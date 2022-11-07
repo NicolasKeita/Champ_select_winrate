@@ -12,9 +12,16 @@
       "@overwolf/types"
     ],
     "outDir": "./dist",
+    "rootDir": "./",
     "rootDirs": [
-      "./src"
+      "src"
     ],
+    "baseUrl": "./src",
+    "paths": {
+      "@public/*": [
+        "../public/*"
+      ]
+    },
     "lib": [
       "dom",
       "dom.iterable",
@@ -31,7 +38,8 @@
     "resolveJsonModule": true,
     //"isolatedModules": true,
     "noEmit": false,
-    "jsx": "react-jsx"
+    //"noEmit": true,
+    "jsx": "react-jsx",
   },
   "include": [
     "src"

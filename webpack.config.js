@@ -5,10 +5,12 @@ const
     { CleanWebpackPlugin } = require('clean-webpack-plugin'),
     OverwolfPlugin = require('./overwolf.webpack');
 
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
+
 module.exports = env => ({
     entry: {
         background: './src/background/background.tsx',
-        desktop: './src/desktop/components/desktop.tsx',
+        desktop: './src/desktop/desktop.tsx',
         in_game: './src/in_game/in_game.tsx'
     },
     devtool: 'inline-source-map',
@@ -19,10 +21,18 @@ module.exports = env => ({
                 use: 'ts-loader',
                 exclude: /node_modules/
             },
+            {
+                test: /\.css$/i,
+                use: [
+                    {loader: 'css-loader', options:{url: false}}
+                ],
+                exclude: /node_modules/
+            }
         ]
     },
     resolve: {
-        extensions: ['.ts', '.js', '.tsx']
+        extensions: ['.ts', '.js', '.tsx', 'jsx'],
+        plugins: [new TsconfigPathsPlugin({ configFile: "./tsconfig.json"})]
     },
     output: {
       path: path.resolve(__dirname, 'dist/'),
@@ -39,7 +49,7 @@ module.exports = env => ({
             chunks: ['background']
         }),
         new HtmlWebpackPlugin({
-            template: './src/desktop/components/desktop.html',
+            template: './src/desktop/desktop.html',
             filename: path.resolve(__dirname, './dist/desktop.html'),
             chunks: ['desktop']
         }),
