@@ -14,40 +14,34 @@ export class AppWindow {
     this.mainWindow = new OWWindow('background');
     this.currWindow = new OWWindow(windowName);
 
-    /*
     const closeButton = document.getElementById('closeButton');
     const maximizeButton = document.getElementById('maximizeButton');
     const minimizeButton = document.getElementById('minimizeButton');
-
-     */
-    console.log("Window object created, this message should be shown only once.");
-
-    /*
     const header = document.getElementById('header');
 
-    this.setDrag(header);
-
-
-
-    closeButton.addEventListener('click', () => {
-      this.mainWindow.close();
-    });
-
-    minimizeButton.addEventListener('click', () => {
-      this.currWindow.minimize();
-    });
-
-    maximizeButton.addEventListener('click', () => {
-      if (!this.maximized) {
-        this.currWindow.maximize();
-      } else {
-        this.currWindow.restore();
-      }
-
-      this.maximized = !this.maximized;
-    });
-
-     */
+    if (header) {
+      this.setDrag(header);
+    }
+    if (closeButton) {
+      closeButton.addEventListener('click', () => {
+        this.mainWindow.close();
+      });
+    }
+    if (minimizeButton) {
+      minimizeButton.addEventListener('click', () => {
+        this.currWindow.minimize();
+      });
+    }
+    if (maximizeButton) {
+      maximizeButton.addEventListener('click', () => {
+        if (!this.maximized) {
+          this.currWindow.maximize();
+        } else {
+          this.currWindow.restore();
+        }
+        this.maximized = !this.maximized;
+      });
+    }
   }
 
   public async getWindowState() {

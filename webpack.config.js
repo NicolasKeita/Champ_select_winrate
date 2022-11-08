@@ -27,7 +27,11 @@ module.exports = env => ({
                     {loader: 'css-loader', options:{url: false}}
                 ],
                 exclude: /node_modules/
-            }
+            },
+            {
+                test: /\.(png|jpe?g|gif|jp2|webp)$/,
+                type: 'asset/resource'
+            },
         ]
     },
     resolve: {

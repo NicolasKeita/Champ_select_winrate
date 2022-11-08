@@ -2,8 +2,8 @@
     Path + Filename: src/desktop/MyApp.tsx
 */
 
-import Header from "./components/Header";
-import Main from "./components/Main";
+import Header from "./components/header";
+import Main from "./components/main";
 
 function MyApp(props) {
     let my_window = props.my_window

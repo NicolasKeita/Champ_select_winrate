@@ -42,7 +42,7 @@
     "jsx": "react-jsx",
   },
   "include": [
-    "src"
+    "src", "index.d.ts"
   ],
   "exclude": [
     "node_modules"

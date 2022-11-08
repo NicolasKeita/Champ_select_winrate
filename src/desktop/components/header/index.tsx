@@ -1,15 +1,23 @@
 /*
-    Path + Filename: src/desktop/components/Header/index.ts
+    Path + Filename: src/desktop/components/header/index.ts
 */
 
+import styled from 'styled-components'
 import "@public/css/desktop.css"
 import "@public/css/general.css"
 import "@public/css/modal.css"
 import "@public/css/header.css"
+import app_logo from "@public/icons/trophee.png"
+
+const AppLogo = styled.img`
+  width: 31px;
+  height: 26px;
+`
 
 function Header(props) {
     let my_window = props.my_window
 
+    //TODO : directly add the function to the onClick, remove these functions
     function minimize() {
         my_window.currWindow.minimize();
     }
@@ -19,10 +27,11 @@ function Header(props) {
     function close() {
         my_window.currWindow.maximize();
     }
+    // TODO: Fully convert to ReactJS
 	return (
             <header id="header" className='app-header'>
-                <img src="../../img/header_icon.svg" alt="headerIcon"/>
-                <h1>Sample App / desktop window</h1>
+                <AppLogo src={app_logo} alt="headerIcon"/>
+                <h1>Champ Select Winrate</h1>
                 <div className="window-controls-group">
                     <button id='minimizeButton' className="window-control window-control-minimize" onClick={minimize}></button>
                     <button id="maximizeButton" className="window-control window-control-maximize" onClick={maximize}></button>
