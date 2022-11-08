@@ -2,15 +2,38 @@
     Path + Filename: src/desktop/components/Main/index.tsx
 */
 
+import styled from 'styled-components';
+
+const PercentageContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 28px;
+`
+
+const LineLeft = styled.div`
+  height: 2px;
+  width: 50px;
+  background: linear-gradient(to left, black, transparent 100%);
+  margin-right: 10px;
+`
+
+const LineRight = styled.div`
+  height: 2px;
+  width: 50px;
+  background: linear-gradient(to right, black, transparent 100%);
+  margin-left: 10px;
+`
+
 function Main() {
+    let winrate = 50;
     return (
         <div className={"desktopTop"}>
-            <h1>Overwolf Sample App</h1>
-            <p>
-                Welcome to the Overwolf tutorial app for developers.<br />
-                Learn how to build an app by using one!
-            </p>
-            <div className="version"></div>
+            <PercentageContainer>
+                <LineLeft></LineLeft>
+                {winrate}%
+                <LineRight></LineRight>
+            </PercentageContainer>
         </div>
     )
 }
