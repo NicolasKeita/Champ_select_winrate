@@ -27,6 +27,7 @@ const LineRight = styled.div`
 
 function Main() {
     let winrate = 50;
+
     return (
         <div className={"desktopTop"}>
             <PercentageContainer>
