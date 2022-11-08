@@ -2,8 +2,7 @@ import { AppWindow } from "../AppWindow";
 import { kWindowNames } from "../consts";
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import Header from './components/Header/index';
-//import Header from 'desktop/components/Header/index';
+import MyApp from "./MyApp";
 
 // The desktop window is the window displayed while game is not running.
 // In our case, our desktop window has no logic - it only displays static data.
@@ -13,7 +12,7 @@ let my_window = new AppWindow(kWindowNames.desktop);
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-      <Header my_window={my_window}/>
+      <MyApp my_window={my_window}/>
   </React.StrictMode>
 );
 
