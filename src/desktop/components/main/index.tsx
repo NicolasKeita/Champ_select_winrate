@@ -5,6 +5,8 @@
 import React from 'react'
 import styled from 'styled-components'
 
+import malhazar from '@public/img/MalzaharSquare.webp'
+
 const PercentageContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -26,18 +28,32 @@ const LineRight = styled.div`
   margin-left: 10px;
 `
 
+const MainContainer = styled.div`
+    color: white;
+    width: 100%;
+    height: 400px;
+    text-align: center;
+    background-color: #464650;
+`
+
+const ChampionImg = styled.img`
+    border-radius: 50%;
+`
+
 function Main() {
     let winrate = 50
 
     return (
-        <div className={'desktopTop'}>
+        <MainContainer>
             <PercentageContainer>
                 <LineLeft/>
                 {winrate}%
                 <LineRight/>
             </PercentageContainer>
-
-        </div>
+            <ChampionImg src={malhazar} alt={'malhazar_img'}/>
+            <ChampionImg src={malhazar} alt={'malhazar_img'}/>
+            <ChampionImg src={malhazar} alt={'malhazar_img'}/>
+        </MainContainer>
     )
 }
 
