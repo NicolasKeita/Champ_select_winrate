@@ -2,7 +2,8 @@
     Path + Filename: src/desktop/components/main/index.tsx
 */
 
-import styled from 'styled-components';
+import React from 'react'
+import styled from 'styled-components'
 
 const PercentageContainer = styled.div`
   display: flex;
@@ -26,10 +27,10 @@ const LineRight = styled.div`
 `
 
 function Main() {
-    let winrate = 50;
+    let winrate = 50
 
     return (
-        <div className={"desktopTop"}>
+        <div className={'desktopTop'}>
             <PercentageContainer>
                 <LineLeft/>
                 {winrate}%
