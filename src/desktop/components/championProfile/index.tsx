@@ -17,7 +17,9 @@ const ChampionImg = styled.img`
 const ChampionProfileContainer = styled.div`
   display: flex;
   flex-direction: ${props => props.isEnemyTeam ? 'row-reverse' : 'row'};
+  padding: 0 12px 0 12px;
 `
+
 const ProfileTexts = styled.div`
   display: flex;
   flex-direction: column;

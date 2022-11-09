@@ -12,6 +12,8 @@ const PercentageContainer = styled.div`
   justify-content: center;
   align-items: center;
   font-size: 28px;
+  padding: 10px;
+  color: #f0ead9;
 `
 
 const LineLeft = styled.div`
@@ -33,7 +35,7 @@ const MainContainer = styled.div`
     width: 100%;
     height: 400px;
     text-align: center;
-    background-color: #464650;
+    background: #121a21;
 `
 
 const PlayersGrid = styled.div`

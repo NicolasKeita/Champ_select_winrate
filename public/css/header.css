@@ -22,14 +22,17 @@
   display: flex;
   align-items: center;
   z-index: 9999;
-  background-color: #272727;
+  //background-color: #272727;
+  background-color: #050e17;
+  padding: 8px;
 }
 
 .app-header h1 {
   font-style: normal;
   font-weight: normal;
-  color: #8d8d8d;
-  font-size: 14px;
+  color: white;
+  //color: #8d8d8d;
+  font-size: 16px;
   padding-left: 8px;
   margin: 0;
   cursor: inherit;
