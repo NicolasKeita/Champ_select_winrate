@@ -4,27 +4,41 @@
 
 import React from 'react'
 import styled from 'styled-components'
+import PropTypes from 'prop-types'
 
 import malhazar from '@public/img/MalzaharSquare.webp'
 
 const ChampionImg = styled.img`
-    border-radius: 50%;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
 `
 
 const ChampionProfileContainer = styled.div`
-  margin-bottom: 20px;
   display: flex;
-  align-items: center;
+  flex-direction: ${props => props.isEnemyTeam ? 'row-reverse' : 'row'};
+`
+const ProfileTexts = styled.div`
+  display: flex;
+  flex-direction: column;
+//  justify-items: space-around;
+  justify-content: space-around;
 `
 
-
-function ChampionProfile() {
+function ChampionProfile(props) {
     return (
-        <ChampionProfileContainer>
+        <ChampionProfileContainer isEnemyTeam={props.isEnemyTeam}>
             <ChampionImg src={malhazar} alt={'malhazar_img'}/>
-            Champion Name
+            <ProfileTexts>
+                <h1>Champion Name</h1>
+                <h2>63</h2>
+            </ProfileTexts>
         </ChampionProfileContainer>
     )
+}
+
+ChampionProfile.propTypes = {
+    isEnemyTeam: PropTypes.bool
 }
 
 export default ChampionProfile

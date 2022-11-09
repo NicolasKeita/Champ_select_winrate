@@ -38,26 +38,29 @@ const MainContainer = styled.div`
 
 const PlayersGrid = styled.div`
   display: flex;
-  //todo: order of images wrong?
-  background: #00defa;
   justify-content: space-between;
 `
 
 const TeammateGrid = styled.div`
   display: flex;
   flex-direction: column;
-  background: green;
 `
 
-const EnnemiesGrid = styled.div`
+const EnemiesGrid = styled.div`
   display: flex;
   flex-direction: column;
-  justify-items: flex-end;
-  background: red;
+`
+
+const LineLeftProfile = styled.div`
+  height: 15px;
+  width: 100%;
+//  background: linear-gradient(to left, red, transparent 100%);
+  background: brown;
+  margin-right: 10px;
 `
 
 function Main() {
-    let winrate = 50
+    let winrate = 51
 
     return (
         <MainContainer>
@@ -69,18 +72,26 @@ function Main() {
             <PlayersGrid>
                 <TeammateGrid>
                     <ChampionProfile/>
+                    <LineLeftProfile/>
                     <ChampionProfile/>
+                    <LineLeftProfile/>
                     <ChampionProfile/>
+                    <LineLeftProfile/>
                     <ChampionProfile/>
+                    <LineLeftProfile/>
                     <ChampionProfile/>
                 </TeammateGrid>
-                <EnnemiesGrid>
-                    <ChampionProfile/>
-                    <ChampionProfile/>
-                    <ChampionProfile/>
-                    <ChampionProfile/>
-                    <ChampionProfile/>
-                </EnnemiesGrid>
+                <EnemiesGrid>
+                    <ChampionProfile isEnemyTeam/>
+                    <LineLeftProfile/>
+                    <ChampionProfile isEnemyTeam/>
+                    <LineLeftProfile/>
+                    <ChampionProfile isEnemyTeam/>
+                    <LineLeftProfile/>
+                    <ChampionProfile isEnemyTeam/>
+                    <LineLeftProfile/>
+                    <ChampionProfile isEnemyTeam/>
+                </EnemiesGrid>
             </PlayersGrid>
         </MainContainer>
     )
