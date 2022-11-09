@@ -5,7 +5,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import malhazar from '@public/img/MalzaharSquare.webp'
+import ChampionProfile from '../championProfile'
 
 const PercentageContainer = styled.div`
   display: flex;
@@ -36,8 +36,24 @@ const MainContainer = styled.div`
     background-color: #464650;
 `
 
-const ChampionImg = styled.img`
-    border-radius: 50%;
+const PlayersGrid = styled.div`
+  display: flex;
+  //todo: order of images wrong?
+  background: #00defa;
+  justify-content: space-between;
+`
+
+const TeammateGrid = styled.div`
+  display: flex;
+  flex-direction: column;
+  background: green;
+`
+
+const EnnemiesGrid = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-items: flex-end;
+  background: red;
 `
 
 function Main() {
@@ -50,9 +66,22 @@ function Main() {
                 {winrate}%
                 <LineRight/>
             </PercentageContainer>
-            <ChampionImg src={malhazar} alt={'malhazar_img'}/>
-            <ChampionImg src={malhazar} alt={'malhazar_img'}/>
-            <ChampionImg src={malhazar} alt={'malhazar_img'}/>
+            <PlayersGrid>
+                <TeammateGrid>
+                    <ChampionProfile/>
+                    <ChampionProfile/>
+                    <ChampionProfile/>
+                    <ChampionProfile/>
+                    <ChampionProfile/>
+                </TeammateGrid>
+                <EnnemiesGrid>
+                    <ChampionProfile/>
+                    <ChampionProfile/>
+                    <ChampionProfile/>
+                    <ChampionProfile/>
+                    <ChampionProfile/>
+                </EnnemiesGrid>
+            </PlayersGrid>
         </MainContainer>
     )
 }
