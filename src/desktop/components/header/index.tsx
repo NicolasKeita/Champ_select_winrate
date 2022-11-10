@@ -2,9 +2,11 @@
     Path + Filename: src/desktop/components/header/index.ts
 */
 
-import React from 'react'
+import React, {useEffect, useRef} from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
+
+import {AppWindow} from '../../../AppWindow'
 
 import '@public/css/desktop.css'
 import '@public/css/general.css'
@@ -18,21 +20,30 @@ const AppLogo = styled.img`
 `
 
 function Header(props) {
-    let my_window = props.my_window
+    const my_window = props.my_window
+    const headerRef = useRef(null)
 
-    //TODO : directly add the function to the onClick, remove these functions
     function minimize() {
         my_window.currWindow.minimize()
     }
     function maximize() {
-        my_window.currWindow.maximize()
+        if (!my_window.maximized) {
+            my_window.currWindow.maximize()
+        } else {
+            my_window.currWindow.restore()
+        }
+        my_window.maximized = !my_window.maximized
     }
     function close() {
-        my_window.currWindow.maximize()
+        my_window.currWindow.close()
     }
-    // TODO: Fully convert to JSX (this is sort of HTML rightnow)
+
+    useEffect(() => {
+        my_window.setDrag(headerRef.current)
+    }, [])
+
 	return (
-            <header id="header" className='app-header'>
+            <header className='app-header' ref={headerRef}>
                 <AppLogo src={app_logo} alt="headerIcon"/>
                 <h1>Champ Select Winrate</h1>
                 <div className="window-controls-group">
@@ -45,8 +56,7 @@ function Header(props) {
 }
 
 Header.propTypes = {
-    //TODO: change any to the actual object
-    my_window: PropTypes.any
+    my_window: PropTypes.instanceOf(AppWindow)
 }
 
 export default Header

@@ -23,8 +23,12 @@ const ChampionProfileContainer = styled.div`
 const ProfileTexts = styled.div`
   display: flex;
   flex-direction: column;
-//  justify-items: space-around;
   justify-content: space-around;
+  color: #888063;
+`
+
+const ChampionPower = styled.h2`
+    color: #beb7a6;
 `
 
 function ChampionProfile(props) {
@@ -33,7 +37,7 @@ function ChampionProfile(props) {
             <ChampionImg src={malhazar} alt={'malhazar_img'}/>
             <ProfileTexts>
                 <h1>Champion Name</h1>
-                <h2>63</h2>
+                <ChampionPower>63</ChampionPower>
             </ProfileTexts>
         </ChampionProfileContainer>
     )

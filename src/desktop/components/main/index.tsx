@@ -54,11 +54,29 @@ const EnemiesGrid = styled.div`
 `
 
 const LineLeftProfile = styled.div`
-  height: 15px;
-  width: 100%;
-//  background: linear-gradient(to left, red, transparent 100%);
-  background: brown;
-  margin-right: 10px;
+   height: 2px;
+   width: 100%;
+   background: ${props => props.isEnemyTeam ?
+       'linear-gradient(to left, #785a28, transparent 100%)' :
+       'linear-gradient(to right, #785a28, transparent 100%)'};
+   transform: scale(var(--ggs,1));
+   margin: 10px;
+
+   &:before {
+      content: ${props => props.isEnemyTeam ? 'none' : `''`};
+      display: block;
+      box-sizing: border-box;
+      position: absolute;
+
+      width: 6px;
+      height: 6px;
+      border: 2px solid;
+      left: -4px;
+      bottom: -2px;
+      transform: rotate(45deg);
+      background: transparent;
+      color: #785a28;
+   };
 `
 
 function Main() {
@@ -85,13 +103,13 @@ function Main() {
                 </TeammateGrid>
                 <EnemiesGrid>
                     <ChampionProfile isEnemyTeam/>
-                    <LineLeftProfile/>
+                    <LineLeftProfile isEnemyTeam/>
                     <ChampionProfile isEnemyTeam/>
-                    <LineLeftProfile/>
+                    <LineLeftProfile isEnemyTeam/>
                     <ChampionProfile isEnemyTeam/>
-                    <LineLeftProfile/>
+                    <LineLeftProfile isEnemyTeam/>
                     <ChampionProfile isEnemyTeam/>
-                    <LineLeftProfile/>
+                    <LineLeftProfile isEnemyTeam/>
                     <ChampionProfile isEnemyTeam/>
                 </EnemiesGrid>
             </PlayersGrid>

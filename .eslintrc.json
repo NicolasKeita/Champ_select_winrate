@@ -19,7 +19,8 @@
     ],
     "rules": {
         "semi": ["warn", "never"],
-        "quotes": ["warn", "single"],
+        "quotes": ["warn", "single", {"allowTemplateLiterals" : true}],
+
         "no-unexpected-multiline": "error"
     }
 }

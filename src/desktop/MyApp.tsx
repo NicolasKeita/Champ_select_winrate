@@ -2,8 +2,12 @@
     Path + Filename: src/desktop/MyApp.tsx
 */
 
-import Header from "./components/header";
-import Main from "./components/main";
+import React from 'react'
+import PropTypes from 'prop-types'
+
+import Header from './components/header'
+import Main from './components/main'
+import {AppWindow} from '../AppWindow'
 
 function MyApp(props) {
     let my_window = props.my_window
@@ -13,6 +17,10 @@ function MyApp(props) {
             <Main/>
         </div>
     )
+}
+
+MyApp.propTypes = {
+    my_window: PropTypes.instanceOf(AppWindow)
 }
 
 export default MyApp
