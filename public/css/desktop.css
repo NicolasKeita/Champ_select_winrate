@@ -10,6 +10,11 @@ body {
   font-family: sans-serif;
 }
 
+#root {
+  display: flex;
+  flex: 1;
+}
+
 main {
   flex: auto;
   display: flex;

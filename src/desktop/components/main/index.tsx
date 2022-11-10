@@ -31,11 +31,11 @@ const LineRight = styled.div`
 `
 
 const MainContainer = styled.div`
-    color: white;
-    width: 100%;
-    height: 400px;
-    text-align: center;
-    background: #121a21;
+  color: white;
+  width: 100%;
+  text-align: center;
+  background: #121a21;
+  padding-bottom: 10px;
 `
 
 const PlayersGrid = styled.div`
@@ -54,29 +54,42 @@ const EnemiesGrid = styled.div`
 `
 
 const LineLeftProfile = styled.div`
-   height: 2px;
-   width: 100%;
-   background: ${props => props.isEnemyTeam ?
-       'linear-gradient(to left, #785a28, transparent 100%)' :
-       'linear-gradient(to right, #785a28, transparent 100%)'};
-   transform: scale(var(--ggs,1));
-   margin: 10px;
+  height: 2px;
+  width: 100% - 10px;
+  background: ${props => props.isEnemyTeam ?
+          'linear-gradient(to left, #785a28, transparent 100%)' :
+          'linear-gradient(to right, #785a28, transparent 100%)'};
+  transform: scale(var(--ggs,1));
+  margin: 10px
+  ${props => props.isEnemyTeam ? '10px' : '0px'}
+  10px
+  ${props => props.isEnemyTeam ? '0px' : '10px'};
 
-   &:before {
-      content: ${props => props.isEnemyTeam ? 'none' : `''`};
-      display: block;
-      box-sizing: border-box;
-      position: absolute;
+  &:after,
+  &:before {
+    display: block;
+    box-sizing: border-box;
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border: 2px solid;
+    bottom: -2px;
+    transform: rotate(45deg);
+    background: transparent;
+    color: #785a28;
+  }
 
-      width: 6px;
-      height: 6px;
-      border: 2px solid;
-      left: -4px;
-      bottom: -2px;
-      transform: rotate(45deg);
-      background: transparent;
-      color: #785a28;
-   };
+  //Right side
+  &:before {
+    content: ${props => props.isEnemyTeam ? `''` : 'none'};
+    right: -4px;
+  };
+
+  //Left side
+  &:after {
+    content: ${props => props.isEnemyTeam ? 'none' : `''`};
+    left: -4px;
+  };
 `
 
 function Main() {

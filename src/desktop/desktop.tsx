@@ -4,6 +4,8 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import MyApp from './MyApp'
 
+import '@public/css/desktop.css'
+
 // The desktop window is the window displayed while game is not running.
 // In our case, our desktop window has no logic - it only displays static data.
 // Therefore, only the generic AppWindow class is called.
