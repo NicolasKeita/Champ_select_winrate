@@ -95,35 +95,32 @@ const LineLeftProfile = styled.div`
 function Main() {
     let winrate = 51
 
+    function renderPlayersGrid(isEnemyTeam) {
+        let profiles = []
+        for (let i = 0; i < 5; ++i) {
+            profiles.push(<ChampionProfile isEnemyTeam={isEnemyTeam}/>)
+            if (i < 4)
+                profiles.push(<LineLeftProfile isEnemyTeam={isEnemyTeam}/>)
+        }
+        return (
+            <div>
+                {profiles}
+            </div>
+        )
+    }
     return (
         <MainContainer>
             <PercentageContainer>
                 <LineLeft/>
-                {winrate}%
+                <h1>{winrate}%</h1>
                 <LineRight/>
             </PercentageContainer>
             <PlayersGrid>
                 <TeammateGrid>
-                    <ChampionProfile/>
-                    <LineLeftProfile/>
-                    <ChampionProfile/>
-                    <LineLeftProfile/>
-                    <ChampionProfile/>
-                    <LineLeftProfile/>
-                    <ChampionProfile/>
-                    <LineLeftProfile/>
-                    <ChampionProfile/>
+                    {renderPlayersGrid(false)}
                 </TeammateGrid>
                 <EnemiesGrid>
-                    <ChampionProfile isEnemyTeam/>
-                    <LineLeftProfile isEnemyTeam/>
-                    <ChampionProfile isEnemyTeam/>
-                    <LineLeftProfile isEnemyTeam/>
-                    <ChampionProfile isEnemyTeam/>
-                    <LineLeftProfile isEnemyTeam/>
-                    <ChampionProfile isEnemyTeam/>
-                    <LineLeftProfile isEnemyTeam/>
-                    <ChampionProfile isEnemyTeam/>
+                    {renderPlayersGrid(true)}
                 </EnemiesGrid>
             </PlayersGrid>
         </MainContainer>

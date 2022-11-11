@@ -26,14 +26,6 @@ function Header(props) {
     function minimize() {
         my_window.currWindow.minimize()
     }
-    function maximize() {
-        if (!my_window.maximized) {
-            my_window.currWindow.maximize()
-        } else {
-            my_window.currWindow.restore()
-        }
-        my_window.maximized = !my_window.maximized
-    }
     function close() {
         my_window.currWindow.close()
     }
@@ -48,7 +40,6 @@ function Header(props) {
                 <h1>Champ Select Winrate</h1>
                 <div className="window-controls-group">
                     <button id='minimizeButton' className="window-control window-control-minimize" onClick={minimize}></button>
-                    <button id="maximizeButton" className="window-control window-control-maximize" onClick={maximize}></button>
                     <button id="closeButton" className="window-control window-control-close" onClick={close}></button>
                 </div>
             </header>
