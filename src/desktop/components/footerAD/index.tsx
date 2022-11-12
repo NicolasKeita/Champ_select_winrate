@@ -1,5 +1,5 @@
 /*
-    Path + Filename: src/desktop/components/footer/index.tsx
+    Path + Filename: src/desktop/components/footerAD/index.tsx
 */
 
 import React from 'react'
@@ -10,11 +10,11 @@ const FooterContainer = styled.footer`
   flex: 1;
 `
 
-function Footer() {
+function FooterAD() {
     return (
         <FooterContainer>
         </FooterContainer>
     )
 }
 
-export default Footer
+export default FooterAD

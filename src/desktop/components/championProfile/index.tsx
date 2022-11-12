@@ -7,11 +7,13 @@ import styled from 'styled-components'
 import PropTypes from 'prop-types'
 
 import malhazar from '@public/img/MalzaharSquare.webp'
+import questionMark from '@public/img/question_mark.jpg'
 
 const ChampionImg = styled.img`
   border-radius: 50%;
   width: 50px;
   height: 50px;
+  background: white;
 `
 
 const ChampionProfileContainer = styled.div`
@@ -32,9 +34,10 @@ const ChampionPower = styled.h2`
 `
 
 function ChampionProfile(props) {
+    //console.log(process)
     return (
         <ChampionProfileContainer isEnemyTeam={props.isEnemyTeam}>
-            <ChampionImg src={malhazar} alt={'malhazar_img'}/>
+            <ChampionImg src={questionMark} alt={'playerChampion'}/>
             <ProfileTexts>
                 <h1>Champion Name</h1>
                 <ChampionPower>63</ChampionPower>

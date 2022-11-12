@@ -4,6 +4,7 @@
 
 import React from 'react'
 import styled from 'styled-components'
+import uniqid from 'uniqid'
 
 import ChampionProfile from '../championProfile'
 
@@ -16,18 +17,14 @@ const PercentageContainer = styled.div`
   color: #f0ead9;
 `
 
-const LineLeft = styled.div`
+const WinrateLine = styled.div`
   height: 2px;
   width: 50px;
-  background: linear-gradient(to left, red, transparent 100%);
-  margin-right: 10px;
-`
-
-const LineRight = styled.div`
-  height: 2px;
-  width: 50px;
-  background: linear-gradient(to right, red, transparent 100%);
-  margin-left: 10px;
+  background: ${props => props.isLeft ?
+          'linear-gradient(to left, red, transparent 100%);' :
+          'linear-gradient(to right, red, transparent 100%);'
+  }
+  ${props => props.isLeft ? 'margin-right: 10px;' : 'margin-left: 10px;'}
 `
 
 const MainContainer = styled.div`
@@ -43,17 +40,12 @@ const PlayersGrid = styled.div`
   justify-content: space-between;
 `
 
-const TeammateGrid = styled.div`
+const TeamGrid = styled.div`
   display: flex;
   flex-direction: column;
 `
 
-const EnemiesGrid = styled.div`
-  display: flex;
-  flex-direction: column;
-`
-
-const LineLeftProfile = styled.div`
+const ProfileLine = styled.div`
   height: 2px;
   width: 100% - 10px;
   background: ${props => props.isEnemyTeam ?
@@ -92,15 +84,19 @@ const LineLeftProfile = styled.div`
   };
 `
 
+function showProcess() {
+}
+
 function Main() {
     let winrate = 51
+    showProcess()
 
     function renderPlayersGrid(isEnemyTeam) {
         let profiles = []
         for (let i = 0; i < 5; ++i) {
-            profiles.push(<ChampionProfile isEnemyTeam={isEnemyTeam}/>)
+            profiles.push(<ChampionProfile isEnemyTeam={isEnemyTeam} key={uniqid()}/>)
             if (i < 4)
-                profiles.push(<LineLeftProfile isEnemyTeam={isEnemyTeam}/>)
+                profiles.push(<ProfileLine isEnemyTeam={isEnemyTeam} key={uniqid()}/>)
         }
         return (
             <div>
@@ -111,17 +107,17 @@ function Main() {
     return (
         <MainContainer>
             <PercentageContainer>
-                <LineLeft/>
+                <WinrateLine isLeft/>
                 <h1>{winrate}%</h1>
-                <LineRight/>
+                <WinrateLine/>
             </PercentageContainer>
             <PlayersGrid>
-                <TeammateGrid>
+                <TeamGrid>
                     {renderPlayersGrid(false)}
-                </TeammateGrid>
-                <EnemiesGrid>
+                </TeamGrid>
+                <TeamGrid>
                     {renderPlayersGrid(true)}
-                </EnemiesGrid>
+                </TeamGrid>
             </PlayersGrid>
         </MainContainer>
     )

@@ -9,6 +9,7 @@ import styled from 'styled-components'
 import Header from './components/header'
 import Main from './components/main'
 import Footer from './components/footer'
+import FooterAD from './components/footerAD'
 import {AppWindow} from '../AppWindow'
 
 const MyAppContainer = styled.div`
@@ -24,6 +25,7 @@ function MyApp(props) {
             <Header my_window={my_window}/>
             <Main/>
             <Footer/>
+            <FooterAD/>
         </MyAppContainer>
     )
 }

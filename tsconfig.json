@@ -9,7 +9,8 @@
     "noImplicitAny": false,
     "strictNullChecks": false,
     "types": [
-      "@overwolf/types"
+      "@overwolf/types",
+      "node"
     ],
     "outDir": "./dist",
     "rootDir": "./",

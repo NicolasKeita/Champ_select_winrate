@@ -1,11 +1,11 @@
 const
     path = require('path'),
     HtmlWebpackPlugin = require('html-webpack-plugin'),
-    CopyPlugin = require("copy-webpack-plugin"),
+    CopyPlugin = require('copy-webpack-plugin'),
     { CleanWebpackPlugin } = require('clean-webpack-plugin'),
-    OverwolfPlugin = require('./overwolf.webpack');
+    OverwolfPlugin = require('./overwolf.webpack')
 
-const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin')
 
 module.exports = env => ({
     entry: {
@@ -36,12 +36,13 @@ module.exports = env => ({
     },
     resolve: {
         extensions: ['.ts', '.js', '.tsx', 'jsx'],
-        plugins: [new TsconfigPathsPlugin({ configFile: "./tsconfig.json"})]
+        plugins: [new TsconfigPathsPlugin({ configFile: './tsconfig.json'})]
     },
     output: {
       path: path.resolve(__dirname, 'dist/'),
       filename: 'js/[name].js'
     },
+    target: 'web',
     plugins: [
         new CleanWebpackPlugin,
         new CopyPlugin({
