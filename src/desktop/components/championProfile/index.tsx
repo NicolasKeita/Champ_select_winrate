@@ -34,7 +34,6 @@ const ChampionPower = styled.h2`
 `
 
 function ChampionProfile(props) {
-    //console.log(process)
     return (
         <ChampionProfileContainer isEnemyTeam={props.isEnemyTeam}>
             <ChampionImg src={questionMark} alt={'playerChampion'}/>

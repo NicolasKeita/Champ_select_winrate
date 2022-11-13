@@ -21,6 +21,9 @@
     "paths": {
       "@public/*": [
         "../public/*"
+      ],
+      "@utils/*": [
+        "../src/utils/*"
       ]
     },
     "lib": [

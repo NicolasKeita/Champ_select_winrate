@@ -49,16 +49,16 @@
         "file": "desktop.html",
         "desktop_only": true,
         "native_window": true,
-        "resizable": false,
+        "resizable": true,
         "transparent": true,
         "override_on_update": true,
         "size": {
           "width": 400,
-          "height": 699
+          "height": 780
         },
         "min_size": {
           "width": 400,
-          "height": 699
+          "height": 780
         }
       },
       "in_game": {
@@ -82,60 +82,21 @@
     "game_targeting": {
       "type": "dedicated",
       "game_ids": [
-        21216,
-        7764,
-        5426,
-        21634,
-        8032,
-        10844,
-        10906,
-        10826,
-        21404,
-        7212,
-        21640,
-        7314,
-        21626,
-        8954
+        10902
       ]
     },
     "game_events": [
-      21216,
-      7764,
-      5426,
-      21634,
-      8032,
-      10844,
-      10906,
-      10826,
-      21404,
-      7212,
-      21640,
-      7314,
-      21626,
-      8954
+      10902
     ],
     "launch_events": [
       {
         "event": "GameLaunch",
         "event_data": {
           "game_ids": [
-            21216,
-            7764,
-            5426,
-            21634,
-            8032,
-            10844,
-            10906,
-            10826,
-            21404,
-            7212,
-            21640,
-            7314,
-            21626,
-            8954
+            10902
           ]
         },
-        "start_minimized": true
+        "start_minimized": false
       }
     ],
     "developer": {

@@ -2,10 +2,11 @@
     Path + Filename: src/desktop/components/main/index.tsx
 */
 
-import React from 'react'
+import React, {useEffect} from 'react'
 import styled from 'styled-components'
 import uniqid from 'uniqid'
 
+import LCU from '@utils/LCU'
 import ChampionProfile from '../championProfile'
 
 const PercentageContainer = styled.div`
@@ -84,12 +85,8 @@ const ProfileLine = styled.div`
   };
 `
 
-function showProcess() {
-}
-
 function Main() {
     let winrate = 51
-    showProcess()
 
     function renderPlayersGrid(isEnemyTeam) {
         let profiles = []

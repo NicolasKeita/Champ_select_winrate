@@ -4,23 +4,30 @@
         "es2021": true
     },
     "extends": [
-        "plugin:react/recommended"
-        /*"standard-with-typescript"*/
+        "plugin:react/recommended",
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended"
+        //"standard-with-typescript"
     ],
     "overrides": [
     ],
     "parserOptions": {
-        "ecmaVersion": "latest",
+        "ecmaVersion": 2022,
         "sourceType": "module",
+        "parser": "@typescript-eslint/parser",
         "project": ["./tsconfig.json"]
     },
     "plugins": [
-        "react"
+        "react",
+        "react-hooks",
+        "@typescript-eslint"
     ],
     "rules": {
         "semi": ["warn", "never"],
         "quotes": ["warn", "single", {"allowTemplateLiterals" : true}],
 
+        "react-hooks/exhaustive-deps": "warn",
+        "react-hooks/rules-of-hooks": "error",
         "no-unexpected-multiline": "error"
     }
 }

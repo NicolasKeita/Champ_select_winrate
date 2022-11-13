@@ -2,8 +2,7 @@ const
   path    = require('path'),
   fs      = require('fs'),
   semver  = require('semver'),
-  zip     = require('zip-a-folder'),
-    {exec} = require('child_process')
+  zip     = require('zip-a-folder')
 
 const handleErrors = (error, compilation) => {
   error = new Error(error)
@@ -16,17 +15,6 @@ const PluginName = 'OverwolfPlugin';
 module.exports = class OverwolfPlugin {
   constructor(env) {
     this.env = env
-    exec('wmic PROCESS WHERE name=\'LeagueClientUx.exe\' GET commandline', (error, stdout, stderr) => {
-      if (error) {
-        console.log(`error: ${error.message}`);
-        return;
-      }
-      if (stderr) {
-        console.log(`stderr: ${stderr}`);
-        return;
-      }
-      console.log(`stdout: ${stdout}`);
-    });
   }
   apply(compiler) {
     compiler.hooks.run.tapPromise(PluginName, async (compilation) => {
