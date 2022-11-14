@@ -23,6 +23,8 @@ function Footer(props) {
         }
         else if (!playerProfile.isClientInChampSelect()) {
             setMessage('You are not in champ select.')
+        } else {
+            setMessage('')
         }
     },[playerProfile, playerProfile.clientStatus])
     return (

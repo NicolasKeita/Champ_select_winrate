@@ -14,41 +14,31 @@ const g_interestedInFeatures = [
     'lcu_info',
 ]
 
-export function registerEvents() {
-
+export function registerEvents(handleFeaturesCallbacks) {
     onErrorListener = function (info) {
         console.log('Error: ' + JSON.stringify(info))
     }
-
-    onInfoUpdates2Listener = function (info) {
-        console.log('Info UPDATE: ' + JSON.stringify(info))
+    onInfoUpdates2Listener = (info) => {
+        console.log('onInfoUpdatesProc')
+        console.log(info)
+        if (info.feature === 'game_flow' && info.info.game_flow.phase === 'ChampSelect') {
+            console.log('Hello CHAMP SELECT')
+            handleFeaturesCallbacks(info)
+        }
     }
-
     onNewEventsListener = function (info) {
-        console.log("EVENT FIRED: " + JSON.stringify(info))
+        console.log('onNewEventsProc')
+        console.log(info)
     }
-    overwolf.games.events.onError.addListener(onErrorListener);
-    overwolf.games.launchers.events.onInfoUpdates.addListener(onInfoUpdates2Listener);
-    overwolf.games.events.onNewEvents.addListener(onNewEventsListener);
+    overwolf.games.events.onError.addListener(onErrorListener)
+    overwolf.games.launchers.events.onInfoUpdates.addListener(onInfoUpdates2Listener)
+    overwolf.games.events.onNewEvents.addListener(onNewEventsListener)
 }
 
 export function unregisterEvents() {
-    overwolf.games.events.onError.removeListener(onErrorListener);
-    overwolf.games.events.onInfoUpdates2.removeListener(onInfoUpdates2Listener);
-    overwolf.games.events.onNewEvents.removeListener(onNewEventsListener);
-}
-
-export function isClientRunning(launcherInfo) {
-    if (!launcherInfo) {
-        return false
-    }
-
-    if (!launcherInfo.launchers[0]) {
-        return false
-    }
-
-    // NOTE: we divide by 10 to get the launcher class id without it's sequence number
-    return Math.floor(launcherInfo.launchers[0].id / 10) == 10902
+    overwolf.games.events.onError.removeListener(onErrorListener)
+    overwolf.games.events.onInfoUpdates2.removeListener(onInfoUpdates2Listener)
+    overwolf.games.events.onNewEvents.removeListener(onNewEventsListener)
 }
 
 export function setFeatures() {
@@ -74,19 +64,28 @@ class LCU {
         this.credentials = ''
     }
 
+    private setFeatures() {
+        overwolf.games.launchers.events.setRequiredFeatures(
+            10902,
+            g_interestedInFeatures,
+            function(info) {
+                if (info.error) {
+                    console.log(info.error)
+                    console.log('Trying in 2 seconds')
+                    window.setTimeout(setFeatures, 2000)
+                    return
+                }
+            }
+        )
+    }
     public isLeagueClient(launcherInfo) {
-        console.log(launcherInfo)
+        if (launcherInfo && launcherInfo.launchers && launcherInfo.launchers.length < 1)
+            return false
         if (launcherInfo.id && Math.floor(launcherInfo.id / 10) == 10902)
             return true
-        if (launcherInfo && launcherInfo.launchers && launcherInfo.launchers.length < 1) {
-            return false
-        }
         return Math.floor(launcherInfo.launchers[0].id / 10) == 10902
     }
-    public onClientAbsence(callbackFunction) {
-        overwolf.games.launchers.getRunningLaunchersInfo(callbackFunction)
-    }
-    public onClientAlreadyRunning(callbackFunction) {
+    public onClientAlreadyRunningOrNot(callbackFunction) {
         overwolf.games.launchers.getRunningLaunchersInfo(callbackFunction)
     }
     public onClientLaunch(callbackFunction) {
@@ -95,11 +94,12 @@ class LCU {
     public onClientClosed(callbackFunction) {
         overwolf.games.launchers.onTerminated.addListener(callbackFunction)
     }
-    public addAllListeners(clientsInfos) {
+    public addAllListeners(clientsInfos, callbackTMP) {
         if (this.isLeagueClient(clientsInfos))
             unregisterEvents()
-        registerEvents()
-        setTimeout(setFeatures, 1000)
+        console.log("adding callbackTMP")
+        registerEvents(callbackTMP)
+        setTimeout(this.setFeatures, 1000)
     }
     public removeAllListeners() {
         unregisterEvents()
