@@ -15,7 +15,6 @@ class PlayerProfile {
     }
 
     public setClientStatus(status) { this.clientStatus = status }
-    public getClientStatus() { return this.clientStatus }
     public isClientClosed() { return this.clientStatus === this.clientStatusEnum.CLOSED }
     public isClientOpen() { return this.clientStatus >= this.clientStatusEnum.OPEN }
     public isClientInChampSelect() { return this.clientStatus === this.clientStatusEnum.INSIDE_CHAMP_SELECT }

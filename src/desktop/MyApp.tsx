@@ -12,7 +12,7 @@ import Footer from './components/footer'
 import FooterAD from './components/footerAD'
 import {AppWindow} from '../AppWindow'
 import PlayerProfile from '@utils/playerProfile'
-import LCU from '@utils/LCU'
+import LCU, {isClientRunning, registerEvents, setFeatures, unregisterEvents} from '@utils/LCU'
 
 const MyAppContainer = styled.div`
   display: flex;
@@ -25,12 +25,35 @@ const LCU_interface = new LCU()
 
 function MyApp(props) {
     const my_window = props.my_window
-    const forceUpdate = useState()[1]
+    const forceUpdate = useReducer((x) => x + 1, 0)[1]
 
-    LCU_interface.listenerOnClientLaunch(() => {
-        playerProfile.setClientStatus(playerProfile.clientStatusEnum.OPEN)
-        forceUpdate(null)
-    })
+    useEffect(() => {
+        LCU_interface.onClientAbsence(clientsInfos => {
+            if (!LCU_interface.isLeagueClient(clientsInfos)) {
+                playerProfile.setClientStatus(playerProfile.clientStatusEnum.CLOSED)
+                forceUpdate()
+            }
+        })
+        LCU_interface.onClientAlreadyRunning((clientsInfos) => {
+            if (LCU_interface.isLeagueClient(clientsInfos)) {
+                LCU_interface.addAllListeners(clientsInfos)
+                playerProfile.setClientStatus(playerProfile.clientStatusEnum.OPEN)
+                forceUpdate()
+            }
+        })
+        LCU_interface.onClientLaunch((clientInfo) => {
+            playerProfile.clientStatus = playerProfile.clientStatusEnum.OPEN
+            LCU_interface.addAllListeners(clientInfo)
+            forceUpdate()
+            //LCU_interface.populateCredentials()
+            //todo add credentials and port to playerProfile
+        })
+        LCU_interface.onClientClosed(() => {
+            playerProfile.clientStatus = playerProfile.clientStatusEnum.CLOSED
+            LCU_interface.removeAllListeners()
+            forceUpdate()
+        })
+    }, [forceUpdate])
     return (
         <MyAppContainer>
             <Header my_window={my_window}/>

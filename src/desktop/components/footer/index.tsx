@@ -24,9 +24,6 @@ function Footer(props) {
         else if (!playerProfile.isClientInChampSelect()) {
             setMessage('You are not in champ select.')
         }
-
-
-
     },[playerProfile, playerProfile.clientStatus])
     return (
         <FooterContainer>
