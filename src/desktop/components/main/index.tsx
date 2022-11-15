@@ -8,6 +8,8 @@ import uniqid from 'uniqid'
 
 import LCU from '@utils/LCU'
 import ChampionProfile from '../championProfile'
+import PropTypes from 'prop-types'
+import PlayerProfile from '@utils/playerProfile'
 
 const PercentageContainer = styled.div`
   display: flex;
@@ -85,13 +87,13 @@ const ProfileLine = styled.div`
   };
 `
 
-function Main() {
+function Main(props) {
     let winrate = 51
 
     function renderPlayersGrid(isEnemyTeam) {
         let profiles = []
         for (let i = 0; i < 5; ++i) {
-            profiles.push(<ChampionProfile isEnemyTeam={isEnemyTeam} key={uniqid()}/>)
+            profiles.push(<ChampionProfile isEnemyTeam={isEnemyTeam} key={uniqid()} playerProfile={props.playerProfile}/>)
             if (i < 4)
                 profiles.push(<ProfileLine isEnemyTeam={isEnemyTeam} key={uniqid()}/>)
         }
@@ -118,6 +120,10 @@ function Main() {
             </PlayersGrid>
         </MainContainer>
     )
+}
+
+Main.propTypes = {
+    playerProfile: PropTypes.instanceOf(PlayerProfile),
 }
 
 export default Main

@@ -8,6 +8,7 @@ import PropTypes from 'prop-types'
 
 import malhazar from '@public/img/MalzaharSquare.webp'
 import questionMark from '@public/img/question_mark.jpg'
+import PlayerProfile from '@utils/playerProfile'
 
 const ChampionImg = styled.img`
   border-radius: 50%;
@@ -34,9 +35,10 @@ const ChampionPower = styled.h2`
 `
 
 function ChampionProfile(props) {
+    const imgC = props.playerProfile.ally1.img
     return (
         <ChampionProfileContainer isEnemyTeam={props.isEnemyTeam}>
-            <ChampionImg src={questionMark} alt={'playerChampion'}/>
+            <ChampionImg src={imgC} alt={'playerChampion'}/>
             <ProfileTexts>
                 <h1>Champion Name</h1>
                 <ChampionPower>63</ChampionPower>
@@ -46,7 +48,8 @@ function ChampionProfile(props) {
 }
 
 ChampionProfile.propTypes = {
-    isEnemyTeam: PropTypes.bool
+    isEnemyTeam: PropTypes.bool,
+    playerProfile : PropTypes.instanceOf(PlayerProfile)
 }
 
 export default ChampionProfile

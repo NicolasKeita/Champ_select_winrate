@@ -4,8 +4,6 @@
 
 /* Overwolf is currently providing the connection to the LCU */
 
-import launch = overwolf.extensions.launch
-
 let onErrorListener, onInfoUpdates2Listener, onNewEventsListener
 const g_interestedInFeatures = [
     'game_flow',
@@ -21,10 +19,11 @@ export function registerEvents(handleFeaturesCallbacks) {
     onInfoUpdates2Listener = (info) => {
         console.log('onInfoUpdatesProc')
         console.log(info)
-        if (info.feature === 'game_flow' && info.info.game_flow.phase === 'ChampSelect') {
-            console.log('Hello CHAMP SELECT')
-            handleFeaturesCallbacks(info)
-        }
+//        if (info.feature === 'game_flow' && info.info.game_flow.phase === 'ChampSelect') {
+//            console.log('Hello CHAMP SELECT')
+        handleFeaturesCallbacks(info)
+//        }
+        //TODO if game_flow autre que champSelect, re setup le clientStatus to open
     }
     onNewEventsListener = function (info) {
         console.log('onNewEventsProc')
@@ -97,7 +96,6 @@ class LCU {
     public addAllListeners(clientsInfos, callbackTMP) {
         if (this.isLeagueClient(clientsInfos))
             unregisterEvents()
-        console.log("adding callbackTMP")
         registerEvents(callbackTMP)
         setTimeout(this.setFeatures, 1000)
     }
