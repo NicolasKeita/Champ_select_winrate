@@ -4,6 +4,9 @@
 
 import questionMark from '@public/img/question_mark.jpg'
 import malhazar from '@public/img/MalzaharSquare.webp'
+import {getChampionByKey} from '@utils/playerProfile/getChampionByKey'
+import {getChampSquareAsset} from '@utils/playerProfile/getChampionSquareAsset'
+
 
 class PlayerProfile {
     //TODO  Typescript supports set & get for accessor. Take a look !
@@ -32,20 +35,11 @@ class PlayerProfile {
     public isClientOpen() { return this.clientStatus >= this.clientStatusEnum.OPEN }
     public isClientInChampSelect() { return this.clientStatus === this.clientStatusEnum.INSIDE_CHAMP_SELECT }
 
-
-    // public handlegameflow = (gameflow) => {
-    //     if (gameflow && gameflow.phase) {
-    //         if (gameflow.phase === 'champselect') {
-    //             this.setclientstatustoinside_champ_select()
-    //             console.log('changement de graphique')
-    //         }
-    //     }
-    // }
-    //
-    // public handlefeaturescallbacks = (info) => {
-    //     if (info.feature === 'game_flow')
-    //         this.handlegameflow(info.info.game_flow)
-    // }
+    public async getChampImg(champId) {
+        const champObject = await getChampionByKey(champId)
+        return await getChampSquareAsset(champObject.image.full)
+//        return malhazar
+    }
 }
 
 export default PlayerProfile

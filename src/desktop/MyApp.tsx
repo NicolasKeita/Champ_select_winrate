@@ -51,26 +51,24 @@ function MyApp(props) {
             playerProfile.setClientStatusToINSIDE_CHAMP_SELECT()
             setClientStatus(playerProfile.clientStatus)
         }
-        return (
-            [
+        return ([
                 setClientStatusToOPEN,
                 setClientStatusToCLOSE,
-                setClientStatusToINSIDE_CHAMP_SELECT
-            ] as const
+                setClientStatusToINSIDE_CHAMP_SELECT]as const
         )
     }
 
     function useChangeImgProfile() {
         const [, setImgProfile] = useState(playerProfile.ally1.img)
-        function setChampionHover(action_res) {
-            playerProfile.ally1.img = malhazar
-            setImgProfile(malhazar)
+        async function setChampionHover(action_res) {
+            const champID = action_res.championId
+            if (champID !== 0) {
+                const champImg = playerProfile.getChampImg(champID)
+                playerProfile.ally1.img = await champImg
+                setImgProfile(await champImg)
+            }
         }
-        return (
-            [
-                setChampionHover,
-            ] as const
-        )
+        return ([setChampionHover])
     }
 
     function handleGameFlow (game_flow) {
