@@ -25,6 +25,9 @@ const MyAppContainer = styled.div`
 const LCU_interface = new LCU()
 const playerProfile = new PlayerProfile()
 
+
+let x = 0
+
 function MyApp(props) {
     console.log('MyApp Rerendered')
     const my_window = props.my_window
@@ -59,14 +62,19 @@ function MyApp(props) {
     }
 
     function useChangeImgProfile() {
-        const [, setImgProfile] = useState(playerProfile.ally1.img)
-        async function setChampionHover(action_res) {
-            const champID = action_res.championId
-            if (champID !== 0) {
-                const champImg = playerProfile.getChampImg(champID)
-                playerProfile.ally1.img = await champImg
-                setImgProfile(await champImg)
-            }
+        const [, setImgProfile] = useState(-1)
+        //const [, setImgProfile] = useState(playerProfile.ally1.img)
+        async function setChampionHover(myTeam, theirTeam) {
+            await playerProfile.fillMyTeam(myTeam)
+            await playerProfile.fillTheirTeam(theirTeam)
+            x += 1
+            setImgProfile(x)
+            // const champID = action_res.championId
+            // if (champID > 0) {
+            //     const champImg = playerProfile.getChampImg(champID)
+            //     playerProfile.ally1.img = await champImg
+            //     setImgProfile(await champImg)
+            // }
         }
         return ([setChampionHover])
     }
@@ -85,9 +93,13 @@ function MyApp(props) {
 
     function handleChampSelect(champ_select) {
         const raw = JSON.parse(champ_select.raw)
+        console.log('champ  Select Object RAW')
+        console.log(raw)
         if (raw.actions.length >= 1) {
-            if (raw.actions[0].length >= 1) {
-                setChampionHover(raw.actions[0][0])
+            if (raw.actions[raw.actions.length - 1].length >= 1) {
+                if (raw.actions[raw.actions.length -1][0].type === 'pick')
+                    setChampionHover(raw.myTeam, raw.theirTeam)
+                    //setChampionHover(raw.actions[0][0])
             }
         }
     }

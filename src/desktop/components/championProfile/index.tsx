@@ -35,7 +35,8 @@ const ChampionPower = styled.h2`
 `
 
 function ChampionProfile(props) {
-    const imgC = props.playerProfile.ally1.img
+    const imgC = props.img
+    //const imgC = props.playerProfile.ally1.img
     return (
         <ChampionProfileContainer isEnemyTeam={props.isEnemyTeam}>
             <ChampionImg src={imgC} alt={'playerChampion'}/>
@@ -49,7 +50,9 @@ function ChampionProfile(props) {
 
 ChampionProfile.propTypes = {
     isEnemyTeam: PropTypes.bool,
-    playerProfile : PropTypes.instanceOf(PlayerProfile)
+    //playerProfile : PropTypes.instanceOf(PlayerProfile),
+    img: PropTypes.string
+
 }
 
 export default ChampionProfile

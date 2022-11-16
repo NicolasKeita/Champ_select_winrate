@@ -10,6 +10,7 @@ import LCU from '@utils/LCU'
 import ChampionProfile from '../championProfile'
 import PropTypes from 'prop-types'
 import PlayerProfile from '@utils/playerProfile'
+import playerProfile from '@utils/playerProfile'
 
 const PercentageContainer = styled.div`
   display: flex;
@@ -93,7 +94,8 @@ function Main(props) {
     function renderPlayersGrid(isEnemyTeam) {
         let profiles = []
         for (let i = 0; i < 5; ++i) {
-            profiles.push(<ChampionProfile isEnemyTeam={isEnemyTeam} key={uniqid()} playerProfile={props.playerProfile}/>)
+            const img = isEnemyTeam ? props.playerProfile.enemies[i].img : props.playerProfile.allies[i].img
+            profiles.push(<ChampionProfile isEnemyTeam={isEnemyTeam} key={uniqid()} img={img}/>)
             if (i < 4)
                 profiles.push(<ProfileLine isEnemyTeam={isEnemyTeam} key={uniqid()}/>)
         }
