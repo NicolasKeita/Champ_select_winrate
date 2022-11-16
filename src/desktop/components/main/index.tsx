@@ -95,7 +95,8 @@ function Main(props) {
         let profiles = []
         for (let i = 0; i < 5; ++i) {
             const img = isEnemyTeam ? props.playerProfile.enemies[i].img : props.playerProfile.allies[i].img
-            profiles.push(<ChampionProfile isEnemyTeam={isEnemyTeam} key={uniqid()} img={img}/>)
+            const champName = isEnemyTeam ? props.playerProfile.enemies[i].name : props.playerProfile.allies[i].name
+            profiles.push(<ChampionProfile isEnemyTeam={isEnemyTeam} key={uniqid()} img={img} champName={champName}/>)
             if (i < 4)
                 profiles.push(<ProfileLine isEnemyTeam={isEnemyTeam} key={uniqid()}/>)
         }

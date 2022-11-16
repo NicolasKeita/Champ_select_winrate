@@ -28,6 +28,7 @@ const ProfileTexts = styled.div`
   flex-direction: column;
   justify-content: space-around;
   color: #888063;
+  padding: 0 5px 0 5px;
 `
 
 const ChampionPower = styled.h2`
@@ -35,13 +36,11 @@ const ChampionPower = styled.h2`
 `
 
 function ChampionProfile(props) {
-    const imgC = props.img
-    //const imgC = props.playerProfile.ally1.img
     return (
         <ChampionProfileContainer isEnemyTeam={props.isEnemyTeam}>
-            <ChampionImg src={imgC} alt={'playerChampion'}/>
+            <ChampionImg src={props.img} alt={'playerChampion'}/>
             <ProfileTexts>
-                <h1>Champion Name</h1>
+                <h1>{props.champName}</h1>
                 <ChampionPower>63</ChampionPower>
             </ProfileTexts>
         </ChampionProfileContainer>
@@ -50,7 +49,7 @@ function ChampionProfile(props) {
 
 ChampionProfile.propTypes = {
     isEnemyTeam: PropTypes.bool,
-    //playerProfile : PropTypes.instanceOf(PlayerProfile),
+    champName: PropTypes.string,
     img: PropTypes.string
 
 }

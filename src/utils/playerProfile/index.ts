@@ -18,46 +18,25 @@ class PlayerProfile {
     public clientStatus: number
     public allies = Array(5)
     public enemies = Array(5)
-    public ally1 = { img : '' }
-    public ally2 = { img : '' }
-    public ally3 = { img : '' }
-    public ally4 = { img : '' }
-    public ally5 = { img : '' }
-    public enemy1 = { img : '' }
-    public enemy2 = { img : '' }
-    public enemy3 = { img : '' }
-    public enemy4 = { img : '' }
-    public enemy5 = { img : '' }
-
-//    public img : string
 
     constructor() {
         this.clientStatus = this.clientStatusEnum.CLOSED
-        this.ally1.img = questionMark
-        this.allies[0] = { img : questionMark }
-        this.allies[1] = { img : questionMark }
-        this.allies[2] = { img : questionMark }
-        this.allies[3] = { img : questionMark }
-        this.allies[4] = { img : questionMark }
-        this.enemies[0] = { img : questionMark }
-        this.enemies[1] = { img : questionMark }
-        this.enemies[2] = { img : questionMark }
-        this.enemies[3] = { img : questionMark }
-        this.enemies[4] = { img : questionMark }
+        this.resetChampSelect()
     }
 
     public resetChampSelect() {
-        this.ally1.img = questionMark
-        this.allies[0] = { img : questionMark }
-        this.allies[1] = { img : questionMark }
-        this.allies[2] = { img : questionMark }
-        this.allies[3] = { img : questionMark }
-        this.allies[4] = { img : questionMark }
-        this.enemies[0] = { img : questionMark }
-        this.enemies[1] = { img : questionMark }
-        this.enemies[2] = { img : questionMark }
-        this.enemies[3] = { img : questionMark }
-        this.enemies[4] = { img : questionMark }
+        const defaultImg = questionMark
+        const defaultName = 'Champion Name'
+        this.allies[0] = { img : defaultImg, name : defaultName }
+        this.allies[1] = { img : defaultImg, name : defaultName }
+        this.allies[2] = { img : defaultImg, name : defaultName }
+        this.allies[3] = { img : defaultImg, name : defaultName }
+        this.allies[4] = { img : defaultImg, name : defaultName }
+        this.enemies[0] = { img : defaultImg, name : defaultName }
+        this.enemies[1] = { img : defaultImg, name : defaultName }
+        this.enemies[2] = { img : defaultImg, name : defaultName }
+        this.enemies[3] = { img : defaultImg, name : defaultName }
+        this.enemies[4] = { img : defaultImg, name : defaultName }
     }
     public setClientStatusToCLOSED() { this.clientStatus = this.clientStatusEnum.CLOSED }
     public setClientStatusToOPEN() { this.clientStatus = this.clientStatusEnum.OPEN }
@@ -70,14 +49,21 @@ class PlayerProfile {
         const champObject = await getChampionByKey(champId)
         return await getChampSquareAsset(champObject.image.full)
     }
+
+    public async getChampName(champId) {
+        return (await getChampionByKey(champId)).name
+    }
+
     public async fillMyTeam(myTeam) {
         for (let i = 0; i < 5; ++i) {
             if (myTeam[i]) {
                 let champID = myTeam[i].championId
                 if (champID <= 0)
                     champID = myTeam[i].championPickIntent
-                if (champID > 0)
+                if (champID > 0) {
                     this.allies[i].img = await this.getChampImg(champID)
+                    this.allies[i].name = await this.getChampName(champID)
+                }
             }
         }
     }
@@ -88,8 +74,10 @@ class PlayerProfile {
                 let champID = theirTeam[i].championId
                 if (champID <= 0)
                     champID = theirTeam[i].championPickIntent
-                if (champID > 0)
+                if (champID > 0) {
                     this.enemies[i].img = await this.getChampImg(champID)
+                    this.enemies[i].name = await this.getChampName(champID)
+                }
             }
         }
     }
