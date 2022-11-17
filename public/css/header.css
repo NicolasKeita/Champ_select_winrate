@@ -18,24 +18,29 @@
   opacity: 1;
 }
 
+@font-face {
+  font-family: 'Hero';
+  src: local('Hero'), url(./../fonts/Hero/Commercial/TTF/Hero-Regular.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Hero';
+  src: local('Hero'), url(./../fonts/Hero/Commercial/TTF/Hero-Bold.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Hero';
+  src: local('Hero'), url(./../fonts/Hero/Commercial/TTF/Hero-Light.ttf) format('truetype');
+}
+
 .app-header {
-  display: flex;
-  align-items: center;
-  z-index: 9999;
-  //background-color: #272727;
-  background-color: #050e17;
-  padding: 8px;
 }
 
 .app-header h1 {
-  font-style: normal;
-  font-weight: normal;
-  color: white;
-  //color: #8d8d8d;
-  font-size: 16px;
-  padding-left: 8px;
-  margin: 0;
-  cursor: inherit;
+  /*font-style: normal;*/
+  /*font-weight: normal;*/
+  /*font-size: 16px;*/
+  /*padding-left: 8px;*/
+  /*margin: 0;*/
+  /*cursor: inherit;*/
 }
 
 .app-header .hotkey-text {

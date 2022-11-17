@@ -106,6 +106,7 @@ function Main(props) {
             </div>
         )
     }
+    //TODO: le background de main doit être linear gradient avec une nouvelle couleure
     return (
         <MainContainer>
             <PercentageContainer>
