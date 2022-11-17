@@ -7,7 +7,7 @@ import styled from 'styled-components'
 import uniqid from 'uniqid'
 
 import LCU from '@utils/LCU'
-import ChampionProfile from '../championProfile'
+import ChampionProfile from '../../championProfile'
 import PropTypes from 'prop-types'
 import PlayerProfile from '@utils/playerProfile'
 

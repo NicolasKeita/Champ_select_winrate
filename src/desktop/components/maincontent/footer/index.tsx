@@ -31,10 +31,10 @@ function Footer(props) {
 
     //TODO: Maybe change position of this code ?
     function useChangeMessage() {
-        const [, setMessage1] = useState(footerText.message)
+        const [, setMessage_internal] = useState(footerText.message)
         function setMessage(msg) {
             footerText.message = msg
-            setMessage1(msg)
+            setMessage_internal(msg)
         }
         return [setMessage]
     }

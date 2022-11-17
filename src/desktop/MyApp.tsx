@@ -7,21 +7,21 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 import Header from './components/header'
-import Main from './components/main'
-import Footer from './components/footer'
+import MainContent from './components/maincontent'
+import Main from './components/maincontent/main'
+import Footer from './components/maincontent/footer'
+import Settings from './components/maincontent/settings'
 import FooterAD from './components/footerAD'
 import {AppWindow} from '../AppWindow'
 import PlayerProfile from '@utils/playerProfile'
 import LCU from '@utils/LCU'
-
-import malhazar from '@public/img/MalzaharSquare.webp'
+import {useIsSettings} from './utils/hooks'
 
 const MyAppContainer = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1;
 `
-
 const LCU_interface = new LCU()
 const playerProfile = new PlayerProfile()
 
@@ -65,7 +65,6 @@ function MyApp(props) {
         const [, setImgProfile] = useState(-1)
         async function setChampionHover(actions) {
             await playerProfile.fillChampSelect(actions)
-//            await playerProfile.fillTheirTeam(theirTeam)
             x += 1
             setImgProfile(x)
         }
@@ -112,7 +111,7 @@ function MyApp(props) {
             LCU_interface.addAllListeners(clientInfo, handleFeaturesCallbacks)
             setClientStatusToOPEN()
             //LCU_interface.populateCredentials()
-            //todo add credentials and port to playerProfile
+            //todo save credentials and port to playerProfile
         })
         LCU_interface.onClientClosed(() => {
             setClientStatusToCLOSE()
@@ -120,11 +119,24 @@ function MyApp(props) {
         })
     }, []) // TODO exhausive-deps-problem Figure out Why adding SetClientStatusToOPEN there will trigger useEffect every render (I just want to let this empty array)
 
+    const { isSettings } = useIsSettings()
+    function renderContent() {
+        if (!isSettings) {
+            return (
+                <div style={{ display: 'flex', flexDirection: 'column', flex: 1}}>
+                    <Main playerProfile={playerProfile}/>
+                    <Footer playerProfile={playerProfile}/>
+                </div>
+            )
+        } else
+            return (<Settings/>)
+    }
     return (
         <MyAppContainer>
-            <Header my_window={my_window}/>
-            <Main playerProfile={playerProfile}/>
-            <Footer playerProfile={playerProfile}/>
+            <Header my_window={my_window} isSettings={isSettings}/>
+            <MainContent id="MainContent">
+                {renderContent()}
+            </MainContent>
             <FooterAD/>
         </MyAppContainer>
     )

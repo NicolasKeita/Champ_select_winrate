@@ -20,15 +20,15 @@
 
 @font-face {
   font-family: 'Hero';
-  src: local('Hero'), url(./../fonts/Hero/Commercial/TTF/Hero-Regular.ttf) format('truetype');
+  src: local('Hero'), url(./../fonts/Hero/Hero-Regular.ttf) format('truetype');
 }
 @font-face {
   font-family: 'Hero';
-  src: local('Hero'), url(./../fonts/Hero/Commercial/TTF/Hero-Bold.ttf) format('truetype');
+  src: local('Hero'), url(./../fonts/Hero/Hero-Bold.ttf) format('truetype');
 }
 @font-face {
   font-family: 'Hero';
-  src: local('Hero'), url(./../fonts/Hero/Commercial/TTF/Hero-Light.ttf) format('truetype');
+  src: local('Hero'), url(./../fonts/Hero/Hero-Light.ttf) format('truetype');
 }
 
 .app-header {

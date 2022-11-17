@@ -12,6 +12,7 @@ import '@public/css/desktop.css'
 import '@public/css/general.css'
 import '@public/css/modal.css'
 import '@public/css/header.css'
+import {useIsSettings} from '../../utils/hooks'
 
 const HeaderContainer = styled.header`
   background: linear-gradient(to right, rgb(63, 62, 62), #363636, #323232);
@@ -41,32 +42,32 @@ const CSWName = styled.h1`
 function Header(props) {
     const my_window = props.my_window
     const headerRef = useRef(null)
+    const { toggleIsSettings } = useIsSettings()
 
-    function minimize() {
-        my_window.currWindow.minimize()
-    }
-    function close() {
-        my_window.currWindow.close()
-    }
+    function minimize() { my_window.currWindow.minimize() }
+    function close() { my_window.currWindow.close() }
+    function activateSettings() { toggleIsSettings() }
 
     useEffect(() => {
         my_window.setDrag(headerRef.current)
-    }, [])
+    }, [my_window])
 
 	return (
             <HeaderContainer className='app-header' ref={headerRef}>
                 <Logo>CSW</Logo>
                 <CSWName>Champ Select Winrate</CSWName>
                 <div className="window-controls-group">
-                    <button id='minimizeButton' className="window-control window-control-minimize" onClick={minimize}></button>
-                    <button id="closeButton" className="window-control window-control-close" onClick={close}></button>
+                    <button className="window-control window-control-settings" onClick={activateSettings}></button>
+                    <button className="window-control window-control-minimize" onClick={minimize}></button>
+                    <button className="window-control window-control-close" onClick={close}></button>
                 </div>
             </HeaderContainer>
     )
 }
 
 Header.propTypes = {
-    my_window: PropTypes.instanceOf(AppWindow)
+    my_window: PropTypes.instanceOf(AppWindow),
+    isSettings: PropTypes.bool
 }
 
 export default Header
