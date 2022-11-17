@@ -102,7 +102,6 @@ function MyApp(props) {
         LCU_interface.onClientAlreadyRunningOrNot((clientsInfos) => {
             // if client's already running
             if (LCU_interface.isLeagueClient(clientsInfos)) {
-                console.log("Only Once OPEN")
                 setClientStatusToOPEN()
                 LCU_interface.addAllListeners(clientsInfos, handleFeaturesCallbacks)
             } else {
@@ -111,7 +110,6 @@ function MyApp(props) {
         })
         LCU_interface.onClientLaunch((clientInfo) => {
             LCU_interface.addAllListeners(clientInfo, handleFeaturesCallbacks)
-            console.log("Only Once OPEN 2")
             setClientStatusToOPEN()
             //LCU_interface.populateCredentials()
             //todo add credentials and port to playerProfile

@@ -72,8 +72,6 @@ class PlayerProfile {
         else if (actions.length == 8) {
             for (let i = 2; i < actions.length; i++) {
                 for (let y = 0; y < actions[i].length; ++y) {
-                    console.log('i = ' + i)
-                    console.log('y = ' + y)
                     const champID = actions[i][y].championId
                     if (champID === 0)
                         continue
@@ -81,11 +79,8 @@ class PlayerProfile {
                     if (cellID < 5) {
                         this.allies[cellID].img = await this.getChampImg(champID)
                         this.allies[cellID].name = await this.getChampName(champID)
-                        console.log("CHAMP ID IS " + champID)
                     } else {
                         cellID = cellID - 5
-                        console.log("CHAMP ID IS " + champID)
-                        console.log("cellID " + cellID)
                         this.enemies[cellID].img = await this.getChampImg(champID)
                         this.enemies[cellID].name = await this.getChampName(champID)
                     }

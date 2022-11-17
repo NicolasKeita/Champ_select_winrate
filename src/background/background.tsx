@@ -48,13 +48,14 @@ class BackgroundController {
   // When running the app, start listening to games' status and decide which window should
   // be launched first, based on whether a supported game is currently running
   public async run() {
-    this._gameListener.start();
+    //this._gameListener.start()
 
-    const currWindowName = (await this.isSupportedGameRunning())
-      ? kWindowNames.inGame
-      : kWindowNames.desktop;
+    // const currWindowName = (await this.isSupportedGameRunning())
+    //   ? kWindowNames.inGame
+    //   : kWindowNames.desktop;
+    const currWindowName = kWindowNames.desktop
 
-    this._windows[currWindowName].restore();
+    this._windows[currWindowName].restore()
   }
 
   private async onAppLaunchTriggered(e: AppLaunchTriggeredEvent) {

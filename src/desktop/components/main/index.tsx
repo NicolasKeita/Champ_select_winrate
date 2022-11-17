@@ -10,7 +10,6 @@ import LCU from '@utils/LCU'
 import ChampionProfile from '../championProfile'
 import PropTypes from 'prop-types'
 import PlayerProfile from '@utils/playerProfile'
-import playerProfile from '@utils/playerProfile'
 
 const PercentageContainer = styled.div`
   display: flex;
@@ -18,7 +17,11 @@ const PercentageContainer = styled.div`
   align-items: center;
   font-size: 28px;
   padding: 10px;
-  color: #f0ead9;
+  //color: #f0ead9;
+  background: -webkit-linear-gradient(#a8540c, #b79e4d);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  //color: #f0ead9;
 `
 
 const WinrateLine = styled.div`
@@ -35,7 +38,9 @@ const MainContainer = styled.div`
   color: white;
   width: 100%;
   text-align: center;
-  background: #121a21;
+  //background: #121a21;
+  background: linear-gradient(to right, #252424, #363636, #252424);
+  //background: #121a21;
   padding-bottom: 10px;
 `
 
@@ -92,7 +97,7 @@ function Main(props) {
     let winrate = 51
 
     function renderPlayersGrid(isEnemyTeam) {
-        let profiles = []
+        const profiles = []
         for (let i = 0; i < 5; ++i) {
             const img = isEnemyTeam ? props.playerProfile.enemies[i].img : props.playerProfile.allies[i].img
             const champName = isEnemyTeam ? props.playerProfile.enemies[i].name : props.playerProfile.allies[i].name
@@ -100,11 +105,7 @@ function Main(props) {
             if (i < 4)
                 profiles.push(<ProfileLine isEnemyTeam={isEnemyTeam} key={uniqid()}/>)
         }
-        return (
-            <div>
-                {profiles}
-            </div>
-        )
+        return <div>{profiles}</div>
     }
     //TODO: le background de main doit être linear gradient avec une nouvelle couleure
     return (

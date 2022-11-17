@@ -12,17 +12,14 @@ import '@public/css/desktop.css'
 import '@public/css/general.css'
 import '@public/css/modal.css'
 import '@public/css/header.css'
-import app_logo from '@public/icons/logo_1.png'
-//import app_logo from '@public/icons/trophee.png'
 
-
-// const AppLogo = styled.img`
-//   width: calc(75px / 2);
-//   //width: 31px;
-//   height: calc(98px / 2);
-//   //height: 30px
-// `
-
+const HeaderContainer = styled.header`
+  background: linear-gradient(to right, rgb(63, 62, 62), #363636, #323232);
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  z-index: 9999;
+`
 const Logo = styled.h1`
   font-size: 26px;
   font-family: Hero,serif;
@@ -32,17 +29,7 @@ const Logo = styled.h1`
   -webkit-text-fill-color: transparent;
   );
   cursor: inherit;
-//  color: linear-gradient(0.25turn, #904a0f, #b79e4d);
 `
-
-const HeaderContainer = styled.header`
-  background: linear-gradient(0.25turn, #323232, #363636, #323232);
-  padding: 8px;
-  display: flex;
-  align-items: center;
-  z-index: 9999;
-`
-
 const CSWName = styled.h1`
   background: -webkit-linear-gradient(#a8540c, #b79e4d);
   -webkit-background-clip: text;

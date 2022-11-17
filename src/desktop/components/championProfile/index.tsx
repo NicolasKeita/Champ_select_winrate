@@ -21,6 +21,10 @@ const ChampionProfileContainer = styled.div`
   display: flex;
   flex-direction: ${props => props.isEnemyTeam ? 'row-reverse' : 'row'};
   padding: 0 12px 0 12px;
+
+  background: -webkit-linear-gradient(#ab6630, #b79e4d);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 `
 
 const ProfileTexts = styled.div`

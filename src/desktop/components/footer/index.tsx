@@ -2,37 +2,30 @@
     Path + Filename: src/desktop/components/footer/index.tsx
 */
 
-import React, {useCallback, useEffect, useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import PlayerProfile from '@utils/playerProfile'
 import FooterText from '@utils/FooterText'
 
 const FooterContainer = styled.footer`
-  background: #8d8d8d;
+  background: linear-gradient(to right, rgb(63, 62, 62), #363636, #323232);
   flex: 0;
-  padding-left: 7px;
+  display: flex;
+  justify-content: center;
+  padding: 4px 0 4px 0;
+`
+const FooterTextStyle = styled.h1`
+  background: -webkit-linear-gradient(#e8730e, #b79e4d);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 `
 
 const footerText = new FooterText()
 
 function Footer(props) {
-//    const footerText = new FooterText()
-    console.log('Footer rendered')
-    //const [message, setMessage] = useState(footerText.message)
-    //let message2 = ''
+    console.log('Footer Component rendered')
     const playerProfile = props.playerProfile
-
-    // useEffect(() => {
-    //  let playerProfile = new Proxy(playerProfile2, {
-    //     set: function (target, key, value) {
-    //         console.log(` tttttttttttttttttttt (${String(key)}) set to ${value}`)
-    //         setMessage(value)
-    //         target[key] = value
-    //         return true
-    //     }
-    // })
-    // }, [])
 
     const [setMessage] = useChangeMessage()
 
@@ -43,46 +36,20 @@ function Footer(props) {
             footerText.message = msg
             setMessage1(msg)
         }
-        return (
-            [
-                setMessage
-            ] as const
-        )
+        return [setMessage]
     }
 
-     // setInterval(() =>{
-     //     console.log(" x = " + x)
-     //     setX(x + 1)
-     // }, 5000)
-
-
-    console.log("text isi " + footerText.message)
     useEffect (() => {
-        console.log('Entering in UseEffect:')
         if (playerProfile.clientStatus === 0)
             setMessage('League client is not open.')
         if (playerProfile.clientStatus === 1)
             setMessage('You are not in champ select.')
         if (playerProfile.clientStatus === 2)
             setMessage('')
-        console.log('playerProfile ClientStatus is : ' + playerProfile.clientStatus)
-        console.log('msg : ' + footerText.message)
-        //
-        // if (playerProfile.isClientClosed()) {
-        //     setMessage('League client is not open.')
-        //     setX(x + 1)
-        // }
-        // else if (!playerProfile.isClientInChampSelect()) {
-        //     setMessage('You are not in champ select.')
-        //     setX(x + 1)
-        // } else {
-        //     setMessage('')
-        //     setX(x + 1)
-        // }
     }, [playerProfile, playerProfile.clientStatus])
     return (
         <FooterContainer>
-            <h1>{footerText.message}</h1>
+            <FooterTextStyle>{footerText.message}</FooterTextStyle>
         </FooterContainer>
     )
 }
