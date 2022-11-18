@@ -6,7 +6,6 @@ import React, {useEffect} from 'react'
 import styled from 'styled-components'
 import uniqid from 'uniqid'
 
-import LCU from '@utils/LCU'
 import ChampionProfile from '../../championProfile'
 import PropTypes from 'prop-types'
 import PlayerProfile from '@utils/playerProfile'
@@ -17,11 +16,9 @@ const PercentageContainer = styled.div`
   align-items: center;
   font-size: 28px;
   padding: 10px;
-  //color: #f0ead9;
   background: -webkit-linear-gradient(#a8540c, #b79e4d);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  //color: #f0ead9;
 `
 
 const WinrateLine = styled.div`
@@ -38,9 +35,7 @@ const MainContainer = styled.div`
   color: white;
   width: 100%;
   text-align: center;
-  //background: #121a21;
   background: linear-gradient(to right, #252424, #363636, #252424);
-  //background: #121a21;
   padding-bottom: 10px;
 `
 

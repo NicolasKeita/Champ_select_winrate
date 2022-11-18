@@ -6,14 +6,66 @@ import React from 'react'
 import styled from 'styled-components'
 
 const SettingsContainer = styled.div`
-  background: red;
+  background: linear-gradient(to right, #252424, #363636, #252424);
   flex: 1;
+  padding: 12px 0 0 12px;
+  overflow: scroll;
+  height: 424px;
+`
+const RowContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+`
+const ChampName = styled.h1`
+  background: -webkit-linear-gradient(#ab6630, #b79e4d);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+`
+const OP_ScoreContainer = styled.div`
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  justify-content: space-evenly;
+  background: -webkit-linear-gradient(#ab6630, #b79e4d);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+`
+const OP_Score = styled.div`
 `
 
+
 function Settings() {
+    function renderListChampNameWithOPScore() {
+        const rows = []
+        const row = []
+        row.push(<ChampName>Cassio</ChampName>)
+        row.push(
+            <OP_ScoreContainer>
+                <OP_Score>Score</OP_Score>
+                <OP_Score>Score2</OP_Score>
+            </OP_ScoreContainer>
+        )
+        for (let i = 0; i < 50; ++i) {
+            rows.push(<div style={{ display: 'flex'}}>{row}</div>)
+        }
+        return (<div>{rows}</div>)
+    }
+    function renderTitleRow() {
+        return (
+            <RowContainer>
+                <ChampName>ChampName</ChampName>
+                <OP_ScoreContainer>
+                    <OP_Score>Your OP Score</OP_Score>
+                    <OP_Score>CSW OP Score</OP_Score>
+                </OP_ScoreContainer>
+            </RowContainer>
+        )
+    }
+
     return (
         <SettingsContainer id={'SettingsContainer'}>
-
+            {renderTitleRow()}
+            {renderListChampNameWithOPScore()}
         </SettingsContainer>
     )
 }
