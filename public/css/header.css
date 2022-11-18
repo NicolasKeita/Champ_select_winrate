@@ -71,6 +71,11 @@
   z-index: 1001;
   margin-left: auto;
 }
+
+.window-controls-group.draggable {
+  user-select: all;
+}
+
 .window-control {
   background-color: transparent;
   transition: background 0.15s ease-in-out;
@@ -131,7 +136,7 @@
   position: absolute;
   margin-top: -3px;
   width: 200px;
-  right: 0px;
+  right: 0;
   background: #464646;
   padding: 30px 5px;
   line-height: 20px;

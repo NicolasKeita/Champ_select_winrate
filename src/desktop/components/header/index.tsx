@@ -57,9 +57,9 @@ function Header(props) {
                 <Logo>CSW</Logo>
                 <CSWName>Champ Select Winrate</CSWName>
                 <div className="window-controls-group">
-                    <button className="window-control window-control-settings" onClick={activateSettings}></button>
-                    <button className="window-control window-control-minimize" onClick={minimize}></button>
-                    <button className="window-control window-control-close" onClick={close}></button>
+                    <button className="window-control window-control-settings" onMouseDown={activateSettings}></button>
+                    <button className="window-control window-control-minimize" onMouseDown={minimize}></button>
+                    <button className="window-control window-control-close" onMouseDown={close}></button>
                 </div>
             </HeaderContainer>
     )
