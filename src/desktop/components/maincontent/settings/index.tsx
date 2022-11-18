@@ -2,7 +2,7 @@
     Path + Filename: src/desktop/components/maincontent/settings/index.tsx
 */
 
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import styled from 'styled-components'
 
 const SettingsContainer = styled.div`
@@ -46,20 +46,36 @@ const InputStyled = styled.input`
   }
 `
 
+let x = 0
 function Settings() {
+    console.log("Settings rerender")
+
+    const [value, setValue] = useState(0)
+
     function renderListChampNameWithOPScore() {
         const rows = []
         const row = []
+        function handleOnChange(event) {
+            if (event.target.value.includes('.'))
+                return
+            const valueEntered = event.target.value * 1
+            if (Number.isInteger(valueEntered) && valueEntered <= 100) {
+                x = event.target.value
+                setValue(value + 1)
+            }
+        }
+
         row.push(
-            <div style={{ display: 'flex', flex: '1'}}>
+            <div style={{ display: 'flex', flex: '1'}} key={'1'}>
                 <form style={{display: 'flex', flex: '1',justifyContent: 'space-evenly'}}>
                     <label style={{display: 'flex', flex: '1'}}>
                         <ChampName>Cassio</ChampName>
                         <OP_ScoreContainer>
                             <InputStyled
                                 type={'text'}
-                                value={'64'}
-                                placeholder={'placeholder'}
+                                value={x}
+                                //placeholder={'placeholder'}
+                                onChange={handleOnChange}
                             />
                             <OP_Score>64</OP_Score>
                         </OP_ScoreContainer>
