@@ -12,10 +12,11 @@ import Main from './components/maincontent/main'
 import Footer from './components/maincontent/footer'
 import Settings from './components/maincontent/settings'
 import FooterAD from './components/footerAD'
+import Config from './components/maincontent/settings/Config'
 import {AppWindow} from '../AppWindow'
 import PlayerProfile from '@utils/playerProfile'
 import LCU from '@utils/LCU'
-import {useIsSettings} from './utils/hooks'
+import {useSettings} from '@utils/hooks'
 
 const MyAppContainer = styled.div`
   display: flex;
@@ -24,6 +25,7 @@ const MyAppContainer = styled.div`
 `
 const LCU_interface = new LCU()
 const playerProfile = new PlayerProfile()
+//const config = new Config()
 
 
 let x = 0
@@ -33,6 +35,7 @@ function MyApp(props) {
     const my_window = props.my_window
     const [setClientStatusToOPEN, setClientStatusToCLOSE, setClientStatusToINSIDE_CHAMP_SELECT] = useChangeClientStatus()
     const [setChampionHover] = useChangeImgProfile()
+    const { settings } = useSettings()
 
     // setInterval(() => {
     //     console.log('Le status client est : ' + playerProfile.clientStatus)
@@ -117,11 +120,11 @@ function MyApp(props) {
             setClientStatusToCLOSE()
             LCU_interface.removeAllListeners()
         })
+        settings.populateDefaultConfig() // TODO handle errors. then. catch
     }, []) // TODO exhausive-deps-problem Figure out Why adding SetClientStatusToOPEN there will trigger useEffect every render (I just want to let this empty array)
 
-    const { isSettings } = useIsSettings()
     function renderContent() {
-        if (!isSettings) {
+        if (settings == undefined || !settings.settingsPage) {
             return (
                 <div style={{ display: 'flex', flexDirection: 'column', flex: 1}}>
                     <Main playerProfile={playerProfile}/>
@@ -133,7 +136,7 @@ function MyApp(props) {
     }
     return (
         <MyAppContainer>
-            <Header my_window={my_window} isSettings={isSettings}/>
+            <Header my_window={my_window}/>
             <MainContent id="MainContent">
                 {renderContent()}
             </MainContent>

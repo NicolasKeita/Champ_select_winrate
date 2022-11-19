@@ -6,10 +6,6 @@ import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 
-import malhazar from '@public/img/MalzaharSquare.webp'
-import questionMark from '@public/img/question_mark.jpg'
-import PlayerProfile from '@utils/playerProfile'
-
 const ChampionImg = styled.img`
   border-radius: 50%;
   width: 50px;

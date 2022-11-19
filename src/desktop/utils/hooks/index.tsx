@@ -3,8 +3,8 @@
 */
 
 import {useContext} from 'react'
-import {IsSettingsContext} from '../context'
+import {SettingsContext} from '../context'
 
-export function useIsSettings() {
-    return useContext(IsSettingsContext)
+export function useSettings() {
+    return useContext(SettingsContext)
 }

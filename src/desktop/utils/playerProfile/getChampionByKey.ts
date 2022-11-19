@@ -6,7 +6,6 @@ let championByIdCache = {};
 let championJson = {};
 
 async function getLatestChampionDDragon(language = "en_US") {
-
     if (championJson[language])
         return championJson[language];
 
@@ -22,8 +21,8 @@ async function getLatestChampionDDragon(language = "en_US") {
     championJson[language] = await response.json();
     return championJson[language];
 }
-//http://ddragon.leagueoflegends.com/cdn/12.22.1/img/champion/Aatrox.png
-export async function getChampionByKey(key, language = "en_US") {
+
+export async function getChampionByKey(key, language = 'en_US') {
 
     // Setup cache
     if (!championByIdCache[language]) {
@@ -39,11 +38,11 @@ export async function getChampionByKey(key, language = "en_US") {
         }
     }
 
-    return championByIdCache[language][key];
+    return championByIdCache[language][key]
 }
 
 // NOTE: IN DDRAGON THE ID IS THE CLEAN NAME!!! It's also super-inconsistent, and broken at times.
 // Cho'gath => Chogath, Wukong => Monkeyking, Fiddlesticks => Fiddlesticks/FiddleSticks (depending on what mood DDragon is in this patch)
-export async function getChampionByID(name, language = "en_US") {
+export async function getChampionByID(name, language = 'en_US') {
     return await getLatestChampionDDragon(language)[name];
 }

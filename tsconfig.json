@@ -23,7 +23,7 @@
         "../public/*"
       ],
       "@utils/*": [
-        "../src/utils/*"
+        "../src/desktop/utils/*"
       ]
     },
     "lib": [

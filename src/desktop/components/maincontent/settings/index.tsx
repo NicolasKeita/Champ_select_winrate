@@ -54,37 +54,38 @@ function Settings() {
 
     function renderListChampNameWithOPScore() {
         const rows = []
-        const row = []
-        function handleOnChange(event) {
-            if (event.target.value.includes('.'))
-                return
-            const valueEntered = event.target.value * 1
-            if (Number.isInteger(valueEntered) && valueEntered <= 100) {
-                x = event.target.value
-                setValue(value + 1)
-            }
-        }
 
-        row.push(
-            <div style={{ display: 'flex', flex: '1'}} key={'1'}>
-                <form style={{display: 'flex', flex: '1',justifyContent: 'space-evenly'}}>
-                    <label style={{display: 'flex', flex: '1'}}>
-                        <ChampName>Cassio</ChampName>
-                        <OP_ScoreContainer>
-                            <InputStyled
-                                type={'text'}
-                                value={x}
-                                //placeholder={'placeholder'}
-                                onChange={handleOnChange}
-                            />
-                            <OP_Score>64</OP_Score>
-                        </OP_ScoreContainer>
-                    </label>
-                </form>
-            </div>
-        )
+        function renderRow(champName) {
+            function handleOnChange(event) {
+                if (event.target.value.includes('.'))
+                    return
+                const valueEntered = event.target.value * 1
+                if (Number.isInteger(valueEntered) && valueEntered <= 100) {
+                    x = event.target.value
+                    setValue(value + 1)
+                }
+            }
+            return(
+                <div style={{display: 'flex', flex: '1'}} key={'1'}>
+                    <form style={{display: 'flex', flex: '1', justifyContent: 'space-evenly'}}>
+                        <label style={{display: 'flex', flex: '1'}}>
+                            <ChampName>{champName}</ChampName>
+                            <OP_ScoreContainer>
+                                <InputStyled
+                                    type={'text'}
+                                    value={x}
+                                    //placeholder={'placeholder'}
+                                    onChange={handleOnChange}
+                                />
+                                <OP_Score>64</OP_Score>
+                            </OP_ScoreContainer>
+                        </label>
+                    </form>
+                </div>
+            )
+        }
         for (let i = 0; i < 50; ++i) {
-            rows.push(<div style={{ display: 'flex'}} key={i}>{row}</div>)
+            rows.push(<div style={{ display: 'flex'}} key={i}>{renderRow('h')}</div>)
         }
         return (<div>{rows}</div>)
     }

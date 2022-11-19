@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom/client'
 import MyApp from './MyApp'
 
 import '@public/css/desktop.css'
-import {IsSettingsProvider} from './utils/context'
+import {SettingsProvider} from '@utils/context'
 
 // The desktop window is the window displayed while game is not running.
 // In our case, our desktop window has no logic - it only displays static data.
@@ -15,8 +15,8 @@ const my_window = new AppWindow(kWindowNames.desktop)
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
 //   <React.StrictMode>
-    <IsSettingsProvider>
+    <SettingsProvider>
         <MyApp my_window={my_window}/>
-    </IsSettingsProvider>
+    </SettingsProvider>
 //   </React.StrictMode>
 )

@@ -3,10 +3,8 @@
 */
 
 import questionMark from '@public/img/question_mark.jpg'
-import malhazar from '@public/img/MalzaharSquare.webp'
-import {getChampionByKey} from '@utils/playerProfile/getChampionByKey'
-import {getChampSquareAsset} from '@utils/playerProfile/getChampionSquareAsset'
-
+import {getChampionByKey} from './getChampionByKey'
+import {getChampSquareAsset} from './getChampionSquareAsset'
 
 class PlayerProfile {
     //TODO  Typescript supports set & get for accessor. Take a look !
@@ -88,34 +86,6 @@ class PlayerProfile {
             }
         }
     }
-
-    // public async fillMyTeam(myTeam) {
-    //     for (let i = 0; i < 5; ++i) {
-    //         if (myTeam[i]) {
-    //             let champID = myTeam[i].championId
-    //             if (champID <= 0)
-    //                 champID = myTeam[i].championPickIntent
-    //             if (champID > 0) {
-    //                 this.allies[i].img = await this.getChampImg(champID)
-    //                 this.allies[i].name = await this.getChampName(champID)
-    //             }
-    //         }
-    //     }
-    // }
-    //
-    // public async fillTheirTeam(theirTeam) {
-    //     for (let i = 0; i < 5; ++i) {
-    //         if (theirTeam[i]) {
-    //             let champID = theirTeam[i].championId
-    //             if (champID <= 0)
-    //                 champID = theirTeam[i].championPickIntent
-    //             if (champID > 0) {
-    //                 this.enemies[i].img = await this.getchampimg(champid)
-    //                 this.enemies[i].name = await this.getchampname(champid)
-    //             }
-    //         }
-    //     }
-    // }
 }
 
 export default PlayerProfile

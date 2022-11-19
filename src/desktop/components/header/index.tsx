@@ -12,7 +12,8 @@ import '@public/css/desktop.css'
 import '@public/css/general.css'
 import '@public/css/modal.css'
 import '@public/css/header.css'
-import {useIsSettings} from '../../utils/hooks'
+import {useSettings} from '@utils/hooks'
+//import Settings from '../maincontent/settings'
 
 const HeaderContainer = styled.header`
   background: linear-gradient(to right, rgb(63, 62, 62), #363636, #323232);
@@ -42,11 +43,11 @@ const CSWName = styled.h1`
 function Header(props) {
     const my_window = props.my_window
     const headerRef = useRef(null)
-    const { toggleIsSettings } = useIsSettings()
+    const { toggleSettings } = useSettings()
 
     function minimize() { my_window.currWindow.minimize() }
     function close() { my_window.currWindow.close() }
-    function activateSettings() { toggleIsSettings() }
+    function activateSettings() { toggleSettings() }
 
     useEffect(() => {
         my_window.setDrag(headerRef.current)
@@ -66,8 +67,8 @@ function Header(props) {
 }
 
 Header.propTypes = {
-    my_window: PropTypes.instanceOf(AppWindow),
-    isSettings: PropTypes.bool
+    my_window: PropTypes.instanceOf(AppWindow)
+    //settings: PropTypes.instanceOf(Settings)
 }
 
 export default Header

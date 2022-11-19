@@ -2,7 +2,7 @@
     Path + Filename: src/desktop/components/main/index.tsx
 */
 
-import React, {useEffect} from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import uniqid from 'uniqid'
 

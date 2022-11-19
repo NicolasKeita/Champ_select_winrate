@@ -3,17 +3,22 @@
 */
 
 import React, { createContext, useState } from 'react'
+import Config from '../../components/maincontent/settings/Config'
+const configDefault = new Config()
 
-export const IsSettingsContext = createContext(undefined)
+export const SettingsContext = createContext(undefined)
+//TODO
 // eslint-disable-next-line react/prop-types
-export const IsSettingsProvider = ( { children } ) => {
-    const [isSettings, setIsSettings] = useState(true)
-    const toggleIsSettings = () => {
-        setIsSettings(isSettings == false)
+export const SettingsProvider = ({ children } ) => {
+    const [settings, setSettings] = useState(configDefault)
+    const toggleSettings = () => {
+        const cpy = Object.assign({}, configDefault)
+        cpy.settingsPage = !settings.settingsPage
+        setSettings(cpy)
     }
     return (
-        <IsSettingsContext.Provider value={ { isSettings, toggleIsSettings } }>
+        <SettingsContext.Provider value={ { settings, toggleSettings } }>
             { children }
-        </IsSettingsContext.Provider>
+        </SettingsContext.Provider>
     )
 }
