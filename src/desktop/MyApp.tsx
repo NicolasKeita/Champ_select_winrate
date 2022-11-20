@@ -35,46 +35,48 @@ function MyApp(props) {
     const my_window = props.my_window
     const [setClientStatusToOPEN, setClientStatusToCLOSE, setClientStatusToINSIDE_CHAMP_SELECT] = useChangeClientStatus()
     const [setChampionHover] = useChangeImgProfile()
-    const { settings } = useSettings()
-
-    // setInterval(() => {
-    //     console.log('Le status client est : ' + playerProfile.clientStatus)
-    // }, 5000)
-
+    const {settings} = useSettings()
+    settings.populateDefaultConfig() // TODO handle errors. then. catch   && TODO change position?
 
     //TODO: Maybe change position of this code ?
     function useChangeClientStatus() {
         const [, setClientStatus] = useState(playerProfile.clientStatus)
+
         function setClientStatusToOPEN() {
             playerProfile.setClientStatusToOPEN()
             setClientStatus(playerProfile.clientStatus)
         }
+
         function setClientStatusToCLOSE() {
             playerProfile.setClientStatusToCLOSED()
             setClientStatus(playerProfile.clientStatus)
         }
+
         function setClientStatusToINSIDE_CHAMP_SELECT() {
             playerProfile.setClientStatusToINSIDE_CHAMP_SELECT()
             setClientStatus(playerProfile.clientStatus)
         }
+
         return ([
                 setClientStatusToOPEN,
                 setClientStatusToCLOSE,
-                setClientStatusToINSIDE_CHAMP_SELECT]as const
+                setClientStatusToINSIDE_CHAMP_SELECT] as const
         )
     }
 
     function useChangeImgProfile() {
         const [, setImgProfile] = useState(-1)
+
         async function setChampionHover(actions) {
             await playerProfile.fillChampSelect(actions)
             x += 1
             setImgProfile(x)
         }
+
         return [setChampionHover]
     }
 
-    function handleGameFlow (game_flow) {
+    function handleGameFlow(game_flow) {
         if (game_flow && game_flow.phase) {
             if (game_flow.phase === 'ChampSelect') {
                 setClientStatusToINSIDE_CHAMP_SELECT()
@@ -120,13 +122,12 @@ function MyApp(props) {
             setClientStatusToCLOSE()
             LCU_interface.removeAllListeners()
         })
-        settings.populateDefaultConfig() // TODO handle errors. then. catch
     }, []) // TODO exhausive-deps-problem Figure out Why adding SetClientStatusToOPEN there will trigger useEffect every render (I just want to let this empty array)
 
     function renderContent() {
         if (settings == undefined || !settings.settingsPage) {
             return (
-                <div style={{ display: 'flex', flexDirection: 'column', flex: 1}}>
+                <div style={{display: 'flex', flexDirection: 'column', flex: 1}}>
                     <Main playerProfile={playerProfile}/>
                     <Footer playerProfile={playerProfile}/>
                 </div>
@@ -134,6 +135,7 @@ function MyApp(props) {
         } else
             return (<Settings/>)
     }
+
     return (
         <MyAppContainer>
             <Header my_window={my_window}/>

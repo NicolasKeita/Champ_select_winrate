@@ -2,13 +2,13 @@
     Path + Filename: src/desktop/components/maincontent/settings/Config.ts
 */
 
-
 import Champion from './Champion'
 
 class Config {
     public settingsPage : boolean
+    public champions = []
     constructor() {
-        this.settingsPage = true
+        this.settingsPage = false
     }
     async getAllChampsName() {
         const language = 'en_US'
@@ -26,10 +26,16 @@ class Config {
         })
         return allChampsName
     }
-    public async populateDefaultConfig() {
+    public populateDefaultConfig = async () => {
+        console.log('beginning populate')
         const allChamps = await this.getAllChampsName()
+        console.log('end populate')
+        allChamps.forEach((elem) => {
+            const champ = new Champion()
+            champ.name = elem
+            this.champions.push(champ)
+        })
     }
-    public champions = Array<Champion>
 }
 
 export default Config

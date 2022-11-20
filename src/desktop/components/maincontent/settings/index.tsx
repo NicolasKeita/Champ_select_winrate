@@ -2,8 +2,10 @@
     Path + Filename: src/desktop/components/maincontent/settings/index.tsx
 */
 
-import React, {useEffect, useState} from 'react'
+import React, {useState} from 'react'
 import styled from 'styled-components'
+import {useSettings} from '@utils/hooks'
+import uniqid from 'uniqid'
 
 const SettingsContainer = styled.div`
   background: linear-gradient(to right, #252424, #363636, #252424);
@@ -48,12 +50,14 @@ const InputStyled = styled.input`
 
 let x = 0
 function Settings() {
-    console.log("Settings rerender")
-
+    console.log('settings rendered')
     const [value, setValue] = useState(0)
+    const settings = useSettings()
+    console.log(settings)
 
     function renderListChampNameWithOPScore() {
-        const rows = []
+        console.log("func call")
+        console.log(settings)
 
         function renderRow(champName) {
             function handleOnChange(event) {
@@ -84,9 +88,10 @@ function Settings() {
                 </div>
             )
         }
-        for (let i = 0; i < 50; ++i) {
-            rows.push(<div style={{ display: 'flex'}} key={i}>{renderRow('h')}</div>)
-        }
+        const rows = []
+        settings.settings.champions.forEach((elem) => {
+            rows.push(<div style={{display: 'flex'}} key={uniqid()}>{renderRow(elem.name)}</div>)
+        })
         return (<div>{rows}</div>)
     }
     function renderTitleRow() {
