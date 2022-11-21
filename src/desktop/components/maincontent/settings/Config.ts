@@ -5,27 +5,32 @@
 import Champion from './Champion'
 
 class Config {
+    //TODO: again, check set & get from typescript
     public settingsPage : boolean
-    public champions = []
+    _champions
+
+    public set champions(champions: any) {
+        this._champions = champions
+    }
+    public get champions() {
+        return this._champions
+    }
+    public stringify() : string {
+        let json = JSON.stringify(this)
+        Object.keys(this).filter(key => key[0] === '_').forEach(key => {
+            json = json.replace(key, key.substring(1))
+        })
+        console.log('here')
+        console.log(json)
+        return json
+    }
     constructor() {
         this.settingsPage = false
+        this._champions = []
     }
-    async getAllChampsName() {
-        //TODO : FETCH FROM LOCAL file
-        const language = 'en_US'
-        let response
-        let versionIndex = 0
-        do {
-            const version = (await fetch('http://ddragon.leagueoflegends.com/api/versions.json').then(async(r) => await r.json()))[versionIndex++]
-            response = await fetch(`https://ddragon.leagueoflegends.com/cdn/${version}/data/${language}/champion.json`)
-        }
-        while (!response.ok)
-        const responseJson = await response.json()
-        const allChampsName = []
-        Object.entries(responseJson.data).forEach(([, value]) => {
-            allChampsName.push(value['name'])
-        })
-        return allChampsName
+
+    public copyFromAnotherSetting(settings): void {
+        this._champions = settings.champions
     }
 
     public async getChampionCSW_json() {
@@ -36,26 +41,19 @@ class Config {
                     'Accept': 'application/json'
                 }
             })
-        const jsonRes = await res.json()
+        const jsonRes = await res.json() //TODO catch error
         return jsonRes
     }
 
-    public populateDefaultConfig = async () => {
-//        let allChamps = await this.getAllChampsName()
-        // allChamps.forEach((elem) => {
-        //     const champ = new Champion()
-        //     champ.name = elem
-        //     this.champions.push(champ)
-        // })
+    public async populateDefaultConfig() {
         const allChamps = await this.getChampionCSW_json()
-        console.log(Object.entries(allChamps))
-        Object.entries(allChamps).forEach(([key, elem], index) => {
-        // allChamps.forEach((elem) => {
+        Object.entries(allChamps).forEach(([, elem]) => {
             const champ = new Champion()
             champ.name = elem['name']
             champ.opScore_CSW = elem['CSW_score']
             this.champions.push(champ)
         })
+        localStorage.setItem('config', this.stringify())
     }
 }
 

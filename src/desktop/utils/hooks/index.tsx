@@ -4,7 +4,6 @@
 
 import {useContext} from 'react'
 import {SettingsContext} from '../context'
+import Config from '../../components/maincontent/settings/Config'
 
-export function useSettings() {
-    return useContext(SettingsContext)
-}
+export const useSettings = () : {settings :Config, toggleSettings: any} => useContext(SettingsContext)

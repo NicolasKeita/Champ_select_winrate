@@ -7,6 +7,7 @@ import styled from 'styled-components'
 import {useSettings} from '@utils/hooks'
 import uniqid from 'uniqid'
 import ConfigRow from './configRow'
+import Config from './Config'
 
 const SettingsContainer = styled.div`
   background: linear-gradient(to right, #252424, #363636, #252424);
@@ -39,11 +40,13 @@ const OP_Score = styled.div`
 `
 
 function Settings() {
-    const settings = useSettings()
+    const {settings} = useSettings()
+    console.log("inside settings")
+    console.log(settings)
 
     function renderListChampNameWithOPScore() {
         const rows = []
-        settings.settings.champions.forEach((elem) => {
+        settings.champions.forEach((elem) => {
             rows.push(<ConfigRow key={uniqid()} champName={elem.name} opScoreCSW={elem.opScore_CSW}/>)
         })
         return (<div>{rows}</div>)

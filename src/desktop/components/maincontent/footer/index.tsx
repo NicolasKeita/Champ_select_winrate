@@ -46,7 +46,7 @@ function Footer(props) {
             setMessage('You are not in champ select.')
         if (playerProfile.clientStatus === 2)
             setMessage('')
-    }, [playerProfile, playerProfile.clientStatus])
+    }, [playerProfile, playerProfile.clientStatus]) // TODO add setMessage to deps array
     return (
         <FooterContainer>
             <FooterTextStyle>{footerText.message}</FooterTextStyle>
