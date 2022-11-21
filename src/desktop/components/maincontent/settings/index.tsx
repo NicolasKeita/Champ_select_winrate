@@ -23,6 +23,7 @@ const ChampName = styled.h1`
   background: -webkit-linear-gradient(#ab6630, #b79e4d);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  width: 110px;
 `
 const OP_ScoreContainer = styled.div`
   display: flex;
@@ -38,6 +39,7 @@ const OP_Score = styled.div`
 
 const InputStyled = styled.input`
   width: 50px;
+  margin-left: -30px;
   border-radius: 4px;
   background-color: rgba(63, 62, 62, 0.0);
   transition: 0.3s background-color ease-in-out, 0.3s box-shadow ease-in-out;
@@ -59,7 +61,7 @@ function Settings() {
         console.log("func call")
         console.log(settings)
 
-        function renderRow(champName) {
+        function renderRow(champName, opScore) {
             function handleOnChange(event) {
                 if (event.target.value.includes('.'))
                     return
@@ -81,7 +83,7 @@ function Settings() {
                                     //placeholder={'placeholder'}
                                     onChange={handleOnChange}
                                 />
-                                <OP_Score>64</OP_Score>
+                                <OP_Score>{opScore}</OP_Score>
                             </OP_ScoreContainer>
                         </label>
                     </form>
@@ -90,7 +92,7 @@ function Settings() {
         }
         const rows = []
         settings.settings.champions.forEach((elem) => {
-            rows.push(<div style={{display: 'flex'}} key={uniqid()}>{renderRow(elem.name)}</div>)
+            rows.push(<div style={{display: 'flex'}} key={uniqid()}>{renderRow(elem.name, elem.opScore_CSW)}</div>)
         })
         return (<div>{rows}</div>)
     }

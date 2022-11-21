@@ -36,7 +36,6 @@ function MyApp(props) {
     const [setClientStatusToOPEN, setClientStatusToCLOSE, setClientStatusToINSIDE_CHAMP_SELECT] = useChangeClientStatus()
     const [setChampionHover] = useChangeImgProfile()
     const {settings} = useSettings()
-    settings.populateDefaultConfig() // TODO handle errors. then. catch   && TODO change position?
 
     //TODO: Maybe change position of this code ?
     function useChangeClientStatus() {
@@ -122,6 +121,7 @@ function MyApp(props) {
             setClientStatusToCLOSE()
             LCU_interface.removeAllListeners()
         })
+        settings.populateDefaultConfig() // TODO handle errors. then. catch
     }, []) // TODO exhausive-deps-problem Figure out Why adding SetClientStatusToOPEN there will trigger useEffect every render (I just want to let this empty array)
 
     function renderContent() {

@@ -8,8 +8,6 @@ import styled from 'styled-components'
 import AD_img from '@public/img/ad_fake_pic.png'
 
 const FooterContainer = styled.footer`
-  background: white;
-  //background: black;
   flex: 1;
 `
 
