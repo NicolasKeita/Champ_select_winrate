@@ -44,10 +44,11 @@ function Settings() {
     console.log("inside settings")
     console.log(settings)
 
+
     function renderListChampNameWithOPScore() {
         const rows = []
-        settings.champions.forEach((elem) => {
-            rows.push(<ConfigRow key={uniqid()} champName={elem.name} opScoreCSW={elem.opScore_CSW}/>)
+        settings.champions.forEach(elem => {
+            rows.push(<ConfigRow key={uniqid()} champName={elem.name} opScoreCSW={+elem.opScore_CSW} opScoreUser={+elem.opScore_user} setUserScore={elem.setUserScore}/>)
         })
         return (<div>{rows}</div>)
     }

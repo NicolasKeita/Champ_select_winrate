@@ -39,8 +39,8 @@ function MyApp(props) {
 
     if (!g_rendered) {
         g_rendered = true
-        let config = localStorage.getItem('config')
-        config = JSON.parse(config)
+        //let config = localStorage.getItem('config')
+        const config: Config = JSON.parse(localStorage.getItem('config'))
         if (config) {
             settings.copyFromAnotherSetting(config)
         } else {

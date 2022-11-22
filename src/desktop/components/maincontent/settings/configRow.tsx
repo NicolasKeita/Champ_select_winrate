@@ -5,6 +5,7 @@
 import React, {useState} from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
+import {useSettings} from '@utils/hooks'
 
 const ChampName = styled.h1`
   background: -webkit-linear-gradient(#ab6630, #b79e4d);
@@ -35,29 +36,43 @@ const InputStyled = styled.input`
 `
 const OP_Score = styled.div`
 `
-
 function ConfigRow(props) {
-    const [opScoreUser, setOpScoreUser] = useState(props.opScoreCSW)
+    const [opScoreUser, setOpScoreUser] = useState<string>(props.opScoreUser)
+    const {settings} = useSettings()
 
     function handleOnChange(event) {
         if (event.target.value.includes('.'))
             return
         const valueEntered = event.target.value * 1
-        if (Number.isInteger(valueEntered) && valueEntered <= 100) {
+        if (valueEntered == 0 && event.target.value === '') {
             setOpScoreUser(event.target.value)
+            return
+        }
+        if (Number.isInteger(valueEntered) && valueEntered <= 100) {
+            setOpScoreUser(valueEntered.toString())
+            props.setUserScore(valueEntered)
+            localStorage.setItem('config', settings.stringify())
+        }
+    }
+    function handleOnBlur(event) {
+        const valueEntered = event.target.value
+        if (valueEntered === '') {
+            setOpScoreUser('' + 50)
+            props.setUserScore(50)
+            localStorage.setItem('config', settings.stringify())
         }
     }
     return(
         <div style={{display: 'flex', flex: '1'}} key={'1'}>
-            <form style={{display: 'flex', flex: '1', justifyContent: 'space-evenly'}}>
+            <form style={{display: 'flex', flex: '1', justifyContent: 'space-evenly'}} onSubmit={(e) => e.preventDefault()}>
                 <label style={{display: 'flex', flex: '1'}}>
                     <ChampName>{props.champName}</ChampName>
                     <OP_ScoreContainer>
                         <InputStyled
                             type={'text'}
                             value={opScoreUser}
-                            //placeholder={'placeholder'}
                             onChange={handleOnChange}
+                            onBlur={handleOnBlur}
                         />
                         <OP_Score>{props.opScoreCSW}</OP_Score>
                     </OP_ScoreContainer>
@@ -70,7 +85,9 @@ function ConfigRow(props) {
 
 ConfigRow.propTypes = {
     champName : PropTypes.string,
-    opScoreCSW : PropTypes.number
+    opScoreCSW : PropTypes.number,
+    opScoreUser : PropTypes.number,
+    setUserScore : PropTypes.any
 }
 
 export default ConfigRow

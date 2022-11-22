@@ -5,11 +5,10 @@
 import Champion from './Champion'
 
 class Config {
-    //TODO: again, check set & get from typescript
     public settingsPage : boolean
-    _champions
+    private _champions : Champion[]
 
-    public set champions(champions: any) {
+    public set champions(champions) {
         this._champions = champions
     }
     public get champions() {
@@ -20,8 +19,6 @@ class Config {
         Object.keys(this).filter(key => key[0] === '_').forEach(key => {
             json = json.replace(key, key.substring(1))
         })
-        console.log('here')
-        console.log(json)
         return json
     }
     constructor() {
@@ -29,8 +26,11 @@ class Config {
         this._champions = []
     }
 
-    public copyFromAnotherSetting(settings): void {
-        this._champions = settings.champions
+    public copyFromAnotherSetting(settings: Config): void {
+        this._champions = []
+        settings.champions.forEach((elem) => {
+            this._champions.push(Object.assign(new Champion(), elem))
+        })
     }
 
     public async getChampionCSW_json() {
@@ -51,10 +51,12 @@ class Config {
             const champ = new Champion()
             champ.name = elem['name']
             champ.opScore_CSW = elem['CSW_score']
+            champ.opScore_user = elem['CSW_score']
             this.champions.push(champ)
         })
         localStorage.setItem('config', this.stringify())
     }
 }
+
 
 export default Config
