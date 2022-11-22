@@ -1,5 +1,5 @@
 /*
-    Path + Filename: src/desktop/components/maincontent/settings/index.tsx
+    Path + Filename: src/desktop/components/maincontent/settings/myContextMenu.tsx
 */
 
 import React from 'react'

@@ -1,5 +1,5 @@
 /*
-    Path + Filename: src/desktop/components/footer/index.tsx
+    Path + Filename: src/desktop/components/footer/myContextMenu.tsx
 */
 
 import React, {useEffect, useState} from 'react'
@@ -24,7 +24,6 @@ const FooterTextStyle = styled.h1`
 const footerText = new FooterText()
 
 function Footer(props) {
-    console.log('Footer Component rendered')
     const playerProfile = props.playerProfile
 
     const [setMessage] = useChangeMessage()

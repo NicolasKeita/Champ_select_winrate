@@ -62,7 +62,7 @@ function ConfigRow(props) {
             localStorage.setItem('config', settings.stringify())
         }
     }
-    return(
+    return( // TODO : webstorm is showing me a way to remove the 3 instance of display flex. There is still styled.component that I can use
         <div style={{display: 'flex', flex: '1'}} key={'1'}>
             <form style={{display: 'flex', flex: '1', justifyContent: 'space-evenly'}} onSubmit={(e) => e.preventDefault()}>
                 <label style={{display: 'flex', flex: '1'}}>

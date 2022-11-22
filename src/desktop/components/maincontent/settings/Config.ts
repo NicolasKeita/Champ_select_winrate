@@ -27,7 +27,7 @@ class Config {
     }
 
     public copyFromAnotherSetting(settings: Config): void {
-        this._champions = []
+        this._champions.length = 0
         settings.champions.forEach((elem) => {
             this._champions.push(Object.assign(new Champion(), elem))
         })
@@ -55,6 +55,10 @@ class Config {
             this.champions.push(champ)
         })
         localStorage.setItem('config', this.stringify())
+    }
+    public async reset() {
+        this.champions.length = 0
+        await this.populateDefaultConfig()
     }
 }
 

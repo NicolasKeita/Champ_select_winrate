@@ -1,5 +1,5 @@
 /*
-    Path + Filename: src/desktop/utils/context/index.tsx
+    Path + Filename: src/desktop/utils/context/myContextMenu.tsx
 */
 
 import React, { createContext, useState } from 'react'
@@ -12,13 +12,25 @@ export const SettingsContext = createContext(undefined)
 // eslint-disable-next-line react/prop-types
 export const SettingsProvider = ({ children }) => {
     const [settings, setSettings] = useState<Config>(configDefault)
-    const toggleSettings = () => {
+    const toggleSettings_rerenderApp = () => {
         const cpy = Object.assign(new Config(), configDefault) // TODO waste of memory ?
         cpy.settingsPage = !settings.settingsPage
         setSettings(cpy)
     }
+    const resetSettings_rerenderApp = () => {
+        const cpy = Object.assign(new Config(), configDefault) // TODO waste of memory ?
+//        cpy.settingsPage = settings.settingsPage // TODO Keep the settings page shown
+        cpy.reset()
+        setSettings(cpy)
+    }
     return (
-        <SettingsContext.Provider value={ { settings, toggleSettings } }>
+        <SettingsContext.Provider value={
+            {
+                settings,
+                toggleSettings_rerenderApp: toggleSettings_rerenderApp,
+                resetSettings_rerenderApp: resetSettings_rerenderApp
+            } as const
+        }>
             { children }
         </SettingsContext.Provider>
     )

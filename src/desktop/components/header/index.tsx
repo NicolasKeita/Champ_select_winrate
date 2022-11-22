@@ -2,7 +2,7 @@
     Path + Filename: src/desktop/components/header/index.ts
 */
 
-import React, {useEffect, useRef} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 
@@ -12,8 +12,14 @@ import '@public/css/desktop.css'
 import '@public/css/general.css'
 import '@public/css/modal.css'
 import '@public/css/header.css'
+
+import { ContextMenuTriggerArea } from 'react-context-menu-hooks'
+import '@public/css/ContextMenu.css'
+import MyContextMenu from './myContextMenu/myContextMenu'
+import { myContextMenuBridge } from './myContextMenu/myContextMenuBridge'
+
+
 import {useSettings} from '@utils/hooks'
-//import Settings from '../maincontent/settings'
 
 const HeaderContainer = styled.header`
   background: linear-gradient(to right, rgb(63, 62, 62), #363636, #323232);
@@ -38,29 +44,94 @@ const CSWName = styled.h1`
   -webkit-text-fill-color: transparent;
   padding-left: 20px;
   cursor: inherit;
-`
 
+
+`
+// const ContextMenuTriggerAreaStyled = styled(ContextMenuTriggerArea)`
+//   background: linear-gradient(to right, rgb(63, 62, 62), #363636, #323232);
+//   border: 1px solid #A8540CFF;
+//   color: #A8540CFF;
+//   padding: 3px;
+// `
+
+const Shape = () => {
+    const [color, setColor] = useState<string>('blue');
+    const [shape, setShape] = useState<string>('circle');
+
+    return (
+        <ContextMenuTriggerArea
+            bridge={myContextMenuBridge}
+            className={`shape ${color} ${shape}`}
+            data={{
+                color,
+                changeColor: (newColor) => {
+                    setColor(newColor);
+                },
+                shape,
+                changeShape: (newColor) => {
+                    setShape(newColor);
+                },
+            }}
+        >
+            <p>Right click and change how I look!</p>
+        </ContextMenuTriggerArea>
+    );
+};
+
+const ButtonSettings = () => {
+    const [color, setColor] = useState<string>('blue');
+    const [shape, setShape] = useState<string>('circle');
+    const { toggleSettings_rerenderApp } = useSettings()
+
+    function activateSettings(e) {
+        if (e.buttons == 1)
+            toggleSettings_rerenderApp()
+    }
+
+    return (
+        <ContextMenuTriggerArea
+            style={{ cursor: 'default'}}
+            bridge={myContextMenuBridge}
+            className={'window-control window-control-settings'}
+            onMouseDown={(e) => activateSettings(e) }
+            data={{
+                color,
+                changeColor: (newColor) => {
+                    setColor(newColor);
+                },
+                shape,
+                changeShape: (newColor) => {
+                    setShape(newColor);
+                },
+            }}
+        >
+        </ContextMenuTriggerArea>
+    )
+}
+
+
+let isMenuOpen = false
 function Header(props) {
+    console.log("Header render")
     const my_window = props.my_window
     const headerRef = useRef(null)
-    const { toggleSettings } = useSettings()
 
-    function minimize() { my_window.currWindow.minimize() }
-    function close() { my_window.currWindow.close() }
-    function activateSettings() { toggleSettings() }
+    function minimize(e) {if (e.buttons == 1) my_window.currWindow.minimize() }
+    function close(e) { if (e.buttons == 1) my_window.currWindow.close() }
 
     useEffect(() => {
         my_window.setDrag(headerRef.current)
     }, [my_window])
 
 	return (
-            <HeaderContainer className='app-header' ref={headerRef}>
+            <HeaderContainer className={'app-header'} ref={headerRef}>
                 <Logo>CSW</Logo>
                 <CSWName>Champ Select Winrate</CSWName>
-                <div className="window-controls-group">
-                    <button className="window-control window-control-settings" onMouseDown={activateSettings}></button>
-                    <button className="window-control window-control-minimize" onMouseDown={minimize}></button>
-                    <button className="window-control window-control-close" onMouseDown={close}></button>
+                <div className='window-controls-group'>
+                    <MyContextMenu />
+                    <ButtonSettings/>
+                    <button className={'window-control window-control-minimize'} onMouseDown={minimize}/>
+                    <button className={'window-control window-control-close'} onMouseDown={close}/>
                 </div>
             </HeaderContainer>
     )
@@ -68,7 +139,6 @@ function Header(props) {
 
 Header.propTypes = {
     my_window: PropTypes.instanceOf(AppWindow)
-    //settings: PropTypes.instanceOf(Settings)
 }
 
 export default Header

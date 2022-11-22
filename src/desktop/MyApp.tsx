@@ -30,7 +30,6 @@ let x = 0
 let g_rendered = false
 
 function MyApp(props) {
-    console.log('MyApp Rerendered')
     const my_window = props.my_window
     const [setClientStatusToOPEN, setClientStatusToCLOSE, setClientStatusToINSIDE_CHAMP_SELECT] = useChangeClientStatus()
     const [setChampionHover] = useChangeImgProfile()
@@ -133,7 +132,6 @@ function MyApp(props) {
             setClientStatusToCLOSE()
             LCU_interface.removeAllListeners()
         })
-        //settings.populateDefaultConfig() // TODO handle errors. then. catch
     }, []) // TODO exhausive-deps-problem Figure out Why adding SetClientStatusToOPEN there will trigger useEffect every render (I just want to let this empty array)
 
     function renderContent() {

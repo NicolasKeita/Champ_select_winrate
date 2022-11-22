@@ -20,14 +20,15 @@
     "plugins": [
         "react",
         "react-hooks",
-        "@typescript-eslint"
+        "@typescript-eslint",
+        "only-warn"
     ],
     "rules": {
         "semi": ["warn", "never"],
         "quotes": ["warn", "single", {"allowTemplateLiterals" : true}],
 
         "react-hooks/exhaustive-deps": "warn",
-        "react-hooks/rules-of-hooks": "error",
-        "no-unexpected-multiline": "error"
+        "react-hooks/rules-of-hooks": "warn",
+        "no-unexpected-multiline": "warn"
     }
 }
