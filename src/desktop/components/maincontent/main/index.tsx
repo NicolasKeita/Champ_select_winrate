@@ -2,7 +2,7 @@
     Path + Filename: src/desktop/components/main/myContextMenu.tsx
 */
 
-import React from 'react'
+import React, {useReducer} from 'react'
 import styled from 'styled-components'
 import uniqid from 'uniqid'
 
@@ -91,6 +91,7 @@ const ProfileLine = styled.div`
 
 function Main(props) {
     const { settings } = useSettings()
+    const [, forceUpdate] = useReducer(x => x + 1, 0)
 
     function syncScores(isEnemyTeam, champName, i) {
         if (champName == 'Champion Name') // TODO careful if i change the default name one day
@@ -105,6 +106,7 @@ function Main(props) {
                     props.playerProfile.enemies[i].score = champFromConfig.opScore_user
                 else
                     props.playerProfile.allies[i].score = champFromConfig.opScore_user
+                forceUpdate()
             }
         }
     }
@@ -124,8 +126,6 @@ function Main(props) {
     }
 
     function computeWinrate(allies, enemies) : number {
-        if (allies[0].name == 'Champion Name')
-            return 50
         let sumAllies = 0
         let sumEnemies = 0
         for (const elem of allies) {
@@ -134,13 +134,9 @@ function Main(props) {
         for (const elem of enemies) {
             sumEnemies += elem.score
         }
-        let averageAllies = sumAllies / 5
-        let averageEnemies = sumEnemies / 5
-        return averageAllies + averageEnemies
+        return ((sumAllies / 5 - sumEnemies / 5) / 2 + 50)
     }
-
-    let winrate = 51
-    winrate = computeWinrate(props.playerProfile.allies, props.playerProfile.enemies)
+    const winrate = computeWinrate(props.playerProfile.allies, props.playerProfile.enemies)
 
     return (
         <MainContainer>
