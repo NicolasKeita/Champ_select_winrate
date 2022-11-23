@@ -18,8 +18,8 @@ const ContextMenuStyled = styled(ContextMenu)`
 
 function MyContextMenu():JSX.Element {
     const { resetSettings_rerenderApp } = useSettings()
-    const handleRightClick = () => {
-        resetSettings_rerenderApp()
+    const handleRightClick = async () => {
+        await resetSettings_rerenderApp()
     }
     const darkMode: boolean = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
 

@@ -44,6 +44,13 @@ class Config {
         const jsonRes = await res.json() //TODO catch error
         return jsonRes
     }
+    public getChampCurrConfig(champName) : Champion | undefined {
+        for (const champion of this.champions) {
+            if (champion.name === champName)
+                return champion
+        }
+        return undefined
+    }
 
     public async populateDefaultConfig() {
         const allChamps = await this.getChampionCSW_json()
@@ -56,6 +63,8 @@ class Config {
         })
         localStorage.setItem('config', this.stringify())
     }
+
+    //don't forget to await for this function // TODO check why necessary cuz I already have await inside
     public async reset() {
         this.champions.length = 0
         await this.populateDefaultConfig()

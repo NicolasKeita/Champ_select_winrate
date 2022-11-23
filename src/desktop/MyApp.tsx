@@ -30,6 +30,7 @@ let x = 0
 let g_rendered = false
 
 function MyApp(props) {
+    console.log("MyApp Rerendered")
     const my_window = props.my_window
     const [setClientStatusToOPEN, setClientStatusToCLOSE, setClientStatusToINSIDE_CHAMP_SELECT] = useChangeClientStatus()
     const [setChampionHover] = useChangeImgProfile()
@@ -78,7 +79,7 @@ function MyApp(props) {
         const [, setImgProfile] = useState(-1)
 
         async function setChampionHover(actions) {
-            await playerProfile.fillChampSelect(actions)
+            await playerProfile.fillChampSelect(actions, settings.champions)
             x += 1
             setImgProfile(x)
         }
@@ -89,10 +90,11 @@ function MyApp(props) {
     function handleGameFlow(game_flow) {
         if (game_flow && game_flow.phase) {
             if (game_flow.phase === 'ChampSelect') {
-                setClientStatusToINSIDE_CHAMP_SELECT()
-                // TODO check si le mec est deja en champ select feature : 'champ select"' received
-            } else {
                 playerProfile.resetChampSelect()
+                setClientStatusToINSIDE_CHAMP_SELECT()
+                // TODO check si le mec est deja en champ select quand l'app est lancé feature : 'champ select"' received
+            } else {
+                //playerProfile.resetChampSelect()
                 setClientStatusToOPEN()
             }
         }
@@ -100,8 +102,6 @@ function MyApp(props) {
 
     function handleChampSelect(champ_select) {
         const raw = JSON.parse(champ_select.raw)
-        console.log('champ  Select Object RAW')
-        console.log(raw.actions)
         setChampionHover(raw.actions)
     }
 

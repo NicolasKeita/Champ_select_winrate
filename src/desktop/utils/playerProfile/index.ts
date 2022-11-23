@@ -5,6 +5,7 @@
 import questionMark from '@public/img/question_mark.jpg'
 import {getChampionByKey} from './getChampionByKey'
 import {getChampSquareAsset} from './getChampionSquareAsset'
+import Champion from '../../components/maincontent/settings/Champion'
 
 class PlayerProfile {
     //TODO  Typescript supports set & get for accessor. Take a look !
@@ -25,9 +26,10 @@ class PlayerProfile {
     public resetChampSelect() {
         const defaultImg = questionMark
         const defaultName = 'Champion Name'
+        const defaultScore = 50
         for (let i = 0; i < 5; ++i) {
-            this.allies[i] = { img : defaultImg, name : defaultName }
-            this.enemies[i] = { img : defaultImg, name : defaultName }
+            this.allies[i] = { img : defaultImg, name : defaultName, score : defaultScore}
+            this.enemies[i] = { img : defaultImg, name : defaultName, score : defaultScore}
         }
     }
     public setClientStatusToCLOSED() { this.clientStatus = this.clientStatusEnum.CLOSED }
@@ -45,9 +47,16 @@ class PlayerProfile {
     public async getChampName(champId) {
         return (await getChampionByKey(champId)).name
     }
+    public getChampScore(champName : string, settingsChampions : Champion[]) : number {
+        for (const elem of settingsChampions) {
+            if (elem.name == champName)
+                return elem.opScore_user
+        }
+        return 50
+    }
 
-
-    public async fillChampSelect(actions) {
+    public async fillChampSelect(actions, settingsChampions : Champion[]) {
+        //TODO if i put a comment just under the function, typescript display it as official function description, do it for all functions ?
         //Custom solo without bans
         if (actions.length == 1) {
             const cellID = actions[0][0].actorCellId
@@ -56,6 +65,7 @@ class PlayerProfile {
                 return
             this.allies[cellID].img = await this.getChampImg(champID)
             this.allies[cellID].name = await this.getChampName(champID)
+            this.allies[cellID].score = this.getChampScore(this.allies[cellID].name, settingsChampions)
         }
         //Custom solo with bans
         if (actions.length == 4) {
@@ -65,6 +75,7 @@ class PlayerProfile {
                 return
             this.allies[cellID].img = await this.getChampImg(champID)
             this.allies[cellID].name = await this.getChampName(champID)
+            this.allies[cellID].score = this.getChampScore(this.allies[cellID].name, settingsChampions)
         }
         // Rift Mode with bans (doesn't handle clash or tournament yet)
         else if (actions.length == 8) {
@@ -77,10 +88,12 @@ class PlayerProfile {
                     if (cellID < 5) {
                         this.allies[cellID].img = await this.getChampImg(champID)
                         this.allies[cellID].name = await this.getChampName(champID)
+                        this.allies[cellID].score = this.getChampScore(this.allies[cellID].name, settingsChampions)
                     } else {
                         cellID = cellID - 5
                         this.enemies[cellID].img = await this.getChampImg(champID)
                         this.enemies[cellID].name = await this.getChampName(champID)
+                        this.enemies[cellID].score = this.getChampScore(this.enemies[cellID].name, settingsChampions)
                     }
                 }
             }

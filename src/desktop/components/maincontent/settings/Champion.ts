@@ -3,7 +3,7 @@
 */
 
 class Champion {
-    public name
+    public name : string
     public opScore_CSW
     public opScore_user
 

@@ -41,7 +41,7 @@ function ChampionProfile(props) {
             <ChampionImg src={props.img} alt={'playerChampion'}/>
             <ProfileTexts>
                 <h1>{props.champName}</h1>
-                <ChampionPower>63</ChampionPower>
+                <ChampionPower>{props.champScore}</ChampionPower>
             </ProfileTexts>
         </ChampionProfileContainer>
     )
@@ -50,7 +50,8 @@ function ChampionProfile(props) {
 ChampionProfile.propTypes = {
     isEnemyTeam: PropTypes.bool,
     champName: PropTypes.string,
-    img: PropTypes.string
+    img: PropTypes.string,
+    champScore: PropTypes.number
 
 }
 

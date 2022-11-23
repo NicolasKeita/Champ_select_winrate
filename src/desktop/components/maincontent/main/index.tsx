@@ -9,6 +9,7 @@ import uniqid from 'uniqid'
 import ChampionProfile from '../../championProfile'
 import PropTypes from 'prop-types'
 import PlayerProfile from '@utils/playerProfile'
+import {useSettings} from '@utils/hooks'
 
 const PercentageContainer = styled.div`
   display: flex;
@@ -89,20 +90,58 @@ const ProfileLine = styled.div`
 `
 
 function Main(props) {
-    let winrate = 51
+    const { settings } = useSettings()
+
+    function syncScores(isEnemyTeam, champName, i) {
+        if (champName == 'Champion Name') // TODO careful if i change the default name one day
+            return
+        const champScore = isEnemyTeam ? props.playerProfile.enemies[i].score : props.playerProfile.allies[i].score
+        console.log(champScore)
+        const champFromConfig = settings.getChampCurrConfig(champName)
+        console.log(champFromConfig)
+        if (champFromConfig) {
+            if (champScore != champFromConfig.opScore_user) {
+                if (isEnemyTeam)
+                    props.playerProfile.enemies[i].score = champFromConfig.opScore_user
+                else
+                    props.playerProfile.allies[i].score = champFromConfig.opScore_user
+            }
+        }
+    }
 
     function renderPlayersGrid(isEnemyTeam) {
         const profiles = []
         for (let i = 0; i < 5; ++i) {
             const img = isEnemyTeam ? props.playerProfile.enemies[i].img : props.playerProfile.allies[i].img
             const champName = isEnemyTeam ? props.playerProfile.enemies[i].name : props.playerProfile.allies[i].name
-            profiles.push(<ChampionProfile isEnemyTeam={isEnemyTeam} key={uniqid()} img={img} champName={champName}/>)
+            syncScores(isEnemyTeam, champName, i)
+            const champScore = isEnemyTeam ? props.playerProfile.enemies[i].score : props.playerProfile.allies[i].score
+            profiles.push(<ChampionProfile isEnemyTeam={isEnemyTeam} key={uniqid()} img={img} champName={champName} champScore={champScore}/>)
             if (i < 4)
                 profiles.push(<ProfileLine isEnemyTeam={isEnemyTeam} key={uniqid()}/>)
         }
         return <div>{profiles}</div>
     }
-    //TODO: le background de main doit être linear gradient avec une nouvelle couleure
+
+    function computeWinrate(allies, enemies) : number {
+        if (allies[0].name == 'Champion Name')
+            return 50
+        let sumAllies = 0
+        let sumEnemies = 0
+        for (const elem of allies) {
+            sumAllies += elem.score
+        }
+        for (const elem of enemies) {
+            sumEnemies += elem.score
+        }
+        let averageAllies = sumAllies / 5
+        let averageEnemies = sumEnemies / 5
+        return averageAllies + averageEnemies
+    }
+
+    let winrate = 51
+    winrate = computeWinrate(props.playerProfile.allies, props.playerProfile.enemies)
+
     return (
         <MainContainer>
             <PercentageContainer>

@@ -17,10 +17,9 @@ export const SettingsProvider = ({ children }) => {
         cpy.settingsPage = !settings.settingsPage
         setSettings(cpy)
     }
-    const resetSettings_rerenderApp = () => {
-        const cpy = Object.assign(new Config(), configDefault) // TODO waste of memory ?
-//        cpy.settingsPage = settings.settingsPage // TODO Keep the settings page shown
-        cpy.reset()
+    const resetSettings_rerenderApp = async () => {
+        const cpy = Object.assign(new Config(), settings)
+        await cpy.reset()
         setSettings(cpy)
     }
     return (
