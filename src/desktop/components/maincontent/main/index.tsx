@@ -97,9 +97,7 @@ function Main(props) {
         if (champName == 'Champion Name') // TODO careful if i change the default name one day
             return
         const champScore = isEnemyTeam ? props.playerProfile.enemies[i].score : props.playerProfile.allies[i].score
-        console.log(champScore)
         const champFromConfig = settings.getChampCurrConfig(champName)
-        console.log(champFromConfig)
         if (champFromConfig) {
             if (champScore != champFromConfig.opScore_user) {
                 if (isEnemyTeam)
@@ -128,13 +126,24 @@ function Main(props) {
     function computeWinrate(allies, enemies) : number {
         let sumAllies = 0
         let sumEnemies = 0
-        for (const elem of allies) {
+        for (const elem of allies)
             sumAllies += elem.score
-        }
-        for (const elem of enemies) {
+        for (const elem of enemies)
             sumEnemies += elem.score
+        const YourWinrate = ((sumAllies / 5 - sumEnemies / 5 ) / 2 + 50)
+        let winRate = YourWinrate
+        let isInferiorTo50 = false
+        if (winRate < 50) {
+            isInferiorTo50 = true
+            winRate = 50 - winRate + 50
         }
-        return ((sumAllies / 5 - sumEnemies / 5) / 2 + 50)
+        winRate = 100.487 - 4965.35 * Math.exp(-0.0917014 * winRate)
+        if (isInferiorTo50) {
+            winRate = 100 - winRate
+            return Math.floor(winRate)
+        } else {
+            return Math.ceil(winRate)
+        }
     }
     const winrate = computeWinrate(props.playerProfile.allies, props.playerProfile.enemies)
 
