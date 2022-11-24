@@ -14,8 +14,10 @@
     "window_icon": "icons/IconMouseOver.png"
   },
   "permissions": [
-    "Hotkeys",
-    "GameInfo"
+    "GameInfo",
+    "Extensions",
+    "Streaming",
+    "Profile"
   ],
   "data": {
     "start_window": "background",
@@ -49,9 +51,12 @@
         "file": "desktop.html",
         "desktop_only": true,
         "native_window": true,
-        "resizable": true,
+        "resizable": false,
         "transparent": true,
         "override_on_update": true,
+        "block_top_window_navigation": true,
+        "popup_blocker": true,
+        "mute": true,
         "size": {
           "width": 400,
           "height": 780

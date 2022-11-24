@@ -2,9 +2,9 @@ import {
   OWGames,
   OWGameListener,
   OWWindow
-} from '@overwolf/overwolf-api-ts';
+} from '@overwolf/overwolf-api-ts'
 
-import { kWindowNames, kGameClassIds } from "../consts";
+import { kWindowNames, kGameClassIds } from '../consts'
 
 import RunningGameInfo = overwolf.games.RunningGameInfo;
 import AppLaunchTriggeredEvent = overwolf.extensions.AppLaunchTriggeredEvent;
@@ -16,7 +16,7 @@ import AppLaunchTriggeredEvent = overwolf.extensions.AppLaunchTriggeredEvent;
 // Our background controller implements the Singleton design pattern, since only one
 // instance of it should exist.
 class BackgroundController {
-  private static _instance: BackgroundController;
+  private static _instance: BackgroundController
   private _windows: Record<string, OWWindow> = {};
   private _gameListener: OWGameListener;
 
@@ -59,7 +59,7 @@ class BackgroundController {
   }
 
   private async onAppLaunchTriggered(e: AppLaunchTriggeredEvent) {
-    console.log('onAppLaunchTriggered():', e);
+    console.log('onAppLaunchTriggered():', e)
 
     if (!e || e.origin.includes('gamelaunchevent')) {
       return;

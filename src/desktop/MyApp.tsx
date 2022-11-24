@@ -30,7 +30,6 @@ let x = 0
 let g_rendered = false
 
 function MyApp(props) {
-    console.log("MyApp Rerendered")
     const my_window = props.my_window
     const [setClientStatusToOPEN, setClientStatusToCLOSE, setClientStatusToINSIDE_CHAMP_SELECT] = useChangeClientStatus()
     const [setChampionHover] = useChangeImgProfile()
@@ -78,8 +77,8 @@ function MyApp(props) {
     function useChangeImgProfile() {
         const [, setImgProfile] = useState(-1)
 
-        async function setChampionHover(actions) {
-            await playerProfile.fillChampSelect(actions, settings.champions)
+        async function setChampionHover(actions, localCellId) {
+            await playerProfile.fillChampSelect(actions, localCellId, settings.champions)
             x += 1
             setImgProfile(x)
         }
@@ -94,7 +93,6 @@ function MyApp(props) {
                 setClientStatusToINSIDE_CHAMP_SELECT()
                 // TODO check si le mec est deja en champ select quand l'app est lancé feature : 'champ select"' received
             } else {
-                //playerProfile.resetChampSelect()
                 setClientStatusToOPEN()
             }
         }
@@ -102,7 +100,7 @@ function MyApp(props) {
 
     function handleChampSelect(champ_select) {
         const raw = JSON.parse(champ_select.raw)
-        setChampionHover(raw.actions)
+        setChampionHover(raw.actions, parseInt(raw.localPlayerCellId))
     }
 
     function handleFeaturesCallbacks(info) {
@@ -147,12 +145,11 @@ function MyApp(props) {
     }
 
     return (
-        <MyAppContainer>
+        <MyAppContainer id={'myApp'}>
             <Header my_window={my_window}/>
             <MainContent id="MainContent">
                 {renderContent()}
             </MainContent>
-            <FooterAD/>
         </MyAppContainer>
     )
 }

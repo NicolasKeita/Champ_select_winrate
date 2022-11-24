@@ -112,7 +112,6 @@ const ButtonSettings = () => {
 
 let isMenuOpen = false
 function Header(props) {
-    console.log("Header render")
     const my_window = props.my_window
     const headerRef = useRef(null)
 

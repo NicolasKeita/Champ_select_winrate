@@ -55,7 +55,7 @@ class PlayerProfile {
         return 50
     }
 
-    public async fillChampSelect(actions, settingsChampions : Champion[]) {
+    public async fillChampSelect(actions, localCellId, settingsChampions : Champion[]) {
         //TODO if i put a comment just under the function, typescript display it as official function description, do it for all functions ?
         //Custom solo without bans
         if (actions.length == 1) {
@@ -79,21 +79,33 @@ class PlayerProfile {
         }
         // Rift Mode with bans (doesn't handle clash or tournament yet)
         else if (actions.length == 8) {
-            for (let i = 2; i < actions.length; i++) {
+            for (let i = 2; i < actions.length; i++) { // TODO replace by 'for of ?'
                 for (let y = 0; y < actions[i].length; ++y) {
                     const champID = actions[i][y].championId
                     if (champID === 0)
                         continue
                     let cellID = actions[i][y].actorCellId
                     if (cellID < 5) {
-                        this.allies[cellID].img = await this.getChampImg(champID)
-                        this.allies[cellID].name = await this.getChampName(champID)
-                        this.allies[cellID].score = this.getChampScore(this.allies[cellID].name, settingsChampions)
+                        if (localCellId < 5) {
+                            this.allies[cellID].img = await this.getChampImg(champID)
+                            this.allies[cellID].name = await this.getChampName(champID)
+                            this.allies[cellID].score = this.getChampScore(this.allies[cellID].name, settingsChampions)
+                        } else {
+                            this.enemies[cellID].img = await this.getChampImg(champID)
+                            this.enemies[cellID].name = await this.getChampName(champID)
+                            this.enemies[cellID].score = this.getChampScore(this.enemies[cellID].name, settingsChampions)
+                        }
                     } else {
                         cellID = cellID - 5
-                        this.enemies[cellID].img = await this.getChampImg(champID)
-                        this.enemies[cellID].name = await this.getChampName(champID)
-                        this.enemies[cellID].score = this.getChampScore(this.enemies[cellID].name, settingsChampions)
+                        if (localCellId < 5) {
+                            this.enemies[cellID].img = await this.getChampImg(champID)
+                            this.enemies[cellID].name = await this.getChampName(champID)
+                            this.enemies[cellID].score = this.getChampScore(this.enemies[cellID].name, settingsChampions)
+                        } else {
+                            this.allies[cellID].img = await this.getChampImg(champID)
+                            this.allies[cellID].name = await this.getChampName(champID)
+                            this.allies[cellID].score = this.getChampScore(this.allies[cellID].name, settingsChampions)
+                        }
                     }
                 }
             }

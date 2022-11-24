@@ -17,17 +17,9 @@ export function registerEvents(handleFeaturesCallbacks) {
         console.log('Error: ' + JSON.stringify(info))
     }
     onInfoUpdates2Listener = (info) => {
-        console.log('onInfoUpdatesProc')
-        console.log(info)
-//        if (info.feature === 'game_flow' && info.info.game_flow.phase === 'ChampSelect') {
-//            console.log('Hello CHAMP SELECT')
         handleFeaturesCallbacks(info)
-//        }
-        //TODO if game_flow autre que champSelect, re setup le clientStatus to open
     }
     onNewEventsListener = function (info) {
-        console.log('onNewEventsProc')
-        console.log(info)
     }
     overwolf.games.events.onError.addListener(onErrorListener)
     overwolf.games.launchers.events.onInfoUpdates.addListener(onInfoUpdates2Listener)

@@ -3,6 +3,7 @@ import { kWindowNames } from '../consts'
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import MyApp from './MyApp'
+import FooterAD from './components/footerAD'
 
 import '@public/css/desktop.css'
 import {SettingsProvider} from '@utils/context'
@@ -14,9 +15,12 @@ const my_window = new AppWindow(kWindowNames.desktop)
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
-//   <React.StrictMode>
-    <SettingsProvider>
-        <MyApp my_window={my_window}/>
-    </SettingsProvider>
-//   </React.StrictMode>
+    <React.StrictMode>
+        <SettingsProvider>
+            <div id={'myApp+FooterAD'} style={{ display : 'flex', flex: '1', flexDirection: 'column'}}>
+                <MyApp my_window={my_window}/>
+                <FooterAD/>
+            </div>
+        </SettingsProvider>
+    </React.StrictMode>
 )
