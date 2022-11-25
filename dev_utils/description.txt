@@ -1,0 +1,3 @@
+From general knowledge about champions, match-ups and teamcomp (that you can set up)
+output your winrate and a champion suggestion for higher chance to win the game !
+

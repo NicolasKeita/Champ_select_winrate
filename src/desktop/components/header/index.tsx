@@ -44,43 +44,12 @@ const CSWName = styled.h1`
   -webkit-text-fill-color: transparent;
   padding-left: 20px;
   cursor: inherit;
-
-
 `
-// const ContextMenuTriggerAreaStyled = styled(ContextMenuTriggerArea)`
-//   background: linear-gradient(to right, rgb(63, 62, 62), #363636, #323232);
-//   border: 1px solid #A8540CFF;
-//   color: #A8540CFF;
-//   padding: 3px;
-// `
 
-const Shape = () => {
-    const [color, setColor] = useState<string>('blue');
-    const [shape, setShape] = useState<string>('circle');
-
-    return (
-        <ContextMenuTriggerArea
-            bridge={myContextMenuBridge}
-            className={`shape ${color} ${shape}`}
-            data={{
-                color,
-                changeColor: (newColor) => {
-                    setColor(newColor);
-                },
-                shape,
-                changeShape: (newColor) => {
-                    setShape(newColor);
-                },
-            }}
-        >
-            <p>Right click and change how I look!</p>
-        </ContextMenuTriggerArea>
-    );
-};
 
 const ButtonSettings = () => {
-    const [color, setColor] = useState<string>('blue');
-    const [shape, setShape] = useState<string>('circle');
+    const [color, setColor] = useState<string>('blue')
+    const [shape, setShape] = useState<string>('circle')
     const { toggleSettings_rerenderApp } = useSettings()
 
     function activateSettings(e) {
@@ -97,18 +66,17 @@ const ButtonSettings = () => {
             data={{
                 color,
                 changeColor: (newColor) => {
-                    setColor(newColor);
+                    setColor(newColor)
                 },
                 shape,
                 changeShape: (newColor) => {
-                    setShape(newColor);
+                    setShape(newColor)
                 },
             }}
         >
         </ContextMenuTriggerArea>
     )
 }
-
 
 let isMenuOpen = false
 function Header(props) {

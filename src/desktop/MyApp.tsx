@@ -11,7 +11,6 @@ import MainContent from './components/maincontent'
 import Main from './components/maincontent/main'
 import Footer from './components/maincontent/footer'
 import Settings from './components/maincontent/settings'
-import FooterAD from './components/footerAD'
 import Config from './components/maincontent/settings/Config'
 import {AppWindow} from '../AppWindow'
 import PlayerProfile from '@utils/playerProfile'
@@ -38,7 +37,6 @@ function MyApp(props) {
 
     if (!g_rendered) {
         g_rendered = true
-        //let config = localStorage.getItem('config')
         const config: Config = JSON.parse(localStorage.getItem('config'))
         if (config) {
             settings.copyFromAnotherSetting(config)
