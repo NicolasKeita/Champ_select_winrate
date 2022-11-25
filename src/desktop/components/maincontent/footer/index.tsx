@@ -46,6 +46,13 @@ function Footer(props) {
         if (playerProfile.clientStatus === 2)
             setMessage('')
     }, [playerProfile, playerProfile.clientStatus]) // TODO add setMessage to deps array
+
+    useEffect(() => {
+        if (!navigator.onLine)
+            setMessage('Check your internet connection.')
+        window.onoffline = () => { setMessage('Check your internet connection.')}
+        window.ononline = () => { setMessage('You are back online.')}
+    }, [])
     return (
         <FooterContainer>
             <FooterTextStyle>{footerText.message}</FooterTextStyle>

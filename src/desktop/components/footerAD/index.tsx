@@ -71,7 +71,11 @@ function FooterAD() {
             el.onload = resolve
             el.onerror = reject
             document.body.appendChild(el)
-        })
+        }).catch(() => {console.error(
+            'CSW_error : couldn\'t connect to ' +
+            'https://content.overwolf.com/libs/ads/latest/owads.min.js' +
+            '. Check your internet connection?'
+        )})
     }
 
     async function createAd() {
@@ -157,6 +161,7 @@ function FooterAD() {
     }
 
     useEffect(() => {
+        localStorage.owAdsForceAdUnit = 'Ad_test'
         init()
     }, [])
     return (
