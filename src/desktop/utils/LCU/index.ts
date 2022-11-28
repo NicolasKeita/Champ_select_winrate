@@ -5,22 +5,16 @@
 /* Overwolf is currently providing the connection to the LCU */
 
 let onErrorListener, onInfoUpdates2Listener, onNewEventsListener
-const g_interestedInFeatures = [
-    'game_flow',
-    'summoner_info',
-    'champ_select',
-    'lcu_info',
-]
+const g_interestedInFeatures = ['game_flow', 'summoner_info', 'champ_select', 'lcu_info']
 
 export function registerEvents(handleFeaturesCallbacks) {
     onErrorListener = function (info) {
         console.log('Error: ' + JSON.stringify(info))
     }
-    onInfoUpdates2Listener = (info) => {
+    onInfoUpdates2Listener = info => {
         handleFeaturesCallbacks(info)
     }
-    onNewEventsListener = function (info) {
-    }
+    onNewEventsListener = function (info) {}
     overwolf.games.events.onError.addListener(onErrorListener)
     overwolf.games.launchers.events.onInfoUpdates.addListener(onInfoUpdates2Listener)
     overwolf.games.events.onNewEvents.addListener(onNewEventsListener)
@@ -33,18 +27,14 @@ export function unregisterEvents() {
 }
 
 export function setFeatures() {
-    overwolf.games.launchers.events.setRequiredFeatures(
-        10902,
-        g_interestedInFeatures,
-        function(info) {
-            if (info.error) {
-                console.log(info.error)
-                console.log('Trying in 2 seconds')
-                window.setTimeout(setFeatures, 2000)
-                return
-            }
+    overwolf.games.launchers.events.setRequiredFeatures(10902, g_interestedInFeatures, function (info) {
+        if (info.error) {
+            console.log(info.error)
+            console.log('Trying in 2 seconds')
+            window.setTimeout(setFeatures, 2000)
+            return
         }
-    )
+    })
 }
 
 class LCU {
@@ -56,24 +46,18 @@ class LCU {
     }
 
     private setFeatures() {
-        overwolf.games.launchers.events.setRequiredFeatures(
-            10902,
-            g_interestedInFeatures,
-            function(info) {
-                if (info.error) {
-                    console.log(info.error)
-                    console.log('Trying in 2 seconds')
-                    window.setTimeout(setFeatures, 2000)
-                    return
-                }
+        overwolf.games.launchers.events.setRequiredFeatures(10902, g_interestedInFeatures, function (info) {
+            if (info.error) {
+                console.log(info.error)
+                console.log('Trying in 2 seconds')
+                window.setTimeout(setFeatures, 2000)
+                return
             }
-        )
+        })
     }
     public isLeagueClient(launcherInfo) {
-        if (launcherInfo && launcherInfo.launchers && launcherInfo.launchers.length < 1)
-            return false
-        if (launcherInfo.id && Math.floor(launcherInfo.id / 10) == 10902)
-            return true
+        if (launcherInfo && launcherInfo.launchers && launcherInfo.launchers.length < 1) return false
+        if (launcherInfo.id && Math.floor(launcherInfo.id / 10) == 10902) return true
         return Math.floor(launcherInfo.launchers[0].id / 10) == 10902
     }
     public onClientAlreadyRunningOrNot(callbackFunction) {
@@ -86,8 +70,7 @@ class LCU {
         overwolf.games.launchers.onTerminated.addListener(callbackFunction)
     }
     public addAllListeners(clientsInfos, callbackTMP) {
-        if (this.isLeagueClient(clientsInfos))
-            unregisterEvents()
+        if (this.isLeagueClient(clientsInfos)) unregisterEvents()
         registerEvents(callbackTMP)
         setTimeout(this.setFeatures, 1000)
     }

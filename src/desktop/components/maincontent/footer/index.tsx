@@ -9,16 +9,16 @@ import PlayerProfile from '@utils/playerProfile'
 import FooterText from '@utils/FooterText'
 
 const FooterContainer = styled.footer`
-  background: linear-gradient(to right, rgb(63, 62, 62), #363636, #323232);
-  flex: 0;
-  display: flex;
-  justify-content: center;
-  padding: 4px 0 4px 0;
+    background: linear-gradient(to right, rgb(63, 62, 62), #363636, #323232);
+    flex: 0;
+    display: flex;
+    justify-content: center;
+    padding: 4px 0 4px 0;
 `
 const FooterTextStyle = styled.h1`
-  background: -webkit-linear-gradient(#e8730e, #b79e4d);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+    background: -webkit-linear-gradient(#e8730e, #b79e4d);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 `
 
 const footerText = new FooterText()
@@ -38,20 +38,20 @@ function Footer(props) {
         return [setMessage]
     }
 
-    useEffect (() => {
-        if (playerProfile.clientStatus === 0)
-            setMessage('League client is not open.')
-        if (playerProfile.clientStatus === 1)
-            setMessage('You are not in champ select.')
-        if (playerProfile.clientStatus === 2)
-            setMessage('')
+    useEffect(() => {
+        if (playerProfile.clientStatus === 0) setMessage('League client is not open.')
+        if (playerProfile.clientStatus === 1) setMessage('You are not in champ select.')
+        if (playerProfile.clientStatus === 2) setMessage('')
     }, [playerProfile, playerProfile.clientStatus]) // TODO add setMessage to deps array
 
     useEffect(() => {
-        if (!navigator.onLine)
+        if (!navigator.onLine) setMessage('Check your internet connection.')
+        window.onoffline = () => {
             setMessage('Check your internet connection.')
-        window.onoffline = () => { setMessage('Check your internet connection.')}
-        window.ononline = () => { setMessage('You are back online.')}
+        }
+        window.ononline = () => {
+            setMessage('You are back online.')
+        }
     }, [])
     return (
         <FooterContainer>
@@ -61,7 +61,7 @@ function Footer(props) {
 }
 
 Footer.propTypes = {
-    playerProfile: PropTypes.instanceOf(PlayerProfile),
+    playerProfile: PropTypes.instanceOf(PlayerProfile)
 }
 
 export default Footer

@@ -6,17 +6,14 @@ import React, {useEffect} from 'react'
 import styled from 'styled-components'
 
 const FooterContainer = styled.footer`
-  flex: 1;
+    flex: 1;
 `
 
-const ADcontainer = styled.img`
-    
-`
+const ADcontainer = styled.img``
 
 function FooterAD() {
     const kWindowName = 'desktop'
-    let
-        adEnabled = false,
+    let adEnabled = false,
         updateWindowIsVisibleInterval = null,
         windowIsOpen = false,
         windowIsVisible = false,
@@ -48,18 +45,15 @@ function FooterAD() {
     }
 
     function removeAd() {
-        if (adInstance !== null)
-            adInstance.removeAd()
+        if (adInstance !== null) adInstance.removeAd()
     }
 
     function updateAd() {
-        const shouldEnable = (windowIsOpen && windowIsVisible)
+        const shouldEnable = windowIsOpen && windowIsVisible
         if (adEnabled !== shouldEnable) {
             adEnabled = shouldEnable
-            if (shouldEnable)
-                createAd()
-            else
-                removeAd()
+            if (shouldEnable) createAd()
+            else removeAd()
         }
     }
 
@@ -71,11 +65,9 @@ function FooterAD() {
             el.onload = resolve
             el.onerror = reject
             document.body.appendChild(el)
-        }).catch(() => {console.error(
-            'CSW_error : couldn\'t connect to ' +
-            'https://content.overwolf.com/libs/ads/latest/owads.min.js' +
-            '. Check your internet connection?'
-        )})
+        }).catch(() => {
+            console.error("CSW_error : couldn't connect to " + 'https://content.overwolf.com/libs/ads/latest/owads.min.js' + '. Check your internet connection?')
+        })
     }
 
     async function createAd() {
@@ -84,7 +76,7 @@ function FooterAD() {
             await loadAdLib()
             // @ts-ignore
             if (!window.OwAd) {
-                console.error('Couldn\'t load OwAd')
+                console.error("Couldn't load OwAd")
                 return
             }
         }
@@ -127,7 +119,7 @@ function FooterAD() {
             overwolf.windows.isWindowVisibleToUser(resolve)
         })
         // @ts-ignore
-        return (state && state.success && state.visible !== 'hidden')
+        return state && state.success && state.visible !== 'hidden'
     }
 
     async function updateWindowIsVisible() {
@@ -164,10 +156,7 @@ function FooterAD() {
         localStorage.owAdsForceAdUnit = 'Ad_test'
         init()
     }, [])
-    return (
-        <FooterContainer id={'adContainer'}>
-        </FooterContainer>
-    )
+    return <FooterContainer id={'adContainer'}></FooterContainer>
 }
 
 export default FooterAD

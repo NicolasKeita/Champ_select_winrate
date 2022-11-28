@@ -1,13 +1,9 @@
-import {
-  OWGames,
-  OWGameListener,
-  OWWindow
-} from '@overwolf/overwolf-api-ts'
+import {OWGames, OWGameListener, OWWindow} from '@overwolf/overwolf-api-ts'
 
-import { kWindowNames, kGameClassIds } from '../consts'
+import {kWindowNames, kGameClassIds} from '../consts'
 
-import RunningGameInfo = overwolf.games.RunningGameInfo;
-import AppLaunchTriggeredEvent = overwolf.extensions.AppLaunchTriggeredEvent;
+import RunningGameInfo = overwolf.games.RunningGameInfo
+import AppLaunchTriggeredEvent = overwolf.extensions.AppLaunchTriggeredEvent
 
 // The background controller holds all of the app's background logic - hence its name. it has
 // many possible use cases, for example sharing data between windows, or, in our case,
@@ -16,80 +12,78 @@ import AppLaunchTriggeredEvent = overwolf.extensions.AppLaunchTriggeredEvent;
 // Our background controller implements the Singleton design pattern, since only one
 // instance of it should exist.
 class BackgroundController {
-  private static _instance: BackgroundController
-  private _windows: Record<string, OWWindow> = {};
-  private _gameListener: OWGameListener;
+    private static _instance: BackgroundController
+    private _windows: Record<string, OWWindow> = {}
+    private _gameListener: OWGameListener
 
-  private constructor() {
-    // Populating the background controller's window dictionary
-    this._windows[kWindowNames.desktop] = new OWWindow(kWindowNames.desktop)
+    private constructor() {
+        // Populating the background controller's window dictionary
+        this._windows[kWindowNames.desktop] = new OWWindow(kWindowNames.desktop)
 
-    // When a a supported game game is started or is ended, toggle the app's windows
-    this._gameListener = new OWGameListener({
-      onGameStarted: this.toggleWindows.bind(this),
-      onGameEnded: this.toggleWindows.bind(this)
-    });
+        // When a a supported game game is started or is ended, toggle the app's windows
+        this._gameListener = new OWGameListener({
+            onGameStarted: this.toggleWindows.bind(this),
+            onGameEnded: this.toggleWindows.bind(this)
+        })
 
-    overwolf.extensions.onAppLaunchTriggered.addListener(
-      e => this.onAppLaunchTriggered(e)
-    );
-  };
-
-  // Implementing the Singleton design pattern
-  public static instance(): BackgroundController {
-    if (!BackgroundController._instance) {
-      BackgroundController._instance = new BackgroundController();
+        overwolf.extensions.onAppLaunchTriggered.addListener(e => this.onAppLaunchTriggered(e))
     }
 
-    return BackgroundController._instance;
-  }
+    // Implementing the Singleton design pattern
+    public static instance(): BackgroundController {
+        if (!BackgroundController._instance) {
+            BackgroundController._instance = new BackgroundController()
+        }
 
-  // When running the app, start listening to games' status and decide which window should
-  // be launched first, based on whether a supported game is currently running
-  public async run() {
-    this._gameListener.start()
-
-    const currWindowName = kWindowNames.desktop
-
-    this._windows[currWindowName].restore()
-  }
-
-  private async onAppLaunchTriggered(e: AppLaunchTriggeredEvent) {
-    console.log('onAppLaunchTriggered():', e)
-
-    if (!e || e.origin.includes('gamelaunchevent')) {
-      return;
+        return BackgroundController._instance
     }
 
-    if (await this.isSupportedGameRunning()) {
-      this._windows[kWindowNames.desktop].close();
-    } else {
-      this._windows[kWindowNames.desktop].restore();
-    }
-  }
+    // When running the app, start listening to games' status and decide which window should
+    // be launched first, based on whether a supported game is currently running
+    public async run() {
+        this._gameListener.start()
 
-  private toggleWindows(info: RunningGameInfo) {
-    if (!info || !this.isSupportedGame(info)) {
-      return;
+        const currWindowName = kWindowNames.desktop
+
+        this._windows[currWindowName].restore()
     }
 
-    if (info.isRunning) {
-      this._windows[kWindowNames.desktop].close();
-    } else {
-      this._windows[kWindowNames.desktop].restore();
+    private async onAppLaunchTriggered(e: AppLaunchTriggeredEvent) {
+        console.log('onAppLaunchTriggered():', e)
+
+        if (!e || e.origin.includes('gamelaunchevent')) {
+            return
+        }
+
+        if (await this.isSupportedGameRunning()) {
+            this._windows[kWindowNames.desktop].close()
+        } else {
+            this._windows[kWindowNames.desktop].restore()
+        }
     }
-  }
 
-  private async isSupportedGameRunning(): Promise<boolean> {
-    const info = await OWGames.getRunningGameInfo();
+    private toggleWindows(info: RunningGameInfo) {
+        if (!info || !this.isSupportedGame(info)) {
+            return
+        }
 
-    return info && info.isRunning && this.isSupportedGame(info);
-  }
+        if (info.isRunning) {
+            this._windows[kWindowNames.desktop].close()
+        } else {
+            this._windows[kWindowNames.desktop].restore()
+        }
+    }
 
-  // Identify whether the RunningGameInfo object we have references a supported game
-  private isSupportedGame(info: RunningGameInfo) {
-    return kGameClassIds.includes(info.classId);
-  }
+    private async isSupportedGameRunning(): Promise<boolean> {
+        const info = await OWGames.getRunningGameInfo()
+
+        return info && info.isRunning && this.isSupportedGame(info)
+    }
+
+    // Identify whether the RunningGameInfo object we have references a supported game
+    private isSupportedGame(info: RunningGameInfo) {
+        return kGameClassIds.includes(info.classId)
+    }
 }
 
-BackgroundController.instance().run();
+BackgroundController.instance().run()

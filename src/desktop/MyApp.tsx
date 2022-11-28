@@ -18,9 +18,9 @@ import LCU from '@utils/LCU'
 import {useSettings} from '@utils/hooks'
 
 const MyAppContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex: 1;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
 `
 const LCU_interface = new LCU()
 const playerProfile = new PlayerProfile()
@@ -34,7 +34,6 @@ function MyApp(props) {
     const [setChampionHover] = useChangeImgProfile()
     const {settings} = useSettings()
 
-
     if (!g_rendered) {
         g_rendered = true
         const config: Config = JSON.parse(localStorage.getItem('config'))
@@ -44,7 +43,6 @@ function MyApp(props) {
             settings.populateDefaultConfig().then(r => {}) // TODO handle errors. then. catch
         }
     }
-
 
     //TODO: Maybe change position of this code ?
     function useChangeClientStatus() {
@@ -65,11 +63,7 @@ function MyApp(props) {
             setClientStatus(playerProfile.clientStatus)
         }
 
-        return ([
-                setClientStatusToOPEN,
-                setClientStatusToCLOSE,
-                setClientStatusToINSIDE_CHAMP_SELECT] as const
-        )
+        return [setClientStatusToOPEN, setClientStatusToCLOSE, setClientStatusToINSIDE_CHAMP_SELECT] as const
     }
 
     function useChangeImgProfile() {
@@ -102,14 +96,12 @@ function MyApp(props) {
     }
 
     function handleFeaturesCallbacks(info) {
-        if (info.feature === 'game_flow')
-            handleGameFlow(info.info.game_flow)
-        if (info.feature === 'champ_select')
-            handleChampSelect(info.info.champ_select)
+        if (info.feature === 'game_flow') handleGameFlow(info.info.game_flow)
+        if (info.feature === 'champ_select') handleChampSelect(info.info.champ_select)
     }
 
     useEffect(() => {
-        LCU_interface.onClientAlreadyRunningOrNot((clientsInfos) => {
+        LCU_interface.onClientAlreadyRunningOrNot(clientsInfos => {
             // if client's already running
             if (LCU_interface.isLeagueClient(clientsInfos)) {
                 setClientStatusToOPEN()
@@ -118,7 +110,7 @@ function MyApp(props) {
                 setClientStatusToCLOSE()
             }
         })
-        LCU_interface.onClientLaunch((clientInfo) => {
+        LCU_interface.onClientLaunch(clientInfo => {
             LCU_interface.addAllListeners(clientInfo, handleFeaturesCallbacks)
             setClientStatusToOPEN()
             //LCU_interface.populateCredentials()
@@ -133,21 +125,24 @@ function MyApp(props) {
     function renderContent() {
         if (settings == undefined || !settings.settingsPage) {
             return (
-                <div style={{display: 'flex', flexDirection: 'column', flex: 1}}>
-                    <Main playerProfile={playerProfile}/>
-                    <Footer playerProfile={playerProfile}/>
+                <div
+                    style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        flex: 1
+                    }}
+                >
+                    <Main playerProfile={playerProfile} />
+                    <Footer playerProfile={playerProfile} />
                 </div>
             )
-        } else
-            return (<Settings/>)
+        } else return <Settings />
     }
 
     return (
         <MyAppContainer id={'myApp'}>
-            <Header my_window={my_window}/>
-            <MainContent id="MainContent">
-                {renderContent()}
-            </MainContent>
+            <Header my_window={my_window} />
+            <MainContent id='MainContent'>{renderContent()}</MainContent>
         </MyAppContainer>
     )
 }

@@ -3,11 +3,11 @@
 */
 
 class Champion {
-    public name : string
+    public name: string
     public opScore_CSW
     public opScore_user
 
-    public setUserScore = (score) => {
+    public setUserScore = score => {
         this.opScore_user = score
     }
 }

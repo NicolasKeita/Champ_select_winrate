@@ -8,15 +8,15 @@ From a dataset related to the latest LoL patch, **use your own knowledge to adju
 
 **Currently supported functionalities (v1.0.0) :**
 
-- Output a customizable winrate
+-   Output a customizable winrate
 
 **Incoming functionalities in December :**
 
-- Many champion suggestions
-- Successful Dodge Notification
+-   Many champion suggestions
+-   Successful Dodge Notification
 
 **Incoming functionalities in January :**
 
-- Huge improvement to the possible customization (you will be able to input matchups for example)
+-   Huge improvement to the possible customization (you will be able to input matchups for example)
 
 A discord will be set up in early January.

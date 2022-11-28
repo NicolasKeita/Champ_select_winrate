@@ -5,8 +5,8 @@
 import Champion from './Champion'
 
 class Config {
-    public settingsPage : boolean
-    private _champions : Champion[]
+    public settingsPage: boolean
+    private _champions: Champion[]
 
     public set champions(champions) {
         this._champions = champions
@@ -14,11 +14,13 @@ class Config {
     public get champions() {
         return this._champions
     }
-    public stringify() : string {
+    public stringify(): string {
         let json = JSON.stringify(this)
-        Object.keys(this).filter(key => key[0] === '_').forEach(key => {
-            json = json.replace(key, key.substring(1))
-        })
+        Object.keys(this)
+            .filter(key => key[0] === '_')
+            .forEach(key => {
+                json = json.replace(key, key.substring(1))
+            })
         return json
     }
     constructor() {
@@ -28,26 +30,24 @@ class Config {
 
     public copyFromAnotherSetting(settings: Config): void {
         this._champions.length = 0
-        settings.champions.forEach((elem) => {
+        settings.champions.forEach(elem => {
             this._champions.push(Object.assign(new Champion(), elem))
         })
     }
 
     public async getChampionCSW_json() {
-        const res = await fetch('./config/champion_CSW_save.json'
-            , {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                }
-            })
+        const res = await fetch('./config/champion_CSW_save.json', {
+            headers: {
+                'Content-Type': 'application/json',
+                Accept: 'application/json'
+            }
+        })
         const jsonRes = await res.json() //TODO catch error
         return jsonRes
     }
-    public getChampCurrConfig(champName) : Champion | undefined {
+    public getChampCurrConfig(champName): Champion | undefined {
         for (const champion of this.champions) {
-            if (champion.name === champName)
-                return champion
+            if (champion.name === champName) return champion
         }
         return undefined
     }
@@ -70,6 +70,5 @@ class Config {
         await this.populateDefaultConfig()
     }
 }
-
 
 export default Config

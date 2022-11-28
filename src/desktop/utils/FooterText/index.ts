@@ -3,7 +3,7 @@
 */
 
 class FooterText {
-    public message : string
+    public message: string
     constructor() {
         this.message = 'League client is not open.'
     }

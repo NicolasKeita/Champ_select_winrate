@@ -1,5 +1,5 @@
-import { AppWindow } from '../AppWindow'
-import { kWindowNames } from '../consts'
+import {AppWindow} from '../AppWindow'
+import {kWindowNames} from '../consts'
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import MyApp from './MyApp'
@@ -17,9 +17,9 @@ const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
     <React.StrictMode>
         <SettingsProvider>
-            <div id={'myApp+FooterAD'} style={{ display : 'flex', flex: '1', flexDirection: 'column'}}>
-                <MyApp my_window={my_window}/>
-                <FooterAD/>
+            <div id={'myApp+FooterAD'} style={{display: 'flex', flex: '1', flexDirection: 'column'}}>
+                <MyApp my_window={my_window} />
+                <FooterAD />
             </div>
         </SettingsProvider>
     </React.StrictMode>
