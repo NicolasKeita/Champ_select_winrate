@@ -22,8 +22,7 @@ class BackgroundController {
 
   private constructor() {
     // Populating the background controller's window dictionary
-    this._windows[kWindowNames.desktop] = new OWWindow(kWindowNames.desktop);
-    this._windows[kWindowNames.inGame] = new OWWindow(kWindowNames.inGame);
+    this._windows[kWindowNames.desktop] = new OWWindow(kWindowNames.desktop)
 
     // When a a supported game game is started or is ended, toggle the app's windows
     this._gameListener = new OWGameListener({
@@ -48,11 +47,8 @@ class BackgroundController {
   // When running the app, start listening to games' status and decide which window should
   // be launched first, based on whether a supported game is currently running
   public async run() {
-    //this._gameListener.start()
+    this._gameListener.start()
 
-    // const currWindowName = (await this.isSupportedGameRunning())
-    //   ? kWindowNames.inGame
-    //   : kWindowNames.desktop;
     const currWindowName = kWindowNames.desktop
 
     this._windows[currWindowName].restore()
@@ -67,10 +63,8 @@ class BackgroundController {
 
     if (await this.isSupportedGameRunning()) {
       this._windows[kWindowNames.desktop].close();
-      this._windows[kWindowNames.inGame].restore();
     } else {
       this._windows[kWindowNames.desktop].restore();
-      this._windows[kWindowNames.inGame].close();
     }
   }
 
@@ -81,10 +75,8 @@ class BackgroundController {
 
     if (info.isRunning) {
       this._windows[kWindowNames.desktop].close();
-      this._windows[kWindowNames.inGame].restore();
     } else {
       this._windows[kWindowNames.desktop].restore();
-      this._windows[kWindowNames.inGame].close();
     }
   }
 

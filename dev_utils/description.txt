@@ -1,3 +1,14 @@
 From general knowledge about champions, match-ups and teamcomp (that you can set up)
-output your winrate and a champion suggestion for higher chance to win the game !
+output your winrate and many champion suggestions to counter enemy team comp
 
+From general knowledge about champ select (that you can set up) output many champ suggestions and your winrate.
+
+Entirely focused on LoL Champion Select. From general knowledge about champions, matchups and team comp (that you can set up),
+output your winrate and many champion suggestions to counter enemy team comp.
+
+My app comes down to the desktop window (there is no in-game window).
+The desktop window currently only has two tabs : home page and settings.
+1: Home Page) The home page is supposed to encourage users to enter LoL Champ Select.
+Once the user is in champ select (the app currently supports 5v5 with bans, ranked or not ranked),
+he will see additional information about champions (currently only the "OP score" of each champion) and a sort of reliable winrate.
+2: Settings) The settings tab will greatly improve in the next updates. It currently allows the user to change the 'OP score' of each champions to their preference. User can also reset scores to a default configuration.

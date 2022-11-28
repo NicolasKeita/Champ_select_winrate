@@ -3,8 +3,7 @@ const
     HtmlWebpackPlugin = require('html-webpack-plugin'),
     CopyPlugin = require('copy-webpack-plugin'),
     { CleanWebpackPlugin } = require('clean-webpack-plugin'),
-    OverwolfPlugin = require('./overwolf.webpack'),
-    nodeExternals = require('webpack-node-externals')
+    OverwolfPlugin = require('./overwolf.webpack')
 
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin')
 
@@ -12,8 +11,7 @@ module.exports = env => {
     const browserConfig = {
         entry: {
             background: './src/background/background.tsx',
-            desktop: './src/desktop/desktop.tsx',
-            in_game: './src/in_game/in_game.tsx',
+            desktop: './src/desktop/desktop.tsx'
         },
         devtool: 'inline-source-map',
         module: {
@@ -59,11 +57,6 @@ module.exports = env => {
                 template: './src/desktop/desktop.html',
                 filename: path.resolve(__dirname, './dist/desktop.html'),
                 chunks: ['desktop']
-            }),
-            new HtmlWebpackPlugin({
-                template: './src/in_game/in_game.html',
-                filename: path.resolve(__dirname, './dist/in_game.html'),
-                chunks: ['in_game']
             }),
             new OverwolfPlugin(env)
         ]

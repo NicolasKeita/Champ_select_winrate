@@ -1,7 +1,5 @@
 {
   "compilerOptions": {
-    //"target": "es2017",
-    //"module": "none",
     "sourceMap": true,
     "moduleResolution": "node",
     "removeComments": true,
@@ -40,9 +38,7 @@
     "noFallthroughCasesInSwitch": true,
     "module": "esNext",
     "resolveJsonModule": true,
-    //"isolatedModules": true,
     "noEmit": false,
-    //"noEmit": true,
     "jsx": "react-jsx",
   },
   "include": [

@@ -6,8 +6,8 @@
     "extends": [
         "plugin:react/recommended",
         "eslint:recommended",
-        "plugin:@typescript-eslint/recommended"
-        //"standard-with-typescript"
+        "plugin:@typescript-eslint/recommended",
+        "standard-with-typescript"
     ],
     "overrides": [
     ],
@@ -17,6 +17,7 @@
         "parser": "@typescript-eslint/parser",
         "project": ["./tsconfig.json"]
     },
+    "ignorePatterns": ["webpack.config.js", "overwolf.webpack.js"],
     "plugins": [
         "react",
         "react-hooks",
