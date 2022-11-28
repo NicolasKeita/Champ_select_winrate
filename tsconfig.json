@@ -1,50 +1,33 @@
 {
-  "compilerOptions": {
-    "sourceMap": true,
-    "moduleResolution": "node",
-    "removeComments": true,
-    "strict": true,
-    "noImplicitAny": false,
-    "strictNullChecks": false,
-    "types": [
-      "@overwolf/types",
-      "node"
-    ],
-    "outDir": "./dist",
-    "rootDir": "./",
-    "rootDirs": [
-      "src"
-    ],
-    "baseUrl": "./src",
-    "paths": {
-      "@public/*": [
-        "../public/*"
-      ],
-      "@utils/*": [
-        "../src/desktop/utils/*"
-      ]
-    },
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
-    "target": "es2022",
-    "allowJs": true,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "forceConsistentCasingInFileNames": true,
-    "noFallthroughCasesInSwitch": true,
-    "module": "esNext",
-    "resolveJsonModule": true,
-    "noEmit": false,
-    "jsx": "react-jsx",
-  },
-  "include": [
-    "src", "index.d.ts"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+	"compilerOptions": {
+		"sourceMap": true,
+		"moduleResolution": "node",
+		"removeComments": true,
+		"strict": true,
+		"noImplicitAny": false,
+		"strictNullChecks": false,
+		"types": ["@overwolf/types", "node"],
+		"outDir": "./dist",
+		"rootDir": "./",
+		"rootDirs": ["src"],
+		"baseUrl": "./src",
+		"paths": {
+			"@public/*": ["../public/*"],
+			"@utils/*": ["../src/desktop/utils/*"]
+		},
+		"lib": ["dom", "dom.iterable", "esnext"],
+		"target": "es2022",
+		"allowJs": true,
+		"skipLibCheck": true,
+		"esModuleInterop": true,
+		"allowSyntheticDefaultImports": true,
+		"forceConsistentCasingInFileNames": true,
+		"noFallthroughCasesInSwitch": true,
+		"module": "esNext",
+		"resolveJsonModule": true,
+		"noEmit": false,
+		"jsx": "react-jsx"
+	},
+	"include": ["src", "index.d.ts"],
+	"exclude": ["node_modules"]
 }

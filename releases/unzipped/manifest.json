@@ -1,91 +1,74 @@
 {
-  "manifest_version": 1,
-  "type": "WebApp",
-  "meta": {
-    "name": "Champ Select Winrate",
-    "author": "Nicolas Keita",
-    "author_display": "SpyNight",
-    "version": "1.0.1",
-    "minimum-overwolf-version": "0.194.0",
-    "description": "From general knowledge about champ select (that you can set up) output many champ suggestions and your winrate.",
-    "dock_button_title": "Champ Select Win",
-    "icon": "icons/IconMouseOver.png",
-    "icon_gray": "icons/IconMouseNormal.png",
-    "launcher_icon": "icons/desktop-icon.ico",
-    "splash_image": "icons/IconMouseOver.png",
-    "window_icon": "icons/IconMouseOver.png"
-  },
-  "permissions": [
-    "GameInfo",
-    "Extensions",
-    "Streaming",
-    "Profile"
-  ],
-  "data": {
-    "start_window": "background",
-    "protocol_override_domains": {
-      "googlesyndication": "http"
-    },
-    "externally_connectable": {
-      "matches": [
-        "http://*.overwolf.com",
-        "https://*.overwolf.com",
-        "https://*.google-analytics.com",
-        "http://*.google-analytics.com",
-        "https://www.googleapis.com"
-      ]
-    },
-    "force_browser": "user",
-    "windows": {
-      "background": {
-        "file": "background.html",
-        "background_optimization": false,
-        "is_background_page": true
-      },
-      "desktop": {
-        "file": "desktop.html",
-        "desktop_only": true,
-        "native_window": true,
-        "resizable": false,
-        "transparent": true,
-        "override_on_update": true,
-        "block_top_window_navigation": true,
-        "popup_blocker": true,
-        "mute": true,
-        "size": {
-          "width": 400,
-          "height": 780
-        },
-        "min_size": {
-          "width": 400,
-          "height": 780
-        }
-      }
-    },
-    "game_targeting": {
-      "type": "dedicated",
-      "game_ids": [
-        10902
-      ]
-    },
-    "game_events": [
-      10902
-    ],
-    "launch_events": [
-      {
-        "event": "GameLaunch",
-        "event_data": {
-          "game_ids": [
-            10902
-          ]
-        },
-        "start_minimized": false
-      }
-    ],
-    "developer": {
-      "enable_auto_refresh": true,
-      "reload_delay": 1000,
-      "filter": "*.*"
-    }
-  }
+	"manifest_version": 1,
+	"type": "WebApp",
+	"meta": {
+		"name": "Champ Select Winrate",
+		"author": "Nicolas Keita",
+		"author_display": "SpyNight",
+		"version": "1.0.1",
+		"minimum-overwolf-version": "0.194.0",
+		"description": "From general knowledge about champ select (that you can set up) output many champ suggestions and your winrate.",
+		"dock_button_title": "Champ Select Win",
+		"icon": "icons/IconMouseOver.png",
+		"icon_gray": "icons/IconMouseNormal.png",
+		"launcher_icon": "icons/desktop-icon.ico",
+		"splash_image": "icons/IconMouseOver.png",
+		"window_icon": "icons/IconMouseOver.png"
+	},
+	"permissions": ["GameInfo", "Extensions", "Streaming", "Profile"],
+	"data": {
+		"start_window": "background",
+		"protocol_override_domains": {
+			"googlesyndication": "http"
+		},
+		"externally_connectable": {
+			"matches": ["http://*.overwolf.com", "https://*.overwolf.com", "https://*.google-analytics.com", "http://*.google-analytics.com", "https://www.googleapis.com"]
+		},
+		"force_browser": "user",
+		"windows": {
+			"background": {
+				"file": "background.html",
+				"background_optimization": false,
+				"is_background_page": true
+			},
+			"desktop": {
+				"file": "desktop.html",
+				"desktop_only": true,
+				"native_window": true,
+				"resizable": false,
+				"transparent": true,
+				"override_on_update": true,
+				"block_top_window_navigation": true,
+				"popup_blocker": true,
+				"mute": true,
+				"size": {
+					"width": 400,
+					"height": 780
+				},
+				"min_size": {
+					"width": 400,
+					"height": 780
+				}
+			}
+		},
+		"game_targeting": {
+			"type": "dedicated",
+			"game_ids": [10902]
+		},
+		"game_events": [10902],
+		"launch_events": [
+			{
+				"event": "GameLaunch",
+				"event_data": {
+					"game_ids": [10902]
+				},
+				"start_minimized": false
+			}
+		],
+		"developer": {
+			"enable_auto_refresh": true,
+			"reload_delay": 1000,
+			"filter": "*.*"
+		}
+	}
 }

@@ -3,13 +3,13 @@
 */
 
 class Champion {
-    public name: string
-    public opScore_CSW
-    public opScore_user
+	public name: string
+	public opScore_CSW
+	public opScore_user
 
-    public setUserScore = score => {
-        this.opScore_user = score
-    }
+	public setUserScore = score => {
+		this.opScore_user = score
+	}
 }
 
 export default Champion

@@ -1,36 +1,32 @@
 {
-    "env": {
-        "browser": true,
-        "es2022": true
-    },
-    "extends": [
-        "plugin:react/recommended",
-        "eslint:recommended",
-        "plugin:@typescript-eslint/recommended",
-        "standard-with-typescript",
-        "prettier"
-    ],
-    "overrides": [
-    ],
-    "parserOptions": {
-        "ecmaVersion": 2022,
-        "sourceType": "module",
-        "parser": "@typescript-eslint/parser",
-        "project": ["./tsconfig.json"]
-    },
-    "ignorePatterns": ["webpack.config.js", "overwolf.webpack.js"],
-    "plugins": [
-        "react",
-        "react-hooks",
-        "@typescript-eslint",
-        "only-warn"
-    ],
-    "rules": {
-        "react-hooks/exhaustive-deps": "warn",
-        "react-hooks/rules-of-hooks": "warn",
-        "no-unexpected-multiline": "warn",
+	"env": {
+		"browser": true,
+		"es2022": true
+	},
+	"extends": ["plugin:react/recommended", "plugin:@typescript-eslint/recommended", "eslint:recommended"],
+	"overrides": [
+		{
+			"files": ["*.ts", "*.tsx"],
+			"rules": {"no-undef": "off"}
+		}
+	],
+	"parserOptions": {
+		"ecmaVersion": 2022,
+		"sourceType": "module",
+		"parser": "@typescript-eslint/parser",
+		"project": ["./tsconfig.json"]
+	},
+	"ignorePatterns": ["webpack.config.js", "overwolf.webpack.js"],
+	"plugins": ["react", "react-hooks", "@typescript-eslint", "only-warn"],
+	"rules": {
+		"react-hooks/exhaustive-deps": "warn",
+		"react-hooks/rules-of-hooks": "warn",
+		"no-unexpected-multiline": "warn",
 
-        "@typescript-eslint/ban-ts-comment": "off",
-        "@typescript-eslint/no-empty-function": "off"
-    }
+		"eqeqeq": "off",
+		"@typescript-eslint/ban-ts-comment": "off",
+		"@typescript-eslint/no-empty-function": "off",
+		"@typescript-eslint/naming-convention": "off",
+		"@typescript-eslint/explicit-module-boundary-types": "off"
+	}
 }

@@ -1,812 +1,812 @@
 {
-  "Aatrox": {
-    "CSW_score": 50,
-    "name": "Aatrox",
-    "image": "Aatrox.png"
-  },
-  "Ahri": {
-    "CSW_score": 50,
-    "name": "Ahri",
-    "image": "Ahri.png"
-  },
-  "Akali": {
-    "CSW_score": 50,
-    "name": "Akali",
-    "image": "Akali.png"
-  },
-  "Akshan": {
-    "CSW_score": 50,
-    "name": "Akshan",
-    "image": "Akshan.png"
-  },
-  "Alistar": {
-    "CSW_score": 50,
-    "name": "Alistar",
-    "image": "Alistar.png"
-  },
-  "Amumu": {
-    "CSW_score": 50,
-    "name": "Amumu",
-    "image": "Amumu.png"
-  },
-  "Anivia": {
-    "CSW_score": 50,
-    "name": "Anivia",
-    "image": "Anivia.png"
-  },
-  "Annie": {
-    "CSW_score": 50,
-    "name": "Annie",
-    "image": "Annie.png"
-  },
-  "Aphelios": {
-    "CSW_score": 50,
-    "name": "Aphelios",
-    "image": "Aphelios.png"
-  },
-  "Ashe": {
-    "CSW_score": 50,
-    "name": "Ashe",
-    "image": "Ashe.png"
-  },
-  "AurelionSol": {
-    "CSW_score": 50,
-    "name": "Aurelion Sol",
-    "image": "AurelionSol.png"
-  },
-  "Azir": {
-    "CSW_score": 50,
-    "name": "Azir",
-    "image": "Azir.png"
-  },
-  "Bard": {
-    "CSW_score": 50,
-    "name": "Bard",
-    "image": "Bard.png"
-  },
-  "Belveth": {
-    "CSW_score": 50,
-    "name": "Bel'Veth",
-    "image": "Belveth.png"
-  },
-  "Blitzcrank": {
-    "CSW_score": 50,
-    "name": "Blitzcrank",
-    "image": "Blitzcrank.png"
-  },
-  "Brand": {
-    "CSW_score": 50,
-    "name": "Brand",
-    "image": "Brand.png"
-  },
-  "Braum": {
-    "CSW_score": 50,
-    "name": "Braum",
-    "image": "Braum.png"
-  },
-  "Caitlyn": {
-    "CSW_score": 50,
-    "name": "Caitlyn",
-    "image": "Caitlyn.png"
-  },
-  "Camille": {
-    "CSW_score": 50,
-    "name": "Camille",
-    "image": "Camille.png"
-  },
-  "Cassiopeia": {
-    "CSW_score": 50,
-    "name": "Cassiopeia",
-    "image": "Cassiopeia.png"
-  },
-  "Chogath": {
-    "CSW_score": 50,
-    "name": "Cho'Gath",
-    "image": "Chogath.png"
-  },
-  "Corki": {
-    "CSW_score": 50,
-    "name": "Corki",
-    "image": "Corki.png"
-  },
-  "Darius": {
-    "CSW_score": 50,
-    "name": "Darius",
-    "image": "Darius.png"
-  },
-  "Diana": {
-    "CSW_score": 50,
-    "name": "Diana",
-    "image": "Diana.png"
-  },
-  "Draven": {
-    "CSW_score": 50,
-    "name": "Draven",
-    "image": "Draven.png"
-  },
-  "DrMundo": {
-    "CSW_score": 50,
-    "name": "Dr. Mundo",
-    "image": "DrMundo.png"
-  },
-  "Ekko": {
-    "CSW_score": 50,
-    "name": "Ekko",
-    "image": "Ekko.png"
-  },
-  "Elise": {
-    "CSW_score": 50,
-    "name": "Elise",
-    "image": "Elise.png"
-  },
-  "Evelynn": {
-    "CSW_score": 50,
-    "name": "Evelynn",
-    "image": "Evelynn.png"
-  },
-  "Ezreal": {
-    "CSW_score": 50,
-    "name": "Ezreal",
-    "image": "Ezreal.png"
-  },
-  "Fiddlesticks": {
-    "CSW_score": 50,
-    "name": "Fiddlesticks",
-    "image": "Fiddlesticks.png"
-  },
-  "Fiora": {
-    "CSW_score": 50,
-    "name": "Fiora",
-    "image": "Fiora.png"
-  },
-  "Fizz": {
-    "CSW_score": 50,
-    "name": "Fizz",
-    "image": "Fizz.png"
-  },
-  "Galio": {
-    "CSW_score": 50,
-    "name": "Galio",
-    "image": "Galio.png"
-  },
-  "Gangplank": {
-    "CSW_score": 50,
-    "name": "Gangplank",
-    "image": "Gangplank.png"
-  },
-  "Garen": {
-    "CSW_score": 50,
-    "name": "Garen",
-    "image": "Garen.png"
-  },
-  "Gnar": {
-    "CSW_score": 50,
-    "name": "Gnar",
-    "image": "Gnar.png"
-  },
-  "Gragas": {
-    "CSW_score": 50,
-    "name": "Gragas",
-    "image": "Gragas.png"
-  },
-  "Graves": {
-    "CSW_score": 50,
-    "name": "Graves",
-    "image": "Graves.png"
-  },
-  "Gwen": {
-    "CSW_score": 50,
-    "name": "Gwen",
-    "image": "Gwen.png"
-  },
-  "Hecarim": {
-    "CSW_score": 50,
-    "name": "Hecarim",
-    "image": "Hecarim.png"
-  },
-  "Heimerdinger": {
-    "CSW_score": 50,
-    "name": "Heimerdinger",
-    "image": "Heimerdinger.png"
-  },
-  "Illaoi": {
-    "CSW_score": 50,
-    "name": "Illaoi",
-    "image": "Illaoi.png"
-  },
-  "Irelia": {
-    "CSW_score": 50,
-    "name": "Irelia",
-    "image": "Irelia.png"
-  },
-  "Ivern": {
-    "CSW_score": 50,
-    "name": "Ivern",
-    "image": "Ivern.png"
-  },
-  "Janna": {
-    "CSW_score": 50,
-    "name": "Janna",
-    "image": "Janna.png"
-  },
-  "JarvanIV": {
-    "CSW_score": 50,
-    "name": "Jarvan IV",
-    "image": "JarvanIV.png"
-  },
-  "Jax": {
-    "CSW_score": 50,
-    "name": "Jax",
-    "image": "Jax.png"
-  },
-  "Jayce": {
-    "CSW_score": 50,
-    "name": "Jayce",
-    "image": "Jayce.png"
-  },
-  "Jhin": {
-    "CSW_score": 50,
-    "name": "Jhin",
-    "image": "Jhin.png"
-  },
-  "Jinx": {
-    "CSW_score": 50,
-    "name": "Jinx",
-    "image": "Jinx.png"
-  },
-  "Kaisa": {
-    "CSW_score": 50,
-    "name": "Kai'Sa",
-    "image": "Kaisa.png"
-  },
-  "Kalista": {
-    "CSW_score": 50,
-    "name": "Kalista",
-    "image": "Kalista.png"
-  },
-  "Karma": {
-    "CSW_score": 50,
-    "name": "Karma",
-    "image": "Karma.png"
-  },
-  "Karthus": {
-    "CSW_score": 50,
-    "name": "Karthus",
-    "image": "Karthus.png"
-  },
-  "Kassadin": {
-    "CSW_score": 50,
-    "name": "Kassadin",
-    "image": "Kassadin.png"
-  },
-  "Katarina": {
-    "CSW_score": 50,
-    "name": "Katarina",
-    "image": "Katarina.png"
-  },
-  "Kayle": {
-    "CSW_score": 50,
-    "name": "Kayle",
-    "image": "Kayle.png"
-  },
-  "Kayn": {
-    "CSW_score": 50,
-    "name": "Kayn",
-    "image": "Kayn.png"
-  },
-  "Kennen": {
-    "CSW_score": 50,
-    "name": "Kennen",
-    "image": "Kennen.png"
-  },
-  "Khazix": {
-    "CSW_score": 50,
-    "name": "Kha'Zix",
-    "image": "Khazix.png"
-  },
-  "Kindred": {
-    "CSW_score": 50,
-    "name": "Kindred",
-    "image": "Kindred.png"
-  },
-  "Kled": {
-    "CSW_score": 50,
-    "name": "Kled",
-    "image": "Kled.png"
-  },
-  "KogMaw": {
-    "CSW_score": 50,
-    "name": "Kog'Maw",
-    "image": "KogMaw.png"
-  },
-  "KSante": {
-    "CSW_score": 50,
-    "name": "K'Sante",
-    "image": "KSante.png"
-  },
-  "Leblanc": {
-    "CSW_score": 50,
-    "name": "LeBlanc",
-    "image": "Leblanc.png"
-  },
-  "LeeSin": {
-    "CSW_score": 50,
-    "name": "Lee Sin",
-    "image": "LeeSin.png"
-  },
-  "Leona": {
-    "CSW_score": 50,
-    "name": "Leona",
-    "image": "Leona.png"
-  },
-  "Lillia": {
-    "CSW_score": 50,
-    "name": "Lillia",
-    "image": "Lillia.png"
-  },
-  "Lissandra": {
-    "CSW_score": 50,
-    "name": "Lissandra",
-    "image": "Lissandra.png"
-  },
-  "Lucian": {
-    "CSW_score": 50,
-    "name": "Lucian",
-    "image": "Lucian.png"
-  },
-  "Lulu": {
-    "CSW_score": 50,
-    "name": "Lulu",
-    "image": "Lulu.png"
-  },
-  "Lux": {
-    "CSW_score": 50,
-    "name": "Lux",
-    "image": "Lux.png"
-  },
-  "Malphite": {
-    "CSW_score": 50,
-    "name": "Malphite",
-    "image": "Malphite.png"
-  },
-  "Malzahar": {
-    "CSW_score": 50,
-    "name": "Malzahar",
-    "image": "Malzahar.png"
-  },
-  "Maokai": {
-    "CSW_score": 50,
-    "name": "Maokai",
-    "image": "Maokai.png"
-  },
-  "MasterYi": {
-    "CSW_score": 50,
-    "name": "Master Yi",
-    "image": "MasterYi.png"
-  },
-  "MissFortune": {
-    "CSW_score": 50,
-    "name": "Miss Fortune",
-    "image": "MissFortune.png"
-  },
-  "MonkeyKing": {
-    "CSW_score": 50,
-    "name": "Wukong",
-    "image": "MonkeyKing.png"
-  },
-  "Mordekaiser": {
-    "CSW_score": 50,
-    "name": "Mordekaiser",
-    "image": "Mordekaiser.png"
-  },
-  "Morgana": {
-    "CSW_score": 50,
-    "name": "Morgana",
-    "image": "Morgana.png"
-  },
-  "Nami": {
-    "CSW_score": 50,
-    "name": "Nami",
-    "image": "Nami.png"
-  },
-  "Nasus": {
-    "CSW_score": 50,
-    "name": "Nasus",
-    "image": "Nasus.png"
-  },
-  "Nautilus": {
-    "CSW_score": 50,
-    "name": "Nautilus",
-    "image": "Nautilus.png"
-  },
-  "Neeko": {
-    "CSW_score": 50,
-    "name": "Neeko",
-    "image": "Neeko.png"
-  },
-  "Nidalee": {
-    "CSW_score": 50,
-    "name": "Nidalee",
-    "image": "Nidalee.png"
-  },
-  "Nilah": {
-    "CSW_score": 50,
-    "name": "Nilah",
-    "image": "Nilah.png"
-  },
-  "Nocturne": {
-    "CSW_score": 50,
-    "name": "Nocturne",
-    "image": "Nocturne.png"
-  },
-  "Nunu": {
-    "CSW_score": 50,
-    "name": "Nunu & Willump",
-    "image": "Nunu.png"
-  },
-  "Olaf": {
-    "CSW_score": 50,
-    "name": "Olaf",
-    "image": "Olaf.png"
-  },
-  "Orianna": {
-    "CSW_score": 50,
-    "name": "Orianna",
-    "image": "Orianna.png"
-  },
-  "Ornn": {
-    "CSW_score": 50,
-    "name": "Ornn",
-    "image": "Ornn.png"
-  },
-  "Pantheon": {
-    "CSW_score": 50,
-    "name": "Pantheon",
-    "image": "Pantheon.png"
-  },
-  "Poppy": {
-    "CSW_score": 50,
-    "name": "Poppy",
-    "image": "Poppy.png"
-  },
-  "Pyke": {
-    "CSW_score": 50,
-    "name": "Pyke",
-    "image": "Pyke.png"
-  },
-  "Qiyana": {
-    "CSW_score": 50,
-    "name": "Qiyana",
-    "image": "Qiyana.png"
-  },
-  "Quinn": {
-    "CSW_score": 50,
-    "name": "Quinn",
-    "image": "Quinn.png"
-  },
-  "Rakan": {
-    "CSW_score": 50,
-    "name": "Rakan",
-    "image": "Rakan.png"
-  },
-  "Rammus": {
-    "CSW_score": 50,
-    "name": "Rammus",
-    "image": "Rammus.png"
-  },
-  "RekSai": {
-    "CSW_score": 50,
-    "name": "Rek'Sai",
-    "image": "RekSai.png"
-  },
-  "Rell": {
-    "CSW_score": 50,
-    "name": "Rell",
-    "image": "Rell.png"
-  },
-  "Renata": {
-    "CSW_score": 50,
-    "name": "Renata Glasc",
-    "image": "Renata.png"
-  },
-  "Renekton": {
-    "CSW_score": 50,
-    "name": "Renekton",
-    "image": "Renekton.png"
-  },
-  "Rengar": {
-    "CSW_score": 50,
-    "name": "Rengar",
-    "image": "Rengar.png"
-  },
-  "Riven": {
-    "CSW_score": 50,
-    "name": "Riven",
-    "image": "Riven.png"
-  },
-  "Rumble": {
-    "CSW_score": 50,
-    "name": "Rumble",
-    "image": "Rumble.png"
-  },
-  "Ryze": {
-    "CSW_score": 50,
-    "name": "Ryze",
-    "image": "Ryze.png"
-  },
-  "Samira": {
-    "CSW_score": 50,
-    "name": "Samira",
-    "image": "Samira.png"
-  },
-  "Sejuani": {
-    "CSW_score": 50,
-    "name": "Sejuani",
-    "image": "Sejuani.png"
-  },
-  "Senna": {
-    "CSW_score": 50,
-    "name": "Senna",
-    "image": "Senna.png"
-  },
-  "Seraphine": {
-    "CSW_score": 50,
-    "name": "Seraphine",
-    "image": "Seraphine.png"
-  },
-  "Sett": {
-    "CSW_score": 50,
-    "name": "Sett",
-    "image": "Sett.png"
-  },
-  "Shaco": {
-    "CSW_score": 50,
-    "name": "Shaco",
-    "image": "Shaco.png"
-  },
-  "Shen": {
-    "CSW_score": 50,
-    "name": "Shen",
-    "image": "Shen.png"
-  },
-  "Shyvana": {
-    "CSW_score": 50,
-    "name": "Shyvana",
-    "image": "Shyvana.png"
-  },
-  "Singed": {
-    "CSW_score": 50,
-    "name": "Singed",
-    "image": "Singed.png"
-  },
-  "Sion": {
-    "CSW_score": 50,
-    "name": "Sion",
-    "image": "Sion.png"
-  },
-  "Sivir": {
-    "CSW_score": 50,
-    "name": "Sivir",
-    "image": "Sivir.png"
-  },
-  "Skarner": {
-    "CSW_score": 50,
-    "name": "Skarner",
-    "image": "Skarner.png"
-  },
-  "Sona": {
-    "CSW_score": 50,
-    "name": "Sona",
-    "image": "Sona.png"
-  },
-  "Soraka": {
-    "CSW_score": 50,
-    "name": "Soraka",
-    "image": "Soraka.png"
-  },
-  "Swain": {
-    "CSW_score": 50,
-    "name": "Swain",
-    "image": "Swain.png"
-  },
-  "Sylas": {
-    "CSW_score": 50,
-    "name": "Sylas",
-    "image": "Sylas.png"
-  },
-  "Syndra": {
-    "CSW_score": 50,
-    "name": "Syndra",
-    "image": "Syndra.png"
-  },
-  "TahmKench": {
-    "CSW_score": 50,
-    "name": "Tahm Kench",
-    "image": "TahmKench.png"
-  },
-  "Taliyah": {
-    "CSW_score": 50,
-    "name": "Taliyah",
-    "image": "Taliyah.png"
-  },
-  "Talon": {
-    "CSW_score": 50,
-    "name": "Talon",
-    "image": "Talon.png"
-  },
-  "Taric": {
-    "CSW_score": 50,
-    "name": "Taric",
-    "image": "Taric.png"
-  },
-  "Teemo": {
-    "CSW_score": 50,
-    "name": "Teemo",
-    "image": "Teemo.png"
-  },
-  "Thresh": {
-    "CSW_score": 50,
-    "name": "Thresh",
-    "image": "Thresh.png"
-  },
-  "Tristana": {
-    "CSW_score": 50,
-    "name": "Tristana",
-    "image": "Tristana.png"
-  },
-  "Trundle": {
-    "CSW_score": 50,
-    "name": "Trundle",
-    "image": "Trundle.png"
-  },
-  "Tryndamere": {
-    "CSW_score": 50,
-    "name": "Tryndamere",
-    "image": "Tryndamere.png"
-  },
-  "TwistedFate": {
-    "CSW_score": 50,
-    "name": "Twisted Fate",
-    "image": "TwistedFate.png"
-  },
-  "Twitch": {
-    "CSW_score": 50,
-    "name": "Twitch",
-    "image": "Twitch.png"
-  },
-  "Udyr": {
-    "CSW_score": 50,
-    "name": "Udyr",
-    "image": "Udyr.png"
-  },
-  "Urgot": {
-    "CSW_score": 50,
-    "name": "Urgot",
-    "image": "Urgot.png"
-  },
-  "Varus": {
-    "CSW_score": 50,
-    "name": "Varus",
-    "image": "Varus.png"
-  },
-  "Vayne": {
-    "CSW_score": 50,
-    "name": "Vayne",
-    "image": "Vayne.png"
-  },
-  "Veigar": {
-    "CSW_score": 50,
-    "name": "Veigar",
-    "image": "Veigar.png"
-  },
-  "Velkoz": {
-    "CSW_score": 50,
-    "name": "Vel'Koz",
-    "image": "Velkoz.png"
-  },
-  "Vex": {
-    "CSW_score": 50,
-    "name": "Vex",
-    "image": "Vex.png"
-  },
-  "Vi": {
-    "CSW_score": 50,
-    "name": "Vi",
-    "image": "Vi.png"
-  },
-  "Viego": {
-    "CSW_score": 50,
-    "name": "Viego",
-    "image": "Viego.png"
-  },
-  "Viktor": {
-    "CSW_score": 50,
-    "name": "Viktor",
-    "image": "Viktor.png"
-  },
-  "Vladimir": {
-    "CSW_score": 50,
-    "name": "Vladimir",
-    "image": "Vladimir.png"
-  },
-  "Volibear": {
-    "CSW_score": 50,
-    "name": "Volibear",
-    "image": "Volibear.png"
-  },
-  "Warwick": {
-    "CSW_score": 50,
-    "name": "Warwick",
-    "image": "Warwick.png"
-  },
-  "Xayah": {
-    "CSW_score": 50,
-    "name": "Xayah",
-    "image": "Xayah.png"
-  },
-  "Xerath": {
-    "CSW_score": 50,
-    "name": "Xerath",
-    "image": "Xerath.png"
-  },
-  "XinZhao": {
-    "CSW_score": 50,
-    "name": "Xin Zhao",
-    "image": "XinZhao.png"
-  },
-  "Yasuo": {
-    "CSW_score": 50,
-    "name": "Yasuo",
-    "image": "Yasuo.png"
-  },
-  "Yone": {
-    "CSW_score": 50,
-    "name": "Yone",
-    "image": "Yone.png"
-  },
-  "Yorick": {
-    "CSW_score": 50,
-    "name": "Yorick",
-    "image": "Yorick.png"
-  },
-  "Yuumi": {
-    "CSW_score": 50,
-    "name": "Yuumi",
-    "image": "Yuumi.png"
-  },
-  "Zac": {
-    "CSW_score": 50,
-    "name": "Zac",
-    "image": "Zac.png"
-  },
-  "Zed": {
-    "CSW_score": 50,
-    "name": "Zed",
-    "image": "Zed.png"
-  },
-  "Zeri": {
-    "CSW_score": 50,
-    "name": "Zeri",
-    "image": "Zeri.png"
-  },
-  "Ziggs": {
-    "CSW_score": 50,
-    "name": "Ziggs",
-    "image": "Ziggs.png"
-  },
-  "Zilean": {
-    "CSW_score": 50,
-    "name": "Zilean",
-    "image": "Zilean.png"
-  },
-  "Zoe": {
-    "CSW_score": 50,
-    "name": "Zoe",
-    "image": "Zoe.png"
-  },
-  "Zyra": {
-    "CSW_score": 50,
-    "name": "Zyra",
-    "image": "Zyra.png"
-  }
+	"Aatrox": {
+		"CSW_score": 50,
+		"name": "Aatrox",
+		"image": "Aatrox.png"
+	},
+	"Ahri": {
+		"CSW_score": 50,
+		"name": "Ahri",
+		"image": "Ahri.png"
+	},
+	"Akali": {
+		"CSW_score": 50,
+		"name": "Akali",
+		"image": "Akali.png"
+	},
+	"Akshan": {
+		"CSW_score": 50,
+		"name": "Akshan",
+		"image": "Akshan.png"
+	},
+	"Alistar": {
+		"CSW_score": 50,
+		"name": "Alistar",
+		"image": "Alistar.png"
+	},
+	"Amumu": {
+		"CSW_score": 50,
+		"name": "Amumu",
+		"image": "Amumu.png"
+	},
+	"Anivia": {
+		"CSW_score": 50,
+		"name": "Anivia",
+		"image": "Anivia.png"
+	},
+	"Annie": {
+		"CSW_score": 50,
+		"name": "Annie",
+		"image": "Annie.png"
+	},
+	"Aphelios": {
+		"CSW_score": 50,
+		"name": "Aphelios",
+		"image": "Aphelios.png"
+	},
+	"Ashe": {
+		"CSW_score": 50,
+		"name": "Ashe",
+		"image": "Ashe.png"
+	},
+	"AurelionSol": {
+		"CSW_score": 50,
+		"name": "Aurelion Sol",
+		"image": "AurelionSol.png"
+	},
+	"Azir": {
+		"CSW_score": 50,
+		"name": "Azir",
+		"image": "Azir.png"
+	},
+	"Bard": {
+		"CSW_score": 50,
+		"name": "Bard",
+		"image": "Bard.png"
+	},
+	"Belveth": {
+		"CSW_score": 50,
+		"name": "Bel'Veth",
+		"image": "Belveth.png"
+	},
+	"Blitzcrank": {
+		"CSW_score": 50,
+		"name": "Blitzcrank",
+		"image": "Blitzcrank.png"
+	},
+	"Brand": {
+		"CSW_score": 50,
+		"name": "Brand",
+		"image": "Brand.png"
+	},
+	"Braum": {
+		"CSW_score": 50,
+		"name": "Braum",
+		"image": "Braum.png"
+	},
+	"Caitlyn": {
+		"CSW_score": 50,
+		"name": "Caitlyn",
+		"image": "Caitlyn.png"
+	},
+	"Camille": {
+		"CSW_score": 50,
+		"name": "Camille",
+		"image": "Camille.png"
+	},
+	"Cassiopeia": {
+		"CSW_score": 50,
+		"name": "Cassiopeia",
+		"image": "Cassiopeia.png"
+	},
+	"Chogath": {
+		"CSW_score": 50,
+		"name": "Cho'Gath",
+		"image": "Chogath.png"
+	},
+	"Corki": {
+		"CSW_score": 50,
+		"name": "Corki",
+		"image": "Corki.png"
+	},
+	"Darius": {
+		"CSW_score": 50,
+		"name": "Darius",
+		"image": "Darius.png"
+	},
+	"Diana": {
+		"CSW_score": 50,
+		"name": "Diana",
+		"image": "Diana.png"
+	},
+	"Draven": {
+		"CSW_score": 50,
+		"name": "Draven",
+		"image": "Draven.png"
+	},
+	"DrMundo": {
+		"CSW_score": 50,
+		"name": "Dr. Mundo",
+		"image": "DrMundo.png"
+	},
+	"Ekko": {
+		"CSW_score": 50,
+		"name": "Ekko",
+		"image": "Ekko.png"
+	},
+	"Elise": {
+		"CSW_score": 50,
+		"name": "Elise",
+		"image": "Elise.png"
+	},
+	"Evelynn": {
+		"CSW_score": 50,
+		"name": "Evelynn",
+		"image": "Evelynn.png"
+	},
+	"Ezreal": {
+		"CSW_score": 50,
+		"name": "Ezreal",
+		"image": "Ezreal.png"
+	},
+	"Fiddlesticks": {
+		"CSW_score": 50,
+		"name": "Fiddlesticks",
+		"image": "Fiddlesticks.png"
+	},
+	"Fiora": {
+		"CSW_score": 50,
+		"name": "Fiora",
+		"image": "Fiora.png"
+	},
+	"Fizz": {
+		"CSW_score": 50,
+		"name": "Fizz",
+		"image": "Fizz.png"
+	},
+	"Galio": {
+		"CSW_score": 50,
+		"name": "Galio",
+		"image": "Galio.png"
+	},
+	"Gangplank": {
+		"CSW_score": 50,
+		"name": "Gangplank",
+		"image": "Gangplank.png"
+	},
+	"Garen": {
+		"CSW_score": 50,
+		"name": "Garen",
+		"image": "Garen.png"
+	},
+	"Gnar": {
+		"CSW_score": 50,
+		"name": "Gnar",
+		"image": "Gnar.png"
+	},
+	"Gragas": {
+		"CSW_score": 50,
+		"name": "Gragas",
+		"image": "Gragas.png"
+	},
+	"Graves": {
+		"CSW_score": 50,
+		"name": "Graves",
+		"image": "Graves.png"
+	},
+	"Gwen": {
+		"CSW_score": 50,
+		"name": "Gwen",
+		"image": "Gwen.png"
+	},
+	"Hecarim": {
+		"CSW_score": 50,
+		"name": "Hecarim",
+		"image": "Hecarim.png"
+	},
+	"Heimerdinger": {
+		"CSW_score": 50,
+		"name": "Heimerdinger",
+		"image": "Heimerdinger.png"
+	},
+	"Illaoi": {
+		"CSW_score": 50,
+		"name": "Illaoi",
+		"image": "Illaoi.png"
+	},
+	"Irelia": {
+		"CSW_score": 50,
+		"name": "Irelia",
+		"image": "Irelia.png"
+	},
+	"Ivern": {
+		"CSW_score": 50,
+		"name": "Ivern",
+		"image": "Ivern.png"
+	},
+	"Janna": {
+		"CSW_score": 50,
+		"name": "Janna",
+		"image": "Janna.png"
+	},
+	"JarvanIV": {
+		"CSW_score": 50,
+		"name": "Jarvan IV",
+		"image": "JarvanIV.png"
+	},
+	"Jax": {
+		"CSW_score": 50,
+		"name": "Jax",
+		"image": "Jax.png"
+	},
+	"Jayce": {
+		"CSW_score": 50,
+		"name": "Jayce",
+		"image": "Jayce.png"
+	},
+	"Jhin": {
+		"CSW_score": 50,
+		"name": "Jhin",
+		"image": "Jhin.png"
+	},
+	"Jinx": {
+		"CSW_score": 50,
+		"name": "Jinx",
+		"image": "Jinx.png"
+	},
+	"Kaisa": {
+		"CSW_score": 50,
+		"name": "Kai'Sa",
+		"image": "Kaisa.png"
+	},
+	"Kalista": {
+		"CSW_score": 50,
+		"name": "Kalista",
+		"image": "Kalista.png"
+	},
+	"Karma": {
+		"CSW_score": 50,
+		"name": "Karma",
+		"image": "Karma.png"
+	},
+	"Karthus": {
+		"CSW_score": 50,
+		"name": "Karthus",
+		"image": "Karthus.png"
+	},
+	"Kassadin": {
+		"CSW_score": 50,
+		"name": "Kassadin",
+		"image": "Kassadin.png"
+	},
+	"Katarina": {
+		"CSW_score": 50,
+		"name": "Katarina",
+		"image": "Katarina.png"
+	},
+	"Kayle": {
+		"CSW_score": 50,
+		"name": "Kayle",
+		"image": "Kayle.png"
+	},
+	"Kayn": {
+		"CSW_score": 50,
+		"name": "Kayn",
+		"image": "Kayn.png"
+	},
+	"Kennen": {
+		"CSW_score": 50,
+		"name": "Kennen",
+		"image": "Kennen.png"
+	},
+	"Khazix": {
+		"CSW_score": 50,
+		"name": "Kha'Zix",
+		"image": "Khazix.png"
+	},
+	"Kindred": {
+		"CSW_score": 50,
+		"name": "Kindred",
+		"image": "Kindred.png"
+	},
+	"Kled": {
+		"CSW_score": 50,
+		"name": "Kled",
+		"image": "Kled.png"
+	},
+	"KogMaw": {
+		"CSW_score": 50,
+		"name": "Kog'Maw",
+		"image": "KogMaw.png"
+	},
+	"KSante": {
+		"CSW_score": 50,
+		"name": "K'Sante",
+		"image": "KSante.png"
+	},
+	"Leblanc": {
+		"CSW_score": 50,
+		"name": "LeBlanc",
+		"image": "Leblanc.png"
+	},
+	"LeeSin": {
+		"CSW_score": 50,
+		"name": "Lee Sin",
+		"image": "LeeSin.png"
+	},
+	"Leona": {
+		"CSW_score": 50,
+		"name": "Leona",
+		"image": "Leona.png"
+	},
+	"Lillia": {
+		"CSW_score": 50,
+		"name": "Lillia",
+		"image": "Lillia.png"
+	},
+	"Lissandra": {
+		"CSW_score": 50,
+		"name": "Lissandra",
+		"image": "Lissandra.png"
+	},
+	"Lucian": {
+		"CSW_score": 50,
+		"name": "Lucian",
+		"image": "Lucian.png"
+	},
+	"Lulu": {
+		"CSW_score": 50,
+		"name": "Lulu",
+		"image": "Lulu.png"
+	},
+	"Lux": {
+		"CSW_score": 50,
+		"name": "Lux",
+		"image": "Lux.png"
+	},
+	"Malphite": {
+		"CSW_score": 50,
+		"name": "Malphite",
+		"image": "Malphite.png"
+	},
+	"Malzahar": {
+		"CSW_score": 50,
+		"name": "Malzahar",
+		"image": "Malzahar.png"
+	},
+	"Maokai": {
+		"CSW_score": 50,
+		"name": "Maokai",
+		"image": "Maokai.png"
+	},
+	"MasterYi": {
+		"CSW_score": 50,
+		"name": "Master Yi",
+		"image": "MasterYi.png"
+	},
+	"MissFortune": {
+		"CSW_score": 50,
+		"name": "Miss Fortune",
+		"image": "MissFortune.png"
+	},
+	"MonkeyKing": {
+		"CSW_score": 50,
+		"name": "Wukong",
+		"image": "MonkeyKing.png"
+	},
+	"Mordekaiser": {
+		"CSW_score": 50,
+		"name": "Mordekaiser",
+		"image": "Mordekaiser.png"
+	},
+	"Morgana": {
+		"CSW_score": 50,
+		"name": "Morgana",
+		"image": "Morgana.png"
+	},
+	"Nami": {
+		"CSW_score": 50,
+		"name": "Nami",
+		"image": "Nami.png"
+	},
+	"Nasus": {
+		"CSW_score": 50,
+		"name": "Nasus",
+		"image": "Nasus.png"
+	},
+	"Nautilus": {
+		"CSW_score": 50,
+		"name": "Nautilus",
+		"image": "Nautilus.png"
+	},
+	"Neeko": {
+		"CSW_score": 50,
+		"name": "Neeko",
+		"image": "Neeko.png"
+	},
+	"Nidalee": {
+		"CSW_score": 50,
+		"name": "Nidalee",
+		"image": "Nidalee.png"
+	},
+	"Nilah": {
+		"CSW_score": 50,
+		"name": "Nilah",
+		"image": "Nilah.png"
+	},
+	"Nocturne": {
+		"CSW_score": 50,
+		"name": "Nocturne",
+		"image": "Nocturne.png"
+	},
+	"Nunu": {
+		"CSW_score": 50,
+		"name": "Nunu & Willump",
+		"image": "Nunu.png"
+	},
+	"Olaf": {
+		"CSW_score": 50,
+		"name": "Olaf",
+		"image": "Olaf.png"
+	},
+	"Orianna": {
+		"CSW_score": 50,
+		"name": "Orianna",
+		"image": "Orianna.png"
+	},
+	"Ornn": {
+		"CSW_score": 50,
+		"name": "Ornn",
+		"image": "Ornn.png"
+	},
+	"Pantheon": {
+		"CSW_score": 50,
+		"name": "Pantheon",
+		"image": "Pantheon.png"
+	},
+	"Poppy": {
+		"CSW_score": 50,
+		"name": "Poppy",
+		"image": "Poppy.png"
+	},
+	"Pyke": {
+		"CSW_score": 50,
+		"name": "Pyke",
+		"image": "Pyke.png"
+	},
+	"Qiyana": {
+		"CSW_score": 50,
+		"name": "Qiyana",
+		"image": "Qiyana.png"
+	},
+	"Quinn": {
+		"CSW_score": 50,
+		"name": "Quinn",
+		"image": "Quinn.png"
+	},
+	"Rakan": {
+		"CSW_score": 50,
+		"name": "Rakan",
+		"image": "Rakan.png"
+	},
+	"Rammus": {
+		"CSW_score": 50,
+		"name": "Rammus",
+		"image": "Rammus.png"
+	},
+	"RekSai": {
+		"CSW_score": 50,
+		"name": "Rek'Sai",
+		"image": "RekSai.png"
+	},
+	"Rell": {
+		"CSW_score": 50,
+		"name": "Rell",
+		"image": "Rell.png"
+	},
+	"Renata": {
+		"CSW_score": 50,
+		"name": "Renata Glasc",
+		"image": "Renata.png"
+	},
+	"Renekton": {
+		"CSW_score": 50,
+		"name": "Renekton",
+		"image": "Renekton.png"
+	},
+	"Rengar": {
+		"CSW_score": 50,
+		"name": "Rengar",
+		"image": "Rengar.png"
+	},
+	"Riven": {
+		"CSW_score": 50,
+		"name": "Riven",
+		"image": "Riven.png"
+	},
+	"Rumble": {
+		"CSW_score": 50,
+		"name": "Rumble",
+		"image": "Rumble.png"
+	},
+	"Ryze": {
+		"CSW_score": 50,
+		"name": "Ryze",
+		"image": "Ryze.png"
+	},
+	"Samira": {
+		"CSW_score": 50,
+		"name": "Samira",
+		"image": "Samira.png"
+	},
+	"Sejuani": {
+		"CSW_score": 50,
+		"name": "Sejuani",
+		"image": "Sejuani.png"
+	},
+	"Senna": {
+		"CSW_score": 50,
+		"name": "Senna",
+		"image": "Senna.png"
+	},
+	"Seraphine": {
+		"CSW_score": 50,
+		"name": "Seraphine",
+		"image": "Seraphine.png"
+	},
+	"Sett": {
+		"CSW_score": 50,
+		"name": "Sett",
+		"image": "Sett.png"
+	},
+	"Shaco": {
+		"CSW_score": 50,
+		"name": "Shaco",
+		"image": "Shaco.png"
+	},
+	"Shen": {
+		"CSW_score": 50,
+		"name": "Shen",
+		"image": "Shen.png"
+	},
+	"Shyvana": {
+		"CSW_score": 50,
+		"name": "Shyvana",
+		"image": "Shyvana.png"
+	},
+	"Singed": {
+		"CSW_score": 50,
+		"name": "Singed",
+		"image": "Singed.png"
+	},
+	"Sion": {
+		"CSW_score": 50,
+		"name": "Sion",
+		"image": "Sion.png"
+	},
+	"Sivir": {
+		"CSW_score": 50,
+		"name": "Sivir",
+		"image": "Sivir.png"
+	},
+	"Skarner": {
+		"CSW_score": 50,
+		"name": "Skarner",
+		"image": "Skarner.png"
+	},
+	"Sona": {
+		"CSW_score": 50,
+		"name": "Sona",
+		"image": "Sona.png"
+	},
+	"Soraka": {
+		"CSW_score": 50,
+		"name": "Soraka",
+		"image": "Soraka.png"
+	},
+	"Swain": {
+		"CSW_score": 50,
+		"name": "Swain",
+		"image": "Swain.png"
+	},
+	"Sylas": {
+		"CSW_score": 50,
+		"name": "Sylas",
+		"image": "Sylas.png"
+	},
+	"Syndra": {
+		"CSW_score": 50,
+		"name": "Syndra",
+		"image": "Syndra.png"
+	},
+	"TahmKench": {
+		"CSW_score": 50,
+		"name": "Tahm Kench",
+		"image": "TahmKench.png"
+	},
+	"Taliyah": {
+		"CSW_score": 50,
+		"name": "Taliyah",
+		"image": "Taliyah.png"
+	},
+	"Talon": {
+		"CSW_score": 50,
+		"name": "Talon",
+		"image": "Talon.png"
+	},
+	"Taric": {
+		"CSW_score": 50,
+		"name": "Taric",
+		"image": "Taric.png"
+	},
+	"Teemo": {
+		"CSW_score": 50,
+		"name": "Teemo",
+		"image": "Teemo.png"
+	},
+	"Thresh": {
+		"CSW_score": 50,
+		"name": "Thresh",
+		"image": "Thresh.png"
+	},
+	"Tristana": {
+		"CSW_score": 50,
+		"name": "Tristana",
+		"image": "Tristana.png"
+	},
+	"Trundle": {
+		"CSW_score": 50,
+		"name": "Trundle",
+		"image": "Trundle.png"
+	},
+	"Tryndamere": {
+		"CSW_score": 50,
+		"name": "Tryndamere",
+		"image": "Tryndamere.png"
+	},
+	"TwistedFate": {
+		"CSW_score": 50,
+		"name": "Twisted Fate",
+		"image": "TwistedFate.png"
+	},
+	"Twitch": {
+		"CSW_score": 50,
+		"name": "Twitch",
+		"image": "Twitch.png"
+	},
+	"Udyr": {
+		"CSW_score": 50,
+		"name": "Udyr",
+		"image": "Udyr.png"
+	},
+	"Urgot": {
+		"CSW_score": 50,
+		"name": "Urgot",
+		"image": "Urgot.png"
+	},
+	"Varus": {
+		"CSW_score": 50,
+		"name": "Varus",
+		"image": "Varus.png"
+	},
+	"Vayne": {
+		"CSW_score": 50,
+		"name": "Vayne",
+		"image": "Vayne.png"
+	},
+	"Veigar": {
+		"CSW_score": 50,
+		"name": "Veigar",
+		"image": "Veigar.png"
+	},
+	"Velkoz": {
+		"CSW_score": 50,
+		"name": "Vel'Koz",
+		"image": "Velkoz.png"
+	},
+	"Vex": {
+		"CSW_score": 50,
+		"name": "Vex",
+		"image": "Vex.png"
+	},
+	"Vi": {
+		"CSW_score": 50,
+		"name": "Vi",
+		"image": "Vi.png"
+	},
+	"Viego": {
+		"CSW_score": 50,
+		"name": "Viego",
+		"image": "Viego.png"
+	},
+	"Viktor": {
+		"CSW_score": 50,
+		"name": "Viktor",
+		"image": "Viktor.png"
+	},
+	"Vladimir": {
+		"CSW_score": 50,
+		"name": "Vladimir",
+		"image": "Vladimir.png"
+	},
+	"Volibear": {
+		"CSW_score": 50,
+		"name": "Volibear",
+		"image": "Volibear.png"
+	},
+	"Warwick": {
+		"CSW_score": 50,
+		"name": "Warwick",
+		"image": "Warwick.png"
+	},
+	"Xayah": {
+		"CSW_score": 50,
+		"name": "Xayah",
+		"image": "Xayah.png"
+	},
+	"Xerath": {
+		"CSW_score": 50,
+		"name": "Xerath",
+		"image": "Xerath.png"
+	},
+	"XinZhao": {
+		"CSW_score": 50,
+		"name": "Xin Zhao",
+		"image": "XinZhao.png"
+	},
+	"Yasuo": {
+		"CSW_score": 50,
+		"name": "Yasuo",
+		"image": "Yasuo.png"
+	},
+	"Yone": {
+		"CSW_score": 50,
+		"name": "Yone",
+		"image": "Yone.png"
+	},
+	"Yorick": {
+		"CSW_score": 50,
+		"name": "Yorick",
+		"image": "Yorick.png"
+	},
+	"Yuumi": {
+		"CSW_score": 50,
+		"name": "Yuumi",
+		"image": "Yuumi.png"
+	},
+	"Zac": {
+		"CSW_score": 50,
+		"name": "Zac",
+		"image": "Zac.png"
+	},
+	"Zed": {
+		"CSW_score": 50,
+		"name": "Zed",
+		"image": "Zed.png"
+	},
+	"Zeri": {
+		"CSW_score": 50,
+		"name": "Zeri",
+		"image": "Zeri.png"
+	},
+	"Ziggs": {
+		"CSW_score": 50,
+		"name": "Ziggs",
+		"image": "Ziggs.png"
+	},
+	"Zilean": {
+		"CSW_score": 50,
+		"name": "Zilean",
+		"image": "Zilean.png"
+	},
+	"Zoe": {
+		"CSW_score": 50,
+		"name": "Zoe",
+		"image": "Zoe.png"
+	},
+	"Zyra": {
+		"CSW_score": 50,
+		"name": "Zyra",
+		"image": "Zyra.png"
+	}
 }
