@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 /*
     Path + Filename: src/desktop/components/footerAD/myContextMenu.tsx
 */
@@ -6,7 +8,7 @@ import React, {useEffect} from 'react'
 import styled from 'styled-components'
 
 const FooterContainer = styled.footer`
-	flex: 1;
+  flex: 1;
 `
 
 const ADcontainer = styled.img``
@@ -21,7 +23,6 @@ function FooterAD() {
 
 	function setTab(tab) {
 		document.querySelectorAll(`[data-tab]`).forEach(el => {
-			// @ts-ignore
 			if (el.dataset.tab === tab) {
 				el.classList.add('active')
 			} else {
@@ -30,7 +31,6 @@ function FooterAD() {
 		})
 
 		document.querySelectorAll(`.tab-content`).forEach(el => {
-			// @ts-ignore
 			el.hidden = Boolean(el.id !== tab)
 		})
 	}
@@ -38,14 +38,14 @@ function FooterAD() {
 	function registerListeners() {
 		document.querySelectorAll('[data-tab]').forEach(el => {
 			el.addEventListener('click', () => {
-				// @ts-ignore
 				setTab(el.dataset.tab)
 			})
 		})
 	}
 
 	function removeAd() {
-		if (adInstance !== null) adInstance.removeAd()
+		if (adInstance !== null)
+			adInstance.removeAd()
 	}
 
 	function updateAd() {
@@ -66,17 +66,15 @@ function FooterAD() {
 			el.onerror = reject
 			document.body.appendChild(el)
 		}).catch(() => {
-			console.error("CSW_error : couldn't connect to " + 'https://content.overwolf.com/libs/ads/latest/owads.min.js' + '. Check your internet connection?')
+			console.error('CSW_error : couldn\'t connect to ' + 'https://content.overwolf.com/libs/ads/latest/owads.min.js' + '. Check your internet connection?')
 		})
 	}
 
 	async function createAd() {
-		// @ts-ignore
 		if (!window.OwAd) {
 			await loadAdLib()
-			// @ts-ignore
 			if (!window.OwAd) {
-				console.error("Couldn't load OwAd")
+				console.error('Couldn\'t load OwAd')
 				return
 			}
 		}
@@ -85,10 +83,9 @@ function FooterAD() {
 			return
 		}
 		const adCont = document.getElementById('adContainer')
-		// @ts-ignore
 		adInstance = new window.OwAd(adCont, {
 			size: {
-				width: 400,
+				width:  400,
 				height: 300
 			}
 		})
@@ -118,7 +115,6 @@ function FooterAD() {
 		const state = await new Promise(resolve => {
 			overwolf.windows.isWindowVisibleToUser(resolve)
 		})
-		// @ts-ignore
 		return state && state.success && state.visible !== 'hidden'
 	}
 
@@ -135,9 +131,7 @@ function FooterAD() {
 		const state = await new Promise(resolve => {
 			overwolf.windows.getWindowState(kWindowName, resolve)
 		})
-		// @ts-ignore
 		if (state && state.success && state.window_state_ex) {
-			// @ts-ignore
 			return state.window_state_ex === 'normal'
 		}
 		return false

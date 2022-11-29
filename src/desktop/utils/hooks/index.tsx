@@ -1,5 +1,5 @@
 /*
-    Path + Filename: src/desktop/utils/hooks/myContextMenu.tsx
+    Path + Filename: src/desktop/utils/hooks/index.tsx
 */
 
 import {useContext} from 'react'
@@ -10,5 +10,5 @@ export const useSettings = (): {
 	settings: Config
 	toggleSettings_rerenderApp: () => void
 	resetSettings_rerenderApp: () => void
-} => useContext(SettingsContext)
+} | undefined => useContext(SettingsContext)
 // TODO : provide another function to resetSettings and rerender ?

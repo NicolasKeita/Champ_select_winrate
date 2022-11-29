@@ -1,13 +1,20 @@
 /*
-    Path + Filename: src/desktop/utils/context/myContextMenu.tsx
+    Path + Filename: src/desktop/utils/context/index.tsx
 */
 
 import React, {createContext, useState} from 'react'
 import Config from '../../components/maincontent/settings/Config'
+
 const configDefault = new Config()
 localStorage.setItem('configDefault', configDefault.stringify())
 
-export const SettingsContext = createContext(undefined)
+interface ContextState {
+	settings: Config
+	toggleSettings_rerenderApp: () => void
+	resetSettings_rerenderApp: () => Promise<void>
+}
+
+export const SettingsContext = createContext<ContextState | undefined>(undefined)
 //TODO
 // eslint-disable-next-line react/prop-types
 export const SettingsProvider = ({children}) => {
@@ -28,7 +35,7 @@ export const SettingsProvider = ({children}) => {
 				{
 					settings,
 					toggleSettings_rerenderApp: toggleSettings_rerenderApp,
-					resetSettings_rerenderApp: resetSettings_rerenderApp
+					resetSettings_rerenderApp:  resetSettings_rerenderApp
 				} as const
 			}
 		>

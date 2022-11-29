@@ -3,7 +3,13 @@
 		"browser": true,
 		"es2022": true
 	},
-	"extends": ["plugin:react/recommended", "plugin:@typescript-eslint/recommended", "eslint:recommended"],
+	"extends": [
+		"plugin:react/recommended",
+		"plugin:@typescript-eslint/recommended",
+		"eslint:recommended",
+		"prettier"
+		//		"standard-with-typescript" regarder la syntax
+	],
 	"overrides": [
 		{
 			"files": ["*.ts", "*.tsx"],
@@ -17,7 +23,12 @@
 		"project": ["./tsconfig.json"]
 	},
 	"ignorePatterns": ["webpack.config.js", "overwolf.webpack.js"],
-	"plugins": ["react", "react-hooks", "@typescript-eslint", "only-warn"],
+	"plugins": [
+		"react",
+		"react-hooks",
+		"@typescript-eslint",
+		"only-warn"
+	],
 	"rules": {
 		"react-hooks/exhaustive-deps": "warn",
 		"react-hooks/rules-of-hooks": "warn",

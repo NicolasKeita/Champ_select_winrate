@@ -1,33 +1,51 @@
 {
 	"compilerOptions": {
-		"sourceMap": true,
-		"moduleResolution": "node",
-		"removeComments": true,
-		"strict": true,
-		"noImplicitAny": false,
-		"strictNullChecks": false,
-		"types": ["@overwolf/types", "node"],
-		"outDir": "./dist",
-		"rootDir": "./",
-		"rootDirs": ["src"],
-		"baseUrl": "./src",
-		"paths": {
-			"@public/*": ["../public/*"],
-			"@utils/*": ["../src/desktop/utils/*"]
-		},
-		"lib": ["dom", "dom.iterable", "esnext"],
-		"target": "es2022",
 		"allowJs": true,
-		"skipLibCheck": true,
-		"esModuleInterop": true,
 		"allowSyntheticDefaultImports": true,
+		"baseUrl": "./src",
+		"esModuleInterop": true,
 		"forceConsistentCasingInFileNames": true,
-		"noFallthroughCasesInSwitch": true,
+		"jsx": "react-jsx",
+		"lib": [
+			"dom",
+			"dom.iterable",
+			"esnext"
+		],
 		"module": "esNext",
-		"resolveJsonModule": true,
+		"moduleResolution": "node",
 		"noEmit": false,
-		"jsx": "react-jsx"
+		"noFallthroughCasesInSwitch": true,
+		"noImplicitAny": false,
+		"outDir": "./dist",
+		"paths": {
+			"@public/*": [
+				"../public/*"
+			],
+			"@utils/*": [
+				"../src/desktop/utils/*"
+			]
+		},
+		"removeComments": true,
+		"resolveJsonModule": true,
+		"rootDir": "./",
+		"rootDirs": [
+			"src"
+		],
+		"skipLibCheck": true,
+		"sourceMap": true,
+		"strict": true,
+		"strictNullChecks": false,
+		"target": "es2022",
+		"types": [
+			"@overwolf/types",
+			"node"
+		]
 	},
-	"include": ["src", "index.d.ts"],
-	"exclude": ["node_modules"]
+	"exclude": [
+		"node_modules"
+	],
+	"include": [
+		"index.d.ts",
+		"src"
+	]
 }

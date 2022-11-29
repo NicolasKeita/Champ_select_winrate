@@ -12,72 +12,72 @@ import PlayerProfile from '@utils/playerProfile'
 import {useSettings} from '@utils/hooks'
 
 const PercentageContainer = styled.div`
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	font-size: 28px;
-	padding: 10px;
-	background: -webkit-linear-gradient(#a8540c, #b79e4d);
-	-webkit-background-clip: text;
-	-webkit-text-fill-color: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 28px;
+  padding: 10px;
+  background: -webkit-linear-gradient(#a8540c, #b79e4d);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 `
 
 const WinrateLine = styled.div`
-	height: 2px;
-	width: 50px;
-	background: ${props => (props.isLeft ? 'linear-gradient(to left, red, transparent 100%);' : 'linear-gradient(to right, red, transparent 100%);')} ${props => (props.isLeft ? 'margin-right: 10px;' : 'margin-left: 10px;')};
+  height: 2px;
+  width: 50px;
+  background: ${props => (props.isLeft ? 'linear-gradient(to left, red, transparent 100%);' : 'linear-gradient(to right, red, transparent 100%);')} ${props => (props.isLeft ? 'margin-right: 10px;' : 'margin-left: 10px;')};
 `
 
 const MainContainer = styled.div`
-	color: white;
-	width: 100%;
-	text-align: center;
-	background: linear-gradient(to right, #252424, #363636, #252424);
-	padding-bottom: 10px;
+  color: white;
+  width: 100%;
+  text-align: center;
+  background: linear-gradient(to right, #252424, #363636, #252424);
+  padding-bottom: 10px;
 `
 
 const PlayersGrid = styled.div`
-	display: flex;
-	justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 `
 
 const TeamGrid = styled.div`
-	display: flex;
-	flex-direction: column;
+  display: flex;
+  flex-direction: column;
 `
 
 const ProfileLine = styled.div`
-	height: 2px;
-	width: 100% - 10px;
-	background: ${props => (props.isEnemyTeam ? 'linear-gradient(to left, #785a28, transparent 100%)' : 'linear-gradient(to right, #785a28, transparent 100%)')};
-	transform: scale(var(--ggs, 1));
-	margin: 10px ${props => (props.isEnemyTeam ? '10px' : '0px')} 10px ${props => (props.isEnemyTeam ? '0px' : '10px')};
+  height: 2px;
+  width: 100% - 10px;
+  background: ${props => (props.isEnemyTeam ? 'linear-gradient(to left, #785a28, transparent 100%)' : 'linear-gradient(to right, #785a28, transparent 100%)')};
+  transform: scale(var(--ggs, 1));
+  margin: 10px ${props => (props.isEnemyTeam ? '10px' : '0px')} 10px ${props => (props.isEnemyTeam ? '0px' : '10px')};
 
-	&:after,
-	&:before {
-		display: block;
-		box-sizing: border-box;
-		position: absolute;
-		width: 6px;
-		height: 6px;
-		border: 2px solid;
-		bottom: -2px;
-		transform: rotate(45deg);
-		background: transparent;
-		color: #785a28;
-	}
+  &:after,
+  &:before {
+    display: block;
+    box-sizing: border-box;
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border: 2px solid;
+    bottom: -2px;
+    transform: rotate(45deg);
+    background: transparent;
+    color: #785a28;
+  }
 
-	//Right side
-	&:before {
-		content: ${props => (props.isEnemyTeam ? `''` : 'none')};
-		right: -4px;
-	}
+  //Right side
+  &:before {
+    content: ${props => (props.isEnemyTeam ? `''` : 'none')};
+    right: -4px;
+  }
 
-	//Left side
-	&:after {
-		content: ${props => (props.isEnemyTeam ? 'none' : `''`)};
-		left: -4px;
-	}
+  //Left side
+  &:after {
+    content: ${props => (props.isEnemyTeam ? 'none' : `''`)};
+    left: -4px;
+  }
 `
 
 function Main(props) {
@@ -100,7 +100,7 @@ function Main(props) {
 	}
 
 	function renderPlayersGrid(isEnemyTeam) {
-		const profiles = []
+		const profiles: JSX.Element[] = []
 		for (let i = 0; i < 5; ++i) {
 			const img = isEnemyTeam ? props.playerProfile.enemies[i].img : props.playerProfile.allies[i].img
 			const champName = isEnemyTeam ? props.playerProfile.enemies[i].name : props.playerProfile.allies[i].name
@@ -132,6 +132,7 @@ function Main(props) {
 			return Math.ceil(winRate)
 		}
 	}
+
 	const winrate = computeWinrate(props.playerProfile.allies, props.playerProfile.enemies)
 
 	return (
