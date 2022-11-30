@@ -4,9 +4,11 @@
 
 import React from 'react'
 import styled from 'styled-components'
-import {useSettings} from '@utils/hooks'
+import {useAppSelector} from '@utils/hooks'
 import uniqid from 'uniqid'
 import ConfigRow from './configRow'
+import Champion from './Champion'
+import {selectInstancedConfig} from '@utils/store/selectors'
 
 const SettingsContainer = styled.div`
   background: linear-gradient(to right, #252424, #363636, #252424);
@@ -38,11 +40,16 @@ const OP_ScoreContainer = styled.div`
 const OP_Score = styled.div``
 
 function Settings() {
-	const {settings} = useSettings()
+	console.log('Settings rendered')
+	const settings = useAppSelector(selectInstancedConfig())
 
 	function renderListChampNameWithOPScore() {
-		const rows: JSX.Element[] = []
+		if (settings.champions.length == 0) {
+			return <div></div> //TODO do the map() first then see if there is a need for this if
+		}
+		const rows: JSX.Element[] = [] // TODO change to map() ?
 		settings.champions.forEach(elem => {
+			// const elem = new Champion(elem2.name, elem2.opScore_user, elem2.opScore_CSW)
 			rows.push(<ConfigRow key={uniqid()} champName={elem.name} opScoreCSW={+elem.opScore_CSW} opScoreUser={+elem.opScore_user} setUserScore={elem.setUserScore} />)
 		})
 		return <div>{rows}</div>

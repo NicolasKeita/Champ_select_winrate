@@ -21,6 +21,7 @@ type My_PropType = {
 }
 
 function MyApp(props: My_PropType): JSX.Element {
+	console.log('MYApp Renderer')
 	const my_window = props.my_window
 
 	return (

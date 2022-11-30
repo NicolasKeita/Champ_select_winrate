@@ -5,39 +5,42 @@
 import React, {useState} from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import {useSettings} from '@utils/hooks'
+import {useAppSelector} from '@utils/hooks'
+import Config from './Config'
 
 const ChampName = styled.h1`
-	background: -webkit-linear-gradient(#ab6630, #b79e4d);
-	-webkit-background-clip: text;
-	-webkit-text-fill-color: transparent;
-	width: 110px;
+  background: -webkit-linear-gradient(#ab6630, #b79e4d);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  width: 110px;
 `
 const OP_ScoreContainer = styled.div`
-	display: flex;
-	flex: 1;
-	flex-direction: row;
-	justify-content: space-evenly;
-	background: -webkit-linear-gradient(#a95a21, #8d782a);
-	-webkit-background-clip: text;
-	-webkit-text-fill-color: transparent;
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  justify-content: space-evenly;
+  background: -webkit-linear-gradient(#a95a21, #8d782a);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 `
 const InputStyled = styled.input`
-	width: 50px;
-	margin-left: -30px;
-	border-radius: 4px;
-	background-color: rgba(63, 62, 62, 0);
-	transition: 0.3s background-color ease-in-out, 0.3s box-shadow ease-in-out;
-	text-align: center;
-	&:hover {
-		background-color: rgba(255, 255, 255, 0.24);
-		box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.05);
-	}
+  width: 50px;
+  margin-left: -30px;
+  border-radius: 4px;
+  background-color: rgba(63, 62, 62, 0);
+  transition: 0.3s background-color ease-in-out, 0.3s box-shadow ease-in-out;
+  text-align: center;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.24);
+    box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.05);
+  }
 `
 const OP_Score = styled.div``
+
 function ConfigRow(props) {
 	const [opScoreUser, setOpScoreUser] = useState<string>(props.opScoreUser)
-	const {settings} = useSettings()
+	const settings = useAppSelector((state) => new Config(JSON.parse(state.configSerialized)))
 
 	function handleOnChange(event) {
 		if (event.target.value.includes('.')) return
@@ -48,25 +51,30 @@ function ConfigRow(props) {
 		}
 		if (Number.isInteger(valueEntered) && valueEntered <= 100) {
 			setOpScoreUser(valueEntered.toString())
-			props.setUserScore(valueEntered)
-			localStorage.setItem('config', settings.stringify())
+			const internalConfig = new Config(settings)
+			internalConfig.getChampCurrConfig(props.champName).opScore_user = valueEntered
+			sessionStorage.setItem('internalConfig', internalConfig.stringifyChampions())
 		}
 	}
+
 	function handleOnBlur(event) {
 		const valueEntered = event.target.value
 		if (valueEntered === '') {
 			setOpScoreUser('' + 50)
-			props.setUserScore(50)
-			localStorage.setItem('config', settings.stringify())
+			const internalConfig = new Config(settings)
+			internalConfig.getChampCurrConfig(props.champName).opScore_user = 50
+			sessionStorage.setItem('internalConfig', internalConfig.stringifyChampions())
 		}
 	}
+
+
 	return (
 		// TODO : webstorm is showing me a way to remove the 3 instance of display flex. There is still styled.component that I can use
 		<div style={{display: 'flex', flex: '1'}} key={'1'}>
 			<form
 				style={{
-					display: 'flex',
-					flex: '1',
+					display:        'flex',
+					flex:           '1',
 					justifyContent: 'space-evenly'
 				}}
 				onSubmit={e => e.preventDefault()}
@@ -84,9 +92,9 @@ function ConfigRow(props) {
 }
 
 ConfigRow.propTypes = {
-	champName: PropTypes.string,
-	opScoreCSW: PropTypes.number,
-	opScoreUser: PropTypes.number,
+	champName:    PropTypes.string,
+	opScoreCSW:   PropTypes.number,
+	opScoreUser:  PropTypes.number,
 	setUserScore: PropTypes.any
 }
 

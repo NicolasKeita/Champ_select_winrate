@@ -2,20 +2,19 @@
     Path + Filename: src/desktop/components/maincontent/myContextMenu.tsx
 */
 
-import {useSettings} from '@utils/hooks'
+import {useAppDispatch, useAppSelector} from '@utils/hooks'
 
-import PropTypes from 'prop-types'
 import React, {useEffect, useState} from 'react'
 import styled from 'styled-components'
 
 import LCU from '@utils/LCU'
 import PlayerProfile from '@utils/playerProfile'
-import {AppWindow} from '../../../AppWindow'
-import Header from './../../components/header'
 import Footer from './../../components/maincontent/footer'
 import Main from './../../components/maincontent/main'
 import Settings from './../../components/maincontent/settings'
 import Config from './../../components/maincontent/settings/Config'
+import {copyFromAnotherSetting, populateDefaultConfig} from '@utils/store/action'
+import {selectInstancedConfig} from '@utils/store/selectors'
 
 const LCU_interface = new LCU()
 const playerProfile = new PlayerProfile()
@@ -27,21 +26,25 @@ let g_rendered = false
 const MainContentContainer = styled.div`
   display: flex;
   flex: 1;
+  flex-direction: column;
+  height: 424px;
 `
 
 function MainContent() {
-
+	console.log('mainCOntent renderer')
 	const [setClientStatusToOPEN, setClientStatusToCLOSE, setClientStatusToINSIDE_CHAMP_SELECT] = useChangeClientStatus()
 	const [setChampionHover] = useChangeImgProfile()
-	const {settings} = useSettings()
+	const settings = useAppSelector(selectInstancedConfig())
+	const dispatch = useAppDispatch()
 
 	if (!g_rendered) {
+		const settingsCpy = new Config(settings)
 		g_rendered = true
 		const config: Config = JSON.parse(localStorage.getItem('config') ?? '{}')
-		if (Object.keys(config).length == 0 || config.champions.length == 0)
-			settings.populateDefaultConfig() // TODO need .then(rerender le component) rappel : c'est sensé être une function async
-		else {
-			settings.copyFromAnotherSetting(config)
+		if (Object.keys(config).length == 0 || config.champions.length == 0) {
+			dispatch(populateDefaultConfig(settingsCpy))
+		} else {
+			dispatch(copyFromAnotherSetting(config))
 		}
 	}
 
@@ -123,24 +126,21 @@ function MainContent() {
 		})
 	}, []) // TODO exhausive-deps-problem Figure out Why adding SetClientStatusToOPEN there will trigger useEffect every render (I just want to let this empty array)
 
-	function renderContent() {
-		if (settings == undefined || !settings.settingsPage) {
-			return (
-				<div
-					style={{
-						display:       'flex',
-						flexDirection: 'column',
-						flex:          1
-					}}
-				>
-					<Main playerProfile={playerProfile} />
-					<Footer playerProfile={playerProfile} />
-				</div>
-			)
-		} else return <Settings />
-	}
+	let currentPage: JSX.Element
+	if (!settings.settingsPage) {
+		currentPage =
+			<div id='main+footer' style={{display: 'flex', flexDirection: 'column', flex: 1}}>
+				<Main playerProfile={playerProfile} />
+				<Footer playerProfile={playerProfile} />
+			</div>
+	} else
+		currentPage = <Settings />
 
-	return <MainContentContainer id={'MainContentContainer'}>{renderContent()}</MainContentContainer>
+	return (
+		<MainContentContainer id='mainContentContainer'>
+			{currentPage}
+		</MainContentContainer>
+	)
 }
 
 export default MainContent

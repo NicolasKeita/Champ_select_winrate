@@ -9,7 +9,8 @@ import uniqid from 'uniqid'
 import ChampionProfile from '../../championProfile'
 import PropTypes from 'prop-types'
 import PlayerProfile from '@utils/playerProfile'
-import {useSettings} from '@utils/hooks'
+import {useAppSelector} from '@utils/hooks'
+import Config from '../settings/Config'
 
 const PercentageContainer = styled.div`
   display: flex;
@@ -81,7 +82,7 @@ const ProfileLine = styled.div`
 `
 
 function Main(props) {
-	const {settings} = useSettings()
+	const settings = useAppSelector((state) => new Config(JSON.parse(state.configSerialized)))
 	const [, forceUpdate] = useReducer(x => x + 1, 0)
 
 	function syncScores(isEnemyTeam, champName, i) {
@@ -134,7 +135,6 @@ function Main(props) {
 	}
 
 	const winrate = computeWinrate(props.playerProfile.allies, props.playerProfile.enemies)
-
 	return (
 		<MainContainer>
 			<PercentageContainer>

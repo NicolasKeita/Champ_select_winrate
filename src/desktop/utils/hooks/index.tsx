@@ -2,13 +2,8 @@
     Path + Filename: src/desktop/utils/hooks/index.tsx
 */
 
-import {useContext} from 'react'
-import {SettingsContext} from '../context'
-import Config from '../../components/maincontent/settings/Config'
+import {AppDispatch, RootState} from '@utils/store/store'
+import {TypedUseSelectorHook, useDispatch, useSelector} from 'react-redux'
 
-export const useSettings = (): {
-	settings: Config
-	toggleSettings_rerenderApp: () => void
-	resetSettings_rerenderApp: () => void
-} | undefined => useContext(SettingsContext)
-// TODO : provide another function to resetSettings and rerender ?
+export const useAppDispatch: () => AppDispatch = useDispatch
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector

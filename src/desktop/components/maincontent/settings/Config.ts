@@ -5,25 +5,41 @@
 import Champion from './Champion'
 
 class Config {
-	public settingsPage: boolean
-
-	constructor() {
-		this.settingsPage = false
+	constructor(payload: Partial<Config>) {
+		//this.settingsPage = false
+		this._settingsPage = payload.settingsPage
 		this._champions = []
+		const allChampionsPlainArray = payload.champions
+		for (const elem of allChampionsPlainArray) {
+			this._champions.push(new Champion(elem.name, elem.opScore_user, elem.opScore_CSW))
+		}
+		// this._champions = allChampionsPlainArray
 	}
+
+	private _settingsPage: boolean
+
+	public get settingsPage() { return this._settingsPage }
+
+	public set settingsPage(settingsPage) { this._settingsPage = settingsPage }
 
 	private _champions: Champion[]
 
-	public get champions() {
-		return this._champions
-	}
+	public get champions() { return this._champions }
 
-	public set champions(champions) {
-		this._champions = champions
-	}
+	public set champions(champions) { this._champions = champions }
 
 	public stringify(): string {
 		let json = JSON.stringify(this)
+		Object.keys(this)
+			  .filter(key => key[0] === '_')
+			  .forEach(key => {
+				  json = json.replace(key, key.substring(1))
+			  })
+		return json
+	}
+
+	public stringifyChampions(): string {
+		let json = JSON.stringify(this.champions)
 		Object.keys(this)
 			  .filter(key => key[0] === '_')
 			  .forEach(key => {
@@ -46,16 +62,14 @@ class Config {
 		return undefined
 	}
 
-	public populateDefaultConfig() {
-		this._fetchChampionsFromConfigJson().then(champs => {
-			this.champions = champs
-			localStorage.setItem('config', this.stringify())
-		})
+	public async populateDefaultConfig() {
+		this.champions = await this._fetchChampionsFromConfigJson()
+		localStorage.setItem('config', this.stringify())
 	}
 
 	public async reset() {
 		this.champions.length = 0
-		this.populateDefaultConfig()
+		await this.populateDefaultConfig()
 	}
 
 	private async _fetchChampionsFromConfigJson(): Promise<Champion[]> {

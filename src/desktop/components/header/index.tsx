@@ -18,40 +18,46 @@ import '@public/css/ContextMenu.css'
 import MyContextMenu from './myContextMenu/myContextMenu'
 import {myContextMenuBridge} from './myContextMenu/myContextMenuBridge'
 
-import {useSettings} from '@utils/hooks'
+import {setUserOPScore, toggleSettingsPage, updateAllUserScores} from '@utils/store/action'
+import {useAppDispatch} from '@utils/hooks'
 
 const HeaderContainer = styled.header`
-	background: linear-gradient(to right, rgb(63, 62, 62), #363636, #323232);
-	padding: 8px;
-	display: flex;
-	align-items: center;
-	z-index: 9999;
+  background: linear-gradient(to right, rgb(63, 62, 62), #363636, #323232);
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  z-index: 9999;
 `
 const Logo = styled.h1`
   font-size: 26px;
-  font-family: Hero,serif;
+  font-family: Hero, serif;
   font-weight: 900;
   background: -webkit-linear-gradient(#904a0f, #b79e4d);
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  );
+  -webkit-text-fill-color: transparent;);
   cursor: inherit;
 `
 const CSWName = styled.h1`
-	background: -webkit-linear-gradient(#a8540c, #b79e4d);
-	-webkit-background-clip: text;
-	-webkit-text-fill-color: transparent;
-	padding-left: 20px;
-	cursor: inherit;
+  background: -webkit-linear-gradient(#a8540c, #b79e4d);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  padding-left: 20px;
+  cursor: inherit;
 `
 
 const ButtonSettings = () => {
 	const [color, setColor] = useState<string>('blue')
 	const [shape, setShape] = useState<string>('circle')
-	const {toggleSettings_rerenderApp} = useSettings()
+	const dispatch = useAppDispatch()
 
 	function activateSettings(e) {
-		if (e.buttons == 1) toggleSettings_rerenderApp()
+		if (e.buttons == 1) {
+			dispatch(toggleSettingsPage())
+			const internalConfig = sessionStorage.getItem('internalConfig')
+			if (internalConfig) {
+				dispatch(updateAllUserScores(JSON.parse(internalConfig)))
+			}
+		}
 	}
 
 	return (
@@ -75,13 +81,16 @@ const ButtonSettings = () => {
 }
 
 let isMenuOpen = false
+
 function Header(props) {
+	console.log('HEader rendered')
 	const my_window = props.my_window
 	const headerRef = useRef(null)
 
 	function minimize(e) {
 		if (e.buttons == 1) my_window.currWindow.minimize()
 	}
+
 	function close(e) {
 		if (e.buttons == 1) my_window.currWindow.close()
 	}
