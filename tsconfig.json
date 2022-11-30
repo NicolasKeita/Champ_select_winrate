@@ -34,7 +34,7 @@
 		"skipLibCheck": true,
 		"sourceMap": true,
 		"strict": true,
-		"strictNullChecks": false,
+		"strictNullChecks": true,
 		"target": "es2022",
 		"types": [
 			"@overwolf/types",

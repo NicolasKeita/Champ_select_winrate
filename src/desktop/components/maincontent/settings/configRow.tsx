@@ -52,8 +52,11 @@ function ConfigRow(props) {
 		if (Number.isInteger(valueEntered) && valueEntered <= 100) {
 			setOpScoreUser(valueEntered.toString())
 			const internalConfig = new Config(settings)
-			internalConfig.getChampCurrConfig(props.champName).opScore_user = valueEntered
-			sessionStorage.setItem('internalConfig', internalConfig.stringifyChampions())
+			const currentChamp = internalConfig.getChampCurrConfig(props.champName)
+			if (currentChamp) {
+				currentChamp.opScore_user = valueEntered
+				sessionStorage.setItem('internalConfig', internalConfig.stringifyChampions())
+			}
 		}
 	}
 
@@ -62,8 +65,11 @@ function ConfigRow(props) {
 		if (valueEntered === '') {
 			setOpScoreUser('' + 50)
 			const internalConfig = new Config(settings)
-			internalConfig.getChampCurrConfig(props.champName).opScore_user = 50
-			sessionStorage.setItem('internalConfig', internalConfig.stringifyChampions())
+			const currentChamp = internalConfig.getChampCurrConfig(props.champName)
+			if (currentChamp) {
+				currentChamp.opScore_user = 50
+				sessionStorage.setItem('internalConfig', internalConfig.stringifyChampions())
+			}
 		}
 	}
 

@@ -6,14 +6,16 @@ import Champion from './Champion'
 
 class Config {
 	constructor(payload: Partial<Config>) {
-		//this.settingsPage = false
-		this._settingsPage = payload.settingsPage
+		this._settingsPage = false
+		if (payload.settingsPage)
+			this._settingsPage = payload.settingsPage
 		this._champions = []
-		const allChampionsPlainArray = payload.champions
-		for (const elem of allChampionsPlainArray) {
-			this._champions.push(new Champion(elem.name, elem.opScore_user, elem.opScore_CSW))
+		if (payload.champions) {
+			const allChampionsPlainArray = payload.champions
+			for (const elem of allChampionsPlainArray) {
+				this._champions.push(new Champion(elem.name, elem.opScore_user, elem.opScore_CSW))
+			}
 		}
-		// this._champions = allChampionsPlainArray
 	}
 
 	private _settingsPage: boolean
