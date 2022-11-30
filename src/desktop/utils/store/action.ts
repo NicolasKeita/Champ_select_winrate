@@ -2,14 +2,19 @@
     Path + Filename: src/desktop/utils/store/action.ts
 */
 
-export const resetSettingsInternal = (cpy) => ({type: 'resetSettings', payload: { cpy: cpy }})
-export const toggleSettingsPage = () => ({type: 'toggleSettingsPage'})
-export const setChampions = (champions) => ({type: 'setChampions', payload: {champions: champions}})
-export const copyFromAnotherSetting = (config) => ({type: 'copyFromAnotherSetting', payload: {config: config}})
-export const setUserOPScore = (score, champName) => ({type: 'setUserOPScore', payload: {score: score, champName: champName}})
-export const updateAllUserScores = (champions) => ({type: 'updateAllUserScores', payload: {champions: champions}})
-export const setInternalSettings = (score, champName) => ({type: 'setInternalSettings', payload: {score: score, champName: champName}})
-export const populateDefaultConfig = (cpy) => (async dispatch => {
+import {createAction} from '@reduxjs/toolkit'
+import Champion from '../../components/maincontent/settings/Champion'
+import Config from '../../components/maincontent/settings/Config'
+
+export const toggleSettingsPage = createAction('toggleSettingsPage')
+export const resetSettingsInternal = createAction<string>('resetSettingsInternal')
+export const setChampions = createAction<Champion[]>('setChampions')
+export const copyFromAnotherSetting = createAction<Config>('copyFromAnotherSetting')
+export const updateAllUserScores = createAction<Champion[]>('updateAllUserScores')
+export const setUserOPScore = createAction('setUserOPScore', function prepare(score: number, champName: string) { return {payload: {score, champName}} })
+export const setInternalSettings = createAction('setInternalSettings', function prepare(score: number, champName: string) { return {payload: {score, champName}}})
+
+export const populateDefaultConfig = (cpy) => (async dispatch => { // TODO search createAsyncThunk() on redux toolkit, (it is a cleaner way to write this I think)
 	await cpy.populateDefaultConfig()
 	dispatch(setChampions(JSON.parse(cpy.stringifyChampions())))
 })
@@ -18,5 +23,5 @@ export const resetSettings = (cpy) => (async dispatch => {
 	dispatch(resetSettingsInternal(cpy.stringify()))
 })
 
-		// .then(response => dispatch(loadGallerySuccess(response.data)))
-		// .catch(() => dispatch(loadGalleryError()));
+// .then(response => dispatch(loadGallerySuccess(response.data)))
+// .catch(() => dispatch(loadGalleryError()));
