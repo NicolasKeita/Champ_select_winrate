@@ -17,10 +17,6 @@ class Champion {
 		this.role = ''
 		this.image = ''
 	}
-
-	public setUserScore = score => {
-		this.opScore_user = score
-	}
 }
 
 export default Champion

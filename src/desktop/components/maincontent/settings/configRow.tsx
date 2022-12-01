@@ -98,10 +98,9 @@ function ConfigRow(props) {
 }
 
 ConfigRow.propTypes = {
-	champName:    PropTypes.string,
-	opScoreCSW:   PropTypes.number,
-	opScoreUser:  PropTypes.number,
-	setUserScore: PropTypes.any
+	champName:   PropTypes.string,
+	opScoreCSW:  PropTypes.number,
+	opScoreUser: PropTypes.number
 }
 
 export default ConfigRow

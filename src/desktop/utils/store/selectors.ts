@@ -11,3 +11,14 @@ export const selectInstancedConfig = () => {
 		}
 	)
 }
+export const selectBooleanSettingsPage = () => {
+	return (
+		(state) => {
+			const configPlainObject: Config | undefined = JSON.parse(state.configSerialized)
+			if (configPlainObject)
+				return configPlainObject.settingsPage
+			else
+				return false
+		}
+	)
+}

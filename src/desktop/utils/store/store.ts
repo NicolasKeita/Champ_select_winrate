@@ -7,20 +7,69 @@ import Config from '../../components/maincontent/settings/Config'
 import Champion from '../../components/maincontent/settings/Champion'
 import {
 	copyFromAnotherSetting,
+	fillChampSelectDisplayedInternal,
+	resetChampSelectDisplayed,
 	resetSettingsInternal,
 	setChampions,
+	setClientStatus,
+	setFooterMessage,
 	setInternalSettings,
 	setUserOPScore,
 	toggleSettingsPage,
 	updateAllUserScores
 } from '@utils/store/action'
+import questionMark from '@public/img/question_mark.jpg'
+import {getChampScore} from '@utils/playerProfile/getChampionByKey'
+
+interface champSelectDisplayedType {
+	allies: champDisplayedType[]
+	enemies: champDisplayedType[]
+}
+
+interface champDisplayedType {
+	img: string,
+	name: string,
+	score: number
+}
+
+function initChampSelectDisplayed() {
+	const champSelectDisplayed: champSelectDisplayedType = {allies: [], enemies: []}
+	const defaultImg: string = questionMark
+	const defaultName = 'Champion Name'
+	const defaultScore = 50
+	for (let i = 0; i < 5; ++i) {
+		champSelectDisplayed.allies.push({
+			img:   defaultImg,
+			name:  defaultName,
+			score: defaultScore
+		})
+		champSelectDisplayed.enemies.push({
+			img:   defaultImg,
+			name:  defaultName,
+			score: defaultScore
+		})
+	}
+	return champSelectDisplayed
+}
 
 const initialState = {
-	configSerialized: JSON.stringify({settingsPage: false, champions: []}),
-	internalSettings: ''
+	configSerialized:     JSON.stringify({settingsPage: false, champions: []}),
+	internalSettings:     '',
+	footerMessageID:      -1,
+	leagueClientStatus:   -1,
+	champSelectDisplayed: initChampSelectDisplayed()
 }
 
 let g_x = 0
+
+function updateChampSelectDisplayedScores(champSelectDisplayed, allChamps) {
+	for (const elem of champSelectDisplayed.allies) {
+		elem.score = getChampScore(elem.name, allChamps)
+	}
+	for (const elem of champSelectDisplayed.enemies) {
+		elem.score = getChampScore(elem.name, allChamps)
+	}
+}
 
 const rootReducer = createReducer(initialState, (builder) => {
 	builder
@@ -29,6 +78,8 @@ const rootReducer = createReducer(initialState, (builder) => {
 			localStorage.setItem('config', action.payload)
 			g_x += 1
 			state.configSerialized = action.payload + ' '.repeat(g_x)
+			const configPlainObject = JSON.parse(state.configSerialized)
+			updateChampSelectDisplayedScores(state.champSelectDisplayed, configPlainObject.champions)
 		})
 		.addCase(toggleSettingsPage, (state) => {
 			const configPlainObject = JSON.parse(state.configSerialized)
@@ -58,7 +109,7 @@ const rootReducer = createReducer(initialState, (builder) => {
 			const configDeserialized = new Config(JSON.parse(state.configSerialized))
 			const currentChamp = configDeserialized.getChampCurrConfig(action.payload.champName)
 			if (currentChamp) {
-				currentChamp.setUserScore(action.payload.score)
+				currentChamp.opScore_user(action.payload.score)
 				state.configSerialized = configDeserialized.stringify()
 			}
 		})
@@ -66,7 +117,7 @@ const rootReducer = createReducer(initialState, (builder) => {
 			const configDeserialized = new Config(JSON.parse(state.configSerialized))
 			const currentChamp = configDeserialized.getChampCurrConfig(action.payload.champName)
 			if (currentChamp) {
-				currentChamp.setUserScore(action.payload.score)
+				currentChamp.opScore_user(action.payload.score)
 				state.internalSettings = JSON.stringify(configDeserialized.champions)
 			}
 		})
@@ -78,6 +129,27 @@ const rootReducer = createReducer(initialState, (builder) => {
 					champion.opScore_user = elem.opScore_user
 			}
 			state.configSerialized = configDeserialized.stringify()
+			updateChampSelectDisplayedScores(state.champSelectDisplayed, configDeserialized.champions)
+		})
+		.addCase(setClientStatus, (state, action) => {
+			state.leagueClientStatus = action.payload
+			state.footerMessageID = action.payload
+		})
+		.addCase(setFooterMessage, (state, action) => {
+			state.footerMessageID = action.payload
+		})
+		.addCase(resetChampSelectDisplayed, (state) => {
+			state.champSelectDisplayed = initChampSelectDisplayed()
+		})
+		.addCase(fillChampSelectDisplayedInternal, (state, action) => {
+			state.champSelectDisplayed.allies = action.payload.allies
+			for (const elem of state.champSelectDisplayed.allies) {
+				elem.score = getChampScore(elem.name, JSON.parse(state.configSerialized).champions)
+			}
+			state.champSelectDisplayed.enemies = action.payload.enemies
+			for (const elem of state.champSelectDisplayed.enemies) {
+				elem.score = getChampScore(elem.name, JSON.parse(state.configSerialized).champions)
+			}
 		})
 })
 

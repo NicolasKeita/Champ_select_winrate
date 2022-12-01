@@ -10,8 +10,8 @@ import Champion from '../../components/maincontent/settings/Champion'
 class PlayerProfile {
 	//TODO  Typescript supports set & get for accessor. Take a look !
 	public readonly clientStatusEnum = {
-		CLOSED: 0,
-		OPEN: 1,
+		CLOSED:              0,
+		OPEN:                1,
 		INSIDE_CHAMP_SELECT: 2
 	}
 	public clientStatus: number
@@ -29,32 +29,38 @@ class PlayerProfile {
 		const defaultScore = 50
 		for (let i = 0; i < 5; ++i) {
 			this.allies[i] = {
-				img: defaultImg,
-				name: defaultName,
+				img:   defaultImg,
+				name:  defaultName,
 				score: defaultScore
 			}
 			this.enemies[i] = {
-				img: defaultImg,
-				name: defaultName,
+				img:   defaultImg,
+				name:  defaultName,
 				score: defaultScore
 			}
 		}
 	}
+
 	public setClientStatusToCLOSED() {
 		this.clientStatus = this.clientStatusEnum.CLOSED
 	}
+
 	public setClientStatusToOPEN() {
 		this.clientStatus = this.clientStatusEnum.OPEN
 	}
+
 	public setClientStatusToINSIDE_CHAMP_SELECT() {
 		this.clientStatus = this.clientStatusEnum.INSIDE_CHAMP_SELECT
 	}
+
 	public isClientClosed() {
 		return this.clientStatus === this.clientStatusEnum.CLOSED
 	}
+
 	public isClientOpen() {
 		return this.clientStatus >= this.clientStatusEnum.OPEN
 	}
+
 	public isClientInChampSelect() {
 		return this.clientStatus === this.clientStatusEnum.INSIDE_CHAMP_SELECT
 	}
@@ -67,6 +73,7 @@ class PlayerProfile {
 	public async getChampName(champId) {
 		return (await getChampionByKey(champId)).name
 	}
+
 	public getChampScore(champName: string, settingsChampions: Champion[]): number {
 		for (const elem of settingsChampions) {
 			if (elem.name == champName) return elem.opScore_user
@@ -75,7 +82,6 @@ class PlayerProfile {
 	}
 
 	public async fillChampSelect(actions, localCellId, settingsChampions: Champion[]) {
-		//TODO if i put a comment just under the function, typescript display it as official function description, do it for all functions ?
 		//Custom solo without bans
 		if (actions.length == 1) {
 			const cellID = actions[0][0].actorCellId

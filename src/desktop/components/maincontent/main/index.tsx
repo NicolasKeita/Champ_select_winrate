@@ -2,15 +2,12 @@
     Path + Filename: src/desktop/components/main/myContextMenu.tsx
 */
 
-import React, {useReducer} from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import uniqid from 'uniqid'
 
 import ChampionProfile from '../../championProfile'
-import PropTypes from 'prop-types'
-import PlayerProfile from '@utils/playerProfile'
 import {useAppSelector} from '@utils/hooks'
-import Config from '../settings/Config'
 
 const PercentageContainer = styled.div`
   display: flex;
@@ -81,32 +78,15 @@ const ProfileLine = styled.div`
   }
 `
 
-function Main(props) {
-	const settings = useAppSelector((state) => new Config(JSON.parse(state.configSerialized)))
-	const [, forceUpdate] = useReducer(x => x + 1, 0)
-
-	function syncScores(isEnemyTeam, champName, i) {
-		if (champName == 'Champion Name')
-			// TODO careful if i change the default name one day
-			return
-		const champScore = isEnemyTeam ? props.playerProfile.enemies[i].score : props.playerProfile.allies[i].score
-		const champFromConfig = settings.getChampCurrConfig(champName)
-		if (champFromConfig) {
-			if (champScore != champFromConfig.opScore_user) {
-				if (isEnemyTeam) props.playerProfile.enemies[i].score = champFromConfig.opScore_user
-				else props.playerProfile.allies[i].score = champFromConfig.opScore_user
-				forceUpdate()
-			}
-		}
-	}
+function Main() {
+	const champSelectDisplayed = useAppSelector((state) => state.champSelectDisplayed)
 
 	function renderPlayersGrid(isEnemyTeam) {
 		const profiles: JSX.Element[] = []
 		for (let i = 0; i < 5; ++i) {
-			const img = isEnemyTeam ? props.playerProfile.enemies[i].img : props.playerProfile.allies[i].img
-			const champName = isEnemyTeam ? props.playerProfile.enemies[i].name : props.playerProfile.allies[i].name
-			syncScores(isEnemyTeam, champName, i)
-			const champScore = isEnemyTeam ? props.playerProfile.enemies[i].score : props.playerProfile.allies[i].score
+			const img = isEnemyTeam ? champSelectDisplayed.enemies[i].img : champSelectDisplayed.allies[i].img
+			const champName = isEnemyTeam ? champSelectDisplayed.enemies[i].name : champSelectDisplayed.allies[i].name
+			const champScore = isEnemyTeam ? champSelectDisplayed.enemies[i].score : champSelectDisplayed.allies[i].score
 			profiles.push(<ChampionProfile isEnemyTeam={isEnemyTeam} key={uniqid()} img={img} champName={champName} champScore={champScore} />)
 			if (i < 4) profiles.push(<ProfileLine isEnemyTeam={isEnemyTeam} key={uniqid()} />)
 		}
@@ -118,8 +98,7 @@ function Main(props) {
 		let sumEnemies = 0
 		for (const elem of allies) sumAllies += elem.score
 		for (const elem of enemies) sumEnemies += elem.score
-		const YourWinrate = (sumAllies / 5 - sumEnemies / 5) / 2 + 50
-		let winRate = YourWinrate
+		let winRate = (sumAllies / 5 - sumEnemies / 5) / 2 + 50
 		let isInferiorTo50 = false
 		if (winRate < 50) {
 			isInferiorTo50 = true
@@ -134,7 +113,7 @@ function Main(props) {
 		}
 	}
 
-	const winrate = computeWinrate(props.playerProfile.allies, props.playerProfile.enemies)
+	const winrate = computeWinrate(champSelectDisplayed.allies, champSelectDisplayed.enemies)
 	return (
 		<MainContainer>
 			<PercentageContainer>
@@ -148,10 +127,6 @@ function Main(props) {
 			</PlayersGrid>
 		</MainContainer>
 	)
-}
-
-Main.propTypes = {
-	playerProfile: PropTypes.instanceOf(PlayerProfile)
 }
 
 export default Main

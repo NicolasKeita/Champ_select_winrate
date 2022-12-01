@@ -7,7 +7,6 @@ import styled from 'styled-components'
 import {useAppSelector} from '@utils/hooks'
 import uniqid from 'uniqid'
 import ConfigRow from './configRow'
-import Champion from './Champion'
 import {selectInstancedConfig} from '@utils/store/selectors'
 
 const SettingsContainer = styled.div`
@@ -37,7 +36,6 @@ const OP_ScoreContainer = styled.div`
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 `
-const OP_Score = styled.div``
 
 function Settings() {
 	console.log('Settings rendered')
@@ -49,8 +47,7 @@ function Settings() {
 		}
 		const rows: JSX.Element[] = [] // TODO change to map() ?
 		settings.champions.forEach(elem => {
-			// const elem = new Champion(elem2.name, elem2.opScore_user, elem2.opScore_CSW)
-			rows.push(<ConfigRow key={uniqid()} champName={elem.name} opScoreCSW={+elem.opScore_CSW} opScoreUser={+elem.opScore_user} setUserScore={elem.setUserScore} />)
+			rows.push(<ConfigRow key={uniqid()} champName={elem.name} opScoreCSW={+elem.opScore_CSW} opScoreUser={+elem.opScore_user} />)
 		})
 		return <div>{rows}</div>
 	}
@@ -60,8 +57,8 @@ function Settings() {
 			<RowContainer style={{paddingBottom: '12px'}}>
 				<ChampName>ChampName</ChampName>
 				<OP_ScoreContainer>
-					<OP_Score>Your OP Score</OP_Score>
-					<OP_Score>CSW OP Score</OP_Score>
+					<div>Your OP Score</div>
+					<div>CSW OP Score</div>
 				</OP_ScoreContainer>
 			</RowContainer>
 		)

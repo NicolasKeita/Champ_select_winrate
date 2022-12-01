@@ -2,8 +2,11 @@
     Path + Filename: src/utils/playerProfile/getChampionByKey.ts
 */
 
-let championByIdCache = {}
-let championJson = {}
+import {getChampSquareAsset} from '@utils/playerProfile/getChampionSquareAsset'
+import Champion from '../../components/maincontent/settings/Champion'
+
+const championByIdCache = {}
+const championJson = {}
 
 async function getLatestChampionDDragon(language = 'en_US') {
 	if (championJson[language]) return championJson[language]
@@ -11,7 +14,6 @@ async function getLatestChampionDDragon(language = 'en_US') {
 	let response
 	let versionIndex = 0
 	do {
-		// I loop over versions because 9.22.1 is broken
 		const version = (await fetch('http://ddragon.leagueoflegends.com/api/versions.json').then(async r => await r.json()))[versionIndex++]
 
 		response = await fetch(`https://ddragon.leagueoflegends.com/cdn/${version}/data/${language}/champion.json`)
@@ -38,8 +40,22 @@ export async function getChampionByKey(key, language = 'en_US') {
 	return championByIdCache[language][key]
 }
 
-// NOTE: IN DDRAGON THE ID IS THE CLEAN NAME!!! It's also super-inconsistent, and broken at times.
-// Cho'gath => Chogath, Wukong => Monkeyking, Fiddlesticks => Fiddlesticks/FiddleSticks (depending on what mood DDragon is in this patch)
 export async function getChampionByID(name, language = 'en_US') {
-	return await getLatestChampionDDragon(language)[name]
+	return ((await getLatestChampionDDragon(language))[name])
+}
+
+export async function getChampImg(champId) {
+	const champObject = await getChampionByKey(champId)
+	return await getChampSquareAsset(champObject.image.full)
+}
+
+export async function getChampName(champId) {
+	return (await getChampionByKey(champId)).name
+}
+
+export function getChampScore(champName: string, settingsChampions: Champion[]): number {
+	for (const elem of settingsChampions) {
+		if (elem.name == champName) return elem.opScore_user
+	}
+	return 50
 }

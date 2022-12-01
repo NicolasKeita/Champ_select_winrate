@@ -19,7 +19,7 @@ import MyContextMenu from './myContextMenu/myContextMenu'
 import {myContextMenuBridge} from './myContextMenu/myContextMenuBridge'
 
 import {setUserOPScore, toggleSettingsPage, updateAllUserScores} from '@utils/store/action'
-import {useAppDispatch} from '@utils/hooks'
+import {useAppDispatch, useAppSelector} from '@utils/hooks'
 
 const HeaderContainer = styled.header`
   background: linear-gradient(to right, rgb(63, 62, 62), #363636, #323232);
@@ -83,7 +83,6 @@ const ButtonSettings = () => {
 let isMenuOpen = false
 
 function Header(props) {
-	console.log('HEader rendered')
 	const my_window = props.my_window
 	const headerRef = useRef(null)
 
