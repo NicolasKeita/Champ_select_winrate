@@ -85,13 +85,20 @@ let isMenuOpen = false
 function Header(props) {
 	const my_window = props.my_window
 	const headerRef = useRef(null)
+	const dispatch = useAppDispatch()
 
 	function minimize(e) {
 		if (e.buttons == 1) my_window.currWindow.minimize()
 	}
 
 	function close(e) {
-		if (e.buttons == 1) my_window.currWindow.close()
+		if (e.buttons == 1) {
+			const internalConfig = sessionStorage.getItem('internalConfig')
+			if (internalConfig) {
+				dispatch(updateAllUserScores(JSON.parse(internalConfig)))
+			}
+			my_window.currWindow.close()
+		}
 	}
 
 	useEffect(() => {

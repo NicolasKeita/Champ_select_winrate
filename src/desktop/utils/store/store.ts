@@ -132,6 +132,7 @@ const rootReducer = createReducer(initialState, (builder) => {
 					champion.opScore_user = elem.opScore_user
 			}
 			state.configSerialized = configDeserialized.stringify()
+			localStorage.setItem('config', configDeserialized.stringify())
 			updateChampSelectDisplayedScores(state.champSelectDisplayed, configDeserialized.champions)
 		})
 		.addCase(setClientStatus, (state, action) => {
