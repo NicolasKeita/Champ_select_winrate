@@ -85,13 +85,23 @@ class LCU_API_connector {
 	}
 
 	public storeSummonerName(lolClient, dispatch) {
-		overwolf.games.launchers.events.getInfo(lolClient.classId, res => {
+		overwolf.games.launchers.events.getInfo(lolClient.classId, callbackAfterGettingClientInfo)
+
+		function callbackAfterGettingClientInfo(res) {
+			console.log('GetInfos done')
+			console.log(res)
 			if (res.success) {
+				if (Object.keys(res.res).length === 0) {
+					console.log('OW failed getting client info, retrying in recursive in 2sec')
+					window.setTimeout(overwolf.games.launchers.events.getInfo, 2000, lolClient.classId, callbackAfterGettingClientInfo)
+					// overwolf.games.launchers.events.getInfo(lolClient.classId, callbackAfterGettingClientInfo)
+					return
+				}
 				if (res.res && res.res.summoner_info) {
 					dispatch(setSummoner(res.res.summoner_info.internal_name, res.res.summoner_info.platform_id))
 				}
 			}
-		})
+		}
 	}
 
 	private setFeatures() {

@@ -28,7 +28,8 @@
 				"https://*.google-analytics.com",
 				"http://*.google-analytics.com",
 				"https://www.googleapis.com",
-				"https://*.api.riotgames.com/lol/summoner/v4/summoners/by-name/*"
+				"https://*.api.riotgames.com/lol/summoner/v4/summoners/by-name/*",
+				"https://*.api.riotgames.com/lol/spectator/v4/active-games/by-summoner/*"
 			]
 		},
 		"force_browser": "user",

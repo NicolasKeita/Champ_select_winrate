@@ -89,8 +89,8 @@ function MyApp(props: My_PropType): JSX.Element {
 				}
 			})
 			LCU_interface.onClientLaunch(clientInfo => {
-				LCU_interface.storeSummonerName(clientInfo, dispatch)
 				LCU_interface.addAllListeners(clientInfo, handleFeaturesCallbacks)
+				LCU_interface.storeSummonerName(clientInfo, dispatch)
 				dispatch(setClientStatus(1))
 			})
 			LCU_interface.onClientClosed(() => {

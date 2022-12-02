@@ -29,23 +29,29 @@ function Footer(): JSX.Element {
 	const dispatch = useAppDispatch()
 	const footerMessageID = useAppSelector(state => state.footerMessageID)
 	const summonerName = useAppSelector(state => state.summonerName)
+	const summonerRegion = useAppSelector(state => state.summonerRegion)
 	const clientStatus = useAppSelector(state => state.leagueClientStatus)
+	const encryptedSummonerId = useAppSelector(state => state.encryptedSummonerId)
+	console.log('name')
+	console.log(summonerName)
+	console.log('region')
+	console.log(summonerRegion)
 	let messageDisplayed = ''
 
 	useEffect(() => {
-		LCU_interface.onClientClosed(() => {
+		LCU_interface.onClientClosed(async () => {
 			const previousClientStatus = clientStatus
 			dispatch(setClientStatus(-1))
 			if (previousClientStatus == 0) {
-				// @ts-ignore
-				if (isInGame(summonerName))
-					dispatch(setFooterMessage(200))
-				else
+				const isInGameVariable = await isInGame(summonerRegion, encryptedSummonerId)
+				if (isInGameVariable == true)
+					dispatch(setFooterMessage(200)) // TODO changer logique, mettre :  Dodge successful. Waof SpyNIght isn't in game. Checking again 5 4 3 2 1sec     -- Dodge fail Waof SpyNight is in-game
+				else if (isInGameVariable == false)
 					dispatch(setFooterMessage(201))
 			}
 			LCU_interface.removeAllListeners()
 		})
-	}, [clientStatus, dispatch, summonerName])
+	}, [clientStatus, dispatch, encryptedSummonerId, summonerName, summonerRegion])
 
 	switch (footerMessageID) {
 		case -1:
