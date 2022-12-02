@@ -12,7 +12,7 @@ import FooterAD from './components/footerAD'
 import Config from './components/maincontent/settings/Config'
 import {
 	copyFromAnotherSetting, fillChampSelectDisplayed, populateDefaultConfig,
-	resetChampSelectDisplayed, setClientStatus, setFooterMessage, setSummonerName
+	resetChampSelectDisplayed, setClientStatus, setSummoner
 } from '@utils/store/action'
 import {useAppDispatch, useAppSelector} from '@utils/hooks'
 import LCU_API_connector from '@utils/LCU_API_connector'
@@ -46,7 +46,6 @@ function MyApp(props: My_PropType): JSX.Element {
 
 		function addLCU_listeners() {
 			function handleGameFlow(game_flow) {
-				console.log(game_flow)
 				if (game_flow && game_flow.phase) {
 					if (game_flow.phase === 'ChampSelect') {
 						// ↑ Entering in champ select
@@ -67,8 +66,9 @@ function MyApp(props: My_PropType): JSX.Element {
 			}
 
 			function handleSummonerInfo(summoner_info) {
-				if (summoner_info.internal_name)
-					dispatch(setSummonerName(summoner_info.internal_name))
+				if (summoner_info.internal_name) {
+					dispatch(setSummoner(summoner_info.internal_name, summoner_info.platform_id))
+				}
 			}
 
 			function handleFeaturesCallbacks(info) {

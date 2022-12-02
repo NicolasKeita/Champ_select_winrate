@@ -31,22 +31,18 @@ function Footer(): JSX.Element {
 	const summonerName = useAppSelector(state => state.summonerName)
 	const clientStatus = useAppSelector(state => state.leagueClientStatus)
 	let messageDisplayed = ''
-	console.log(`CLient status ${clientStatus}`)
 
 	useEffect(() => {
 		LCU_interface.onClientClosed(() => {
 			const previousClientStatus = clientStatus
-			console.log('onClose')
-			console.log(clientStatus)
-			console.log(previousClientStatus)
 			dispatch(setClientStatus(-1))
 			if (previousClientStatus == 0) {
+				// @ts-ignore
 				if (isInGame(summonerName))
 					dispatch(setFooterMessage(200))
 				else
 					dispatch(setFooterMessage(201))
 			}
-			console.log('Client CLOSED !')
 			LCU_interface.removeAllListeners()
 		})
 	}, [clientStatus, dispatch, summonerName])

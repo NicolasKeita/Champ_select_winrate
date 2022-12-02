@@ -4,7 +4,7 @@
 
 /* Overwolf is currently providing the connection to the LCU_API_connector */
 
-import {setSummonerName} from '@utils/store/action'
+import {setSummoner} from '@utils/store/action'
 
 let onErrorListener, onInfoUpdates2Listener, onNewEventsListener
 const g_interestedInFeatures = ['game_flow', 'summoner_info', 'champ_select']
@@ -14,14 +14,9 @@ export function registerEvents(handleFeaturesCallbacks) {
 		console.log('CSW_Error onErrorFromOWApi: ' + JSON.stringify(info))
 	}
 	onInfoUpdates2Listener = info => {
-		console.log('new info')
-		console.log(info)
 		handleFeaturesCallbacks(info)
 	}
 	onNewEventsListener = function(info) {
-
-		console.log('new2 info')
-		console.log(info)
 	}
 	overwolf.games.events.onError.addListener(onErrorListener)
 	overwolf.games.launchers.events.onInfoUpdates.addListener(onInfoUpdates2Listener)
@@ -93,7 +88,7 @@ class LCU_API_connector {
 		overwolf.games.launchers.events.getInfo(lolClient.classId, res => {
 			if (res.success) {
 				if (res.res && res.res.summoner_info) {
-					dispatch(setSummonerName(res.res.summoner_info.internal_name))
+					dispatch(setSummoner(res.res.summoner_info.internal_name, res.res.summoner_info.platform_id))
 				}
 			}
 		})

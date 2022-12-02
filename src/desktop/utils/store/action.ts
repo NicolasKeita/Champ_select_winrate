@@ -16,7 +16,15 @@ export const setInternalSettings = createAction('setInternalSettings', function 
 export const setClientStatus = createAction<number>('setClientStatus')
 export const setFooterMessage = createAction<number>('setFooterMessage')
 export const resetChampSelectDisplayed = createAction('resetChampSelectDisplayed')
-export const setSummonerName = createAction<string>('setSummonerName')
+export const setSummonerInternal = createAction('setSummonerInternal', function prepare(summonerName: string, summonerRegion: string, encryptedSummonerId: string) {
+	return {
+		payload: {
+			summonerName,
+			summonerRegion,
+			encryptedSummonerId
+		}
+	}
+})
 
 export const populateDefaultConfig = () => (async dispatch => { // TODO search createAsyncThunk() on redux toolkit, (it is a cleaner way to write this I think)
 	const allChamps = await fetchChampionsFromConfigJson()
@@ -28,9 +36,15 @@ export const resetSettings = () => (async dispatch => {
 	dispatch(setChampions(allChamps))
 })
 
+export const setSummoner = (summonerName, summonerRegion) => (async dispatch => {
+	const encryptedSummonerId = await fetchEncryptedSummonerId(summonerName, summonerRegion)
+	dispatch(setSummonerInternal(summonerName, summonerRegion, encryptedSummonerId))
+})
+
 import {getChampImg, getChampName} from '@utils/fetchDataDragon/fetchDataDragon'
 import questionMark from '@public/img/question_mark.jpg'
 import {fetchChampionsFromConfigJson} from '@utils/fetchLocalConfigJson/fetchChampionsFromConfigJson'
+import {fetchEncryptedSummonerId} from '@utils/LOL_API'
 
 
 interface champDisplayedType {
