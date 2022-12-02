@@ -7,7 +7,7 @@ import Champion from '../../components/maincontent/settings/Champion'
 import Config from '../../components/maincontent/settings/Config'
 
 export const toggleSettingsPage = createAction('toggleSettingsPage')
-export const resetSettingsInternal = createAction<string>('resetSettingsInternal')
+export const resetSettingsInternal = createAction('resetSettingsInternal')
 export const setChampions = createAction<Champion[]>('setChampions')
 export const copyFromAnotherSetting = createAction<Config>('copyFromAnotherSetting')
 export const updateAllUserScores = createAction<Champion[]>('updateAllUserScores')
@@ -17,17 +17,19 @@ export const setClientStatus = createAction<number>('setClientStatus')
 export const setFooterMessage = createAction<number>('setFooterMessage')
 export const resetChampSelectDisplayed = createAction('resetChampSelectDisplayed')
 
-export const populateDefaultConfig = (cpy) => (async dispatch => { // TODO search createAsyncThunk() on redux toolkit, (it is a cleaner way to write this I think)
-	await cpy.populateDefaultConfig()
-	dispatch(setChampions(JSON.parse(cpy.stringifyChampions())))
+export const populateDefaultConfig = () => (async dispatch => { // TODO search createAsyncThunk() on redux toolkit, (it is a cleaner way to write this I think)
+	const allChamps = await fetchChampionsFromConfigJson()
+	dispatch(setChampions(allChamps))
 })
-export const resetSettings = (cpy) => (async dispatch => {
-	await cpy.reset()
-	dispatch(resetSettingsInternal(cpy.stringify()))
+export const resetSettings = () => (async dispatch => {
+	const allChamps = await fetchChampionsFromConfigJson()
+	dispatch(resetSettingsInternal())
+	dispatch(setChampions(allChamps))
 })
 
-import {getChampImg, getChampName} from '@utils/playerProfile/getChampionByKey'
+import {getChampImg, getChampName} from '@utils/fetchDataDragon/fetchDataDragon'
 import questionMark from '@public/img/question_mark.jpg'
+import {fetchChampionsFromConfigJson} from '@utils/fetchLocalConfigJson/fetchChampionsFromConfigJson'
 
 
 interface champDisplayedType {
@@ -40,9 +42,6 @@ export const fillChampSelectDisplayedInternal = createAction('fillChampSelectDis
 export const fillChampSelectDisplayed = (actions, localCellId) => (async dispatch => {
 	if (actions.length == 0)
 		return
-	console.log('Action fill')
-	console.log(actions)
-
 	const allies: champDisplayedType[] = []
 	const enemies: champDisplayedType[] = []
 

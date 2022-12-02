@@ -4,7 +4,6 @@
 
 import React, {useEffect} from 'react'
 import styled from 'styled-components'
-import FooterText from '@utils/FooterText'
 import {useAppDispatch, useAppSelector} from '@utils/hooks'
 import {setFooterMessage} from '@utils/store/action'
 
@@ -50,7 +49,7 @@ function Footer(): JSX.Element {
 		if (!navigator.onLine) { dispatch(setFooterMessage(100)) }
 		window.onoffline = () => { dispatch(setFooterMessage(100)) }
 		window.ononline = () => { dispatch(setFooterMessage(101)) }
-	}, [])
+	}, [dispatch])
 	return (
 		<FooterContainer>
 			<FooterTextStyle>{messageDisplayed}</FooterTextStyle>

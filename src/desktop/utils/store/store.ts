@@ -19,7 +19,7 @@ import {
 	updateAllUserScores
 } from '@utils/store/action'
 import questionMark from '@public/img/question_mark.jpg'
-import {getChampScore} from '@utils/playerProfile/getChampionByKey'
+import {getChampScore} from '@utils/fetchDataDragon/fetchDataDragon'
 
 interface champSelectDisplayedType {
 	allies: champDisplayedType[]
@@ -62,7 +62,7 @@ const initialState = {
 
 let g_x = 0
 
-function updateChampSelectDisplayedScores(champSelectDisplayed, allChamps) {
+function updateChampSelectDisplayedScores(champSelectDisplayed, allChamps) { //TODO put types
 	for (const elem of champSelectDisplayed.allies) {
 		elem.score = getChampScore(elem.name, allChamps)
 	}
@@ -73,12 +73,13 @@ function updateChampSelectDisplayedScores(champSelectDisplayed, allChamps) {
 
 const rootReducer = createReducer(initialState, (builder) => {
 	builder
-		.addCase(resetSettingsInternal, (state, action) => {
+		.addCase(resetSettingsInternal, (state) => {
+			const configPlainObject: Config = JSON.parse(state.configSerialized)
+			if (!configPlainObject.champions) return
+			configPlainObject.champions.length = 0
 			sessionStorage.removeItem('internalConfig')
-			localStorage.setItem('config', action.payload)
 			g_x += 1
-			state.configSerialized = action.payload + ' '.repeat(g_x)
-			const configPlainObject = JSON.parse(state.configSerialized)
+			state.configSerialized = JSON.stringify(configPlainObject) + ' '.repeat(g_x)
 			updateChampSelectDisplayedScores(state.champSelectDisplayed, configPlainObject.champions)
 		})
 		.addCase(toggleSettingsPage, (state) => {
@@ -96,9 +97,11 @@ const rootReducer = createReducer(initialState, (builder) => {
 					duplicate.opScore_user = elem.opScore_user
 					duplicate.opScore_CSW = elem.opScore_CSW
 				} else
-					configDeserialized.champions.push(newChamp)
+					configDeserialized.champions.push(newChamp.toPlainObj())
 			}
+			localStorage.setItem('config', configDeserialized.stringify())
 			state.configSerialized = configDeserialized.stringify()
+			updateChampSelectDisplayedScores(state.champSelectDisplayed, configDeserialized.champions)
 		})
 		.addCase(copyFromAnotherSetting, (state, action) => {
 			const configDeserialized = new Config(JSON.parse(state.configSerialized))

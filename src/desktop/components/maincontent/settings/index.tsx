@@ -38,8 +38,7 @@ const OP_ScoreContainer = styled.div`
 `
 
 function Settings() {
-	console.log('Settings rendered')
-	const settings = useAppSelector(selectInstancedConfig())
+	const settings = useAppSelector(selectInstancedConfig()) //TODO select only champions(settings.champions) but do that after fixing the Reset reducer action in store (g_x).
 
 	function renderListChampNameWithOPScore() {
 		if (settings.champions.length == 0) {

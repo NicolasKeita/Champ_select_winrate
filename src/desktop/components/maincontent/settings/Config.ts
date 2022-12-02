@@ -3,6 +3,7 @@
 */
 
 import Champion from './Champion'
+import {fetchChampionsFromConfigJson} from '@utils/fetchLocalConfigJson/fetchChampionsFromConfigJson'
 
 class Config {
 	constructor(payload: Partial<Config>) {
@@ -62,40 +63,6 @@ class Config {
 			if (champion.name === champName) return champion
 		}
 		return undefined
-	}
-
-	public async populateDefaultConfig() {
-		this.champions = await this._fetchChampionsFromConfigJson()
-		localStorage.setItem('config', this.stringify())
-	}
-
-	public async reset() {
-		this.champions.length = 0
-		await this.populateDefaultConfig()
-	}
-
-	private async _fetchChampionsFromConfigJson(): Promise<Champion[]> {
-		const fileUrl = './config/champion_CSW_save.json'
-		const res = await fetch(fileUrl, {
-			headers: {
-				'Content-Type': 'application/json',
-				'Accept':       'application/json'
-			}
-		})
-		if (!res.ok) {
-			console.error('CSW_error: following call : fetch(' + fileUrl + ' caught error;  ' + res.statusText)
-			return []
-		}
-		try {
-			const data = await res.json() as Promise<Champion[]>
-			return (Object.values(data).map((elem: Champion) => {
-				return new Champion(elem.name, elem.opScore_CSW, elem.opScore_CSW)
-			}))
-		} catch (e) {
-			console.error('CSW_error: following call : res.json() caught error; previously : fetch(' + fileUrl)
-			console.error(e)
-			return []
-		}
 	}
 }
 

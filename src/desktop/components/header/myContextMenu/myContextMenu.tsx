@@ -23,8 +23,7 @@ function MyContextMenu(): JSX.Element {
 	const dispatch = useAppDispatch()
 	const settings = useAppSelector(selectInstancedConfig())
 	const handleRightClick = () => {
-		const cpy = new Config(settings)
-		dispatch(resetSettings(cpy))
+		dispatch(resetSettings())
 	}
 	const darkMode: boolean = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
 

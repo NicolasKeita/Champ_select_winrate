@@ -21,7 +21,6 @@ const MainContentContainer = styled.div`
 `
 
 function MainContent() {
-	console.log('mainCOntent renderer')
 	const settingsPage = useAppSelector(selectBooleanSettingsPage())
 
 	let currentPage: JSX.Element

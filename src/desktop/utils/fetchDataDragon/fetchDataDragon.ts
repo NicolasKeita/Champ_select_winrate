@@ -1,8 +1,7 @@
 /*
-    Path + Filename: src/utils/playerProfile/getChampionByKey.ts
+    Path + Filename: src/utils/fetchDataDragon/fetchDataDragon.ts
 */
 
-import {getChampSquareAsset} from '@utils/playerProfile/getChampionSquareAsset'
 import Champion from '../../components/maincontent/settings/Champion'
 
 const championByIdCache = {}
@@ -14,7 +13,7 @@ async function getLatestChampionDDragon(language = 'en_US') {
 	let response
 	let versionIndex = 0
 	do {
-		const version = (await fetch('http://ddragon.leagueoflegends.com/api/versions.json').then(async r => await r.json()))[versionIndex++]
+		const version = (await fetch('https://ddragon.leagueoflegends.com/api/versions.json').then(async r => await r.json()))[versionIndex++]
 
 		response = await fetch(`https://ddragon.leagueoflegends.com/cdn/${version}/data/${language}/champion.json`)
 	} while (!response.ok)
@@ -58,4 +57,9 @@ export function getChampScore(champName: string, settingsChampions: Champion[]):
 		if (elem.name == champName) return elem.opScore_user
 	}
 	return 50
+}
+
+export async function getChampSquareAsset(champNamePNG) {
+	const version = (await fetch('https://ddragon.leagueoflegends.com/api/versions.json').then(async r => await r.json()))[0]
+	return `https://ddragon.leagueoflegends.com/cdn/${version}/img/champion/${champNamePNG}`
 }

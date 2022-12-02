@@ -41017,7 +41017,7 @@ PERFORMANCE OF THIS SOFTWARE.
 			/* harmony import */
 			var _AppWindow__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../AppWindow */ './src/AppWindow.ts')
 			/* harmony import */
-			var _utils_playerProfile__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @utils/playerProfile */ './src/desktop/utils/playerProfile/index.ts')
+			var _utils_playerProfile__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @utils/fetchDataDragon */ './src/desktop/utils/playerProfile/index.ts')
 			/* harmony import */
 			var _utils_LCU__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @utils/LCU_API_connector */ './src/desktop/utils/LCU/index.ts')
 			/* harmony import */
@@ -41627,7 +41627,7 @@ PERFORMANCE OF THIS SOFTWARE.
 			/* harmony import */
 			var prop_types__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/ __webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_5__)
 			/* harmony import */
-			var _utils_playerProfile__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @utils/playerProfile */ './src/desktop/utils/playerProfile/index.ts')
+			var _utils_playerProfile__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @utils/fetchDataDragon */ './src/desktop/utils/playerProfile/index.ts')
 			/* harmony import */
 			var _utils_FooterText__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @utils/FooterText */ './src/desktop/utils/FooterText/index.ts')
 
@@ -41748,7 +41748,7 @@ PERFORMANCE OF THIS SOFTWARE.
 			/* harmony import */
 			var prop_types__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/ __webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_7__)
 			/* harmony import */
-			var _utils_playerProfile__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @utils/playerProfile */ './src/desktop/utils/playerProfile/index.ts')
+			var _utils_playerProfile__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @utils/fetchDataDragon */ './src/desktop/utils/playerProfile/index.ts')
 			/* harmony import */
 			var _utils_hooks__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @utils/hooks */ './src/desktop/utils/hooks/index.tsx')
 
@@ -42438,7 +42438,7 @@ PERFORMANCE OF THIS SOFTWARE.
 
 		/***/ './src/desktop/utils/playerProfile/getChampionByKey.ts':
 		/*!*************************************************************!*\
-  !*** ./src/desktop/utils/playerProfile/getChampionByKey.ts ***!
+  !*** ./src/desktop/utils/fetchDataDragon/fetchDataDragon.ts ***!
   \*************************************************************/
 		/***/ (__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 			'use strict'
@@ -42486,7 +42486,7 @@ PERFORMANCE OF THIS SOFTWARE.
 
 		/***/ './src/desktop/utils/playerProfile/getChampionSquareAsset.ts':
 		/*!*******************************************************************!*\
-  !*** ./src/desktop/utils/playerProfile/getChampionSquareAsset.ts ***!
+  !*** ./src/desktop/utils/fetchDataDragon/getChampionSquareAsset.ts ***!
   \*******************************************************************/
 		/***/ (__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 			'use strict'
@@ -42507,7 +42507,7 @@ PERFORMANCE OF THIS SOFTWARE.
 
 		/***/ './src/desktop/utils/playerProfile/index.ts':
 		/*!**************************************************!*\
-  !*** ./src/desktop/utils/playerProfile/index.ts ***!
+  !*** ./src/desktop/utils/fetchDataDragon/index.ts ***!
   \**************************************************/
 		/***/ (__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 			'use strict'

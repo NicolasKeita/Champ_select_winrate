@@ -17,6 +17,10 @@ class Champion {
 		this.role = ''
 		this.image = ''
 	}
+
+	toPlainObj(): Champion {
+		return Object.assign({}, this)
+	}
 }
 
 export default Champion
