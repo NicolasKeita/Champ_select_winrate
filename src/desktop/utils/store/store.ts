@@ -13,7 +13,7 @@ import {
 	setChampions,
 	setClientStatus,
 	setFooterMessage,
-	setInternalSettings,
+	setInternalSettings, setSummonerName,
 	setUserOPScore,
 	toggleSettingsPage,
 	updateAllUserScores
@@ -57,7 +57,8 @@ const initialState = {
 	internalSettings:     '',
 	footerMessageID:      -1,
 	leagueClientStatus:   -1,
-	champSelectDisplayed: initChampSelectDisplayed()
+	champSelectDisplayed: initChampSelectDisplayed(),
+	summonerName:         ''
 }
 
 let g_x = 0
@@ -138,6 +139,7 @@ const rootReducer = createReducer(initialState, (builder) => {
 		.addCase(setClientStatus, (state, action) => {
 			state.leagueClientStatus = action.payload
 			state.footerMessageID = action.payload
+			sessionStorage.setItem('clientStatus', action.payload.toString())
 		})
 		.addCase(setFooterMessage, (state, action) => {
 			state.footerMessageID = action.payload
@@ -154,6 +156,9 @@ const rootReducer = createReducer(initialState, (builder) => {
 			for (const elem of state.champSelectDisplayed.enemies) {
 				elem.score = getChampScore(elem.name, JSON.parse(state.configSerialized).champions)
 			}
+		})
+		.addCase(setSummonerName, (state, action) => {
+			state.summonerName = action.payload
 		})
 })
 

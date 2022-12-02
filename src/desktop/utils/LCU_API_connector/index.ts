@@ -4,17 +4,25 @@
 
 /* Overwolf is currently providing the connection to the LCU_API_connector */
 
+import {setSummonerName} from '@utils/store/action'
+
 let onErrorListener, onInfoUpdates2Listener, onNewEventsListener
-const g_interestedInFeatures = ['game_flow', 'summoner_info', 'champ_select', 'lcu_info']
+const g_interestedInFeatures = ['game_flow', 'summoner_info', 'champ_select']
 
 export function registerEvents(handleFeaturesCallbacks) {
 	onErrorListener = function(info) {
 		console.log('CSW_Error onErrorFromOWApi: ' + JSON.stringify(info))
 	}
 	onInfoUpdates2Listener = info => {
+		console.log('new info')
+		console.log(info)
 		handleFeaturesCallbacks(info)
 	}
-	onNewEventsListener = function(info) {}
+	onNewEventsListener = function(info) {
+
+		console.log('new2 info')
+		console.log(info)
+	}
 	overwolf.games.events.onError.addListener(onErrorListener)
 	overwolf.games.launchers.events.onInfoUpdates.addListener(onInfoUpdates2Listener)
 	overwolf.games.events.onNewEvents.addListener(onNewEventsListener)
@@ -74,6 +82,23 @@ class LCU_API_connector {
 		unregisterEvents()
 	}
 
+	public getLoLClient(allClients) {
+		let lolClient = null
+		if (allClients && allClients.launchers)
+			lolClient = allClients.launchers.find(elem => elem.id && Math.floor(elem.id / 10) == 10902)
+		return (lolClient)
+	}
+
+	public storeSummonerName(lolClient, dispatch) {
+		overwolf.games.launchers.events.getInfo(lolClient.classId, res => {
+			if (res.success) {
+				if (res.res && res.res.summoner_info) {
+					dispatch(setSummonerName(res.res.summoner_info.internal_name))
+				}
+			}
+		})
+	}
+
 	private setFeatures() {
 		overwolf.games.launchers.events.setRequiredFeatures(10902, g_interestedInFeatures, function(info) {
 			if (info.error) {
@@ -84,10 +109,6 @@ class LCU_API_connector {
 			}
 		})
 	}
-
-	// public populateCredentials() {
-	//     return (0)
-	// }
 }
 
 export default LCU_API_connector

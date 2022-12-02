@@ -63,6 +63,7 @@ class BackgroundController {
 	}
 
 	private toggleWindows(info: RunningGameInfo) {
+		return
 		if (!info || !this.isSupportedGame(info)) {
 			return
 		}

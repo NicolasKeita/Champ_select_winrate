@@ -16,6 +16,7 @@ export const setInternalSettings = createAction('setInternalSettings', function 
 export const setClientStatus = createAction<number>('setClientStatus')
 export const setFooterMessage = createAction<number>('setFooterMessage')
 export const resetChampSelectDisplayed = createAction('resetChampSelectDisplayed')
+export const setSummonerName = createAction<string>('setSummonerName')
 
 export const populateDefaultConfig = () => (async dispatch => { // TODO search createAsyncThunk() on redux toolkit, (it is a cleaner way to write this I think)
 	const allChamps = await fetchChampionsFromConfigJson()
