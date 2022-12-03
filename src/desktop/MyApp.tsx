@@ -12,11 +12,12 @@ import FooterAD from './components/footerAD'
 import Config from './components/maincontent/settings/Config'
 import {
 	copyFromAnotherSetting, fillChampSelectDisplayed, populateDefaultConfig,
-	resetChampSelectDisplayed, setClientStatus, setSummoner
+	resetChampSelectDisplayed, setClientStatus, setFooterMessage
 } from '@utils/store/action'
-import {useAppDispatch, useAppSelector} from '@utils/hooks'
+import {useAppDispatch} from '@utils/hooks'
 import LCU_API_connector from '@utils/LCU_API_connector'
-import {isInGame} from '@utils/LOL_API'
+import {fetchEncryptedSummonerId, isInGame} from '@utils/LOL_API'
+import {fetchChampionsFromConfigJson} from '@utils/fetchLocalConfigJson/fetchChampionsFromConfigJson'
 
 const MyAppContainer = styled.div`
   display: flex;
@@ -51,9 +52,13 @@ function MyApp(props: My_PropType): JSX.Element {
 						// ↑ Entering in champ select
 						dispatch(resetChampSelectDisplayed())
 						dispatch(setClientStatus(0))
-					} else {
+					} else { //TODO else if lobby, create a clientStatus dedicated for lobby gameflow
 						const previousClientStatus = sessionStorage.getItem('clientStatus')
-						if (!(previousClientStatus && parseInt(previousClientStatus) === 0 && game_flow.phase === 'None'))
+						if (previousClientStatus && parseInt(previousClientStatus) === 0 && game_flow.phase === 'None') {
+							// ↑ if user close his client manually (dodge)
+							dispatch(setClientStatus(-1))
+							dispatch(setFooterMessage(201))
+						} else
 							dispatch(setClientStatus(1))
 					}
 				}
@@ -65,38 +70,61 @@ function MyApp(props: My_PropType): JSX.Element {
 				dispatch(setClientStatus(0))
 			}
 
-			function handleSummonerInfo(summoner_info) {
-				if (summoner_info.internal_name) {
-					dispatch(setSummoner(summoner_info.internal_name, summoner_info.platform_id))
-				}
-			}
-
 			function handleFeaturesCallbacks(info) {
 				if (info.feature === 'game_flow') handleGameFlow(info.info.game_flow)
 				if (info.feature === 'champ_select') handleChampSelect(info.info.champ_select)
-				if (info.feature === 'summoner_info') handleSummonerInfo(info.info.summoner_info)
 			}
 
 			LCU_interface.onClientAlreadyRunningOrNot(clientsInfos => {
 				if (LCU_interface.isLeagueClient(clientsInfos)) {
+					fetchingSummonerNameAndRegionEvery5sec()
 					// ↑ if client's already running
-					const lolClient = LCU_interface.getLoLClient(clientsInfos)
-					LCU_interface.storeSummonerName(lolClient, dispatch)
-					dispatch(setClientStatus(1))
 					LCU_interface.addAllListeners(clientsInfos, handleFeaturesCallbacks)
+					dispatch(setClientStatus(1))
 				} else {
 					dispatch(setClientStatus(-1))
 				}
 			})
 			LCU_interface.onClientLaunch(clientInfo => {
 				LCU_interface.addAllListeners(clientInfo, handleFeaturesCallbacks)
-				LCU_interface.storeSummonerName(clientInfo, dispatch)
 				dispatch(setClientStatus(1))
+				fetchingSummonerNameAndRegionEvery5sec()
 			})
-			LCU_interface.onClientClosed(() => {
+			LCU_interface.onClientClosed(async () => {
+				const clientStatus = sessionStorage.getItem('clientStatus')
+				// if (clientStatus && parseInt(clientStatus) == 0) {
+				// 	const encryptedSummonerId = sessionStorage.getItem('encryptedSummonerId')
+				// 	const summonerRegion = sessionStorage.getItem('summonerRegion')
+				// 	const isInGameVariable = await isInGame(summonerRegion, encryptedSummonerId)
+				// 	// TODO changer logique, mettre :  Dodge successful. Waof SpyNIght isn't in game. Checking again 5 4 3 2 1sec     -- Dodge fail Waof SpyNight is in-game
+				// 	if (isInGameVariable == true)
+				// 		dispatch(setFooterMessage(200))
+				// 	else if (isInGameVariable == false)
+				// 		dispatch(setFooterMessage(201))
+				// }
 				dispatch(setClientStatus(-1))
 				LCU_interface.removeAllListeners()
 			})
+		}
+
+		function fetchingSummonerNameAndRegionEvery5sec() {
+			const intervalId = setInterval(() => {
+				console.log('Fetching summonerName')
+				overwolf.games.launchers.events.getInfo(10902, (result) => {
+					if (result.success && result.res && result.res.summoner_info) {
+						const name = result.res.summoner_info.internal_name
+						const region = result.res.summoner_info.platform_id
+						if (name == undefined || region == undefined)
+							return
+						sessionStorage.setItem('summonerName', name)
+						sessionStorage.setItem('summonerRegion', region)
+						fetchEncryptedSummonerId(name, region).then(encryptedSummonerId => {
+							sessionStorage.setItem('encryptedSummonerId', encryptedSummonerId)
+						})
+						clearInterval(intervalId)
+					}
+				})
+			}, 5000)
 		}
 
 		initializeDefaultConfig()

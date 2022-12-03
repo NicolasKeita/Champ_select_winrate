@@ -16,6 +16,8 @@ export const setInternalSettings = createAction('setInternalSettings', function 
 export const setClientStatus = createAction<number>('setClientStatus')
 export const setFooterMessage = createAction<number>('setFooterMessage')
 export const resetChampSelectDisplayed = createAction('resetChampSelectDisplayed')
+export const setSummonerName = createAction<string>('setSummonerName')
+export const setSummonerRegion = createAction<string>('setSummonerRegion')
 export const setSummonerInternal = createAction('setSummonerInternal', function prepare(summonerName: string, summonerRegion: string, encryptedSummonerId: string) {
 	return {
 		payload: {
@@ -38,6 +40,7 @@ export const resetSettings = () => (async dispatch => {
 
 export const setSummoner = (summonerName, summonerRegion) => (async dispatch => {
 	const encryptedSummonerId = await fetchEncryptedSummonerId(summonerName, summonerRegion)
+	sessionStorage.setItem('encryptedSummonerId', encryptedSummonerId)
 	dispatch(setSummonerInternal(summonerName, summonerRegion, encryptedSummonerId))
 })
 

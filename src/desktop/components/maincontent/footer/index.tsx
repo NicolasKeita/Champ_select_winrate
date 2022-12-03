@@ -5,9 +5,7 @@
 import React, {useEffect} from 'react'
 import styled from 'styled-components'
 import {useAppDispatch, useAppSelector} from '@utils/hooks'
-import {setClientStatus, setFooterMessage} from '@utils/store/action'
-import {isInGame} from '@utils/LOL_API'
-import LCU_API_connector from '@utils/LCU_API_connector'
+import {setFooterMessage} from '@utils/store/action'
 
 const FooterContainer = styled.footer`
   background: linear-gradient(to right, rgb(63, 62, 62), #363636, #323232);
@@ -15,43 +13,22 @@ const FooterContainer = styled.footer`
   display: flex;
   justify-content: center;
   padding: 4px 0 4px 0;
+  height: 20px;
 `
 const FooterTextStyle = styled.h1`
   background: -webkit-linear-gradient(#e8730e, #b79e4d);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  font-size: ${props => props.messageDisplayedLength < 50 ? '14px' : '11px'};
 `
-
-const LCU_interface = new LCU_API_connector()
 
 function Footer(): JSX.Element {
 	console.log('Footer rendered')
 	const dispatch = useAppDispatch()
 	const footerMessageID = useAppSelector(state => state.footerMessageID)
-	const summonerName = useAppSelector(state => state.summonerName)
-	const summonerRegion = useAppSelector(state => state.summonerRegion)
-	const clientStatus = useAppSelector(state => state.leagueClientStatus)
-	const encryptedSummonerId = useAppSelector(state => state.encryptedSummonerId)
-	console.log('name')
-	console.log(summonerName)
-	console.log('region')
-	console.log(summonerRegion)
+	const summonerName = sessionStorage.getItem('summonerName')
 	let messageDisplayed = ''
-
-	useEffect(() => {
-		LCU_interface.onClientClosed(async () => {
-			const previousClientStatus = clientStatus
-			dispatch(setClientStatus(-1))
-			if (previousClientStatus == 0) {
-				const isInGameVariable = await isInGame(summonerRegion, encryptedSummonerId)
-				if (isInGameVariable == true)
-					dispatch(setFooterMessage(200)) // TODO changer logique, mettre :  Dodge successful. Waof SpyNIght isn't in game. Checking again 5 4 3 2 1sec     -- Dodge fail Waof SpyNight is in-game
-				else if (isInGameVariable == false)
-					dispatch(setFooterMessage(201))
-			}
-			LCU_interface.removeAllListeners()
-		})
-	}, [clientStatus, dispatch, encryptedSummonerId, summonerName, summonerRegion])
+	let countdownCheckingIsInGame = 5
 
 	switch (footerMessageID) {
 		case -1:
@@ -70,10 +47,10 @@ function Footer(): JSX.Element {
 			messageDisplayed = 'You are back online.'
 			break
 		case 200:
-			messageDisplayed = `You failed dodging. ${summonerName} is in-game.`
+			messageDisplayed = `Dodge failure. ${summonerName} is in-game.`
 			break
 		case 201:
-			messageDisplayed = `You dodged successfully. ${summonerName} is not in-game.`
+			messageDisplayed = `Dodge successful. ${summonerName} is not in-game. Checking again in ${countdownCheckingIsInGame} sec`
 			break
 		default:
 			messageDisplayed = 'League client is not open.'
@@ -86,7 +63,7 @@ function Footer(): JSX.Element {
 	}, [dispatch])
 	return (
 		<FooterContainer>
-			<FooterTextStyle>{messageDisplayed}</FooterTextStyle>
+			<FooterTextStyle messageDisplayedLength={messageDisplayed.length}>{messageDisplayed}</FooterTextStyle>
 		</FooterContainer>
 	)
 }

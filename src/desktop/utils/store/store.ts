@@ -13,7 +13,7 @@ import {
 	setChampions,
 	setClientStatus,
 	setFooterMessage,
-	setInternalSettings, setSummonerInternal, setUserOPScore,
+	setInternalSettings, setSummonerInternal, setSummonerName, setSummonerRegion, setUserOPScore,
 	toggleSettingsPage,
 	updateAllUserScores
 } from '@utils/store/action'
@@ -162,6 +162,12 @@ const rootReducer = createReducer(initialState, (builder) => {
 			state.summonerName = action.payload.summonerName
 			state.summonerRegion = action.payload.summonerRegion
 			state.encryptedSummonerId = action.payload.encryptedSummonerId
+		})
+		.addCase(setSummonerName, (state, action) => {
+			state.summonerName = action.payload
+		})
+		.addCase(setSummonerRegion, (state, action) => {
+			state.summonerRegion = action.payload
 		})
 })
 

@@ -7,7 +7,7 @@
 import {setSummoner} from '@utils/store/action'
 
 let onErrorListener, onInfoUpdates2Listener, onNewEventsListener
-const g_interestedInFeatures = ['game_flow', 'summoner_info', 'champ_select']
+const g_interestedInFeatures = ['game_flow', 'champ_select']
 
 export function registerEvents(handleFeaturesCallbacks) {
 	onErrorListener = function(info) {
@@ -92,9 +92,8 @@ class LCU_API_connector {
 			console.log(res)
 			if (res.success) {
 				if (Object.keys(res.res).length === 0) {
-					console.log('OW failed getting client info, retrying in recursive in 2sec')
-					window.setTimeout(overwolf.games.launchers.events.getInfo, 2000, lolClient.classId, callbackAfterGettingClientInfo)
-					// overwolf.games.launchers.events.getInfo(lolClient.classId, callbackAfterGettingClientInfo)
+					console.log('CSW_log : overwolf.games.launchers.events.getInfo() failed, retrying in recursive in 2sec')
+					//window.setTimeout(overwolf.games.launchers.events.getInfo, 2000, lolClient.classId, callbackAfterGettingClientInfo)
 					return
 				}
 				if (res.res && res.res.summoner_info) {

@@ -8,6 +8,7 @@ import {useAppSelector} from '@utils/hooks'
 import uniqid from 'uniqid'
 import ConfigRow from './configRow'
 import {selectInstancedConfig} from '@utils/store/selectors'
+import {fetchEncryptedSummonerId} from '@utils/LOL_API'
 
 const SettingsContainer = styled.div`
   background: linear-gradient(to right, #252424, #363636, #252424);

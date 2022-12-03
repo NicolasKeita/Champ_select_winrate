@@ -18,8 +18,8 @@ import '@public/css/ContextMenu.css'
 import MyContextMenu from './myContextMenu/myContextMenu'
 import {myContextMenuBridge} from './myContextMenu/myContextMenuBridge'
 
-import {setUserOPScore, toggleSettingsPage, updateAllUserScores} from '@utils/store/action'
-import {useAppDispatch, useAppSelector} from '@utils/hooks'
+import {toggleSettingsPage, updateAllUserScores} from '@utils/store/action'
+import {useAppDispatch} from '@utils/hooks'
 
 const HeaderContainer = styled.header`
   background: linear-gradient(to right, rgb(63, 62, 62), #363636, #323232);
@@ -79,8 +79,6 @@ const ButtonSettings = () => {
 		></ContextMenuTriggerArea>
 	)
 }
-
-let isMenuOpen = false
 
 function Header(props) {
 	const my_window = props.my_window
