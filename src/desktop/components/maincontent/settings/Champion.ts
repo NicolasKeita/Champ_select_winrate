@@ -2,7 +2,6 @@
     Path + Filename: src/desktop/components/maincontent/settings/Champion.ts
 */
 
-//TODO tranform into private
 class Champion {
 	public name: string
 	public opScore_CSW

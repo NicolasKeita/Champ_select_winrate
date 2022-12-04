@@ -64,7 +64,7 @@ const initialState = {
 
 let g_x = 0
 
-function updateChampSelectDisplayedScores(champSelectDisplayed, allChamps) { //TODO put types
+function updateChampSelectDisplayedScores(champSelectDisplayed: champSelectDisplayedType, allChamps: Champion[]) {
 	for (const elem of champSelectDisplayed.allies) {
 		elem.score = getChampScore(elem.name, allChamps)
 	}
@@ -139,8 +139,9 @@ const rootReducer = createReducer(initialState, (builder) => {
 		})
 		.addCase(setClientStatus, (state, action) => {
 			state.leagueClientStatus = action.payload
-			state.footerMessageID = action.payload
 			sessionStorage.setItem('clientStatus', action.payload.toString())
+			if (state.footerMessageID != 200 && state.footerMessageID != 201 && action.payload != 2)
+				state.footerMessageID = action.payload
 		})
 		.addCase(setFooterMessage, (state, action) => {
 			state.footerMessageID = action.payload

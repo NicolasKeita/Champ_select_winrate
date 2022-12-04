@@ -52,7 +52,11 @@ function MyApp(props: My_PropType): JSX.Element {
 						// ↑ Entering in champ select
 						dispatch(resetChampSelectDisplayed())
 						dispatch(setClientStatus(0))
-					} else { //TODO else if lobby, create a clientStatus dedicated for lobby gameflow
+					} // TODO remove comments below
+						// else if (game_flow.phase === 'Lobby') {
+						// 	dispatch(setClientStatus(2))
+					// }
+					else {
 						const previousClientStatus = sessionStorage.getItem('clientStatus')
 						if (previousClientStatus && parseInt(previousClientStatus) === 0 && game_flow.phase === 'None') {
 							// ↑ if user close his client manually (dodge)
@@ -91,17 +95,6 @@ function MyApp(props: My_PropType): JSX.Element {
 				fetchingSummonerNameAndRegionEvery5sec()
 			})
 			LCU_interface.onClientClosed(async () => {
-				const clientStatus = sessionStorage.getItem('clientStatus')
-				// if (clientStatus && parseInt(clientStatus) == 0) {
-				// 	const encryptedSummonerId = sessionStorage.getItem('encryptedSummonerId')
-				// 	const summonerRegion = sessionStorage.getItem('summonerRegion')
-				// 	const isInGameVariable = await isInGame(summonerRegion, encryptedSummonerId)
-				// 	// TODO changer logique, mettre :  Dodge successful. Waof SpyNIght isn't in game. Checking again 5 4 3 2 1sec     -- Dodge fail Waof SpyNight is in-game
-				// 	if (isInGameVariable == true)
-				// 		dispatch(setFooterMessage(200))
-				// 	else if (isInGameVariable == false)
-				// 		dispatch(setFooterMessage(201))
-				// }
 				dispatch(setClientStatus(-1))
 				LCU_interface.removeAllListeners()
 			})

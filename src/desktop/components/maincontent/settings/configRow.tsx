@@ -75,7 +75,6 @@ function ConfigRow(props) {
 
 
 	return (
-		// TODO : webstorm is showing me a way to remove the 3 instance of display flex. There is still styled.component that I can use
 		<div style={{display: 'flex', flex: '1'}} key={'1'}>
 			<form
 				style={{

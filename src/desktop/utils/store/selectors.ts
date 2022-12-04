@@ -13,12 +13,23 @@ export const selectInstancedConfig = () => {
 }
 export const selectBooleanSettingsPage = () => {
 	return (
-		(state) => {
+		state => {
 			const configPlainObject: Config | undefined = JSON.parse(state.configSerialized)
 			if (configPlainObject)
 				return configPlainObject.settingsPage
 			else
 				return false
+		}
+	)
+}
+export const selectAllChampions = () => {
+	return (
+		state => {
+			const configPlainObject: Config | undefined = JSON.parse(state.configSerialized)
+			if (configPlainObject && configPlainObject.champions)
+				return configPlainObject.champions
+			else
+				return []
 		}
 	)
 }
