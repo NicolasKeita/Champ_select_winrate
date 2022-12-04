@@ -2,10 +2,12 @@
     Path + Filename: src/desktop/components/footer/myContextMenu.tsx
 */
 
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import styled from 'styled-components'
 import {useAppDispatch, useAppSelector} from '@utils/hooks'
 import {setFooterMessage} from '@utils/store/action'
+import Countdown from 'react-countdown'
+import {isInGame} from '@utils/LOL_API'
 
 const FooterContainer = styled.footer`
   background: linear-gradient(to right, rgb(63, 62, 62), #363636, #323232);
@@ -28,7 +30,6 @@ function Footer(): JSX.Element {
 	const footerMessageID = useAppSelector(state => state.footerMessageID)
 	const summonerName = sessionStorage.getItem('summonerName')
 	let messageDisplayed = ''
-	let countdownCheckingIsInGame = 5
 
 	switch (footerMessageID) {
 		case -1:
@@ -50,7 +51,7 @@ function Footer(): JSX.Element {
 			messageDisplayed = `Dodge failure. ${summonerName} is in-game.`
 			break
 		case 201:
-			messageDisplayed = `Dodge successful. ${summonerName} is not in-game. Checking again in ${countdownCheckingIsInGame} sec`
+			messageDisplayed = `Dodge successful. ${summonerName} is not in-game. Checking again in `
 			break
 		default:
 			messageDisplayed = 'League client is not open.'
@@ -61,9 +62,37 @@ function Footer(): JSX.Element {
 		window.onoffline = () => { dispatch(setFooterMessage(100)) }
 		window.ononline = () => { dispatch(setFooterMessage(101)) }
 	}, [dispatch])
+
+	let msg: JSX.Element
+	const renderer = ({seconds, completed}) => {
+		if (completed) {
+			const summonerRegion = sessionStorage.getItem('summonerRegion')
+			const encryptedSummonerId = sessionStorage.getItem('encryptedSummonerId')
+			isInGame(summonerRegion, encryptedSummonerId).then(isInGameBool => {
+				if (isInGameBool) {
+					dispatch(setFooterMessage(200))
+				} else {
+					return (<Countdown date={Date.now() + 6000} key={10} renderer={renderer} />)
+				}
+			})
+		} else
+			return <span>{seconds}</span>
+	}
+
+	if (footerMessageID === 201) {
+		msg = (
+			<div>
+				{messageDisplayed}
+				<Countdown date={Date.now() + 6000} key={10} renderer={renderer} />
+				<span> sec</span>
+			</div>)
+	} else {
+		msg = (<div>{messageDisplayed}</div>)
+	}
+
 	return (
 		<FooterContainer>
-			<FooterTextStyle messageDisplayedLength={messageDisplayed.length}>{messageDisplayed}</FooterTextStyle>
+			<FooterTextStyle messageDisplayedLength={messageDisplayed.length}>{msg}</FooterTextStyle>
 		</FooterContainer>
 	)
 }

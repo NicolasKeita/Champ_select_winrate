@@ -34,6 +34,7 @@ export async function fetchEncryptedSummonerId(summonerName, summonerRegion): Pr
 }
 
 export async function isInGame(summonerRegion, encryptedSummonerId): Promise<boolean | null> {
+	return true
 	// const url = `https://${summonerRegion}.api.riotgames.com/lol/spectator/v4/active-games/by-summoner/${encryptedSummonerId}`
 	// const res = await fetch(url, {
 	// 	headers: my_headers

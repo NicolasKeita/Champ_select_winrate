@@ -4,6 +4,7 @@
 	"meta": {
 		"name": "Champ Select Winrate",
 		"author": "Nicolas Keita",
+		"author_display": "SpyNight",
 		"version": "1.0.2",
 		"minimum-overwolf-version": "0.194.0",
 		"description": "From general knowledge about champ select (that you can set up) output many champ suggestions and your winrate.",
