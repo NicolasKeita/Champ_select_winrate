@@ -140,7 +140,7 @@ const rootReducer = createReducer(initialState, (builder) => {
 		.addCase(setClientStatus, (state, action) => {
 			state.leagueClientStatus = action.payload
 			sessionStorage.setItem('clientStatus', action.payload.toString())
-			if (state.footerMessageID != 200 && state.footerMessageID != 201 && action.payload != 2)
+			if ((state.footerMessageID == 200 || state.footerMessageID == 201 && action.payload != -1) || action.payload != 2) {} else
 				state.footerMessageID = action.payload
 		})
 		.addCase(setFooterMessage, (state, action) => {

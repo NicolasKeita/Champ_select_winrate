@@ -15,7 +15,7 @@ const FooterContainer = styled.footer`
   display: flex;
   justify-content: center;
   padding: 4px 0 4px 0;
-  height: 20px;
+  //height: 20px;
 `
 const FooterTextStyle = styled.h1`
   background: -webkit-linear-gradient(#e8730e, #b79e4d);

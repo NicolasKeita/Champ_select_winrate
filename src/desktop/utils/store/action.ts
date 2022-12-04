@@ -28,7 +28,7 @@ export const setSummonerInternal = createAction('setSummonerInternal', function 
 	}
 })
 
-export const populateDefaultConfig = () => (async dispatch => { // TODO search createAsyncThunk() on redux toolkit, (it is a cleaner way to write this I think)
+export const populateDefaultConfig = () => (async dispatch => { // TODO migration to createSlice and createAsyncThunk?
 	const allChamps = await fetchChampionsFromConfigJson()
 	dispatch(setChampions(allChamps))
 })
@@ -100,11 +100,10 @@ export const fillChampSelectDisplayed = (actions, localCellId) => (async dispatc
 	// Rift Mode with bans (doesn't handle clash or tournament yet)
 	else if (actions.length == 8) {
 		for (let i = 2; i < actions.length; i++) {
-			// TODO replace by 'for of ?'
-			for (let y = 0; y < actions[i].length; ++y) {
-				const champID = actions[i][y].championId
+			for (const pairActionSplitted of actions[i]) {
+				const champID = pairActionSplitted.championId
 				if (champID === 0) continue
-				let cellID = actions[i][y].actorCellId
+				let cellID = pairActionSplitted.actorCellId
 				if (cellID < 5) {
 					if (localCellId < 5) {
 						allies[cellID].img = await getChampImg(champID)
