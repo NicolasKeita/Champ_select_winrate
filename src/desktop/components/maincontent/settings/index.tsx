@@ -7,7 +7,7 @@ import styled from 'styled-components'
 import {useAppSelector} from '@utils/hooks'
 import uniqid from 'uniqid'
 import ConfigRow from './configRow'
-import {selectAllChampions, selectInstancedConfig} from '@utils/store/selectors'
+import {selectAllChampions} from '@utils/store/selectors'
 
 const SettingsContainer = styled.div`
   background: linear-gradient(to right, #252424, #363636, #252424);

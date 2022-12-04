@@ -2,8 +2,7 @@
     Path + Filename: src/desktop/components/maincontent/settings/Config.ts
 */
 
-import Champion from './Champion'
-import {fetchChampionsFromConfigJson} from '@utils/fetchLocalConfigJson/fetchChampionsFromConfigJson'
+import {Champion, ChampionConstructor } from './Champion'
 
 class Config {
 	constructor(payload: Partial<Config>) {
@@ -14,7 +13,7 @@ class Config {
 		if (payload.champions) {
 			const allChampionsPlainArray = payload.champions
 			for (const elem of allChampionsPlainArray) {
-				this._champions.push(new Champion(elem.name, elem.opScore_user, elem.opScore_CSW))
+				this._champions.push(new ChampionConstructor(elem.name, elem.opScore_user, elem.opScore_CSW))
 			}
 		}
 	}
@@ -54,7 +53,7 @@ class Config {
 	public copyFromAnotherSetting(settings: Config): void {
 		this._champions.length = 0
 		settings.champions.forEach(elem => {
-			this._champions.push(Object.assign(new Champion(), elem))
+			this._champions.push(Object.assign(new ChampionConstructor(), elem))
 		})
 	}
 

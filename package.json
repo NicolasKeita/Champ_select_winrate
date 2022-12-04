@@ -51,7 +51,6 @@
 		"@types/react": "^18.0.23",
 		"@types/react-dom": "^18.0.7",
 		"node-jsx": "^0.13.3",
-		"prop-types": "^15.8.1",
 		"react": "^18.2.0",
 		"react-context-menu-hooks": "^0.4.0",
 		"react-countdown": "^2.3.5",

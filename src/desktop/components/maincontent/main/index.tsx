@@ -8,6 +8,7 @@ import uniqid from 'uniqid'
 
 import ChampionProfile from '../../championProfile'
 import {useAppSelector} from '@utils/hooks'
+import {Champion} from '../settings/Champion'
 
 const PercentageContainer = styled.div`
   display: flex;
@@ -80,24 +81,26 @@ const ProfileLine = styled.div`
 
 function Main() {
 	const champSelectDisplayed = useAppSelector((state) => state.champSelectDisplayed)
+	const localCellId = sessionStorage.getItem('localCellId')
+	const isItUser = false
 
 	function renderPlayersGrid(isEnemyTeam) {
 		const profiles: JSX.Element[] = []
 		for (let i = 0; i < 5; ++i) {
-			const img = isEnemyTeam ? champSelectDisplayed.enemies[i].img : champSelectDisplayed.allies[i].img
+			const img = isEnemyTeam ? champSelectDisplayed.enemies[i].image : champSelectDisplayed.allies[i].image
 			const champName = isEnemyTeam ? champSelectDisplayed.enemies[i].name : champSelectDisplayed.allies[i].name
-			const champScore = isEnemyTeam ? champSelectDisplayed.enemies[i].score : champSelectDisplayed.allies[i].score
-			profiles.push(<ChampionProfile isEnemyTeam={isEnemyTeam} key={uniqid()} img={img} champName={champName} champScore={champScore} />)
+			const champScore = isEnemyTeam ? champSelectDisplayed.enemies[i].opScore_user : champSelectDisplayed.allies[i].opScore_user
+			profiles.push(<ChampionProfile isEnemyTeam={isEnemyTeam} key={uniqid()} img={img} champName={champName} champScore={champScore} champRecommendation={champSelectDisplayed.champRecommendations} isItUser={isItUser}/>)
 			if (i < 4) profiles.push(<ProfileLine isEnemyTeam={isEnemyTeam} key={uniqid()} />)
 		}
 		return <div>{profiles}</div>
 	}
 
-	function computeWinrate(allies, enemies): number {
+	function computeWinrate(allies : Champion[], enemies : Champion[]): number {
 		let sumAllies = 0
 		let sumEnemies = 0
-		for (const elem of allies) sumAllies += elem.score
-		for (const elem of enemies) sumEnemies += elem.score
+		for (const elem of allies) sumAllies += elem.opScore_user
+		for (const elem of enemies) sumEnemies += elem.opScore_user
 		let winRate = (sumAllies / 5 - sumEnemies / 5) / 2 + 50
 		let isInferiorTo50 = false
 		if (winRate < 50) {

@@ -2,7 +2,7 @@
     Path + Filename: src/utils/fetchDataDragon/fetchDataDragon.ts
 */
 
-import Champion from '../../components/maincontent/settings/Champion'
+import {Champion} from '../../components/maincontent/settings/Champion'
 
 const championByIdCache = {}
 const championJson = {}

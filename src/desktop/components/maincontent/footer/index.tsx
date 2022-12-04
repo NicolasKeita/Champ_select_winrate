@@ -2,7 +2,7 @@
     Path + Filename: src/desktop/components/footer/myContextMenu.tsx
 */
 
-import React, {useEffect, useState} from 'react'
+import React, {useEffect} from 'react'
 import styled from 'styled-components'
 import {useAppDispatch, useAppSelector} from '@utils/hooks'
 import {setFooterMessage} from '@utils/store/action'

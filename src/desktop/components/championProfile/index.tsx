@@ -4,12 +4,22 @@
 
 import React from 'react'
 import styled from 'styled-components'
-import PropTypes from 'prop-types'
+import { Champion } from '../maincontent/settings/Champion'
+import uniqid from 'uniqid'
+import {getChampSquareAsset} from '@utils/fetchDataDragon/fetchDataDragon'
+import {useAppSelector} from '@utils/hooks'
 
 const ChampionImg = styled.img`
 	border-radius: 50%;
 	width: 50px;
 	height: 50px;
+	background: white;
+`
+
+const ChampRecommendationImg = styled.img`
+	border-radius: 50%;
+	width: 15px;
+	height: 15px;
 	background: white;
 `
 
@@ -33,25 +43,43 @@ const ProfileTexts = styled.div`
 
 const ChampionPower = styled.h2`
 	color: #beb7a6;
+  padding: 0 10px 0 10px;
 `
 
-function ChampionProfile(props) {
+interface PropsType {
+	isEnemyTeam: boolean,
+	champName: string,
+	img: string,
+	champScore: number,
+	champRecommendation: Champion[],
+	isItUser: boolean
+}
+
+function ChampionProfile(props : PropsType) {
+	const clientStatus = useAppSelector(state => state.leagueClientStatus)
+
+	function renderChampionRecommendation() : JSX.Element[] | null {
+		if (clientStatus != 0) return null
+		const row : JSX.Element[] = []
+		for (let i = 0; i < 5; ++i) {
+			const img = getChampSquareAsset(props.champRecommendation[0].image)
+			row.push(<ChampRecommendationImg key={uniqid()} src={img} />)
+		}
+		return row
+	}
+
 	return (
 		<ChampionProfileContainer isEnemyTeam={props.isEnemyTeam}>
 			<ChampionImg src={props.img} alt={'playerChampion'} />
 			<ProfileTexts>
 				<h1>{props.champName}</h1>
-				<ChampionPower>{props.champScore}</ChampionPower>
+				<div style={{display: 'flex', flexDirection: 'row'}}>
+					<ChampionPower>{props.champScore}</ChampionPower>
+					{renderChampionRecommendation()}
+				</div>
 			</ProfileTexts>
 		</ChampionProfileContainer>
 	)
-}
-
-ChampionProfile.propTypes = {
-	isEnemyTeam: PropTypes.bool,
-	champName: PropTypes.string,
-	img: PropTypes.string,
-	champScore: PropTypes.number
 }
 
 export default ChampionProfile
