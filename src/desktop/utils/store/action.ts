@@ -11,7 +11,8 @@ import {
 	fetchChampionsFromConfigJson
 } from '@utils/fetchLocalConfigJson/fetchChampionsFromConfigJson'
 import {
-	doChampionSuggestionsInternal, fillChampSelectDisplayedInternal,
+	ChampDisplayedType,
+	fillChampSelectDisplayedInternal, getDefaultRecommendations,
 	resetSettingsInternal,
 	setChampions
 } from '@utils/store/store'
@@ -27,15 +28,23 @@ export const resetSettings = () => (async dispatch => {
 	dispatch(setChampions(allChamps))
 })
 
-export const fillChampSelectDisplayed = (actions, localCellId) => (async dispatch => {
+export const fillChampSelectDisplayed = (actions, localCellId, myTeam, theirTeam) => (async dispatch => {
 	if (actions.length == 0)
 		return
-	const allies: Champion[] = []
-	const enemies: Champion[] = []
+	const allies: ChampDisplayedType[] = []
+	const enemies: ChampDisplayedType[] = []
 
 	for (let i = 0; i < 5; ++i) {
-		allies.push(getDefaultChampion())
-		enemies.push(getDefaultChampion())
+		allies.push({
+			role: undefined,
+			champ: getDefaultChampion(),
+			recommendations: getDefaultRecommendations()
+		})
+		enemies.push({
+			role: undefined,
+			champ: getDefaultChampion(),
+			recommendations: getDefaultRecommendations()
+		})
 	}
 
 	//Custom solo without bans
@@ -44,18 +53,18 @@ export const fillChampSelectDisplayed = (actions, localCellId) => (async dispatc
 		const champID = actions[0][0].championId
 		if (champID === 0) return
 		console.log(champID)
-		allies[cellID].imageUrl = await getChampImg(champID)
-		allies[cellID].name = await getChampName(champID)
-		allies[cellID].opScore_user = -1
+		allies[cellID].champ.imageUrl = await getChampImg(champID)
+		allies[cellID].champ.name = await getChampName(champID)
+		allies[cellID].champ.opScore_user = -1
 	}
 	//Custom solo with bans
 	if (actions.length == 4) {
 		const cellID = actions[3][0].actorCellId
 		const champID = actions[3][0].championId
 		if (champID === 0) return
-		allies[cellID].imageUrl = await getChampImg(champID)
-		allies[cellID].name = await getChampName(champID)
-		allies[cellID].opScore_user = -1
+		allies[cellID].champ.imageUrl = await getChampImg(champID)
+		allies[cellID].champ.name = await getChampName(champID)
+		allies[cellID].champ.opScore_user = -1
 	}
 	// Rift Mode with bans (doesn't handle clash or tournament yet)
 	else if (actions.length == 8) {
@@ -66,32 +75,28 @@ export const fillChampSelectDisplayed = (actions, localCellId) => (async dispatc
 				let cellID = pairActionSplitted.actorCellId
 				if (cellID < 5) {
 					if (localCellId < 5) {
-						allies[cellID].imageUrl = await getChampImg(champID)
-						allies[cellID].name = await getChampName(champID)
-						allies[cellID].opScore_user = -1
+						allies[cellID].champ.imageUrl = await getChampImg(champID)
+						allies[cellID].champ.name = await getChampName(champID)
+						allies[cellID].champ.opScore_user = -1
 					} else {
-						enemies[cellID].imageUrl = await getChampImg(champID)
-						enemies[cellID].name = await getChampName(champID)
-						enemies[cellID].opScore_user = -1
+						enemies[cellID].champ.imageUrl = await getChampImg(champID)
+						enemies[cellID].champ.name = await getChampName(champID)
+						enemies[cellID].champ.opScore_user = -1
 					}
 				} else {
 					cellID = cellID - 5
 					if (localCellId < 5) {
-						enemies[cellID].imageUrl = await getChampImg(champID)
-						enemies[cellID].name = await getChampName(champID)
-						enemies[cellID].opScore_user = -1
+						enemies[cellID].champ.imageUrl = await getChampImg(champID)
+						enemies[cellID].champ.name = await getChampName(champID)
+						enemies[cellID].champ.opScore_user = -1
 					} else {
-						allies[cellID].imageUrl = await getChampImg(champID)
-						allies[cellID].name = await getChampName(champID)
-						allies[cellID].opScore_user = -1
+						allies[cellID].champ.imageUrl = await getChampImg(champID)
+						allies[cellID].champ.name = await getChampName(champID)
+						allies[cellID].champ.opScore_user = -1
 					}
 				}
 			}
 		}
 	}
 	dispatch(fillChampSelectDisplayedInternal(allies, enemies))
-	//dispatch(doChampionSuggestions(allies, enemies, localCellId))
 })
-// export const doChampionSuggestions = (allies, enemies, localCellId) => (async dispatch => {
-// 	dispatch(doChampionSuggestionsInternal(allies, enemies, localCellId))
-// })

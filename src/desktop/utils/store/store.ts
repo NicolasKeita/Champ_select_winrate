@@ -15,30 +15,45 @@ import {
 	getDefaultChampion
 } from '../../components/maincontent/settings/Champion'
 import {
-	getChampImg, getChampImgByName,
-	getChampScore, getChampSquareAsset
+	getChampImgByName,
+	getChampScore
 } from '@utils/fetchDataDragon/fetchDataDragon'
-import {fetchEncryptedSummonerId} from '@utils/LOL_API'
-import {
-	fetchChampionsFromConfigJson
-} from '@utils/fetchLocalConfigJson/fetchChampionsFromConfigJson'
+
+export type ChampDisplayedType = {
+	role: string | undefined | null
+	champ: Champion
+	recommendations: Champion[]
+}
 
 type ChampSelectDisplayedType = {
-	allies: Champion[]
-	enemies: Champion[]
-	champRecommendations: Champion[]
+	allies: ChampDisplayedType[]
+	enemies: ChampDisplayedType[]
+}
+
+export function getDefaultRecommendations(): Champion[] {
+	const recommendations: Champion[] = []
+	for (let i = 0; i < 5; ++i) {
+		recommendations.push(getDefaultChampion())
+	}
+	return recommendations
 }
 
 function initChampSelectDisplayed() {
 	const champSelectDisplayed: ChampSelectDisplayedType = {
 		allies: [],
-		enemies: [],
-		champRecommendations: []
+		enemies: []
 	}
 	for (let i = 0; i < 5; ++i) {
-		champSelectDisplayed.allies.push(getDefaultChampion())
-		champSelectDisplayed.enemies.push(getDefaultChampion())
-		champSelectDisplayed.champRecommendations.push(getDefaultChampion())
+		champSelectDisplayed.allies.push({
+			role: undefined,
+			champ: getDefaultChampion(),
+			recommendations: getDefaultRecommendations()
+		})
+		champSelectDisplayed.enemies.push({
+			role: undefined,
+			champ: getDefaultChampion(),
+			recommendations: getDefaultRecommendations()
+		})
 	}
 	return champSelectDisplayed
 }
@@ -69,26 +84,12 @@ let g_x = 0
 
 function updateChampSelectDisplayedScores(champSelectDisplayed: ChampSelectDisplayedType, allChamps: Champion[]) {
 	for (const elem of champSelectDisplayed.allies) {
-		elem.opScore_user = getChampScore(elem.name, allChamps)
+		elem.champ.opScore_user = getChampScore(elem.champ.name, allChamps)
 	}
 	for (const elem of champSelectDisplayed.enemies) {
-		elem.opScore_user = getChampScore(elem.name, allChamps)
+		elem.champ.opScore_user = getChampScore(elem.champ.name, allChamps)
 	}
 }
-
-// export const fetchToDoList = createAsyncThunk(
-// 	'todo/fetchList',
-// 	async (champId: number, thunkAPI) => {
-// 		const leState = thunkAPI.getState()
-// 		console.log('state?')
-// 		console.log(leState)
-//
-// 		const tmp2 = await getChampImg(champId)
-// 		console.log('img')
-// 		console.log(tmp2)
-// 		return 50
-// 	}
-// )
 
 export const doChampionSuggestions = createAsyncThunk(
 	'doChampionSuggestions',
@@ -198,17 +199,17 @@ const slice = createSlice({
 			state.champSelectDisplayed = initChampSelectDisplayed()
 		},
 		fillChampSelectDisplayedInternal: {
-			prepare: (allies: Champion[], enemies: Champion[]) => ({
+			prepare: (allies: ChampDisplayedType[], enemies: ChampDisplayedType[]) => ({
 				payload: {allies, enemies}
 			}),
-			reducer: (state, action: PayloadAction<{allies: Champion[], enemies: Champion[]}>) => {
+			reducer: (state, action: PayloadAction<{allies: ChampDisplayedType[], enemies: ChampDisplayedType[]}>) => {
 				state.champSelectDisplayed.allies = action.payload.allies
 				for (const elem of state.champSelectDisplayed.allies) {
-					elem.opScore_user = getChampScore(elem.name, JSON.parse(state.configSerialized).champions)
+					elem.champ.opScore_user = getChampScore(elem.champ.name, JSON.parse(state.configSerialized).champions)
 				}
 				state.champSelectDisplayed.enemies = action.payload.enemies
 				for (const elem of state.champSelectDisplayed.enemies) {
-					elem.opScore_user = getChampScore(elem.name, JSON.parse(state.configSerialized).champions)
+					elem.champ.opScore_user = getChampScore(elem.champ.name, JSON.parse(state.configSerialized).champions)
 				}
 			}
 		},
@@ -227,25 +228,13 @@ const slice = createSlice({
 		},
 		setSummonerRegion: (state, action: PayloadAction<string>) => {
 			state.summonerRegion = action.payload
-		},
-		doChampionSuggestionsInternal: {
-			prepare: (allies: Champion[], enemies: Champion[], localCellId: number) => ({
-				payload: {allies, enemies, localCellId}
-			}),
-			reducer: (state, action: PayloadAction<{allies: Champion[], enemies: Champion[], localCellId: number}>) => {
-				state.champSelectDisplayed.champRecommendations = []
-				const configPlainObject: Config = JSON.parse(state.configSerialized)
-				configPlainObject.champions.sort((a, b) => a.opScore_user - b.opScore_user)
-				for (let i = 0; i < 5; ++i) {
-					state.champSelectDisplayed.champRecommendations.push(configPlainObject.champions[i])
-					console.log(state.champSelectDisplayed.champRecommendations)
-				}
-			}
 		}
 	},
 	extraReducers: (builder) => {
 		builder.addCase(doChampionSuggestions.fulfilled, (state, action) => {
-			state.champSelectDisplayed.champRecommendations = action.payload
+			for (const elem of state.champSelectDisplayed.allies) {
+				elem.recommendations = action.payload
+			}
 		})
 		// [fetchToDoList.fulfilled]: (state, {meta, payload}) => {
 		// 	if (meta.requestId === state.currentRequestId.requestId) {
@@ -271,13 +260,7 @@ const slice = createSlice({
 
 export const {
 	toggleSettingsPage,
-	doChampionSuggestionsInternal,
 	setChampions,
-	setInternalSettings,
-	setSummonerInternal,
-	setSummonerName,
-	setSummonerRegion,
-	setUserOPScore,
 	updateAllUserScores,
 	resetChampSelectDisplayed,
 	fillChampSelectDisplayedInternal,
@@ -293,14 +276,12 @@ const mainReducer = combineReducers({
 
 export const store = configureStore({
 	reducer: mainReducer
-	// preloadedState: initialState
 })
 
 store.subscribe(() => {
 	// console.log('new state : ')
 	// console.log(store.getState().configSerialized)
 })
-// store.dispatch(slice.actions.toggleSettingsPage())
 
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch

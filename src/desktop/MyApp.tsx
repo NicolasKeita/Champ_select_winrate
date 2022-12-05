@@ -74,7 +74,8 @@ function MyApp(props: My_PropType): JSX.Element {
 
 			function handleChampSelect(champ_select) {
 				const raw = JSON.parse(champ_select.raw)
-				dispatch(fillChampSelectDisplayed(raw.actions, parseInt(raw.localPlayerCellId)))
+				console.log(raw)
+				dispatch(fillChampSelectDisplayed(raw.actions, parseInt(raw.localPlayerCellId), raw.myTeam, raw.theirTeam))
 				dispatch(doChampionSuggestions())
 				// TODO merge
 				// fillchampselect and dochampionsuggestion ?

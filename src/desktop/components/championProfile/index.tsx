@@ -59,7 +59,7 @@ function ChampionProfile(props: PropsType) {
 	const clientStatus = useAppSelector(state => state.slice.leagueClientStatus)
 
 	function renderChampionRecommendation(): JSX.Element[] | null {
-		if (clientStatus != 0) return null
+		if (clientStatus != 0 || props.isEnemyTeam) return null
 		const row: JSX.Element[] = []
 		for (let i = 0; i < 5; ++i) {
 			const img = props.champRecommendation[i].imageUrl
