@@ -11,13 +11,17 @@ import MainContent from './components/maincontent'
 import FooterAD from './components/footerAD'
 import Config from './components/maincontent/settings/Config'
 import {
-	copyFromAnotherSetting, fillChampSelectDisplayed, populateDefaultConfig,
+	copyFromAnotherSetting,
 	resetChampSelectDisplayed, setClientStatus, setFooterMessage
-} from '@utils/store/action'
+} from '@utils/store/store'
+
 import {useAppDispatch} from '@utils/hooks'
 import LCU_API_connector from '@utils/LCU_API_connector'
 import {fetchEncryptedSummonerId, isInGame} from '@utils/LOL_API'
-import {fetchChampionsFromConfigJson} from '@utils/fetchLocalConfigJson/fetchChampionsFromConfigJson'
+import {
+	fillChampSelectDisplayed,
+	populateDefaultConfig
+} from '@utils/store/action'
 
 const MyAppContainer = styled.div`
   display: flex;

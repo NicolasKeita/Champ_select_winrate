@@ -5,7 +5,7 @@
 import React, {useEffect} from 'react'
 import styled from 'styled-components'
 import {useAppDispatch, useAppSelector} from '@utils/hooks'
-import {setFooterMessage} from '@utils/store/action'
+import {setFooterMessage} from '@utils/store/store'
 import Countdown from 'react-countdown'
 import {isInGame} from '@utils/LOL_API'
 
@@ -27,7 +27,7 @@ const FooterTextStyle = styled.h1`
 function Footer(): JSX.Element {
 	console.log('Footer rendered')
 	const dispatch = useAppDispatch()
-	const footerMessageID = useAppSelector(state => state.footerMessageID)
+	const footerMessageID = useAppSelector(state => state.slice.footerMessageID)
 	const summonerName = sessionStorage.getItem('summonerName')
 	let messageDisplayed = ''
 
@@ -72,7 +72,8 @@ function Footer(): JSX.Element {
 				if (isInGameBool) {
 					dispatch(setFooterMessage(200))
 				} else {
-					return (<Countdown date={Date.now() + 6000} key={10} renderer={renderer} />)
+					return (<Countdown date={Date.now() + 6000} key={10}
+									   renderer={renderer} />)
 				}
 			})
 		} else
@@ -83,7 +84,8 @@ function Footer(): JSX.Element {
 		msg = (
 			<div>
 				{messageDisplayed}
-				<Countdown date={Date.now() + 6000} key={10} renderer={renderer} />
+				<Countdown date={Date.now() + 6000} key={10}
+						   renderer={renderer} />
 				<span> sec</span>
 			</div>)
 	} else {
@@ -92,7 +94,8 @@ function Footer(): JSX.Element {
 
 	return (
 		<FooterContainer>
-			<FooterTextStyle messageDisplayedLength={messageDisplayed.length}>{msg}</FooterTextStyle>
+			<FooterTextStyle
+				messageDisplayedLength={messageDisplayed.length}>{msg}</FooterTextStyle>
 		</FooterContainer>
 	)
 }

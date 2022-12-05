@@ -4,17 +4,18 @@
 
 import Config from '../../components/maincontent/settings/Config'
 
+//TODO put types there, on the state
 export const selectInstancedConfig = () => {
 	return (
 		(state) => {
-			return new Config(JSON.parse(state.configSerialized))
+			return new Config(JSON.parse(state.slice.configSerialized))
 		}
 	)
 }
 export const selectBooleanSettingsPage = () => {
 	return (
 		state => {
-			const configPlainObject: Config | undefined = JSON.parse(state.configSerialized)
+			const configPlainObject: Config | undefined = JSON.parse(state.slice.configSerialized)
 			if (configPlainObject)
 				return configPlainObject.settingsPage
 			else
@@ -25,7 +26,7 @@ export const selectBooleanSettingsPage = () => {
 export const selectAllChampions = () => {
 	return (
 		state => {
-			const configPlainObject: Config | undefined = JSON.parse(state.configSerialized)
+			const configPlainObject: Config | undefined = JSON.parse(state.slice.configSerialized)
 			if (configPlainObject && configPlainObject.champions)
 				return configPlainObject.champions
 			else

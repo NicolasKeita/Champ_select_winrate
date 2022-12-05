@@ -40,7 +40,7 @@ const OP_Score = styled.div``
 
 function ConfigRow(props) {
 	const [opScoreUser, setOpScoreUser] = useState<string>(props.opScoreUser)
-	const settings = useAppSelector((state) => new Config(JSON.parse(state.configSerialized)))
+	const settings = useAppSelector((state) => new Config(JSON.parse(state.slice.configSerialized)))
 
 	function handleOnChange(event) {
 		if (event.target.value.includes('.')) return

@@ -3,14 +3,17 @@
 */
 
 
-import {Champion, ChampionConstructor} from '../../components/maincontent/settings/Champion'
+import {
+	Champion,
+	championConstructor
+} from '../../components/maincontent/settings/Champion'
 
 export async function fetchChampionsFromConfigJson(): Promise<Champion[]> {
 	const fileUrl = './config/champion_CSW_save.json'
 	const res = await fetch(fileUrl, {
 		headers: {
 			'Content-Type': 'application/json',
-			'Accept':       'application/json'
+			'Accept': 'application/json'
 		}
 	})
 	if (!res.ok) {
@@ -20,7 +23,7 @@ export async function fetchChampionsFromConfigJson(): Promise<Champion[]> {
 	try {
 		const data = await res.json() as Promise<Champion[]>
 		return (Object.values(data).map((elem: Champion) => {
-			return new ChampionConstructor(elem.name, elem.opScore_CSW, elem.opScore_CSW)
+			return championConstructor(elem.name, elem.opScore_CSW, elem.opScore_CSW)
 		}))
 	} catch (e) {
 		console.error('CSW_error: following call : res.json() caught error; previously : fetch(' + fileUrl)

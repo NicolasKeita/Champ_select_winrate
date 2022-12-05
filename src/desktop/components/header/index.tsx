@@ -18,8 +18,9 @@ import '@public/css/ContextMenu.css'
 import MyContextMenu from './myContextMenu/myContextMenu'
 import {myContextMenuBridge} from './myContextMenu/myContextMenuBridge'
 
-import {toggleSettingsPage, updateAllUserScores} from '@utils/store/action'
+import {updateAllUserScores} from '@utils/store/store'
 import {useAppDispatch} from '@utils/hooks'
+import {toggleSettingsPage} from '@utils/store/store'
 
 const HeaderContainer = styled.header`
   background: linear-gradient(to right, rgb(63, 62, 62), #363636, #323232);
@@ -110,8 +111,10 @@ function Header(props) {
 			<div className='window-controls-group'>
 				<MyContextMenu />
 				<ButtonSettings />
-				<button className={'window-control window-control-minimize'} onMouseDown={minimize} />
-				<button className={'window-control window-control-close'} onMouseDown={close} />
+				<button className={'window-control window-control-minimize'}
+						onMouseDown={minimize} />
+				<button className={'window-control window-control-close'}
+						onMouseDown={close} />
 			</div>
 		</HeaderContainer>
 	)

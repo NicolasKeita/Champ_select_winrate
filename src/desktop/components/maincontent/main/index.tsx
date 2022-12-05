@@ -80,23 +80,29 @@ const ProfileLine = styled.div`
 `
 
 function Main() {
-	const champSelectDisplayed = useAppSelector((state) => state.champSelectDisplayed)
+	const champSelectDisplayed = useAppSelector((state) => state.slice.champSelectDisplayed)
 	const localCellId = sessionStorage.getItem('localCellId')
 	const isItUser = false
 
 	function renderPlayersGrid(isEnemyTeam) {
 		const profiles: JSX.Element[] = []
 		for (let i = 0; i < 5; ++i) {
-			const img = isEnemyTeam ? champSelectDisplayed.enemies[i].image : champSelectDisplayed.allies[i].image
+			const img = isEnemyTeam ? champSelectDisplayed.enemies[i].imageUrl : champSelectDisplayed.allies[i].imageUrl
 			const champName = isEnemyTeam ? champSelectDisplayed.enemies[i].name : champSelectDisplayed.allies[i].name
 			const champScore = isEnemyTeam ? champSelectDisplayed.enemies[i].opScore_user : champSelectDisplayed.allies[i].opScore_user
-			profiles.push(<ChampionProfile isEnemyTeam={isEnemyTeam} key={uniqid()} img={img} champName={champName} champScore={champScore} champRecommendation={champSelectDisplayed.champRecommendations} isItUser={isItUser}/>)
-			if (i < 4) profiles.push(<ProfileLine isEnemyTeam={isEnemyTeam} key={uniqid()} />)
+			profiles.push(<ChampionProfile isEnemyTeam={isEnemyTeam}
+										   key={uniqid()} img={img}
+										   champName={champName}
+										   champScore={champScore}
+										   champRecommendation={champSelectDisplayed.champRecommendations}
+										   isItUser={isItUser} />)
+			if (i < 4) profiles.push(<ProfileLine isEnemyTeam={isEnemyTeam}
+												  key={uniqid()} />)
 		}
 		return <div>{profiles}</div>
 	}
 
-	function computeWinrate(allies : Champion[], enemies : Champion[]): number {
+	function computeWinrate(allies: Champion[], enemies: Champion[]): number {
 		let sumAllies = 0
 		let sumEnemies = 0
 		for (const elem of allies) sumAllies += elem.opScore_user

@@ -6,23 +6,31 @@ import questionMark from '@public/img/question_mark.jpg'
 
 export type Champion = {
 	name: string
-	opScore_CSW : number
+	opScore_CSW: number
 	opScore_user: number
 	role: string
 	image: string
+	imageUrl: string
 }
 
-export function ChampionConstructor(this: Champion, name = '', opScore_user = 50, opScore_CSW = 50) {
-	this.name = name
-	this.opScore_user = opScore_user
-	this.opScore_CSW = opScore_CSW
-	this.role = ''
-	this.image = ''
+export function championConstructor(name = '', opScore_user = 50, opScore_CSW = 50): Champion {
+	return {
+		name: name,
+		opScore_user: opScore_user,
+		opScore_CSW: opScore_CSW,
+		role: '',
+		image: '',
+		imageUrl: ''
+	}
 }
 
-export function getDefaultChampion() : Champion {
+export function getDefaultChampion(): Champion {
 	const defaultImg: string = questionMark
 	const defaultName = 'Champion Name'
 	const defaultScore = 50
-	return <Champion>{name: defaultName, image: defaultImg, opScore_user: defaultScore}
+	return <Champion>{
+		name: defaultName,
+		imageUrl: defaultImg,
+		opScore_user: defaultScore
+	}
 }
