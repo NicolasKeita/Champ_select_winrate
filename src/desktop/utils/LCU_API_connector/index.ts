@@ -4,8 +4,6 @@
 
 /* Overwolf is currently providing the connection to the LCU_API_connector */
 
-import {setSummoner} from '@utils/store/action'
-
 let onErrorListener, onInfoUpdates2Listener, onNewEventsListener
 const g_interestedInFeatures = ['game_flow', 'champ_select']
 

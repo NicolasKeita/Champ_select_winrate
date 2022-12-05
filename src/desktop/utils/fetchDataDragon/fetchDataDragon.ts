@@ -22,6 +22,19 @@ async function getLatestChampionDDragon(language = 'en_US') {
 	return championJson[language]
 }
 
+//TODO put version in cache everywhere oin this file
+export async function getChampImgByName(name: string) {
+	const json = await getLatestChampionDDragon()
+	for (const value of Object.values(json.data)) {
+		// @ts-ignore
+		if (value.name == name) {
+			// @ts-ignore
+			return getChampSquareAsset(value.image.full)
+		}
+	}
+	return ''
+}
+
 export async function getChampionByKey(key, language = 'en_US') {
 	// Setup cache
 	if (!championByIdCache[language]) {
@@ -59,7 +72,8 @@ export function getChampScore(champName: string, settingsChampions: Champion[]):
 	return 50
 }
 
-export async function getChampSquareAsset(champNamePNG) {
+export async function getChampSquareAsset(champNamePNG) { //TODO remove async,
+	// remove version, remove CDN
 	const version = (await fetch('https://ddragon.leagueoflegends.com/api/versions.json').then(async r => await r.json()))[0]
 	return `https://ddragon.leagueoflegends.com/cdn/${version}/img/champion/${champNamePNG}`
 }

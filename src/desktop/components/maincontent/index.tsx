@@ -2,7 +2,7 @@
     Path + Filename: src/desktop/components/maincontent/myContextMenu.tsx
 */
 
-import {useAppSelector} from '@utils/hooks'
+import {useAppDispatch, useAppSelector} from '@utils/hooks'
 
 import React from 'react'
 import styled from 'styled-components'
@@ -11,7 +11,6 @@ import Footer from './../../components/maincontent/footer'
 import Main from './../../components/maincontent/main'
 import Settings from './../../components/maincontent/settings'
 import {selectBooleanSettingsPage} from '@utils/store/selectors'
-
 
 const MainContentContainer = styled.div`
   display: flex;
@@ -26,7 +25,8 @@ function MainContent() {
 	let currentPage: JSX.Element
 	if (!settingsPage) {
 		currentPage =
-			<div id='main+footer' style={{display: 'flex', flexDirection: 'column', flex: 1}}>
+			<div id='main+footer'
+				 style={{display: 'flex', flexDirection: 'column', flex: 1}}>
 				<Main />
 				<Footer />
 			</div>

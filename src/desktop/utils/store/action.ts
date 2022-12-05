@@ -10,12 +10,10 @@ import {getChampImg, getChampName} from '@utils/fetchDataDragon/fetchDataDragon'
 import {
 	fetchChampionsFromConfigJson
 } from '@utils/fetchLocalConfigJson/fetchChampionsFromConfigJson'
-import {fetchEncryptedSummonerId} from '@utils/LOL_API'
 import {
 	doChampionSuggestionsInternal, fillChampSelectDisplayedInternal,
 	resetSettingsInternal,
-	setChampions,
-	setSummonerInternal
+	setChampions
 } from '@utils/store/store'
 
 export const populateDefaultConfig = () => (async dispatch => { // TODO migration to createSlice and createAsyncThunk?
@@ -27,12 +25,6 @@ export const resetSettings = () => (async dispatch => {
 	const allChamps = await fetchChampionsFromConfigJson()
 	dispatch(resetSettingsInternal())
 	dispatch(setChampions(allChamps))
-})
-
-export const setSummoner = (summonerName, summonerRegion) => (async dispatch => {
-	const encryptedSummonerId = await fetchEncryptedSummonerId(summonerName, summonerRegion)
-	sessionStorage.setItem('encryptedSummonerId', encryptedSummonerId)
-	dispatch(setSummonerInternal(summonerName, summonerRegion, encryptedSummonerId))
 })
 
 export const fillChampSelectDisplayed = (actions, localCellId) => (async dispatch => {
@@ -51,6 +43,7 @@ export const fillChampSelectDisplayed = (actions, localCellId) => (async dispatc
 		const cellID = actions[0][0].actorCellId
 		const champID = actions[0][0].championId
 		if (champID === 0) return
+		console.log(champID)
 		allies[cellID].imageUrl = await getChampImg(champID)
 		allies[cellID].name = await getChampName(champID)
 		allies[cellID].opScore_user = -1
@@ -99,6 +92,6 @@ export const fillChampSelectDisplayed = (actions, localCellId) => (async dispatc
 	dispatch(fillChampSelectDisplayedInternal(allies, enemies))
 	//dispatch(doChampionSuggestions(allies, enemies, localCellId))
 })
-export const doChampionSuggestions = (allies, enemies, localCellId) => (async dispatch => {
-	dispatch(doChampionSuggestionsInternal(allies, enemies, localCellId))
-})
+// export const doChampionSuggestions = (allies, enemies, localCellId) => (async dispatch => {
+// 	dispatch(doChampionSuggestionsInternal(allies, enemies, localCellId))
+// })

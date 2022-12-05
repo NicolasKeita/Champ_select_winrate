@@ -4,7 +4,7 @@
 
 import {
 	combineReducers,
-	configureStore,
+	configureStore, createAsyncThunk,
 	createSlice,
 	PayloadAction
 } from '@reduxjs/toolkit'
@@ -14,7 +14,14 @@ import {
 	championConstructor,
 	getDefaultChampion
 } from '../../components/maincontent/settings/Champion'
-import {getChampScore} from '@utils/fetchDataDragon/fetchDataDragon'
+import {
+	getChampImg, getChampImgByName,
+	getChampScore, getChampSquareAsset
+} from '@utils/fetchDataDragon/fetchDataDragon'
+import {fetchEncryptedSummonerId} from '@utils/LOL_API'
+import {
+	fetchChampionsFromConfigJson
+} from '@utils/fetchLocalConfigJson/fetchChampionsFromConfigJson'
 
 type ChampSelectDisplayedType = {
 	allies: Champion[]
@@ -68,6 +75,39 @@ function updateChampSelectDisplayedScores(champSelectDisplayed: ChampSelectDispl
 		elem.opScore_user = getChampScore(elem.name, allChamps)
 	}
 }
+
+// export const fetchToDoList = createAsyncThunk(
+// 	'todo/fetchList',
+// 	async (champId: number, thunkAPI) => {
+// 		const leState = thunkAPI.getState()
+// 		console.log('state?')
+// 		console.log(leState)
+//
+// 		const tmp2 = await getChampImg(champId)
+// 		console.log('img')
+// 		console.log(tmp2)
+// 		return 50
+// 	}
+// )
+
+export const doChampionSuggestions = createAsyncThunk(
+	'doChampionSuggestions',
+	async (thunkParam, thunkAPI) => {
+		const state: any = thunkAPI.getState()
+		const configPlainObject: Config = JSON.parse(state.slice.configSerialized)
+		configPlainObject.champions.sort((a, b) => b.opScore_user - a.opScore_user)
+		const champSuggestions: Champion[] = []
+		for (let i = 0; i < 5; ++i) {
+			const champSuggested = configPlainObject.champions[i]
+			champSuggested.imageUrl = await getChampImgByName(champSuggested.name)
+			champSuggestions.push(champSuggested)
+		}
+		return champSuggestions
+	}
+)
+// export const doChampionSuggestions = (allies, enemies, localCellId) => (async dispatch => {
+// 	dispatch(doChampionSuggestionsInternal(allies, enemies, localCellId))
+// })
 
 const slice = createSlice({
 	name: 'slice',
@@ -203,7 +243,30 @@ const slice = createSlice({
 			}
 		}
 	},
-	extraReducers: (builder) => {}
+	extraReducers: (builder) => {
+		builder.addCase(doChampionSuggestions.fulfilled, (state, action) => {
+			state.champSelectDisplayed.champRecommendations = action.payload
+		})
+		// [fetchToDoList.fulfilled]: (state, {meta, payload}) => {
+		// 	if (meta.requestId === state.currentRequestId.requestId) {
+		// 		state.todoList = payload
+		// 		state.loading = 'fin'
+		// 		state.currentRequestId = ''
+		// 	}
+		// },
+		// [fetchToDoList.pending]: (state, {meta}) => {
+		// 	state.currentRequestId = meta
+		// 	state.loading = 'pending'
+		// },
+		// [fetchToDoList.rejected]: (state, {meta, payload, error}) => {
+		// 	if (meta.requestId === state.currentRequestId.requestId) {
+		// 		state.currentRequestId = meta
+		// 		state.loading = 'fin'
+		// 		state.todoList = payload
+		// 		state.error = error
+		// 	}
+		// }
+	}
 })
 
 export const {

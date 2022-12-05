@@ -11,7 +11,7 @@ import MainContent from './components/maincontent'
 import FooterAD from './components/footerAD'
 import Config from './components/maincontent/settings/Config'
 import {
-	copyFromAnotherSetting,
+	copyFromAnotherSetting, doChampionSuggestions,
 	resetChampSelectDisplayed, setClientStatus, setFooterMessage
 } from '@utils/store/store'
 
@@ -75,6 +75,9 @@ function MyApp(props: My_PropType): JSX.Element {
 			function handleChampSelect(champ_select) {
 				const raw = JSON.parse(champ_select.raw)
 				dispatch(fillChampSelectDisplayed(raw.actions, parseInt(raw.localPlayerCellId)))
+				dispatch(doChampionSuggestions())
+				// TODO merge
+				// fillchampselect and dochampionsuggestion ?
 				dispatch(setClientStatus(0))
 			}
 

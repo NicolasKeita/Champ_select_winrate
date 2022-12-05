@@ -62,8 +62,7 @@ function ChampionProfile(props: PropsType) {
 		if (clientStatus != 0) return null
 		const row: JSX.Element[] = []
 		for (let i = 0; i < 5; ++i) {
-			const img = props.img
-			// const img = getChampSquareAsset(props.champRecommendation[0].image)
+			const img = props.champRecommendation[i].imageUrl
 			row.push(<ChampRecommendationImg key={uniqid()} src={img} />)
 		}
 		return row
