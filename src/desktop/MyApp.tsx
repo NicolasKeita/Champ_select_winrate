@@ -11,17 +11,18 @@ import MainContent from './components/maincontent'
 import FooterAD from './components/footerAD'
 import Config from './components/maincontent/settings/Config'
 import {
-	copyFromAnotherSetting, doChampionSuggestions,
-	resetChampSelectDisplayed, setClientStatus, setFooterMessage
+	copyFromAnotherSetting,
+	fillChampSelectDisplayed,
+	resetChampSelectDisplayed,
+	setClientStatus,
+	setFooterMessage
 } from '@utils/store/store'
 
 import {useAppDispatch} from '@utils/hooks'
 import LCU_API_connector from '@utils/LCU_API_connector'
-import {fetchEncryptedSummonerId, isInGame} from '@utils/LOL_API'
-import {
-	fillChampSelectDisplayed,
-	populateDefaultConfig
-} from '@utils/store/action'
+import {fetchEncryptedSummonerId} from '@utils/LOL_API'
+import { populateDefaultConfig } from '@utils/store/action'
+import {parse} from '@typescript-eslint/parser'
 
 const MyAppContainer = styled.div`
   display: flex;
@@ -66,17 +67,22 @@ function MyApp(props: My_PropType): JSX.Element {
 							// ↑ if user close his client manually (dodge)
 							dispatch(setClientStatus(-1))
 							dispatch(setFooterMessage(201))
-						} else
+						} else {
 							dispatch(setClientStatus(1))
+						}
 					}
 				}
 			}
 
 			function handleChampSelect(champ_select) {
 				const raw = JSON.parse(champ_select.raw)
-				console.log(raw)
-				dispatch(fillChampSelectDisplayed(raw.actions, parseInt(raw.localPlayerCellId), raw.myTeam, raw.theirTeam))
-				dispatch(doChampionSuggestions())
+				dispatch(fillChampSelectDisplayed({
+					actions: raw.actions,
+					localCellId: parseInt(raw.localCellId),
+					myTeam: raw.myTeam
+				}))
+
+				// dispatch(doChampionSuggestions())
 				// TODO merge
 				// fillchampselect and dochampionsuggestion ?
 				dispatch(setClientStatus(0))

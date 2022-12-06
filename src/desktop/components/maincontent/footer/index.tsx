@@ -25,7 +25,6 @@ const FooterTextStyle = styled.h1`
 `
 
 function Footer(): JSX.Element {
-	console.log('Footer rendered')
 	const dispatch = useAppDispatch()
 	const footerMessageID = useAppSelector(state => state.slice.footerMessageID)
 	const summonerName = sessionStorage.getItem('summonerName')

@@ -8,6 +8,7 @@ import {Champion} from '../maincontent/settings/Champion'
 import uniqid from 'uniqid'
 import {getChampSquareAsset} from '@utils/fetchDataDragon/fetchDataDragon'
 import {useAppSelector} from '@utils/hooks'
+import questionMark from '@public/img/question_mark.jpg'
 
 const ChampionImg = styled.img`
   border-radius: 50%;
@@ -51,8 +52,7 @@ interface PropsType {
 	champName: string,
 	img: string,
 	champScore: number,
-	champRecommendation: Champion[],
-	isItUser: boolean
+	champRecommendation: Champion[]
 }
 
 function ChampionProfile(props: PropsType) {
@@ -61,8 +61,15 @@ function ChampionProfile(props: PropsType) {
 	function renderChampionRecommendation(): JSX.Element[] | null {
 		if (clientStatus != 0 || props.isEnemyTeam) return null
 		const row: JSX.Element[] = []
+		console.log("Recommen")
+		console.log(JSON.stringify(props.champRecommendation))
 		for (let i = 0; i < 5; ++i) {
-			const img = props.champRecommendation[i].imageUrl
+			const recommendation = props.champRecommendation[i]
+			let img
+			if (recommendation == undefined) {
+				img = questionMark
+			} else
+				img = recommendation.imageUrl
 			row.push(<ChampRecommendationImg key={uniqid()} src={img} />)
 		}
 		return row

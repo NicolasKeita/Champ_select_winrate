@@ -23,7 +23,14 @@ export async function fetchChampionsFromConfigJson(): Promise<Champion[]> {
 	try {
 		const data = await res.json() as Promise<Champion[]>
 		return (Object.values(data).map((elem: Champion) => {
-			return championConstructor(elem.name, elem.opScore_CSW, elem.opScore_CSW)
+			return {
+				name: elem.name,
+				opScore_user: elem.opScore_CSW,
+				opScore_CSW: elem.opScore_CSW,
+				image: elem.image,
+				imageUrl: '',
+				role: elem.role
+			}
 		}))
 	} catch (e) {
 		console.error('CSW_error: following call : res.json() caught error; previously : fetch(' + fileUrl)

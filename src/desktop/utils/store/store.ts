@@ -15,12 +15,15 @@ import {
 	getDefaultChampion
 } from '../../components/maincontent/settings/Champion'
 import {
-	getChampImgByName,
-	getChampScore
+	getChampImg,
+	getChampImgByName, getChampName,
+	getChampScore, getChampSquareAsset
 } from '@utils/fetchDataDragon/fetchDataDragon'
+import config from '../../components/maincontent/settings/Config'
+import {Root} from 'react-dom/client'
 
 export type ChampDisplayedType = {
-	role: string | undefined | null
+	assignedRole: string
 	champ: Champion
 	recommendations: Champion[]
 }
@@ -45,12 +48,12 @@ function initChampSelectDisplayed() {
 	}
 	for (let i = 0; i < 5; ++i) {
 		champSelectDisplayed.allies.push({
-			role: undefined,
+			assignedRole: '',
 			champ: getDefaultChampion(),
 			recommendations: getDefaultRecommendations()
 		})
 		champSelectDisplayed.enemies.push({
-			role: undefined,
+			assignedRole: '',
 			champ: getDefaultChampion(),
 			recommendations: getDefaultRecommendations()
 		})
@@ -91,24 +94,134 @@ function updateChampSelectDisplayedScores(champSelectDisplayed: ChampSelectDispl
 	}
 }
 
-export const doChampionSuggestions = createAsyncThunk(
+export const doChampionSuggestions = createAsyncThunk<ChampDisplayedType[], void, {state: RootState}>(
 	'doChampionSuggestions',
 	async (thunkParam, thunkAPI) => {
-		const state: any = thunkAPI.getState()
+		const state = thunkAPI.getState() // TODO : change any
+		console.log('slice')
+		console.log(state.slice.champSelectDisplayed.allies)
 		const configPlainObject: Config = JSON.parse(state.slice.configSerialized)
-		configPlainObject.champions.sort((a, b) => b.opScore_user - a.opScore_user)
-		const champSuggestions: Champion[] = []
-		for (let i = 0; i < 5; ++i) {
-			const champSuggested = configPlainObject.champions[i]
-			champSuggested.imageUrl = await getChampImgByName(champSuggested.name)
-			champSuggestions.push(champSuggested)
+		const alliesCpy: ChampDisplayedType[] = JSON.parse(JSON.stringify(state.slice.champSelectDisplayed.allies))
+		for (const ally of alliesCpy) {
+			const configPlainObjectCpy: Config = JSON.parse(JSON.stringify(configPlainObject))
+			let role = ally.assignedRole
+			if (role == '')
+				role = 'bottom'
+			const allChampsFilteredWithRole = configPlainObjectCpy.champions.filter(champ => champ.role == role)
+			allChampsFilteredWithRole.sort((a, b) => b.opScore_user - a.opScore_user)
+			const champSuggestions: Champion[] = []
+			for (let i = 0; i < 5; ++i) {
+				const champSuggested = allChampsFilteredWithRole[i]
+				champSuggested.imageUrl = await getChampSquareAsset(champSuggested.image)
+				champSuggestions.push(champSuggested)
+			}
+			ally.recommendations = champSuggestions
 		}
-		return champSuggestions
+		return alliesCpy
 	}
 )
-// export const doChampionSuggestions = (allies, enemies, localCellId) => (async dispatch => {
-// 	dispatch(doChampionSuggestionsInternal(allies, enemies, localCellId))
-// })
+
+type FillChampSelectDisplayedParamType = {
+	actions : never[][],
+	localCellId : number,
+	myTeam: never[]
+}
+
+function getRecommendations(allies : ChampDisplayedType[], playerId : number , allChamps : Champion[]) : Champion[] {
+	let assignedRole = allies[playerId].assignedRole
+	if (assignedRole == '')
+		assignedRole = 'utility'
+	const allChampsFilteredWithRole = allChamps.filter(champ => champ.role == assignedRole)
+	allChampsFilteredWithRole.sort((a, b) => b.opScore_user - a.opScore_user)
+	return allChampsFilteredWithRole.slice(0, 5)
+}
+
+type BothTeam = {
+	allies: ChampDisplayedType[],
+	enemies: ChampDisplayedType[]
+}
+
+export const fillChampSelectDisplayed = createAsyncThunk<BothTeam | void , FillChampSelectDisplayedParamType, {state: RootState}>(
+	'fillChampSelectDisplayed',
+	async (thunkParam, thunkAPI) => {
+		if (thunkParam.actions.length == 0)
+			return
+		const allies: ChampDisplayedType[] = []
+		const enemies: ChampDisplayedType[] = []
+		const configPlainObject: Config = JSON.parse(thunkAPI.getState().slice.configSerialized)
+		const allChamps = configPlainObject.champions
+
+		for (let i = 0; i < 5; ++i) {
+			allies.push({
+				assignedRole: '',
+				champ: getDefaultChampion(),
+				recommendations: getDefaultRecommendations()
+			})
+			enemies.push({
+				assignedRole: '',
+				champ: getDefaultChampion(),
+				recommendations: getDefaultRecommendations()
+			})
+		}
+
+		async function fillChampNameAndImgUrlFromId(champObject: Champion, championId: number) {
+			champObject.imageUrl = await getChampImg(championId)
+			champObject.name = await getChampName(championId)
+			champObject.opScore_user = -1
+		}
+		function fillAssignedRoleAndRecommendations(ally: ChampDisplayedType, myTeam : never[], actorCellId : number) {
+			for (const {assignedPosition, cellId} of myTeam) {
+				if (cellId == actorCellId) {
+					ally.assignedRole = assignedPosition
+					ally.recommendations = getRecommendations(allies, actorCellId, allChamps)
+				}
+			}
+		}
+
+		//Custom solo without or with bans
+		if (thunkParam.actions.length == 1 ||thunkParam.actions.length == 4) {
+			let actorCellId : number, championId : number
+			if (thunkParam.actions.length == 1)
+				({actorCellId, championId} = thunkParam.actions[0][0])
+			else
+				({actorCellId, championId} = thunkParam.actions[3][0])
+			if (championId === 0) return
+			await fillChampNameAndImgUrlFromId(allies[actorCellId].champ, championId)
+			fillAssignedRoleAndRecommendations(allies[actorCellId], thunkParam.myTeam, actorCellId)
+		}
+	// Rift Mode with bans (doesn't handle clash or tournament yet)
+		else if (thunkParam.actions.length == 8) {
+			for (let i = 2; i < thunkParam.actions.length; i++) {
+				let actorCellId: number, championId: number
+				for ({actorCellId, championId} of thunkParam.actions[i]) {
+					if (championId === 0) continue
+					if (actorCellId < 5) {
+						if (thunkParam.localCellId < 5) {
+							await fillChampNameAndImgUrlFromId(allies[actorCellId].champ, championId)
+							fillAssignedRoleAndRecommendations(allies[actorCellId], thunkParam.myTeam, actorCellId)
+						} else
+							await fillChampNameAndImgUrlFromId(enemies[actorCellId].champ, championId)
+					} else {
+						actorCellId -= 5
+						if (thunkParam.localCellId < 5)
+							await fillChampNameAndImgUrlFromId(enemies[actorCellId].champ, championId)
+						else {
+							await fillChampNameAndImgUrlFromId(allies[actorCellId].champ, championId)
+							fillAssignedRoleAndRecommendations(allies[actorCellId], thunkParam.myTeam, actorCellId)
+						}
+					}
+				}
+			}
+		}
+
+		for (const ally of allies) {
+			for (const recommendation of ally.recommendations) {
+				recommendation.imageUrl = await getChampSquareAsset(recommendation.image)
+			}
+		}
+		return {allies: allies, enemies: enemies}
+})
+
 
 const slice = createSlice({
 	name: 'slice',
@@ -131,12 +244,15 @@ const slice = createSlice({
 		setChampions: (state, action: PayloadAction<Champion[]>) => {
 			const configDeserialized = new Config(JSON.parse(state.configSerialized))
 			for (const elem of Object.values(action.payload)) {
-				const newChamp = championConstructor(elem.name, elem.opScore_user, elem.opScore_CSW)
+				const newChamp = championConstructor(elem.name, elem.opScore_user, elem.opScore_CSW, elem.role, elem.image, elem.imageUrl)
 				const duplicate = configDeserialized.champions.find(elemConfig => elemConfig.name === elem.name)
 				if (duplicate) {
 					duplicate.name = elem.name
 					duplicate.opScore_user = elem.opScore_user
 					duplicate.opScore_CSW = elem.opScore_CSW
+					duplicate.role = elem.role
+					duplicate.image = elem.image
+					duplicate.imageUrl = elem.imageUrl
 				} else
 					configDeserialized.champions.push(newChamp)
 			}
@@ -189,8 +305,11 @@ const slice = createSlice({
 		setClientStatus: (state, action: PayloadAction<number>) => {
 			state.leagueClientStatus = action.payload
 			sessionStorage.setItem('clientStatus', action.payload.toString())
-			if (((state.footerMessageID == 200 || state.footerMessageID == 201) && action.payload != -1) || action.payload != 2) {} else
-				state.footerMessageID = action.payload
+			if ((state.footerMessageID == 200 || state.footerMessageID == 201) && action.payload == -1)
+				return
+			if (action.payload == 2)
+				return
+			state.footerMessageID = action.payload
 		},
 		setFooterMessage: (state, action: PayloadAction<number>) => {
 			state.footerMessageID = action.payload
@@ -198,21 +317,23 @@ const slice = createSlice({
 		resetChampSelectDisplayed: (state) => {
 			state.champSelectDisplayed = initChampSelectDisplayed()
 		},
-		fillChampSelectDisplayedInternal: {
-			prepare: (allies: ChampDisplayedType[], enemies: ChampDisplayedType[]) => ({
-				payload: {allies, enemies}
-			}),
-			reducer: (state, action: PayloadAction<{allies: ChampDisplayedType[], enemies: ChampDisplayedType[]}>) => {
-				state.champSelectDisplayed.allies = action.payload.allies
-				for (const elem of state.champSelectDisplayed.allies) {
-					elem.champ.opScore_user = getChampScore(elem.champ.name, JSON.parse(state.configSerialized).champions)
-				}
-				state.champSelectDisplayed.enemies = action.payload.enemies
-				for (const elem of state.champSelectDisplayed.enemies) {
-					elem.champ.opScore_user = getChampScore(elem.champ.name, JSON.parse(state.configSerialized).champions)
-				}
-			}
-		},
+		// fillChampSelectDisplayed: {
+		// 	prepare: (allies: ChampDisplayedType[], enemies: ChampDisplayedType[]) => ({
+		// 		payload: {allies, enemies}
+		// 	}),
+		// 	reducer: (state, action: PayloadAction<{allies: ChampDisplayedType[], enemies: ChampDisplayedType[]}>) => {
+		// 		console.log("What's payload tho")
+		// 		console.log(action.payload)
+		// 		state.champSelectDisplayed.allies = JSON.parse(JSON.stringify(action.payload.allies))
+		// 		for (const elem of state.champSelectDisplayed.allies) {
+		// 			elem.champ.opScore_user = getChampScore(elem.champ.name, JSON.parse(state.configSerialized).champions)
+		// 		}
+		// 		state.champSelectDisplayed.enemies = JSON.parse(JSON.stringify(action.payload.enemies))
+		// 		for (const elem of state.champSelectDisplayed.enemies) {
+		// 			elem.champ.opScore_user = getChampScore(elem.champ.name, JSON.parse(state.configSerialized).champions)
+		// 		}
+		// 	}
+		// },
 		setSummonerInternal: {
 			prepare: (summonerName: string, summonerRegion: string, encryptedSummonerId: string) => ({
 				payload: {summonerName, summonerRegion, encryptedSummonerId}
@@ -232,29 +353,22 @@ const slice = createSlice({
 	},
 	extraReducers: (builder) => {
 		builder.addCase(doChampionSuggestions.fulfilled, (state, action) => {
-			for (const elem of state.champSelectDisplayed.allies) {
-				elem.recommendations = action.payload
+			state.champSelectDisplayed.allies = action.payload
+		})
+		builder.addCase(fillChampSelectDisplayed.fulfilled, (state, action) => {
+			if (action.payload !== undefined) {
+				console.log("What's payload tho")
+				console.log(action.payload)
+				state.champSelectDisplayed.allies = JSON.parse(JSON.stringify(action.payload.allies))
+				for (const elem of state.champSelectDisplayed.allies) {
+					elem.champ.opScore_user = getChampScore(elem.champ.name, JSON.parse(state.configSerialized).champions)
+				}
+				state.champSelectDisplayed.enemies = JSON.parse(JSON.stringify(action.payload.enemies))
+				for (const elem of state.champSelectDisplayed.enemies) {
+					elem.champ.opScore_user = getChampScore(elem.champ.name, JSON.parse(state.configSerialized).champions)
+				}
 			}
 		})
-		// [fetchToDoList.fulfilled]: (state, {meta, payload}) => {
-		// 	if (meta.requestId === state.currentRequestId.requestId) {
-		// 		state.todoList = payload
-		// 		state.loading = 'fin'
-		// 		state.currentRequestId = ''
-		// 	}
-		// },
-		// [fetchToDoList.pending]: (state, {meta}) => {
-		// 	state.currentRequestId = meta
-		// 	state.loading = 'pending'
-		// },
-		// [fetchToDoList.rejected]: (state, {meta, payload, error}) => {
-		// 	if (meta.requestId === state.currentRequestId.requestId) {
-		// 		state.currentRequestId = meta
-		// 		state.loading = 'fin'
-		// 		state.todoList = payload
-		// 		state.error = error
-		// 	}
-		// }
 	}
 })
 
@@ -263,7 +377,6 @@ export const {
 	setChampions,
 	updateAllUserScores,
 	resetChampSelectDisplayed,
-	fillChampSelectDisplayedInternal,
 	resetSettingsInternal,
 	copyFromAnotherSetting,
 	setFooterMessage,
@@ -280,7 +393,7 @@ export const store = configureStore({
 
 store.subscribe(() => {
 	// console.log('new state : ')
-	// console.log(store.getState().configSerialized)
+	// console.log(JSON.parse(store.getState().slice.configSerialized))
 })
 
 export type RootState = ReturnType<typeof store.getState>

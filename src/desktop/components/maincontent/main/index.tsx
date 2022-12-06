@@ -81,9 +81,8 @@ const ProfileLine = styled.div`
 `
 
 function Main() {
+	console.log("Main renderer")
 	const champSelectDisplayed = useAppSelector((state) => state.slice.champSelectDisplayed)
-	const localCellId = sessionStorage.getItem('localCellId')
-	const isItUser = false
 
 	function renderPlayersGrid(isEnemyTeam: boolean): JSX.Element {
 		const profiles: JSX.Element[] = []
@@ -97,7 +96,7 @@ function Main() {
 										   champName={champName}
 										   champScore={champScore}
 										   champRecommendation={champRecommendation}
-										   isItUser={isItUser} />)
+			/>)
 			if (i < 4) profiles.push(<ProfileLine isEnemyTeam={isEnemyTeam}
 												  key={uniqid()} />)
 		}

@@ -13,24 +13,22 @@ export type Champion = {
 	imageUrl: string
 }
 
-export function championConstructor(name = '', opScore_user = 50, opScore_CSW = 50): Champion {
+export function championConstructor(name = '', opScore_user = 50, opScore_CSW = 50, role = '', image = '', imageUrl = ''): Champion {
 	return {
 		name: name,
 		opScore_user: opScore_user,
 		opScore_CSW: opScore_CSW,
-		role: '',
-		image: '',
-		imageUrl: ''
+		role: role,
+		image: image,
+		imageUrl: imageUrl
 	}
 }
 
 export function getDefaultChampion(): Champion {
-	const defaultImg: string = questionMark
+	const defaultImageUrl: string = questionMark
 	const defaultName = 'Champion Name'
 	const defaultScore = 50
-	return <Champion>{
-		name: defaultName,
-		imageUrl: defaultImg,
-		opScore_user: defaultScore
-	}
+	const defaultRole = ''
+	const defaultImage = ''
+	return championConstructor(defaultName, defaultScore, defaultScore, defaultRole, defaultImage, defaultImageUrl)
 }
