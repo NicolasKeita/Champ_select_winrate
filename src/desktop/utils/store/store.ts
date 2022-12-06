@@ -94,36 +94,9 @@ function updateChampSelectDisplayedScores(champSelectDisplayed: ChampSelectDispl
 	}
 }
 
-export const doChampionSuggestions = createAsyncThunk<ChampDisplayedType[], void, {state: RootState}>(
-	'doChampionSuggestions',
-	async (thunkParam, thunkAPI) => {
-		const state = thunkAPI.getState() // TODO : change any
-		console.log('slice')
-		console.log(state.slice.champSelectDisplayed.allies)
-		const configPlainObject: Config = JSON.parse(state.slice.configSerialized)
-		const alliesCpy: ChampDisplayedType[] = JSON.parse(JSON.stringify(state.slice.champSelectDisplayed.allies))
-		for (const ally of alliesCpy) {
-			const configPlainObjectCpy: Config = JSON.parse(JSON.stringify(configPlainObject))
-			let role = ally.assignedRole
-			if (role == '')
-				role = 'bottom'
-			const allChampsFilteredWithRole = configPlainObjectCpy.champions.filter(champ => champ.role == role)
-			allChampsFilteredWithRole.sort((a, b) => b.opScore_user - a.opScore_user)
-			const champSuggestions: Champion[] = []
-			for (let i = 0; i < 5; ++i) {
-				const champSuggested = allChampsFilteredWithRole[i]
-				champSuggested.imageUrl = await getChampSquareAsset(champSuggested.image)
-				champSuggestions.push(champSuggested)
-			}
-			ally.recommendations = champSuggestions
-		}
-		return alliesCpy
-	}
-)
-
 type FillChampSelectDisplayedParamType = {
 	actions : never[][],
-	localCellId : number,
+	localPlayerCellId : number,
 	myTeam: never[]
 }
 
@@ -189,26 +162,23 @@ export const fillChampSelectDisplayed = createAsyncThunk<BothTeam | void , FillC
 			await fillChampNameAndImgUrlFromId(allies[actorCellId].champ, championId)
 			fillAssignedRoleAndRecommendations(allies[actorCellId], thunkParam.myTeam, actorCellId)
 		}
-	// Rift Mode with bans (doesn't handle clash or tournament yet)
+	// Rift Mode with bans (doesn't support clash or tournament yet)
 		else if (thunkParam.actions.length == 8) {
 			for (let i = 2; i < thunkParam.actions.length; i++) {
 				let actorCellId: number, championId: number
 				for ({actorCellId, championId} of thunkParam.actions[i]) {
 					if (championId === 0) continue
-					if (actorCellId < 5) {
-						if (thunkParam.localCellId < 5) {
-							await fillChampNameAndImgUrlFromId(allies[actorCellId].champ, championId)
-							fillAssignedRoleAndRecommendations(allies[actorCellId], thunkParam.myTeam, actorCellId)
-						} else
-							await fillChampNameAndImgUrlFromId(enemies[actorCellId].champ, championId)
+
+					console.log(thunkParam.localPlayerCellId)
+					if ((actorCellId < 5 && thunkParam.localPlayerCellId < 5) || (actorCellId >= 5 && thunkParam.localPlayerCellId >= 5)) {
+						if (actorCellId >= 5)
+							actorCellId -=5
+						await fillChampNameAndImgUrlFromId(allies[actorCellId].champ, championId)
+						fillAssignedRoleAndRecommendations(allies[actorCellId], thunkParam.myTeam, actorCellId)
 					} else {
-						actorCellId -= 5
-						if (thunkParam.localCellId < 5)
-							await fillChampNameAndImgUrlFromId(enemies[actorCellId].champ, championId)
-						else {
-							await fillChampNameAndImgUrlFromId(allies[actorCellId].champ, championId)
-							fillAssignedRoleAndRecommendations(allies[actorCellId], thunkParam.myTeam, actorCellId)
-						}
+						if (actorCellId >= 5)
+							actorCellId -=5
+						await fillChampNameAndImgUrlFromId(enemies[actorCellId].champ, championId)
 					}
 				}
 			}
@@ -317,23 +287,6 @@ const slice = createSlice({
 		resetChampSelectDisplayed: (state) => {
 			state.champSelectDisplayed = initChampSelectDisplayed()
 		},
-		// fillChampSelectDisplayed: {
-		// 	prepare: (allies: ChampDisplayedType[], enemies: ChampDisplayedType[]) => ({
-		// 		payload: {allies, enemies}
-		// 	}),
-		// 	reducer: (state, action: PayloadAction<{allies: ChampDisplayedType[], enemies: ChampDisplayedType[]}>) => {
-		// 		console.log("What's payload tho")
-		// 		console.log(action.payload)
-		// 		state.champSelectDisplayed.allies = JSON.parse(JSON.stringify(action.payload.allies))
-		// 		for (const elem of state.champSelectDisplayed.allies) {
-		// 			elem.champ.opScore_user = getChampScore(elem.champ.name, JSON.parse(state.configSerialized).champions)
-		// 		}
-		// 		state.champSelectDisplayed.enemies = JSON.parse(JSON.stringify(action.payload.enemies))
-		// 		for (const elem of state.champSelectDisplayed.enemies) {
-		// 			elem.champ.opScore_user = getChampScore(elem.champ.name, JSON.parse(state.configSerialized).champions)
-		// 		}
-		// 	}
-		// },
 		setSummonerInternal: {
 			prepare: (summonerName: string, summonerRegion: string, encryptedSummonerId: string) => ({
 				payload: {summonerName, summonerRegion, encryptedSummonerId}
@@ -352,13 +305,8 @@ const slice = createSlice({
 		}
 	},
 	extraReducers: (builder) => {
-		builder.addCase(doChampionSuggestions.fulfilled, (state, action) => {
-			state.champSelectDisplayed.allies = action.payload
-		})
 		builder.addCase(fillChampSelectDisplayed.fulfilled, (state, action) => {
 			if (action.payload !== undefined) {
-				console.log("What's payload tho")
-				console.log(action.payload)
 				state.champSelectDisplayed.allies = JSON.parse(JSON.stringify(action.payload.allies))
 				for (const elem of state.champSelectDisplayed.allies) {
 					elem.champ.opScore_user = getChampScore(elem.champ.name, JSON.parse(state.configSerialized).champions)

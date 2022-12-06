@@ -35,12 +35,19 @@ export async function fetchEncryptedSummonerId(summonerName, summonerRegion): Pr
 
 export async function isInGame(summonerRegion, encryptedSummonerId): Promise<boolean | null> {
 	return true
-	// const url = `https://${summonerRegion}.api.riotgames.com/lol/spectator/v4/active-games/by-summoner/${encryptedSummonerId}`
-	// const res = await fetch(url, {
-	// 	headers: my_headers
-	// })
-	const url = `https://${summonerRegion}.api.riotgames.com/lol/spectator/v4/active-games/by-summoner/${encryptedSummonerId}?api_key=${API_key}`
-	const res = await fetch(url, {headers: {'Origin': 'https://developer.riotgames.com'}})
+	const url = `https://${summonerRegion}.api.riotgames.com/lol/spectator/v4/active-games/by-summoner/${encryptedSummonerId}`
+	let res
+	try {
+		res = await fetch(url, {
+			headers: my_headers
+		})
+	} catch (e) {
+		console.error('CSW_error: following call : fetch(' + url + ' caught' +
+			' error;  ' + e)
+			return null
+	}
+	// const url = `https://${summonerRegion}.api.riotgames.com/lol/spectator/v4/active-games/by-summoner/${encryptedSummonerId}?api_key=${API_key}`
+	// const res = await fetch(url, {headers: {'Origin': 'https://developer.riotgames.com'}})
 	console.log('isInGame')
 	console.log(res)
 	if (!res.ok && res.status != 404) {

@@ -78,7 +78,6 @@ export async function getChampSquareAsset(champNamePNG : string) : Promise<strin
 	// async,
 	// remove version, remove CDN
 	if (champNamePNG == '' || !champNamePNG == undefined) {
-		console.log(`GetChampSquaure received :${champNamePNG}`)
 		return questionMark
 	}
 	let version

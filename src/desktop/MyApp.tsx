@@ -39,7 +39,6 @@ const LCU_interface = new LCU_API_connector()
 function MyApp(props: My_PropType): JSX.Element {
 	const my_window = props.my_window
 	const dispatch = useAppDispatch()
-	console.log('MyApp Rerender')
 
 	useEffect(() => {
 		function initializeDefaultConfig() {
@@ -78,13 +77,9 @@ function MyApp(props: My_PropType): JSX.Element {
 				const raw = JSON.parse(champ_select.raw)
 				dispatch(fillChampSelectDisplayed({
 					actions: raw.actions,
-					localCellId: parseInt(raw.localCellId),
+					localPlayerCellId: parseInt(raw.localPlayerCellId),
 					myTeam: raw.myTeam
 				}))
-
-				// dispatch(doChampionSuggestions())
-				// TODO merge
-				// fillchampselect and dochampionsuggestion ?
 				dispatch(setClientStatus(0))
 			}
 
