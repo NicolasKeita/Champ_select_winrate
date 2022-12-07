@@ -21,6 +21,9 @@ import {
 } from '@utils/fetchDataDragon/fetchDataDragon'
 import config from '../../components/maincontent/settings/Config'
 import {Root} from 'react-dom/client'
+import {
+	abortControllerWithReason
+} from '@reduxjs/toolkit/dist/listenerMiddleware/utils'
 
 export type ChampDisplayedType = {
 	assignedRole: string
@@ -100,7 +103,7 @@ type FillChampSelectDisplayedParamType = {
 	myTeam: never[]
 }
 
-function getRecommendations(allies : ChampDisplayedType[], playerId : number , allChamps : Champion[]) : Champion[] {
+function getRecommendations(allies : ChampDisplayedType[], playerId : number, allChamps : Champion[]) : Champion[] {
 	let assignedRole = allies[playerId].assignedRole
 	if (assignedRole == '')
 		assignedRole = 'utility'
@@ -142,11 +145,11 @@ export const fillChampSelectDisplayed = createAsyncThunk<BothTeam | void , FillC
 			champObject.name = await getChampName(championId)
 			champObject.opScore_user = -1
 		}
-		function fillAssignedRoleAndRecommendations(ally: ChampDisplayedType, myTeam : never[], actorCellId : number) {
+		function fillAssignedRoleAndRecommendations(allies: ChampDisplayedType[], myTeam : never[], actorCellId : number) {
 			for (const {assignedPosition, cellId} of myTeam) {
 				if (cellId == actorCellId) {
-					ally.assignedRole = assignedPosition
-					ally.recommendations = getRecommendations(allies, actorCellId, allChamps)
+					allies[actorCellId].assignedRole = assignedPosition
+					allies[actorCellId].recommendations = getRecommendations(allies, actorCellId, allChamps)
 				}
 			}
 		}
@@ -160,12 +163,13 @@ export const fillChampSelectDisplayed = createAsyncThunk<BothTeam | void , FillC
 				({actorCellId, championId} = thunkParam.actions[3][0])
 			if (championId === 0) return
 			await fillChampNameAndImgUrlFromId(allies[actorCellId].champ, championId)
-			fillAssignedRoleAndRecommendations(allies[actorCellId], thunkParam.myTeam, actorCellId)
+			fillAssignedRoleAndRecommendations(allies, thunkParam.myTeam, actorCellId)
 		}
 	// Rift Mode with bans (doesn't support clash or tournament yet)
 		else if (thunkParam.actions.length == 8) {
 			// console.log("actions")
 			// console.log(thunkParam.actions)
+			// fillAssignedRoleAndRecommendations(allies[actorCellId], thunkParam.myTeam, actorCellId)
 			for (let i = 2; i < thunkParam.actions.length; i++) {
 				let actorCellId: number, championId: number
 				for ({actorCellId, championId} of thunkParam.actions[i]) {
@@ -174,7 +178,7 @@ export const fillChampSelectDisplayed = createAsyncThunk<BothTeam | void , FillC
 						if (actorCellId >= 5)
 							actorCellId -=5
 						await fillChampNameAndImgUrlFromId(allies[actorCellId].champ, championId)
-						fillAssignedRoleAndRecommendations(allies[actorCellId], thunkParam.myTeam, actorCellId)
+						fillAssignedRoleAndRecommendations(allies, thunkParam.myTeam, actorCellId)
 					} else {
 						if (actorCellId >= 5)
 							actorCellId -=5
