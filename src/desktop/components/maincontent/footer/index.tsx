@@ -28,7 +28,6 @@ const FooterTextStyle = styled.h1`
 function Footer(): JSX.Element {
 	const dispatch = useAppDispatch()
 	const footerMessageID = useAppSelector(state => state.slice.footerMessageID)
-	console.log(` footer message id is : ${footerMessageID}`)
 	const summonerName = sessionStorage.getItem('summonerName')
 	let messageDisplayed = ''
 	const [date, setDate] = useState(Date.now() + 6000)
@@ -79,7 +78,7 @@ function Footer(): JSX.Element {
 						setDate(Date.now() + 6000)
 						setKey(uniqid())
 					}
-				})
+				}).catch(e => console.error(e))
 			} else
 				return null
 		} else

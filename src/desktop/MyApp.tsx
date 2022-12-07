@@ -121,10 +121,14 @@ function MyApp(props: My_PropType): JSX.Element {
 						sessionStorage.setItem('summonerRegion', region)
 						fetchEncryptedSummonerId(name, region).then(encryptedSummonerId => {
 							sessionStorage.setItem('encryptedSummonerId', encryptedSummonerId)
+						}).catch((e) => {
+							console.error(e + ' - retrying in 5sec')
+							sessionStorage.setItem('encryptedSummonerId', '')
 						})
 						const encryptedSummonerId = sessionStorage.getItem('encryptedSummonerId')
-						if (encryptedSummonerId && encryptedSummonerId != '')
+						if (encryptedSummonerId && encryptedSummonerId != '') {
 							clearInterval(intervalId)
+						}
 					}
 				})
 			}, 5000)
