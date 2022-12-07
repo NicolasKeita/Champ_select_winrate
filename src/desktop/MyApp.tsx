@@ -53,13 +53,13 @@ function MyApp(props: My_PropType): JSX.Element {
 			function handleGameFlow(game_flow) {
 				if (game_flow && game_flow.phase) {
 					if (game_flow.phase === 'ChampSelect') {
-						// ↑ Entering in champ select
 						dispatch(resetChampSelectDisplayed())
 						dispatch(setClientStatus(0))
-					} // TODO remove comments below
-						// else if (game_flow.phase === 'Lobby') {
-						// 	dispatch(setClientStatus(2))
-					// }
+					} else if (game_flow.phase === 'Lobby') {
+						dispatch(setClientStatus(2))
+					} else if (game_flow.phase == 'Matchmaking') {
+						dispatch(setClientStatus(3))
+					}
 					else {
 						const previousClientStatus = sessionStorage.getItem('clientStatus')
 						if (previousClientStatus && parseInt(previousClientStatus) === 0 && game_flow.phase === 'None') {
@@ -111,7 +111,6 @@ function MyApp(props: My_PropType): JSX.Element {
 
 		function fetchingSummonerNameAndRegionEvery5sec() {
 			const intervalId = setInterval(() => {
-				console.log('Fetching summonerName')
 				overwolf.games.launchers.events.getInfo(10902, (result) => {
 					if (result.success && result.res && result.res.summoner_info) {
 						const name = result.res.summoner_info.internal_name

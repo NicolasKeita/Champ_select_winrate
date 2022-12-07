@@ -45,7 +45,6 @@
 		"zip-a-folder": "^0.0.12"
 	},
 	"dependencies": {
-		"@nicholasadamou/react-iframe": "^1.0.4",
 		"@reduxjs/toolkit": "^1.9.0",
 		"@types/jest": "^27.5.2",
 		"@types/react": "^18.0.23",

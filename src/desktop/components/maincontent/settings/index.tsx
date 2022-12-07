@@ -39,7 +39,6 @@ const OP_ScoreContainer = styled.div`
 `
 
 function Settings() {
-	console.log("settings rendered")
 	const allChamps = useAppSelector(selectAllChampions())
 
 	function renderListChampNameWithOPScore() {

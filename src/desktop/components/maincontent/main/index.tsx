@@ -8,7 +8,6 @@ import uniqid from 'uniqid'
 
 import ChampionProfile from '../../championProfile'
 import {useAppSelector} from '@utils/hooks'
-import {Champion} from '../settings/Champion'
 import {ChampDisplayedType} from '@utils/store/store'
 
 const PercentageContainer = styled.div`

@@ -2,12 +2,13 @@
     Path + Filename: src/desktop/components/footer/myContextMenu.tsx
 */
 
-import React, {useEffect, useReducer, useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import styled from 'styled-components'
 import {useAppDispatch, useAppSelector} from '@utils/hooks'
 import {setFooterMessage} from '@utils/store/store'
 import Countdown from 'react-countdown'
 import {isInGame} from '@utils/LOL_API'
+import uniqid from 'uniqid'
 
 const FooterContainer = styled.footer`
   background: linear-gradient(to right, rgb(63, 62, 62), #363636, #323232);
@@ -25,14 +26,12 @@ const FooterTextStyle = styled.h1`
 `
 
 function Footer(): JSX.Element {
-	console.log("rendereing footer")
 	const dispatch = useAppDispatch()
 	const footerMessageID = useAppSelector(state => state.slice.footerMessageID)
 	const summonerName = sessionStorage.getItem('summonerName')
 	let messageDisplayed = ''
-	const [, forceUpdate] = useReducer(x => x + 1, 0);
 	const [date, setDate] = useState(Date.now() + 6000)
-	const [key, setKey] = useState(0)
+	const [key, setKey] = useState(uniqid())
 
 	switch (footerMessageID) {
 		case -1:
@@ -68,9 +67,6 @@ function Footer(): JSX.Element {
 
 	let msg: JSX.Element
 	const renderer = ({seconds, completed}) => {
-		console.log('function inside countdown')
-		console.log(seconds)
-		console.log(completed)
 		if (completed) {
 			const summonerRegion = sessionStorage.getItem('summonerRegion')
 			const encryptedSummonerId = sessionStorage.getItem('encryptedSummonerId')
@@ -80,9 +76,7 @@ function Footer(): JSX.Element {
 						dispatch(setFooterMessage(200))
 					} else {
 						setDate(Date.now() + 6000)
-						setKey(key + 1)
-						// return (<Countdown date={Date.now() + 6000} key={10}
-						// 				 renderer={renderer} />)
+						setKey(uniqid())
 					}
 				})
 			} else

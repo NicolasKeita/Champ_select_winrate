@@ -164,6 +164,8 @@ export const fillChampSelectDisplayed = createAsyncThunk<BothTeam | void , FillC
 		}
 	// Rift Mode with bans (doesn't support clash or tournament yet)
 		else if (thunkParam.actions.length == 8) {
+			// console.log("actions")
+			// console.log(thunkParam.actions)
 			for (let i = 2; i < thunkParam.actions.length; i++) {
 				let actorCellId: number, championId: number
 				for ({actorCellId, championId} of thunkParam.actions[i]) {
@@ -275,7 +277,7 @@ const slice = createSlice({
 			sessionStorage.setItem('clientStatus', action.payload.toString())
 			if ((state.footerMessageID == 200 || state.footerMessageID == 201) && action.payload == -1)
 				return
-			if (action.payload == 2)
+			if (action.payload == 2 || action.payload == 3)
 				return
 			state.footerMessageID = action.payload
 		},
