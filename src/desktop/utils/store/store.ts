@@ -168,8 +168,6 @@ export const fillChampSelectDisplayed = createAsyncThunk<BothTeam | void , FillC
 				let actorCellId: number, championId: number
 				for ({actorCellId, championId} of thunkParam.actions[i]) {
 					if (championId === 0) continue
-
-					console.log(thunkParam.localPlayerCellId)
 					if ((actorCellId < 5 && thunkParam.localPlayerCellId < 5) || (actorCellId >= 5 && thunkParam.localPlayerCellId >= 5)) {
 						if (actorCellId >= 5)
 							actorCellId -=5

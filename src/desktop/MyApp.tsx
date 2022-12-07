@@ -137,7 +137,7 @@ function MyApp(props: My_PropType): JSX.Element {
 		<MyAppContainer id='myApp'>
 			<Header my_window={my_window} />
 			<MainContent />
-			<FooterAD />
+			{/*<FooterAD />*/}
 		</MyAppContainer>
 	)
 }

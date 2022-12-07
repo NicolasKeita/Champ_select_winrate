@@ -15,7 +15,7 @@
 		"splash_image": "icons/IconMouseOver.png",
 		"window_icon": "icons/IconMouseOver.png"
 	},
-	"permissions": ["GameInfo", "Extensions", "Streaming", "Profile"],
+	"permissions": ["GameInfo", "Extensions", "Streaming", "Profile", "Web"],
 	"data": {
 		"start_window": "background",
 		"protocol_override_domains": {
@@ -29,7 +29,8 @@
 				"http://*.google-analytics.com",
 				"https://www.googleapis.com",
 				"https://*.api.riotgames.com/lol/summoner/v4/summoners/by-name/*",
-				"https://*.api.riotgames.com/lol/spectator/v4/active-games/by-summoner/*"
+				"https://*.api.riotgames.com/lol/spectator/v4/active-games/by-summoner/*",
+				"https://euw1.api.riotgames.com/lol/spectator/v4/active-games/by-summoner/VnhtAZ7qkZMk34pBvtaR3fGNt0A92pnVv89F2lIvFfzEhzA?api_key=RGAPI-7698957e-20a3-4cb4-b746-0e6808a78d04"
 			]
 		},
 		"force_browser": "user",

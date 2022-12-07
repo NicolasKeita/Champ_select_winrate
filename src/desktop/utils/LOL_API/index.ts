@@ -2,17 +2,9 @@
     Path + Filename: src/desktop/utils/LOL_API/index.ts
 */
 
-//import API_key from './API_KEY.json' assert {type: 'json'}
+import api_json from './API_KEY.json'
 
-const API_key = 'RGAPI-7698957e-20a3-4cb4-b746-0e6808a78d04'
-
-const my_headers = {
-	// 'User-Agent':      'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36',
-	// 'Accept-Charset': 'application/x-www-form-urlencoded; charset=UTF-8',
-	'X-Riot-Token': API_key
-	// 'Accept-Language': 'fr,fr-FR;q=0.9,en;q=0.8',
-	// 'Origin': 'https://developer.riotgames.com'
-}
+const API_key = api_json.API_KEY
 
 export async function fetchEncryptedSummonerId(summonerName, summonerRegion): Promise<string> {
 	const url = `https://${summonerRegion}.api.riotgames.com/lol/summoner/v4/summoners/by-name/${summonerName}?api_key=${API_key}`
@@ -33,23 +25,18 @@ export async function fetchEncryptedSummonerId(summonerName, summonerRegion): Pr
 	}
 }
 
-export async function isInGame(summonerRegion, encryptedSummonerId): Promise<boolean | null> {
-	return true
-	const url = `https://${summonerRegion}.api.riotgames.com/lol/spectator/v4/active-games/by-summoner/${encryptedSummonerId}`
+export async function isInGame(summonerRegion : string, encryptedSummonerId : string): Promise<boolean | null> {
+	//const url = `https://${summonerRegion}.api.riotgames.com/lol/spectator/v4/active-games/by-summoner/${encryptedSummonerId}?api_key=${API_key}`
+	//const url = 'https://4nuo1ouibd.execute-api.eu-west-3.amazonaws.com/rgapi/'
+	const url = `https://4nuo1ouibd.execute-api.eu-west-3.amazonaws.com/rgapi/spectator/${encryptedSummonerId}/${summonerRegion.toLowerCase()}`
 	let res
 	try {
-		res = await fetch(url, {
-			headers: my_headers
-		})
+		res = await fetch(url)
 	} catch (e) {
-		console.error('CSW_error: following call : fetch(' + url + ' caught' +
-			' error;  ' + e)
-			return null
+			console.error('CSW_error: following call : fetch(' + url + ' caught' +
+				' error;  ' + e)
+				return null
 	}
-	// const url = `https://${summonerRegion}.api.riotgames.com/lol/spectator/v4/active-games/by-summoner/${encryptedSummonerId}?api_key=${API_key}`
-	// const res = await fetch(url, {headers: {'Origin': 'https://developer.riotgames.com'}})
-	console.log('isInGame')
-	console.log(res)
 	if (!res.ok && res.status != 404) {
 		console.error('CSW_error: following call : fetch(' + url + ' caught error;  ' + res.statusText)
 		return null
