@@ -22,7 +22,6 @@ import {useAppDispatch} from '@utils/hooks'
 import LCU_API_connector from '@utils/LCU_API_connector'
 import {fetchEncryptedSummonerId} from '@utils/LOL_API'
 import { populateDefaultConfig } from '@utils/store/action'
-import {parse} from '@typescript-eslint/parser'
 
 const MyAppContainer = styled.div`
   display: flex;
@@ -64,8 +63,8 @@ function MyApp(props: My_PropType): JSX.Element {
 						const previousClientStatus = sessionStorage.getItem('clientStatus')
 						if (previousClientStatus && parseInt(previousClientStatus) === 0 && game_flow.phase === 'None') {
 							// ↑ if user close his client manually (dodge)
-							dispatch(setClientStatus(-1))
 							dispatch(setFooterMessage(201))
+							dispatch(setClientStatus(-1))
 						} else {
 							dispatch(setClientStatus(1))
 						}
@@ -75,12 +74,13 @@ function MyApp(props: My_PropType): JSX.Element {
 
 			function handleChampSelect(champ_select) {
 				const raw = JSON.parse(champ_select.raw)
+				if (raw.localPlayerCellId == -1) return
+				dispatch(setClientStatus(0))
 				dispatch(fillChampSelectDisplayed({
 					actions: raw.actions,
 					localPlayerCellId: parseInt(raw.localPlayerCellId),
 					myTeam: raw.myTeam
 				}))
-				dispatch(setClientStatus(0))
 			}
 
 			function handleFeaturesCallbacks(info) {
@@ -122,7 +122,9 @@ function MyApp(props: My_PropType): JSX.Element {
 						fetchEncryptedSummonerId(name, region).then(encryptedSummonerId => {
 							sessionStorage.setItem('encryptedSummonerId', encryptedSummonerId)
 						})
-						clearInterval(intervalId)
+						const encryptedSummonerId = sessionStorage.getItem('encryptedSummonerId')
+						if (encryptedSummonerId && encryptedSummonerId != '')
+							clearInterval(intervalId)
 					}
 				})
 			}, 5000)
@@ -136,7 +138,7 @@ function MyApp(props: My_PropType): JSX.Element {
 		<MyAppContainer id='myApp'>
 			<Header my_window={my_window} />
 			<MainContent />
-			{/*<FooterAD />*/}
+			<FooterAD />
 		</MyAppContainer>
 	)
 }

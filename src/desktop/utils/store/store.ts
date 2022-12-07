@@ -141,13 +141,16 @@ export const fillChampSelectDisplayed = createAsyncThunk<BothTeam | void , FillC
 		}
 
 		async function fillChampNameAndImgUrlFromId(champObject: Champion, championId: number) {
+			if (championId == 0) return
 			champObject.imageUrl = await getChampImg(championId)
 			champObject.name = await getChampName(championId)
 			champObject.opScore_user = -1
 		}
-		function fillAssignedRoleAndRecommendations(allies: ChampDisplayedType[], myTeam : never[], actorCellId : number) {
+		function fillAssignedRoleAndRecommendations(allies: ChampDisplayedType[], myTeam : never[], actorCellId : number, isActorCellRightSide = false) {
+			let actorCellIdTeam = actorCellId
+			if (isActorCellRightSide) actorCellIdTeam += 5
 			for (const {assignedPosition, cellId} of myTeam) {
-				if (cellId == actorCellId) {
+				if (cellId === actorCellIdTeam) {
 					allies[actorCellId].assignedRole = assignedPosition
 					allies[actorCellId].recommendations = getRecommendations(allies, actorCellId, allChamps)
 				}
@@ -161,24 +164,20 @@ export const fillChampSelectDisplayed = createAsyncThunk<BothTeam | void , FillC
 				({actorCellId, championId} = thunkParam.actions[0][0])
 			else
 				({actorCellId, championId} = thunkParam.actions[3][0])
-			if (championId === 0) return
 			await fillChampNameAndImgUrlFromId(allies[actorCellId].champ, championId)
 			fillAssignedRoleAndRecommendations(allies, thunkParam.myTeam, actorCellId)
 		}
 	// Rift Mode with bans (doesn't support clash or tournament yet)
 		else if (thunkParam.actions.length == 8) {
-			// console.log("actions")
-			// console.log(thunkParam.actions)
-			// fillAssignedRoleAndRecommendations(allies[actorCellId], thunkParam.myTeam, actorCellId)
 			for (let i = 2; i < thunkParam.actions.length; i++) {
 				let actorCellId: number, championId: number
 				for ({actorCellId, championId} of thunkParam.actions[i]) {
-					if (championId === 0) continue
+					const isActorCellRightSide = actorCellId >= 5
 					if ((actorCellId < 5 && thunkParam.localPlayerCellId < 5) || (actorCellId >= 5 && thunkParam.localPlayerCellId >= 5)) {
 						if (actorCellId >= 5)
 							actorCellId -=5
 						await fillChampNameAndImgUrlFromId(allies[actorCellId].champ, championId)
-						fillAssignedRoleAndRecommendations(allies, thunkParam.myTeam, actorCellId)
+						fillAssignedRoleAndRecommendations(allies, thunkParam.myTeam, actorCellId, isActorCellRightSide)
 					} else {
 						if (actorCellId >= 5)
 							actorCellId -=5
@@ -278,7 +277,8 @@ const slice = createSlice({
 		},
 		setClientStatus: (state, action: PayloadAction<number>) => {
 			state.leagueClientStatus = action.payload
-			sessionStorage.setItem('clientStatus', action.payload.toString())
+			if (action.payload < 10 && action.payload > -10)
+				sessionStorage.setItem('clientStatus', action.payload.toString())
 			if ((state.footerMessageID == 200 || state.footerMessageID == 201) && action.payload == -1)
 				return
 			if (action.payload == 2 || action.payload == 3)

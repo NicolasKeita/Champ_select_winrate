@@ -4,9 +4,12 @@
 
 export async function fetchEncryptedSummonerId(summonerName : string, summonerRegion : string): Promise<string> {
 	const url = `https://4nuo1ouibd.execute-api.eu-west-3.amazonaws.com/csw_api_proxy/summoner/${summonerName}/${summonerRegion.toLowerCase()}`
-	const res = await fetch(url)
-	if (!res.ok) {
-		console.error('CSW_error: following call : fetch(' + url + ' caught error;  ' + res.statusText)
+	let res
+	try {
+		res = await fetch(url)
+	} catch (e) {
+		console.error('CSW_error: following call : fetch(' + url + ' caught' +
+			' error;  ')
 		return ''
 	}
 	try {
@@ -14,7 +17,6 @@ export async function fetchEncryptedSummonerId(summonerName : string, summonerRe
 		return data.id
 	} catch (e) {
 		console.error('CSW_error: following call : res.json() caught error; previously : fetch(' + url)
-		console.error(e)
 		return ''
 	}
 }
@@ -30,7 +32,7 @@ export async function isInGame(summonerRegion : string, encryptedSummonerId : st
 				return null
 	}
 	if (!res.ok && res.status != 404) {
-		console.error('CSW_error: following call : fetch(' + url + ' caught error;  ' + res.statusText)
+		console.error('CSW_error: following call : fetch(' + url + ' caught error;  ')
 		return null
 	}
 	try {
@@ -50,7 +52,6 @@ export async function isInGame(summonerRegion : string, encryptedSummonerId : st
 		}
 	} catch (e) {
 		console.error('CSW_error: following call : res.json() caught error; previously : fetch(' + url)
-		console.error(e)
 		return null
 	}
 }

@@ -14,7 +14,6 @@ const FooterContainer = styled.footer`
 const ADcontainer = styled.img``
 
 function FooterAD() {
-	console.log('FooterAD rerendered')
 	const kWindowName = 'desktop'
 	let adEnabled = false,
 		updateWindowIsVisibleInterval = null,
