@@ -7,10 +7,9 @@ import {ContextMenu} from 'react-context-menu-hooks'
 import {myContextMenuBridge} from './myContextMenuBridge'
 import styled from 'styled-components'
 
-import {resetSettings} from '@utils/store/action'
 import {useAppDispatch, useAppSelector} from '@utils/hooks'
-import Config from '../../maincontent/settings/Config'
 import {selectInstancedConfig} from '@utils/store/selectors'
+import {resetSettings} from '@utils/store/store'
 
 const ContextMenuStyled = styled(ContextMenu)`
   background: linear-gradient(to right, rgb(63, 62, 62), #363636, #323232);
@@ -29,7 +28,8 @@ function MyContextMenu(): JSX.Element {
 
 	return (
 		<ContextMenuStyled dark={darkMode} bridge={myContextMenuBridge}>
-			<ContextMenu.Option onClick={handleRightClick}>Reset config</ContextMenu.Option>
+			<ContextMenu.Option onClick={handleRightClick}>Reset
+				config</ContextMenu.Option>
 		</ContextMenuStyled>
 	)
 }

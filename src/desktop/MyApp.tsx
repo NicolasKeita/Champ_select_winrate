@@ -11,7 +11,7 @@ import MainContent from './components/maincontent'
 import FooterAD from './components/footerAD'
 import Config from './components/maincontent/settings/Config'
 import {
-	copyFromAnotherSetting,
+	copyFromAnotherSetting, fetchAllChampions,
 	fillChampSelectDisplayed,
 	resetChampSelectDisplayed,
 	setClientStatus,
@@ -21,7 +21,9 @@ import {
 import {useAppDispatch} from '@utils/hooks'
 import LCU_API_connector from '@utils/LCU_API_connector'
 import {fetchEncryptedSummonerId} from '@utils/LOL_API'
-import { populateDefaultConfig } from '@utils/store/action'
+import {
+	fetchCSWgameVersion
+} from '@utils/fetchLocalConfigJson/fetchChampionsFromConfigJson'
 
 const MyAppContainer = styled.div`
   display: flex;
@@ -40,12 +42,23 @@ function MyApp(props: My_PropType): JSX.Element {
 	const dispatch = useAppDispatch()
 
 	useEffect(() => {
+
 		function initializeDefaultConfig() {
-			const config: Config = JSON.parse(localStorage.getItem('config') ?? '{}')
-			if (Object.keys(config).length == 0 || config.champions.length == 0)
-				dispatch(populateDefaultConfig())
-			else
-				dispatch(copyFromAnotherSetting(config))
+			fetchCSWgameVersion()
+				.then(gameVersion => {
+					const userGameVersion = localStorage.getItem('CSW_gameVersion')
+					const config: Config = JSON.parse(localStorage.getItem('config') ?? '{}')
+					if (userGameVersion != gameVersion || Object.keys(config).length == 0 || !config.champions || config.champions.length == 0) {
+						localStorage.setItem('CSW_gameVersion', gameVersion)
+						dispatch(fetchAllChampions())
+					} else {
+						dispatch(copyFromAnotherSetting(config))
+					}
+				})
+				.catch(e => {
+					console.error(e + ' retrying in 5sec')
+					setTimeout(initializeDefaultConfig, 5000)
+				})
 		}
 
 		function addLCU_listeners() {
@@ -58,8 +71,7 @@ function MyApp(props: My_PropType): JSX.Element {
 						dispatch(setClientStatus(2))
 					} else if (game_flow.phase == 'Matchmaking') {
 						dispatch(setClientStatus(3))
-					}
-					else {
+					} else {
 						const previousClientStatus = sessionStorage.getItem('clientStatus')
 						if (previousClientStatus && parseInt(previousClientStatus) === 0 && game_flow.phase === 'None') {
 							// ↑ if user close his client manually (dodge)

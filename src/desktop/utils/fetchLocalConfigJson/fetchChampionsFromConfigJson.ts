@@ -3,22 +3,15 @@
 */
 
 
-import {
-	Champion,
-	championConstructor
-} from '../../components/maincontent/settings/Champion'
+import {Champion} from '../../components/maincontent/settings/Champion'
 
-export async function fetchChampionsFromConfigJson(): Promise<Champion[]> {
-	const fileUrl = './config/champion_CSW_save.json'
-	const res = await fetch(fileUrl, {
-		headers: {
-			'Content-Type': 'application/json',
-			'Accept': 'application/json'
-		}
-	})
-	if (!res.ok) {
-		console.error('CSW_error: following call : fetch(' + fileUrl + ' caught error;  ' + res.statusText)
-		return []
+export async function fetchAllChampionsJson(): Promise<Champion[]> {
+	const url = 'https://4nuo1ouibd.execute-api.eu-west-3.amazonaws.com/csw_api_proxy/allchamps'
+	let res
+	try {
+		res = await fetch(url)
+	} catch (e) {
+		throw new Error('CSW_error: following call : fetch(' + url + ' caught error;  ' + res.statusText)
 	}
 	try {
 		const data = await res.json() as Promise<Champion[]>
@@ -33,8 +26,21 @@ export async function fetchChampionsFromConfigJson(): Promise<Champion[]> {
 			}
 		}))
 	} catch (e) {
-		console.error('CSW_error: following call : res.json() caught error; previously : fetch(' + fileUrl)
-		console.error(e)
-		return []
+		throw new Error('CSW_error: following call : res.json() caught error; previously : fetch(' + url)
+	}
+}
+
+export async function fetchCSWgameVersion(): Promise<string> {
+	const url = 'https://4nuo1ouibd.execute-api.eu-west-3.amazonaws.com/csw_api_proxy/cswgameversion'
+	let res
+	try {
+		res = await fetch(url)
+	} catch (e) {
+		throw new Error('CSW_error: following call : fetch(' + url + ' caught error;  ' + res.statusText)
+	}
+	try {
+		return await res.text()
+	} catch (e) {
+		throw new Error('CSW_error: following call : res.text() caught error; previously : fetch(' + url)
 	}
 }

@@ -16,14 +16,12 @@ import {
 } from '../../components/maincontent/settings/Champion'
 import {
 	getChampImg,
-	getChampImgByName, getChampName,
+	getChampName,
 	getChampScore, getChampSquareAsset
 } from '@utils/fetchDataDragon/fetchDataDragon'
-import config from '../../components/maincontent/settings/Config'
-import {Root} from 'react-dom/client'
 import {
-	abortControllerWithReason
-} from '@reduxjs/toolkit/dist/listenerMiddleware/utils'
+	fetchAllChampionsJson
+} from '@utils/fetchLocalConfigJson/fetchChampionsFromConfigJson'
 
 export type ChampDisplayedType = {
 	assignedRole: string
@@ -98,12 +96,12 @@ function updateChampSelectDisplayedScores(champSelectDisplayed: ChampSelectDispl
 }
 
 type FillChampSelectDisplayedParamType = {
-	actions : never[][],
-	localPlayerCellId : number,
+	actions: never[][],
+	localPlayerCellId: number,
 	myTeam: never[]
 }
 
-function getRecommendations(allies : ChampDisplayedType[], playerId : number, allChamps : Champion[]) : Champion[] {
+function getRecommendations(allies: ChampDisplayedType[], playerId: number, allChamps: Champion[]): Champion[] {
 	let assignedRole = allies[playerId].assignedRole
 	if (assignedRole == '')
 		assignedRole = 'utility'
@@ -117,7 +115,18 @@ type BothTeam = {
 	enemies: ChampDisplayedType[]
 }
 
-export const fillChampSelectDisplayed = createAsyncThunk<BothTeam | void , FillChampSelectDisplayedParamType, {state: RootState}>(
+export const fetchAllChampions = createAsyncThunk<Champion[]>(
+	'fetchAllChampions',
+	async (thunkParam, {rejectWithValue}) => {
+		try {
+			return await fetchAllChampionsJson()
+		} catch (e) {
+			return rejectWithValue(e)
+		}
+	}
+)
+
+export const fillChampSelectDisplayed = createAsyncThunk<BothTeam | void, FillChampSelectDisplayedParamType, {state: RootState}>(
 	'fillChampSelectDisplayed',
 	async (thunkParam, thunkAPI) => {
 		if (thunkParam.actions.length == 0)
@@ -146,7 +155,8 @@ export const fillChampSelectDisplayed = createAsyncThunk<BothTeam | void , FillC
 			champObject.name = await getChampName(championId)
 			champObject.opScore_user = -1
 		}
-		function fillAssignedRoleAndRecommendations(allies: ChampDisplayedType[], myTeam : never[], actorCellId : number, isActorCellRightSide = false) {
+
+		function fillAssignedRoleAndRecommendations(allies: ChampDisplayedType[], myTeam: never[], actorCellId: number, isActorCellRightSide = false) {
 			let actorCellIdTeam = actorCellId
 			if (isActorCellRightSide) actorCellIdTeam += 5
 			for (const {assignedPosition, cellId} of myTeam) {
@@ -158,8 +168,8 @@ export const fillChampSelectDisplayed = createAsyncThunk<BothTeam | void , FillC
 		}
 
 		//Custom solo without or with bans
-		if (thunkParam.actions.length == 1 ||thunkParam.actions.length == 4) {
-			let actorCellId : number, championId : number
+		if (thunkParam.actions.length == 1 || thunkParam.actions.length == 4) {
+			let actorCellId: number, championId: number
 			if (thunkParam.actions.length == 1)
 				({actorCellId, championId} = thunkParam.actions[0][0])
 			else
@@ -167,7 +177,7 @@ export const fillChampSelectDisplayed = createAsyncThunk<BothTeam | void , FillC
 			await fillChampNameAndImgUrlFromId(allies[actorCellId].champ, championId)
 			fillAssignedRoleAndRecommendations(allies, thunkParam.myTeam, actorCellId)
 		}
-	// Rift Mode with bans (doesn't support clash or tournament yet)
+		// Rift Mode with bans (doesn't support clash or tournament yet)
 		else if (thunkParam.actions.length == 8) {
 			for (let i = 2; i < thunkParam.actions.length; i++) {
 				let actorCellId: number, championId: number
@@ -175,12 +185,12 @@ export const fillChampSelectDisplayed = createAsyncThunk<BothTeam | void , FillC
 					const isActorCellRightSide = actorCellId >= 5
 					if ((actorCellId < 5 && thunkParam.localPlayerCellId < 5) || (actorCellId >= 5 && thunkParam.localPlayerCellId >= 5)) {
 						if (actorCellId >= 5)
-							actorCellId -=5
+							actorCellId -= 5
 						await fillChampNameAndImgUrlFromId(allies[actorCellId].champ, championId)
 						fillAssignedRoleAndRecommendations(allies, thunkParam.myTeam, actorCellId, isActorCellRightSide)
 					} else {
 						if (actorCellId >= 5)
-							actorCellId -=5
+							actorCellId -= 5
 						await fillChampNameAndImgUrlFromId(enemies[actorCellId].champ, championId)
 					}
 				}
@@ -193,7 +203,7 @@ export const fillChampSelectDisplayed = createAsyncThunk<BothTeam | void , FillC
 			}
 		}
 		return {allies: allies, enemies: enemies}
-})
+	})
 
 
 const slice = createSlice({
@@ -204,34 +214,6 @@ const slice = createSlice({
 			const configPlainObject = JSON.parse(state.configSerialized)
 			configPlainObject.settingsPage = !configPlainObject.settingsPage
 			state.configSerialized = JSON.stringify(configPlainObject)
-		},
-		resetSettingsInternal: (state) => {
-			const configPlainObject: Config = JSON.parse(state.configSerialized)
-			if (!configPlainObject.champions) return
-			configPlainObject.champions.length = 0
-			sessionStorage.removeItem('internalConfig')
-			g_x += 1
-			state.configSerialized = JSON.stringify(configPlainObject) + ' '.repeat(g_x)
-			updateChampSelectDisplayedScores(state.champSelectDisplayed, configPlainObject.champions)
-		},
-		setChampions: (state, action: PayloadAction<Champion[]>) => {
-			const configDeserialized = new Config(JSON.parse(state.configSerialized))
-			for (const elem of Object.values(action.payload)) {
-				const newChamp = championConstructor(elem.name, elem.opScore_user, elem.opScore_CSW, elem.role, elem.image, elem.imageUrl)
-				const duplicate = configDeserialized.champions.find(elemConfig => elemConfig.name === elem.name)
-				if (duplicate) {
-					duplicate.name = elem.name
-					duplicate.opScore_user = elem.opScore_user
-					duplicate.opScore_CSW = elem.opScore_CSW
-					duplicate.role = elem.role
-					duplicate.image = elem.image
-					duplicate.imageUrl = elem.imageUrl
-				} else
-					configDeserialized.champions.push(newChamp)
-			}
-			localStorage.setItem('config', configDeserialized.stringify())
-			state.configSerialized = configDeserialized.stringify()
-			updateChampSelectDisplayedScores(state.champSelectDisplayed, configDeserialized.champions)
 		},
 		copyFromAnotherSetting: (state, action: PayloadAction<Config>) => {
 			const configDeserialized = new Config(JSON.parse(state.configSerialized))
@@ -306,6 +288,25 @@ const slice = createSlice({
 		},
 		setSummonerRegion: (state, action: PayloadAction<string>) => {
 			state.summonerRegion = action.payload
+		},
+		resetSettings: (state) => {
+			const configPlainObject: Config = JSON.parse(state.configSerialized)
+			if (!configPlainObject.champions) return
+			configPlainObject.champions.length = 0
+			sessionStorage.removeItem('internalConfig')
+			const userConfigString = localStorage.getItem('config')
+			if (!userConfigString) console.error('CSW_error: config in localstorage not found')
+			else {
+				const userConfig: Config = JSON.parse(userConfigString)
+				for (const champion of userConfig.champions) {
+					champion.opScore_user = champion.opScore_CSW
+					configPlainObject.champions.push(champion)
+				}
+				localStorage.setItem('config', JSON.stringify(configPlainObject))
+			}
+			g_x += 1
+			state.configSerialized = JSON.stringify(configPlainObject) + ' '.repeat(g_x)
+			updateChampSelectDisplayedScores(state.champSelectDisplayed, configPlainObject.champions)
 		}
 	},
 	extraReducers: (builder) => {
@@ -321,18 +322,40 @@ const slice = createSlice({
 				}
 			}
 		})
+		builder.addCase(fetchAllChampions.fulfilled, (state, action) => {
+			const configDeserialized = new Config(JSON.parse(state.configSerialized))
+			for (const elem of Object.values(action.payload)) {
+				const newChamp = championConstructor(elem.name, elem.opScore_user, elem.opScore_CSW, elem.role, elem.image, elem.imageUrl)
+				const duplicate = configDeserialized.champions.find(elemConfig => elemConfig.name === elem.name)
+				if (duplicate) {
+					duplicate.name = elem.name
+					duplicate.opScore_user = elem.opScore_user
+					duplicate.opScore_CSW = elem.opScore_CSW
+					duplicate.role = elem.role
+					duplicate.image = elem.image
+					duplicate.imageUrl = elem.imageUrl
+				} else configDeserialized.champions.push(newChamp)
+			}
+			localStorage.setItem('config', configDeserialized.stringify())
+			state.configSerialized = configDeserialized.stringify()
+			updateChampSelectDisplayedScores(state.champSelectDisplayed, configDeserialized.champions)
+		})
+		builder.addCase(fetchAllChampions.rejected, (_state, action) => {
+			console.error(action.payload)
+			console.error('CSW_error: fetchAllChampions failed, retrying in 5sec')
+			setTimeout(fetchAllChampions, 5000)
+		})
 	}
 })
 
 export const {
 	toggleSettingsPage,
-	setChampions,
 	updateAllUserScores,
 	resetChampSelectDisplayed,
-	resetSettingsInternal,
 	copyFromAnotherSetting,
 	setFooterMessage,
-	setClientStatus
+	setClientStatus,
+	resetSettings
 } = slice.actions
 
 const mainReducer = combineReducers({
