@@ -59,7 +59,8 @@ function ChampionProfile(props: PropsType) {
 	const clientStatus = useAppSelector(state => state.slice.leagueClientStatus)
 
 	function renderChampionRecommendation(): JSX.Element[] | null {
-		if (clientStatus == -1 || props.isEnemyTeam) return null
+		if (props.isEnemyTeam) return null
+		//if (clientStatus == -1 || props.isEnemyTeam) return null
 		const row: JSX.Element[] = []
 		for (let i = 0; i < 5; ++i) {
 			const recommendation = props.champRecommendation[i]

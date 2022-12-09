@@ -43,6 +43,12 @@ function Footer(): JSX.Element {
 		case 1:
 			messageDisplayed = 'You are not in champ select.'
 			break
+		case 2:
+			messageDisplayed = 'You are not in champ select.'
+			break
+		case 3:
+			messageDisplayed = 'You are not in champ select.'
+			break
 		case 100:
 			messageDisplayed = 'Check your internet connection.'
 			break
@@ -71,14 +77,16 @@ function Footer(): JSX.Element {
 			const summonerRegion = sessionStorage.getItem('summonerRegion')
 			const encryptedSummonerId = sessionStorage.getItem('encryptedSummonerId')
 			if (summonerRegion && encryptedSummonerId) {
-				isInGame(summonerRegion, encryptedSummonerId).then(isInGameBool => {
-					if (isInGameBool) {
-						dispatch(setFooterMessage(200))
-					} else {
-						setDate(Date.now() + 6000)
-						setKey(uniqid())
-					}
-				}).catch(e => console.error(e))
+				isInGame(summonerRegion, encryptedSummonerId)
+					.then(isInGameBool => {
+						if (isInGameBool) {
+							dispatch(setFooterMessage(200))
+						} else {
+							setDate(Date.now() + 6000)
+							setKey(uniqid())
+						}
+					})
+					.catch(e => console.error(e))
 			} else
 				return null
 		} else

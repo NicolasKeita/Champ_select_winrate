@@ -106,6 +106,7 @@ function getRecommendations(allies: ChampDisplayedType[], playerId: number, allC
 	if (assignedRole == '')
 		assignedRole = 'utility'
 	const allChampsFilteredWithRole = allChamps.filter(champ => champ.role == assignedRole)
+	if (allChampsFilteredWithRole.length == 0) console.error('CSW_error: couldnt get recommendations')
 	allChampsFilteredWithRole.sort((a, b) => b.opScore_user - a.opScore_user)
 	return allChampsFilteredWithRole.slice(0, 5)
 }
@@ -156,7 +157,7 @@ export const fillChampSelectDisplayed = createAsyncThunk<BothTeam | void, FillCh
 			champObject.opScore_user = -1
 		}
 
-		function fillAssignedRoleAndRecommendations(allies: ChampDisplayedType[], myTeam: never[], actorCellId: number, isActorCellRightSide = false) {
+		function fillAssignedRoleAndRecommendations(allies: ChampDisplayedType[], myTeam: never[], actorCellId: number, allChamps: Champion[], isActorCellRightSide = false) {
 			let actorCellIdTeam = actorCellId
 			if (isActorCellRightSide) actorCellIdTeam += 5
 			for (const {assignedPosition, cellId} of myTeam) {
@@ -175,7 +176,7 @@ export const fillChampSelectDisplayed = createAsyncThunk<BothTeam | void, FillCh
 			else
 				({actorCellId, championId} = thunkParam.actions[3][0])
 			await fillChampNameAndImgUrlFromId(allies[actorCellId].champ, championId)
-			fillAssignedRoleAndRecommendations(allies, thunkParam.myTeam, actorCellId)
+			fillAssignedRoleAndRecommendations(allies, thunkParam.myTeam, actorCellId, allChamps)
 		}
 		// Rift Mode with bans (doesn't support clash or tournament yet)
 		else if (thunkParam.actions.length == 8) {
@@ -187,7 +188,7 @@ export const fillChampSelectDisplayed = createAsyncThunk<BothTeam | void, FillCh
 						if (actorCellId >= 5)
 							actorCellId -= 5
 						await fillChampNameAndImgUrlFromId(allies[actorCellId].champ, championId)
-						fillAssignedRoleAndRecommendations(allies, thunkParam.myTeam, actorCellId, isActorCellRightSide)
+						fillAssignedRoleAndRecommendations(allies, thunkParam.myTeam, actorCellId, allChamps, isActorCellRightSide)
 					} else {
 						if (actorCellId >= 5)
 							actorCellId -= 5
@@ -259,16 +260,13 @@ const slice = createSlice({
 		},
 		setClientStatus: (state, action: PayloadAction<number>) => {
 			state.leagueClientStatus = action.payload
-			if (action.payload < 10 && action.payload > -10)
-				sessionStorage.setItem('clientStatus', action.payload.toString())
-			if ((state.footerMessageID == 200 || state.footerMessageID == 201) && action.payload == -1)
-				return
-			if (action.payload == 2 || action.payload == 3)
-				return
-			state.footerMessageID = action.payload
+			sessionStorage.setItem('clientStatus', action.payload.toString())
 		},
 		setFooterMessage: (state, action: PayloadAction<number>) => {
+			if ((state.footerMessageID == 200 || state.footerMessageID == 201) && !(action.payload >= 0 && action.payload <= 3))
+				return
 			state.footerMessageID = action.payload
+			sessionStorage.setItem('footerMessageId', action.payload.toString())
 		},
 		resetChampSelectDisplayed: (state) => {
 			state.champSelectDisplayed = initChampSelectDisplayed()

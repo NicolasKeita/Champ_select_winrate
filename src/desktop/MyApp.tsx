@@ -67,19 +67,31 @@ function MyApp(props: My_PropType): JSX.Element {
 					if (game_flow.phase === 'ChampSelect') {
 						dispatch(resetChampSelectDisplayed())
 						dispatch(setClientStatus(0))
+						dispatch(setFooterMessage(0))
 					} else if (game_flow.phase === 'Lobby') {
 						dispatch(setClientStatus(2))
+						dispatch(setFooterMessage(2))
 					} else if (game_flow.phase == 'Matchmaking') {
 						dispatch(setClientStatus(3))
-					} else {
+						dispatch(setFooterMessage(3))
+					} else if (game_flow.phase === 'None') {
 						const previousClientStatus = sessionStorage.getItem('clientStatus')
-						if (previousClientStatus && parseInt(previousClientStatus) === 0 && game_flow.phase === 'None') {
+						const previousFooterMessageId = sessionStorage.getItem('footerMessageId')
+						if (previousClientStatus && parseInt(previousClientStatus) === 0) {
 							// ↑ if user close his client manually (dodge)
+							dispatch(setClientStatus(-1))
 							dispatch(setFooterMessage(201))
+						} else if (previousFooterMessageId && (parseInt(previousFooterMessageId) === 201 || parseInt(previousFooterMessageId) === 200)
+							&& previousClientStatus && (parseInt(previousClientStatus) === -1)) {
+							// ↑ if user close his client manually (dodge), might receive x2 game_flow None
 							dispatch(setClientStatus(-1))
 						} else {
 							dispatch(setClientStatus(1))
+							dispatch(setFooterMessage(1))
 						}
+					} else {
+						dispatch(setClientStatus(1))
+						dispatch(setFooterMessage(1))
 					}
 				}
 			}
@@ -88,6 +100,7 @@ function MyApp(props: My_PropType): JSX.Element {
 				const raw = JSON.parse(champ_select.raw)
 				if (raw.localPlayerCellId == -1) return
 				dispatch(setClientStatus(0))
+				dispatch(setFooterMessage(0))
 				dispatch(fillChampSelectDisplayed({
 					actions: raw.actions,
 					localPlayerCellId: parseInt(raw.localPlayerCellId),
@@ -106,17 +119,21 @@ function MyApp(props: My_PropType): JSX.Element {
 					// ↑ if client's already running
 					LCU_interface.addAllListeners(clientsInfos, handleFeaturesCallbacks)
 					dispatch(setClientStatus(1))
+					dispatch(setFooterMessage(1))
 				} else {
 					dispatch(setClientStatus(-1))
+					dispatch(setFooterMessage(-1))
 				}
 			})
 			LCU_interface.onClientLaunch(clientInfo => {
 				LCU_interface.addAllListeners(clientInfo, handleFeaturesCallbacks)
 				dispatch(setClientStatus(1))
+				dispatch(setFooterMessage(1))
 				fetchingSummonerNameAndRegionEvery5sec()
 			})
 			LCU_interface.onClientClosed(async () => {
 				dispatch(setClientStatus(-1))
+				dispatch(setFooterMessage(-1))
 				LCU_interface.removeAllListeners()
 			})
 		}
@@ -131,16 +148,20 @@ function MyApp(props: My_PropType): JSX.Element {
 							return
 						sessionStorage.setItem('summonerName', name)
 						sessionStorage.setItem('summonerRegion', region)
-						fetchEncryptedSummonerId(name, region).then(encryptedSummonerId => {
-							sessionStorage.setItem('encryptedSummonerId', encryptedSummonerId)
-						}).catch((e) => {
-							console.error(e + ' - retrying in 5sec')
-							sessionStorage.setItem('encryptedSummonerId', '')
-						})
-						const encryptedSummonerId = sessionStorage.getItem('encryptedSummonerId')
-						if (encryptedSummonerId && encryptedSummonerId != '') {
-							clearInterval(intervalId)
-						}
+						fetchEncryptedSummonerId(name, region)
+							.then(encryptedSummonerId => {
+								sessionStorage.setItem('encryptedSummonerId', encryptedSummonerId)
+							})
+							.catch((e) => {
+								console.error(e + ' - retrying in 5sec')
+								sessionStorage.setItem('encryptedSummonerId', '')
+							})
+							.finally(() => {
+								const encryptedSummonerId = sessionStorage.getItem('encryptedSummonerId')
+								if (encryptedSummonerId && encryptedSummonerId != '') {
+									clearInterval(intervalId)
+								}
+							})
 					}
 				})
 			}, 5000)

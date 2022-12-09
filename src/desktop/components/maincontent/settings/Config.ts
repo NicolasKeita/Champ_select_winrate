@@ -5,10 +5,7 @@
 import {Champion, championConstructor} from './Champion'
 
 class Config {
-	public CSW_scoreVersion: string
-
 	constructor(payload: Partial<Config>) {
-		this.CSW_scoreVersion = ''
 		this._settingsPage = false
 		if (payload.settingsPage)
 			this._settingsPage = payload.settingsPage
