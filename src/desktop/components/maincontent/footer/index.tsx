@@ -25,13 +25,20 @@ const FooterTextStyle = styled.h1`
   font-size: ${props => props.messageDisplayedLength < 50 ? '14px' : '11px'};
 `
 
+let countdownDurationLimit = 1000 * 60 * 3
+
 function Footer(): JSX.Element {
 	const dispatch = useAppDispatch()
-	const footerMessageID = useAppSelector(state => state.slice.footerMessageID)
+	let footerMessageID = useAppSelector(state => state.slice.footerMessageID)
 	const summonerName = sessionStorage.getItem('summonerName')
 	let messageDisplayed = ''
 	const [date, setDate] = useState(Date.now() + 6000)
 	const [key, setKey] = useState(uniqid())
+	if (footerMessageID != 201)
+		countdownDurationLimit = 1000 * 60 * 3
+	if (countdownDurationLimit < 1)
+		footerMessageID = -1
+
 
 	switch (footerMessageID) {
 		case -1:
@@ -82,11 +89,19 @@ function Footer(): JSX.Element {
 						if (isInGameBool) {
 							dispatch(setFooterMessage(200))
 						} else {
+							countdownDurationLimit -= 6000
 							setDate(Date.now() + 6000)
 							setKey(uniqid())
 						}
 					})
-					.catch(e => console.error(e))
+					.catch(e => {
+						console.error(e)
+						countdownDurationLimit -= 6000
+						setDate(Date.now() + 6000)
+						setKey(uniqid())
+					})
+					.finally(() => {
+					})
 			} else
 				return null
 		} else

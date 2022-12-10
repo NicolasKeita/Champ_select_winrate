@@ -2,12 +2,12 @@ const path = require('path'),
 	HtmlWebpackPlugin = require('html-webpack-plugin'),
 	CopyPlugin = require('copy-webpack-plugin'),
 	{CleanWebpackPlugin} = require('clean-webpack-plugin'),
-	OverwolfPlugin = require('./overwolf.webpack')
-
-const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin')
+	OverwolfPlugin = require('./overwolf.webpack'),
+	TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin')
 
 module.exports = env => {
-	const browserConfig = {
+	return {
+		target: 'web',
 		entry: {
 			background: './src/background/background.tsx',
 			desktop: './src/desktop/desktop.tsx'
@@ -26,7 +26,7 @@ module.exports = env => {
 					exclude: /node_modules/
 				},
 				{
-					test: /\.(png|jpe?g|gif|jp2|webp|svg)$/,
+					test: /\.(png|jpe?g|ttf|webp|svg)$/,
 					type: 'asset/resource'
 				}
 			]
@@ -39,7 +39,6 @@ module.exports = env => {
 			path: path.resolve(__dirname, 'dist/'),
 			filename: 'js/[name].js'
 		},
-		target: 'web',
 		plugins: [
 			new CleanWebpackPlugin(),
 			new CopyPlugin({
@@ -58,6 +57,4 @@ module.exports = env => {
 			new OverwolfPlugin(env)
 		]
 	}
-
-	return [browserConfig]
 }
