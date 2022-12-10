@@ -251,8 +251,8 @@ const slice = createSlice({
 			const configDeserialized = new Config(JSON.parse(state.configSerialized))
 			for (const elem of Object.values(action.payload)) {
 				const champion = configDeserialized.getChampCurrConfig(elem.name)
-				if (champion)
-					champion.opScore_user = elem.opScore_user
+				if (champion) champion.opScore_user = elem.opScore_user
+				else console.log('CSW_error: couldnt update Score')
 			}
 			state.configSerialized = configDeserialized.stringify()
 			localStorage.setItem('config', configDeserialized.stringify())

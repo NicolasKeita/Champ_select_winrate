@@ -13,7 +13,7 @@ class Config {
 		if (payload.champions) {
 			const allChampionsPlainArray = payload.champions
 			for (const elem of allChampionsPlainArray) {
-				this._champions.push(championConstructor(elem.name, elem.opScore_user, elem.opScore_CSW))
+				this._champions.push(championConstructor(elem.name, elem.opScore_user, elem.opScore_CSW, elem.role, elem.image, elem.imageUrl))
 			}
 		}
 	}
