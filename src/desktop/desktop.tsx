@@ -12,9 +12,9 @@ const myWindow = new AppWindow(kWindowNames.desktop)
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
-	// <React.StrictMode>
-	<Provider store={store}>
-		<MyApp my_window={myWindow} />
-	</Provider>
-	// </React.StrictMode>
+	<React.StrictMode>
+		<Provider store={store}>
+			<MyApp my_window={myWindow} />
+		</Provider>
+	</React.StrictMode>
 )

@@ -221,32 +221,6 @@ const slice = createSlice({
 			configDeserialized.copyFromAnotherSetting(action.payload)
 			state.configSerialized = configDeserialized.stringify()
 		},
-		setUserOPScore: {
-			prepare: (score: number, champName: string) => ({
-				payload: {score, champName}
-			}),
-			reducer: (state, action: PayloadAction<{score: number, champName: string}>) => {
-				const configDeserialized = new Config(JSON.parse(state.configSerialized))
-				const currentChamp = configDeserialized.getChampCurrConfig(action.payload.champName)
-				if (currentChamp) {
-					currentChamp.opScore_user = action.payload.score
-					state.configSerialized = configDeserialized.stringify()
-				}
-			}
-		},
-		setInternalSettings: {
-			prepare: (score: number, champName: string) => ({
-				payload: {score, champName}
-			}),
-			reducer: (state, action: PayloadAction<{score: number, champName: string}>) => {
-				const configDeserialized = new Config(JSON.parse(state.configSerialized))
-				const currentChamp = configDeserialized.getChampCurrConfig(action.payload.champName)
-				if (currentChamp) {
-					currentChamp.opScore_user = action.payload.score
-					state.internalSettings = JSON.stringify(configDeserialized.champions)
-				}
-			}
-		},
 		updateAllUserScores: (state, action: PayloadAction<Champion[]>) => {
 			const configDeserialized = new Config(JSON.parse(state.configSerialized))
 			for (const elem of Object.values(action.payload)) {
@@ -270,16 +244,6 @@ const slice = createSlice({
 		},
 		resetChampSelectDisplayed: (state) => {
 			state.champSelectDisplayed = initChampSelectDisplayed()
-		},
-		setSummonerInternal: {
-			prepare: (summonerName: string, summonerRegion: string, encryptedSummonerId: string) => ({
-				payload: {summonerName, summonerRegion, encryptedSummonerId}
-			}),
-			reducer: (state, action: PayloadAction<{summonerName: string, summonerRegion: string, encryptedSummonerId: string}>) => {
-				state.summonerName = action.payload.summonerName
-				state.summonerRegion = action.payload.summonerRegion
-				state.encryptedSummonerId = action.payload.encryptedSummonerId
-			}
 		},
 		setSummonerName: (state, action: PayloadAction<string>) => {
 			state.summonerName = action.payload

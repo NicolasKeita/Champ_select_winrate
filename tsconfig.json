@@ -38,7 +38,9 @@
 		"target": "es2022",
 		"types": [
 			"@overwolf/types",
-			"node"
+			"node",
+			"jest",
+			"@testing-library/jest-dom"
 		]
 	},
 	"exclude": [
@@ -46,6 +48,5 @@
 	],
 	"include": [
 		"index.d.ts",
-		"src"
 	]
 }
