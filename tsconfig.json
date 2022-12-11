@@ -48,5 +48,6 @@
 	],
 	"include": [
 		"index.d.ts",
+		"src/"
 	]
 }
