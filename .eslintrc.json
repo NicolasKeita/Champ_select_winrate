@@ -22,7 +22,7 @@
 		"parser": "@typescript-eslint/parser",
 		"project": ["./tsconfig.json"]
 	},
-	"ignorePatterns": ["webpack.config.js", "overwolf.webpack.js"],
+	"ignorePatterns": ["webpack.config.js", "overwolf.webpack.js", "jest.config.js"],
 	"plugins": [
 		"react",
 		"react-hooks",

@@ -2,21 +2,27 @@
     Path + Filename: src/desktop/desktop.test.tsx
 */
 
-import React from 'react'
+import React from "react";
 // import {Provider} from 'react-redux'
 // import MyApp from './MyApp'
-import {AppWindow} from '../AppWindow'
-import {kWindowNames} from '../consts'
+import { AppWindow } from "../AppWindow";
+import { kWindowNames } from "../consts";
 // import {store} from '@utils/store/store'
-import '@testing-library/jest-dom'
+import "@testing-library/jest-dom";
 
-const myWindow = new AppWindow(kWindowNames.desktop)
+const myWindow = new AppWindow(kWindowNames.desktop);
 
-import { render, screen } from '@testing-library/react';
+import { render, screen } from "@testing-library/react";
+import { Provider } from "react-redux";
+import { store } from "@utils/store/store";
+import MyApp from "./MyApp";
 
-test('renders learn react link', () => {
+test("renders learn react link", () => {
   render(
-    <div>hello world</div>
+    // <div>hello world</div>
+    <Provider store={store}>
+      <MyApp my_window={myWindow} />
+    </Provider>
   );
   const linkElement = screen.getByText(/hello world/i);
   expect(linkElement).toBeInTheDocument();
