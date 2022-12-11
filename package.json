@@ -7,7 +7,8 @@
 		"*": "eslint --max-warnings 0 --fix"
 	},
 	"scripts": {
-		"test": "jest | tee tmp.txt && grep -q 'overwolf is not defined' tmp.txt ; echo $? ; rm tmp.txt",
+		"test": "jest | tee tmp.txt && grep -q 'overwolf is not defined' tmp.txt ; echo $?",
+		"clean_test": "rm tmp.txt",
 		"build": "webpack --mode=development  --env makeOpk",
 		"dev": "webpack --watch --mode=development",
 		"watch": "webpack --watch --mode=development"
