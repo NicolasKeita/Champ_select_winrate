@@ -12,7 +12,7 @@ import "@testing-library/jest-dom";
 
 const myWindow = new AppWindow(kWindowNames.desktop);
 
-import { render, screen } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import { Provider } from "react-redux";
 import { store } from "@utils/store/store";
 import MyApp from "./MyApp";
