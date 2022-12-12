@@ -85,7 +85,7 @@ function FooterAD() {
 		const adCont = document.getElementById('adContainer')
 		adInstance = new window.OwAd(adCont, {
 			size: {
-				width:  400,
+				width: 400,
 				height: 300
 			}
 		})
