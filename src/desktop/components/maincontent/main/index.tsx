@@ -9,6 +9,7 @@ import uniqid from 'uniqid'
 import ChampionProfile from '../../championProfile'
 import {useAppSelector} from '@utils/hooks'
 import {ChampDisplayedType} from '@utils/store/store'
+import {Tooltip} from '@chakra-ui/react'
 
 const PercentageContainer = styled.div`
   display: flex;
@@ -122,11 +123,14 @@ function Main() {
 	}
 
 	const winrate = computeWinrate(champSelectDisplayed.allies, champSelectDisplayed.enemies)
+	const tooltipNumber = 'Numbers are coming from your own settings. Check your settings (top right icon) to change the default'
 	return (
 		<MainContainer>
 			<PercentageContainer>
 				<WinrateLine isLeft />
-				<h1>{winrate}%</h1>
+				<Tooltip label={tooltipNumber}>
+					<h1>{winrate}%</h1>
+				</Tooltip>
 				<WinrateLine />
 			</PercentageContainer>
 			<PlayersGrid>

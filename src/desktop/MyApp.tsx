@@ -73,15 +73,19 @@ function MyApp(props: My_PropType): JSX.Element {
 					} else if (game_flow.phase == 'Matchmaking') {
 						dispatch(setClientStatus(3))
 						dispatch(setFooterMessage(3))
+					} else if (game_flow.phase == 'GameStart' || game_flow.phase == 'InProgress') {
+						dispatch(setClientStatus(1))
+						dispatch(setFooterMessage(5))
 					} else if (game_flow.phase === 'None') {
 						const previousClientStatus = sessionStorage.getItem('clientStatus')
 						const previousFooterMessageId = sessionStorage.getItem('footerMessageId')
-						if (previousClientStatus && parseInt(previousClientStatus) === 0) {
+						const isSupportedGameMode = !sessionStorage.getItem('unsupported game_mode')
+						if (previousClientStatus && parseInt(previousClientStatus) === 0 && isSupportedGameMode) {
 							// ↑ if user close his client manually (dodge)
 							dispatch(setClientStatus(-1))
 							dispatch(setFooterMessage(201))
 						} else if (previousFooterMessageId && (parseInt(previousFooterMessageId) === 201 || parseInt(previousFooterMessageId) === 200)
-							&& previousClientStatus && (parseInt(previousClientStatus) === -1)) {
+							&& previousClientStatus && (parseInt(previousClientStatus) === -1) && isSupportedGameMode) {
 							// ↑ if user close his client manually (dodge), might receive x2 game_flow None
 							dispatch(setClientStatus(-1))
 						} else {
@@ -98,11 +102,12 @@ function MyApp(props: My_PropType): JSX.Element {
 			function handleChampSelect(champ_select) {
 				const raw = JSON.parse(champ_select.raw)
 				if (raw.localPlayerCellId == -1) return
-				if (raw.actions.length != 8) {
-					dispatch(setFooterMessage(4))
-					return
-				}
 				dispatch(setClientStatus(0))
+				if (raw.actions.length == 8) {
+					sessionStorage.removeItem('unsupported game_mode')
+				} else {
+					sessionStorage.setItem('unsupported game_mode', 'true')
+				}
 				dispatch(setFooterMessage(0))
 				dispatch(fillChampSelectDisplayed({
 					actions: raw.actions,

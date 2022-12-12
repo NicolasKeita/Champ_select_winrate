@@ -7,6 +7,7 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import {useAppSelector} from '@utils/hooks'
 import Config from './Config'
+import {Input} from '@chakra-ui/react'
 
 const ChampName = styled.h1`
   background: -webkit-linear-gradient(#ab6630, #b79e4d);
@@ -23,11 +24,12 @@ const OP_ScoreContainer = styled.div`
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 `
-const InputStyled = styled.input`
-  width: 50px;
+const InputStyled = styled(Input)`
+  //width: 50px;
   margin-left: -30px;
   border-radius: 4px;
-  background-color: rgba(63, 62, 62, 0);
+  background: rgba(63, 62, 62, 0);
+  //background-color: rgba(63, 62, 62, 0);
   transition: 0.3s background-color ease-in-out, 0.3s box-shadow ease-in-out;
   text-align: center;
 
@@ -78,8 +80,8 @@ function ConfigRow(props) {
 		<div style={{display: 'flex', flex: '1'}} key={'1'}>
 			<form
 				style={{
-					display:        'flex',
-					flex:           '1',
+					display: 'flex',
+					flex: '1',
 					justifyContent: 'space-evenly'
 				}}
 				onSubmit={e => e.preventDefault()}
@@ -87,7 +89,15 @@ function ConfigRow(props) {
 				<label style={{display: 'flex', flex: '1'}}>
 					<ChampName>{props.champName}</ChampName>
 					<OP_ScoreContainer>
-						<InputStyled type={'text'} value={opScoreUser} onChange={handleOnChange} onBlur={handleOnBlur} />
+						<InputStyled type={'text'} value={opScoreUser}
+									 size='xs' width={'50px'}
+									 variant={'outline'}
+									 fontSize={'14px'}
+									 fontWeight={'bold'}
+									 borderColor={'grey'}
+									 borderSize={'2px'}
+									 onChange={handleOnChange}
+									 onBlur={handleOnBlur} />
 						<OP_Score>{props.opScoreCSW}</OP_Score>
 					</OP_ScoreContainer>
 				</label>
@@ -97,8 +107,8 @@ function ConfigRow(props) {
 }
 
 ConfigRow.propTypes = {
-	champName:   PropTypes.string,
-	opScoreCSW:  PropTypes.number,
+	champName: PropTypes.string,
+	opScoreCSW: PropTypes.number,
 	opScoreUser: PropTypes.number
 }
 

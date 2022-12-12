@@ -59,6 +59,9 @@ function Footer(): JSX.Element {
 		case 4:
 			messageDisplayed = 'CSW only support draft game mode 5v5.'
 			break
+		case 5:
+			messageDisplayed = 'You are in-game.'
+			break
 		case 100:
 			messageDisplayed = 'Check your internet connection.'
 			break

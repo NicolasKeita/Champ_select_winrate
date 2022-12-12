@@ -22,6 +22,7 @@ import {
 import {
 	fetchAllChampionsJson
 } from '@utils/fetchLocalConfigJson/fetchChampionsFromConfigJson'
+import {createFactory} from 'react'
 
 export type ChampDisplayedType = {
 	assignedRole: string
@@ -169,14 +170,29 @@ export const fillChampSelectDisplayed = createAsyncThunk<BothTeam | void, FillCh
 		}
 
 		//Custom solo without or with bans
-		if (thunkParam.actions.length == 1 || thunkParam.actions.length == 4) {
-			let actorCellId: number, championId: number
-			if (thunkParam.actions.length == 1)
-				({actorCellId, championId} = thunkParam.actions[0][0])
-			else
-				({actorCellId, championId} = thunkParam.actions[3][0])
-			await fillChampNameAndImgUrlFromId(allies[actorCellId].champ, championId)
-			fillAssignedRoleAndRecommendations(allies, thunkParam.myTeam, actorCellId, allChamps)
+		console.log(thunkParam.actions)
+		if (thunkParam.actions.length != 8) {
+			let actorCellId: number, championId: number, isAllyAction: boolean,
+				type: string, actorCellIdEnemy = 0
+			for (const action of thunkParam.actions) {
+				for ({
+					actorCellId,
+					championId,
+					isAllyAction,
+					type
+				} of action) {
+					console.log(type, isAllyAction, actorCellId, championId)
+					if (type == 'pick') {
+						if (isAllyAction) {
+							await fillChampNameAndImgUrlFromId(allies[actorCellId].champ, championId)
+							fillAssignedRoleAndRecommendations(allies, thunkParam.myTeam, actorCellId, allChamps)
+						} else {
+							await fillChampNameAndImgUrlFromId(enemies[actorCellIdEnemy].champ, championId)
+							actorCellIdEnemy += 1
+						}
+					}
+				}
+			}
 		}
 		// Rift Mode with bans (doesn't support clash or tournament yet)
 		else if (thunkParam.actions.length == 8) {
