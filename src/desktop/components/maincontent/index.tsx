@@ -2,7 +2,7 @@
     Path + Filename: src/desktop/components/maincontent/myContextMenu.tsx
 */
 
-import {useAppDispatch, useAppSelector} from '@utils/hooks'
+import {useAppSelector} from '@utils/hooks'
 
 import React from 'react'
 import styled from 'styled-components'

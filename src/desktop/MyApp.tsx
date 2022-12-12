@@ -67,8 +67,6 @@ function MyApp(props: My_PropType): JSX.Element {
 				if (game_flow && game_flow.phase) {
 					if (game_flow.phase === 'ChampSelect') {
 						dispatch(resetChampSelectDisplayed())
-						dispatch(setClientStatus(0))
-						dispatch(setFooterMessage(0))
 					} else if (game_flow.phase === 'Lobby') {
 						dispatch(setClientStatus(2))
 						dispatch(setFooterMessage(2))
@@ -100,6 +98,10 @@ function MyApp(props: My_PropType): JSX.Element {
 			function handleChampSelect(champ_select) {
 				const raw = JSON.parse(champ_select.raw)
 				if (raw.localPlayerCellId == -1) return
+				if (raw.actions.length != 8) {
+					dispatch(setFooterMessage(4))
+					return
+				}
 				dispatch(setClientStatus(0))
 				dispatch(setFooterMessage(0))
 				dispatch(fillChampSelectDisplayed({
@@ -182,7 +184,6 @@ function MyApp(props: My_PropType): JSX.Element {
 			<Header my_window={my_window} />
 			<MainContent />
 			{Footer}
-			{/*<FooterAD />*/}
 		</MyAppContainer>
 	)
 }
