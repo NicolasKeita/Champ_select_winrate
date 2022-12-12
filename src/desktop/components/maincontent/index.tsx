@@ -17,6 +17,7 @@ const MainContentContainer = styled.div`
   flex: 1;
   flex-direction: column;
   height: 424px;
+  background: linear-gradient(to right, rgb(63, 62, 62), #363636, #323232);
 `
 
 function MainContent() {

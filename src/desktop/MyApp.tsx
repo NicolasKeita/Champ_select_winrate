@@ -24,6 +24,7 @@ import {fetchEncryptedSummonerId} from '@utils/LOL_API'
 import {
 	fetchCSWgameVersion
 } from '@utils/fetchLocalConfigJson/fetchChampionsFromConfigJson'
+import ReplacementFooterAD from './components/footerAD/replacement'
 
 const MyAppContainer = styled.div`
   display: flex;
@@ -171,11 +172,17 @@ function MyApp(props: My_PropType): JSX.Element {
 		addLCU_listeners()
 	}, [dispatch])
 
+	let Footer: JSX.Element
+	if (false)
+		Footer = <FooterAD />
+	else
+		Footer = <ReplacementFooterAD />
 	return (
 		<MyAppContainer id='myApp'>
 			<Header my_window={my_window} />
 			<MainContent />
-			<FooterAD />
+			{Footer}
+			{/*<FooterAD />*/}
 		</MyAppContainer>
 	)
 }

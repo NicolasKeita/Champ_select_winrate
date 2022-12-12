@@ -16,7 +16,6 @@ import {Provider} from 'react-redux'
 import {store} from '@utils/store/store'
 import MyApp from './MyApp'
 
-
 test('renders learn react link', () => {
 	render(
 		// <div>hello world</div>

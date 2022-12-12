@@ -12,3 +12,5 @@ The desktop window currently only has two tabs : home page and settings.
 Once the user is in champ select (the app currently supports 5v5 with bans, ranked or not ranked),
 he will see additional information about champions (currently only the "OP score" of each champion) and a sort of reliable winrate.
 2: Settings) The settings tab will greatly improve in the next updates. It currently allows the user to change the 'OP score' of each champions to their preference. User can also reset scores to a default configuration.
+
+Fully Customizable champ select tool.
