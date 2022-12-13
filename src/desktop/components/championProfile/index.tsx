@@ -60,7 +60,8 @@ function ChampionProfile(props: PropsType) {
 
 	function renderChampionRecommendation(): JSX.Element[] | null {
 		const isUnsupportedGameMode = !!sessionStorage.getItem('unsupported game_mode')
-		if (props.isEnemyTeam || isUnsupportedGameMode) return null
+		if (props.isEnemyTeam) return null
+		//if (props.isEnemyTeam || isUnsupportedGameMode) return null
 		const row: JSX.Element[] = []
 		for (let i = 0; i < 5; ++i) {
 			const recommendation = props.champRecommendation[i]

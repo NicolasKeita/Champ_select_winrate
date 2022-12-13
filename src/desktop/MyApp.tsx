@@ -80,12 +80,14 @@ function MyApp(props: My_PropType): JSX.Element {
 						const previousClientStatus = sessionStorage.getItem('clientStatus')
 						const previousFooterMessageId = sessionStorage.getItem('footerMessageId')
 						const isSupportedGameMode = !sessionStorage.getItem('unsupported game_mode')
-						if (previousClientStatus && parseInt(previousClientStatus) === 0 && isSupportedGameMode) {
+						if (previousClientStatus && parseInt(previousClientStatus) === 0) {
+							//if (previousClientStatus && parseInt(previousClientStatus) === 0 && isSupportedGameMode) {
 							// ↑ if user close his client manually (dodge)
 							dispatch(setClientStatus(-1))
 							dispatch(setFooterMessage(201))
 						} else if (previousFooterMessageId && (parseInt(previousFooterMessageId) === 201 || parseInt(previousFooterMessageId) === 200)
-							&& previousClientStatus && (parseInt(previousClientStatus) === -1) && isSupportedGameMode) {
+							&& previousClientStatus && (parseInt(previousClientStatus) === -1)) {
+							//&& previousClientStatus && (parseInt(previousClientStatus) === -1) && isSupportedGameMode) {
 							// ↑ if user close his client manually (dodge), might receive x2 game_flow None
 							dispatch(setClientStatus(-1))
 						} else {
@@ -107,9 +109,10 @@ function MyApp(props: My_PropType): JSX.Element {
 				if (raw.actions.length == 8) {
 					sessionStorage.removeItem('unsupported game_mode')
 				} else {
-					if (raw.actions.length == 0) {
+					if (raw.actions.length == 0) { // Aram
 						dispatch(setFooterMessage(4))
-					}
+					} else
+						dispatch(setFooterMessage(6))
 					sessionStorage.setItem('unsupported game_mode', 'true')
 				}
 				dispatch(fillChampSelectDisplayed({

@@ -62,6 +62,9 @@ function Footer(): JSX.Element {
 		case 5:
 			messageDisplayed = 'You are in-game.'
 			break
+		case 6:
+			messageDisplayed = 'Use Custom game only for testing. Features cannot be accurate if the game is not real.'
+			break
 		case 100:
 			messageDisplayed = 'Check your internet connection.'
 			break
