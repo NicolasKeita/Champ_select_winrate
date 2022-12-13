@@ -2,7 +2,7 @@
     Path + Filename: src/desktop/utils/LOL_API/index.ts
 */
 
-export async function fetchEncryptedSummonerId(summonerName : string, summonerRegion : string): Promise<string> {
+export async function fetchEncryptedSummonerId(summonerName: string, summonerRegion: string): Promise<string> {
 	const url = `https://4nuo1ouibd.execute-api.eu-west-3.amazonaws.com/csw_api_proxy/summoner/${summonerName}/${summonerRegion.toLowerCase()}`
 	let res
 	try {
@@ -14,13 +14,13 @@ export async function fetchEncryptedSummonerId(summonerName : string, summonerRe
 	try {
 		const data = await res.json()
 		return data.id
-	} catch (err : unknown) {
+	} catch (err: unknown) {
 		const e = err as Error
 		throw new Error(e.message)
 	}
 }
 
-export async function isInGame(summonerRegion : string, encryptedSummonerId : string): Promise<boolean> {
+export async function isInGame(summonerRegion: string, encryptedSummonerId: string): Promise<boolean> {
 	const url = `https://4nuo1ouibd.execute-api.eu-west-3.amazonaws.com/csw_api_proxy/spectator/${encryptedSummonerId}/${summonerRegion.toLowerCase()}`
 	let res
 	try {
