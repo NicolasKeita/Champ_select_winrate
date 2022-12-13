@@ -22,7 +22,6 @@ import {
 import {
 	fetchAllChampionsJson
 } from '@utils/fetchLocalConfigJson/fetchChampionsFromConfigJson'
-import {createFactory} from 'react'
 
 export type ChampDisplayedType = {
 	assignedRole: string
@@ -170,7 +169,6 @@ export const fillChampSelectDisplayed = createAsyncThunk<BothTeam | void, FillCh
 		}
 
 		//Custom solo without or with bans
-		console.log(thunkParam.actions)
 		if (thunkParam.actions.length != 8) {
 			let actorCellId: number, championId: number, isAllyAction: boolean,
 				type: string, actorCellIdEnemy = 0
@@ -181,7 +179,6 @@ export const fillChampSelectDisplayed = createAsyncThunk<BothTeam | void, FillCh
 					isAllyAction,
 					type
 				} of action) {
-					console.log(type, isAllyAction, actorCellId, championId)
 					if (type == 'pick') {
 						if (isAllyAction) {
 							await fillChampNameAndImgUrlFromId(allies[actorCellId].champ, championId)

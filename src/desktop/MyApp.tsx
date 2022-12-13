@@ -103,12 +103,15 @@ function MyApp(props: My_PropType): JSX.Element {
 				const raw = JSON.parse(champ_select.raw)
 				if (raw.localPlayerCellId == -1) return
 				dispatch(setClientStatus(0))
+				dispatch(setFooterMessage(0))
 				if (raw.actions.length == 8) {
 					sessionStorage.removeItem('unsupported game_mode')
 				} else {
+					if (raw.actions.length == 0) {
+						dispatch(setFooterMessage(4))
+					}
 					sessionStorage.setItem('unsupported game_mode', 'true')
 				}
-				dispatch(setFooterMessage(0))
 				dispatch(fillChampSelectDisplayed({
 					actions: raw.actions,
 					localPlayerCellId: parseInt(raw.localPlayerCellId),

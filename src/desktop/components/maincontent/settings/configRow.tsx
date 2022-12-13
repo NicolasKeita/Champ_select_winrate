@@ -95,7 +95,7 @@ function ConfigRow(props) {
 									 fontSize={'14px'}
 									 fontWeight={'bold'}
 									 borderColor={'grey'}
-									 borderSize={'2px'}
+									 border={'2px'}
 									 onChange={handleOnChange}
 									 onBlur={handleOnBlur} />
 						<OP_Score>{props.opScoreCSW}</OP_Score>
