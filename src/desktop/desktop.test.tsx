@@ -9,35 +9,21 @@ import MyApp from './MyApp'
 import {AppWindow} from '../AppWindow'
 import {kWindowNames} from '../consts'
 import '@testing-library/jest-dom'
+import {act, render, waitFor} from '@testing-library/react'
+import {ChakraProvider} from '@chakra-ui/react'
+import {store} from '@utils/store/store'
+import * as fetchChampionsFromConfigJson from "@utils/fetchLocalConfigJson/fetchChampionsFromConfigJson"
+import fetchMock from "jest-fetch-mock";
 
 const myWindow = new AppWindow(kWindowNames.desktop)
 
-import {render} from '@testing-library/react'
-
-
-// jest.mock('./ReplacementFooterAD', jest.fn())
-import ReplacementFooterAD from './components/footerAD/replacement'
-import {ChakraProvider} from '@chakra-ui/react'
-import {store} from '@utils/store/store'
-
-
-// import spyOn = jest.spyOn
-// import * as data from './OW_mocking'
-
-// export const overwolf = {
-// 	windows: {onStateChanged: {addListener: (callback) => {}}}
-// 	// games: {launchers: {events: {getInfo: (numberr: any, callback: any) => {}}}}
-// }
-
-// export interface overwolf {
-// 	windows: {onStateChanged: {addListener: callback => {}}},
-// games: {launchers: {events: getInfo(10902, callback => {})}}
-// }
-
-// overwolf.windows.onStateChanged.addListener = callback => {}
-// overwolf.games.launchers.events.getInfo(numberr, callback) {}
-
-test('renders learn react link', () => {
+test('renders learn react link', async () => {
+	const mock = jest.spyOn(fetchChampionsFromConfigJson, "fetchCSWgameVersion").mockResolvedValue("12.23.0")
+	const mock2 = jest.spyOn(fetchChampionsFromConfigJson, "fetchAllChampionsJson").mockResolvedValue([])
+	fetchMock.enableMocks()
+	// @ts-ignore
+	fetch.mockResponseOnce(JSON.stringify({rates: {CAD: 1.42}}));
+	// global.overwolf = jest.fn(() => // TODO do that
 	global.overwolf = {
 		windows: {
 			//@ts-ignore
@@ -64,18 +50,20 @@ test('renders learn react link', () => {
 		}
 	}
 
-	// const mock = jest.spyOn(overwolf.windows.onStateChanged, 'addListener')
-	// const mock2 = jest.spyOn(overwolf.games.launchers, 'getRunningLaunchersInfo')
-	// const mock3 = jest.spyOn(overwolf.games.launchers.events, 'getInfo')
-	//
-	// const nico = jest.fn()
-	render(
-		<ChakraProvider>
-			<Provider store={store}>
-				<MyApp my_window={myWindow} />
-			</Provider>
-		</ChakraProvider>
-	)
+	await act(() => {
+		render(
+			<ChakraProvider>
+				<Provider store={store}>
+					<MyApp my_window={myWindow} />
+				</Provider>
+			</ChakraProvider>
+		)
+	})
+	await waitFor(() => {
+
+	})
+	mock.mockRestore()
+	mock2.mockRestore()
 	// const linkElement = screen.getByText(/hello world/i);
 	// expect(linkElement).toBeInTheDocument();
 })

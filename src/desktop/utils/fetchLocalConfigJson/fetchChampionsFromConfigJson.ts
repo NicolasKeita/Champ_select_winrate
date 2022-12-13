@@ -11,7 +11,7 @@ export async function fetchAllChampionsJson(): Promise<Champion[]> {
 	try {
 		res = await fetch(url)
 	} catch (e) {
-		throw new Error('CSW_error: following call : fetch(' + url + ' caught error;  ' + res.statusText)
+		throw new Error(`CSW_error: following call : fetch(${url}) caught error; error: ${e}`)
 	}
 	try {
 		const data = await res.json() as Promise<Champion[]>
@@ -26,7 +26,7 @@ export async function fetchAllChampionsJson(): Promise<Champion[]> {
 			}
 		}))
 	} catch (e) {
-		throw new Error('CSW_error: following call : res.json() caught error; previously : fetch(' + url)
+		throw new Error(`CSW_error: following call : res.json() caught error; previously: ${url} error: ${e}`)
 	}
 }
 
