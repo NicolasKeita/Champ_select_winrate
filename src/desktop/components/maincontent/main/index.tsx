@@ -123,7 +123,7 @@ function Main() {
 	}
 
 	const winrate = computeWinrate(champSelectDisplayed.allies, champSelectDisplayed.enemies)
-	const tooltipNumber = 'Numbers are coming from your own settings. Check your settings (top right icon) to change the default'
+	const tooltipNumber = 'Numbers are coming from your own settings. Check your settings (top right icon) to change the default.'
 	return (
 		<MainContainer>
 			<PercentageContainer>
