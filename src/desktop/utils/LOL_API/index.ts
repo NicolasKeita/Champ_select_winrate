@@ -34,6 +34,7 @@ export async function isInGame(summonerRegion: string, encryptedSummonerId: stri
 	try {
 		const data = await res.json()
 		if (data && data.status) {
+			// if (data.status.status_code === 204)
 			if (data.status.status_code === 404)
 				return false
 			else

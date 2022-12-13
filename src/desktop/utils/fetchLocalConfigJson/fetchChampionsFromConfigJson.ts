@@ -36,7 +36,7 @@ export async function fetchCSWgameVersion(): Promise<string> {
 	try {
 		res = await fetch(url)
 	} catch (e) {
-		throw new Error('CSW_error: following call : fetch(' + url + ' caught error;  ')
+		throw new Error(`CSW_error: following call : fetch(${url}) caught error; error: ${e}`)
 	}
 	try {
 		return await res.text()
