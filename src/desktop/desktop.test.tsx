@@ -91,7 +91,6 @@ describe('basic', () => {
 	})
 
 	test('should display message when opening lol client', async () => {
-
 		fetchMock.enableMocks()
 		// @ts-ignore
 		fetch.mockResponseOnce(JSON.stringify(allChamps));
