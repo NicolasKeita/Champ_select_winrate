@@ -19,7 +19,7 @@ import '@testing-library/jest-dom'
 const myWindow = new AppWindow(kWindowNames.desktop)
 
 describe('basic', () => {
-	test('should display winrate in title', async () => {
+	test('should display winrate in header', async () => {
 		const mock = jest.spyOn(fetchChampionsFromConfigJson, "fetchCSWgameVersion").mockResolvedValue("12.23.0")
 		const mock2 = jest.spyOn(fetchChampionsFromConfigJson, "fetchAllChampionsJson").mockResolvedValue([])
 		fetchMock.enableMocks()
