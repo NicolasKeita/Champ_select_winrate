@@ -69,7 +69,8 @@ export async function getChampName(champId) {
 
 export function getChampScore(champName: string, settingsChampions: Champion[]): number {
 	for (const elem of settingsChampions) {
-		if (elem.name == champName) return elem.opScore_user
+		if (elem.name == champName)
+			return elem.opScore_user? elem.opScore_user : 50
 	}
 	return 50
 }

@@ -106,8 +106,9 @@ function getRecommendations(allies: ChampDisplayedType[], playerId: number, allC
 	if (assignedRole == '')
 		assignedRole = 'utility'
 	const allChampsFilteredWithRole = allChamps.filter(champ => champ.role == assignedRole)
-	if (allChampsFilteredWithRole.length == 0) console.error('CSW_error: couldnt get recommendations')
-	allChampsFilteredWithRole.sort((a, b) => b.opScore_user - a.opScore_user)
+	if (allChampsFilteredWithRole.length == 0)
+		console.error('CSW_error: couldnt get recommendations')
+	allChampsFilteredWithRole.sort((a, b) => { if (b.opScore_user && a.opScore_user) return b.opScore_user - a.opScore_user; else return 0})
 	return allChampsFilteredWithRole.slice(0, 5)
 }
 

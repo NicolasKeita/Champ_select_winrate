@@ -7,10 +7,10 @@ import questionMark from '@public/img/question_mark.jpg'
 export type Champion = {
 	name: string
 	opScore_CSW: number
-	opScore_user: number
+	opScore_user?: number
 	role: string
 	image: string
-	imageUrl: string
+	imageUrl?: string
 }
 
 export function championConstructor(name = '', opScore_user = 50, opScore_CSW = 50, role = '', image = '', imageUrl = ''): Champion {

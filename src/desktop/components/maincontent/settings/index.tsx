@@ -8,7 +8,6 @@ import {useAppSelector} from '@utils/hooks'
 import uniqid from 'uniqid'
 import ConfigRow from './configRow'
 import {selectAllChampions} from '@utils/store/selectors'
-import {isInGame} from '@utils/LOL_API'
 
 const SettingsContainer = styled.div`
   background: linear-gradient(to right, #252424, #363636, #252424);
@@ -43,7 +42,7 @@ function Settings() {
 
 	function renderListChampNameWithOPScore() {
 		return allChamps.map(elem => {
-			return <ConfigRow key={uniqid()} champName={elem.name} opScoreCSW={+elem.opScore_CSW} opScoreUser={+elem.opScore_user} />
+			return <ConfigRow key={uniqid()} champName={elem.name} opScoreCSW={+elem.opScore_CSW} opScoreUser={elem.opScore_user?+elem.opScore_user: 50} />
 		})
 	}
 
