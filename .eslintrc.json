@@ -1,7 +1,8 @@
 {
 	"env": {
 		"browser": true,
-		"es2022": true
+		"es2022": true,
+		"jest/globals": true
 	},
 	"extends": [
 		"plugin:react/recommended",
@@ -22,11 +23,12 @@
 		"parser": "@typescript-eslint/parser",
 		"project": ["./tsconfig.json"]
 	},
-	"ignorePatterns": ["webpack.config.js", "overwolf.webpack.js", "jest.config.js"],
+	"ignorePatterns": ["webpack.config.js", "overwolf.webpack.js", "jest.config.js", "__tests__/", "__testsUtils__","node_modules/"],
 	"plugins": [
 		"react",
 		"react-hooks",
 		"@typescript-eslint",
+		"jest",
 		"only-warn"
 	],
 	"rules": {

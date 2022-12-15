@@ -44,7 +44,9 @@
 		]
 	},
 	"exclude": [
-		"node_modules"
+		"node_modules",
+		"__tests__/*",
+		"__testsUtils__/*"
 	],
 	"include": [
 		"index.d.ts",

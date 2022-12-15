@@ -16,7 +16,7 @@ module.exports = {
     ...pathsToModuleNameMapper(compilerOptions.paths, { prefix: "<rootDir>/Champ_select_winrate/" })
   },
   moduleDirectories: ["node_modules"],
-  roots: ["<rootDir>/src/"],
+  roots: ["<rootDir>"],
   moduleFileExtensions: ["ts", "tsx", "js", "jsx"]
 
 };
