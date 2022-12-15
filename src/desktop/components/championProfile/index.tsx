@@ -6,8 +6,6 @@ import React from 'react'
 import styled from 'styled-components'
 import {Champion} from '../maincontent/settings/Champion'
 import uniqid from 'uniqid'
-import {getChampSquareAsset} from '@utils/fetchDataDragon/fetchDataDragon'
-import {useAppSelector} from '@utils/hooks'
 import questionMark from '@public/img/question_mark.jpg'
 
 const ChampionImg = styled.img`
@@ -55,22 +53,15 @@ interface PropsType {
 	champRecommendation: Champion[]
 }
 
-function ChampionProfile(props: PropsType) {
-	const clientStatus = useAppSelector(state => state.slice.leagueClientStatus)
-
+function ChampionProfile(props: PropsType) : JSX.Element {
 	function renderChampionRecommendation(): JSX.Element[] | null {
 		const isUnsupportedGameMode = !!sessionStorage.getItem('unsupported game_mode')
 		if (props.isEnemyTeam) return null
 		//if (props.isEnemyTeam || isUnsupportedGameMode) return null
 		const row: JSX.Element[] = []
 		for (let i = 0; i < 5; ++i) {
-			const recommendation = props.champRecommendation[i]
-			let img
-			if (recommendation == undefined) {
-				img = questionMark
-			} else
-				img = recommendation.imageUrl
-			row.push(<ChampRecommendationImg key={uniqid()} src={img} />)
+			row.push(<ChampRecommendationImg key={uniqid()}
+											 src={props.champRecommendation[i] ? props.champRecommendation[i].imageUrl : questionMark} />)
 		}
 		return row
 	}

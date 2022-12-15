@@ -12,15 +12,26 @@ import {ChakraProvider} from '@chakra-ui/react'
 import {store} from '@utils/store/store'
 import * as fetchChampionsFromConfigJson
 	from '@utils/fetchLocalConfigJson/fetchChampionsFromConfigJson'
-import fetchMock from 'jest-fetch-mock'
 import allChamps from './../../__tests__/allChamps.json'
 import '@testing-library/jest-dom'
+import fetch from 'jest-fetch-mock'
 
 const myWindow = new AppWindow(kWindowNames.desktop)
 
 describe('basic', () => {
 	const mock = jest.spyOn(fetchChampionsFromConfigJson, 'fetchCSWgameVersion').mockResolvedValue('12.23.0')
 	const mock2 = jest.spyOn(fetchChampionsFromConfigJson, 'fetchAllChampionsJson').mockResolvedValue(Object.values(allChamps))
+	fetch.enableMocks()
+	fetch.mockResponse(req =>
+		req.url === 'https://4nuo1ouibd.execute-api.eu-west-3.amazonaws.com/csw_api_proxy/allchamps'
+			? Promise.resolve(JSON.stringify(allChamps))
+			: Promise.reject(new Error('bad url JEST-TESTS'))
+	)
+	fetch.mockResponse(req =>
+		req.url === 'https://4nuo1ouibd.execute-api.eu-west-3.amazonaws.com/csw_api_proxy/cswgameversion'
+			? Promise.resolve('12.23.0')
+			: Promise.reject(new Error('bad url2 JEST-TESTS'))
+	)
 	global.overwolf = {
 		games: {
 			launchers: {
@@ -67,9 +78,6 @@ describe('basic', () => {
 		}
 	}
 	test('should display winrate in header', async () => {
-		fetchMock.enableMocks()
-		// @ts-ignore
-		fetch.mockResponseOnce(JSON.stringify(allChamps))
 
 		await act(() => {
 			render(
@@ -91,10 +99,8 @@ describe('basic', () => {
 		expect(FooterElem).toBeInTheDocument()
 	})
 	test('should display message when lol client is already open', async () => {
-		fetchMock.enableMocks()
-		// @ts-ignore
-		fetch.mockResponseOnce(JSON.stringify(allChamps))
 
+		// fetch.mockResponse(JSON.stringify(allChamps))
 		function getRunningLaunchersInfo(callback) {
 			const clientsInfos = {
 				launchers: [] as unknown as {id: number}[]
@@ -123,9 +129,7 @@ describe('basic', () => {
 		expect(FooterElem).toBeInTheDocument()
 	})
 	test('should display message when closing lol client', async () => {
-		fetchMock.enableMocks()
-		// @ts-ignore
-		fetch.mockResponseOnce(JSON.stringify(allChamps))
+
 
 		function getRunningLaunchersInfo(callback) {
 			const clientsInfos = {
@@ -161,10 +165,6 @@ describe('basic', () => {
 	})
 
 	test('should remove footer when entering in champ select matchmaking', async () => {
-		fetchMock.enableMocks()
-		// @ts-ignore
-		fetch.mockResponseOnce(JSON.stringify(allChamps))
-
 		function getRunningLaunchersInfo(callback) {
 			const clientsInfos = {
 				launchers: [{id: 109021}]
