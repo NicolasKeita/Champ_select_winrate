@@ -24,7 +24,6 @@ describe('basic', () => {
 	global.overwolf = {
 		games: {
 			launchers: {
-				//@ts-ignore
 				events: {
 					//@ts-ignore
 					onInfoUpdates: {
@@ -91,7 +90,7 @@ describe('basic', () => {
 		expect(winrateElem).toBeInTheDocument()
 		expect(FooterElem).toBeInTheDocument()
 	})
-	test('should display message when opening lol client', async () => {
+	test('should display message when lol client is already open', async () => {
 		fetchMock.enableMocks()
 		// @ts-ignore
 		fetch.mockResponseOnce(JSON.stringify(allChamps))
@@ -130,9 +129,8 @@ describe('basic', () => {
 
 		function getRunningLaunchersInfo(callback) {
 			const clientsInfos = {
-				launchers: [] as unknown as {id: number}[]
+				launchers: [{id: 109021}]
 			}
-			clientsInfos.launchers.push({id: 109021})
 			callback(clientsInfos)
 		}
 
@@ -159,6 +157,80 @@ describe('basic', () => {
 		await waitFor(() => {
 			const FooterElem = screen.getByText(/League client is not open./i)
 			expect(FooterElem).toBeInTheDocument()
+		}, {timeout: 4000})
+	})
+
+	test('should remove footer when entering in champ select matchmaking', async () => {
+		fetchMock.enableMocks()
+		// @ts-ignore
+		fetch.mockResponseOnce(JSON.stringify(allChamps))
+
+		function getRunningLaunchersInfo(callback) {
+			const clientsInfos = {
+				launchers: [{id: 109021}]
+			}
+			callback(clientsInfos)
+		}
+
+		function onInfoUpdatesAddListener(callback) {
+			let infoGameFlow = {
+				feature: 'game_flow',
+				info: {
+					game_flow: {
+						phase: 'Lobby'
+					}
+				}
+			}
+			setTimeout(callback, 1000, infoGameFlow)
+			infoGameFlow.info.game_flow.phase = 'ChampSelect'
+			setTimeout(callback, 2000, infoGameFlow)
+			let infoChampSelect = {
+				feature: 'champ_select',
+				info: {
+					champ_select: {
+						raw: JSON.stringify({
+							localPlayerCellId: 0,
+							actions: [
+								[{
+									actorCellId: 0,
+									ChampionId: 77,
+									isAllyAction: false,
+									type: 'ban'
+								}],
+								[],
+								[],
+								[],
+								[],
+								[],
+								[],
+								[]
+							]
+						})
+					}
+				}
+			}
+			setTimeout(callback, 3000, infoChampSelect)
+		}
+
+		// client is already running
+		global.overwolf.games.launchers.getRunningLaunchersInfo = getRunningLaunchersInfo
+		global.overwolf.games.launchers.onTerminated.addListener = () => {}
+		global.overwolf.games.launchers.events.onInfoUpdates.addListener = onInfoUpdatesAddListener
+
+		await act(() => {
+			render(
+				<ChakraProvider>
+					<Provider store={store}>
+						<MyApp my_window={myWindow} />
+					</Provider>
+				</ChakraProvider>
+			)
+		})
+		mock.mockRestore()
+		mock2.mockRestore()
+		await waitFor(() => {
+			const FooterElem = screen.getByTestId('footerMessage').innerHTML
+			expect(FooterElem).toBe('<div></div>')
 		}, {timeout: 4000})
 	})
 

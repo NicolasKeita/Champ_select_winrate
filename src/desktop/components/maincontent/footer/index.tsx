@@ -131,8 +131,10 @@ function Footer(): JSX.Element {
 
 	return (
 		<FooterContainer>
-			<FooterTextStyle
-				messageDisplayedLength={messageDisplayed.length}>{msg}</FooterTextStyle>
+			<FooterTextStyle data-testid={'footerMessage'}
+							 messageDisplayedLength={messageDisplayed.length}>
+				{msg}
+			</FooterTextStyle>
 		</FooterContainer>
 	)
 }

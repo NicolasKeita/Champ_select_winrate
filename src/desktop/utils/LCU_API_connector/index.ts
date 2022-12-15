@@ -65,9 +65,9 @@ class LCU_API_connector {
 		overwolf.games.launchers.onTerminated.addListener(callbackFunction)
 	}
 
-	public addAllListeners(clientsInfos, callbackTMP) {
+	public addAllListeners(clientsInfos, callbackWhenOWSendAnyNewEvent) {
 		if (this.isLeagueClient(clientsInfos)) unregisterEvents()
-		registerEvents(callbackTMP)
+		registerEvents(callbackWhenOWSendAnyNewEvent)
 		setTimeout(this.setFeatures, 1000)
 	}
 
