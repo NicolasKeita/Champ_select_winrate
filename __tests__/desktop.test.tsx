@@ -14,7 +14,11 @@ import {AppWindow} from '../src/AppWindow'
 import {kWindowNames} from '../src/consts'
 import {store} from '../src/desktop/utils/store/store'
 import allChamps from '../__testsUtils__/allChamps.json'
-import {overwolfMocked} from '../__testsUtils__/OW_mocking'
+import {configTest} from '../__testsUtils__/configTest'
+import {
+	getRunningLaunchersInfo,
+	overwolfMocked
+} from '../__testsUtils__/OW_mocking'
 
 const myWindow = new AppWindow(kWindowNames.desktop)
 
@@ -47,15 +51,7 @@ describe('basic', () => {
 	})
 	test('should display message when lol client is already open', async () => {
 		global.overwolf = overwolfMocked
-		function getRunningLaunchersInfo(callback) {
-			const clientsInfos = {
-				launchers: [{id: 109021}]
-			}
-			callback(clientsInfos)
-		}
-
 		global.overwolf.games.launchers.getRunningLaunchersInfo = getRunningLaunchersInfo
-
 		await act(() => {
 			render(
 				<ChakraProvider>
@@ -64,9 +60,6 @@ describe('basic', () => {
 					</Provider>
 				</ChakraProvider>
 			)
-		})
-		await waitFor(() => {
-
 		})
 		const FooterElem = screen.getByText(/You are not in champ select./i)
 		expect(FooterElem).toBeInTheDocument()
@@ -106,12 +99,6 @@ describe('basic', () => {
 
 	test('should remove footer when entering in champ select matchmaking', async () => {
 		global.overwolf = overwolfMocked
-		function getRunningLaunchersInfo(callback) {
-			const clientsInfos = {
-				launchers: [{id: 109021}]
-			}
-			callback(clientsInfos)
-		}
 
 		function onInfoUpdatesAddListener(callback) {
 			const infoGameFlow = {
@@ -172,4 +159,21 @@ describe('basic', () => {
 		}, {timeout: 4000})
 	})
 
+	test('should see default settings in sessionStorage after launching app', async () => {
+		global.overwolf = overwolfMocked
+		//lol Client's already running
+		global.overwolf.games.launchers.getRunningLaunchersInfo = getRunningLaunchersInfo
+		await act(() => {
+			render(
+				<ChakraProvider>
+					<Provider store={store}>
+						<MyApp my_window={myWindow} />
+					</Provider>
+				</ChakraProvider>
+			)
+		})
+
+		const config = localStorage.getItem('config')
+		expect(config).toBe(configTest)
+	})
 })

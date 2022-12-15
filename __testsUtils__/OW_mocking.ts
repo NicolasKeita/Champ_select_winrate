@@ -47,3 +47,10 @@ export const overwolfMocked : typeof overwolf = {
 		}
 	}
 }
+
+export function getRunningLaunchersInfo(callback) {
+	const clientsInfos = {
+		launchers: [{id: 109021}]
+	}
+	callback(clientsInfos)
+}
