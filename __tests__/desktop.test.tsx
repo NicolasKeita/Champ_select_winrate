@@ -19,6 +19,7 @@ import {
 	getRunningLaunchersInfo,
 	overwolfMocked
 } from '../__testsUtils__/OW_mocking'
+import userEvent from '@testing-library/user-event'
 
 const myWindow = new AppWindow(kWindowNames.desktop)
 
@@ -74,7 +75,7 @@ describe('basic', () => {
 		}
 
 		function onTerminatedAddListener(callback) {
-			setTimeout(callback, 1000)
+			setTimeout(callback, 500)
 		}
 
 		// open LoL client
@@ -158,8 +159,7 @@ describe('basic', () => {
 			expect(FooterElem).toBe('<div></div>')
 		}, {timeout: 4000})
 	})
-
-	test('should see default settings in sessionStorage after launching app', async () => {
+	test('should see default settings in localStorage after launching app', async () => {
 		global.overwolf = overwolfMocked
 		//lol Client's already running
 		global.overwolf.games.launchers.getRunningLaunchersInfo = getRunningLaunchersInfo
@@ -175,5 +175,27 @@ describe('basic', () => {
 
 		const config = localStorage.getItem('config')
 		expect(config).toBe(configTest)
+	})
+	test('should settings', async () => {
+		const user = userEvent.setup()
+		global.overwolf = overwolfMocked
+		//lol Client's already running
+		global.overwolf.games.launchers.getRunningLaunchersInfo = getRunningLaunchersInfo
+		await act(() => {
+			render(
+				<ChakraProvider>
+					<Provider store={store}>
+						<MyApp my_window={myWindow} />
+					</Provider>
+				</ChakraProvider>
+			)
+		})
+
+		const config = localStorage.getItem('config')
+		expect(config).toBe(configTest)
+		await user.click(screen.getByTestId('settingsButton'))
+		const elem = screen.getByText('Aatrox').parentElement?.innerHTML
+		expect(elem).toContain('69')
+		//TODO l'user change le score de AAtrox
 	})
 })

@@ -41,6 +41,7 @@ export const overwolfMocked : typeof overwolf = {
 	},
 	//@ts-ignore
 	windows: {
+		dragMove: () => {},
 		onStateChanged: {
 			addListener: (callback) => {},
 			removeListener: (callback) => {}
