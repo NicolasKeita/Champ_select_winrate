@@ -1,5 +1,5 @@
 /*
-    Path + Filename: src/desktop/desktop.test.tsx
+    Path + Filename: src/desktop/basic.test.tsx
 */
 
 import React from 'react'
@@ -19,11 +19,11 @@ import {
 	getRunningLaunchersInfo,
 	overwolfMocked
 } from '../__testsUtils__/OW_mocking'
-import userEvent from '@testing-library/user-event'
 
 const myWindow = new AppWindow(kWindowNames.desktop)
 
 describe('basic', () => {
+	jest.setTimeout(30000)
 	fetch.enableMocks()
 	fetch.mockResponse(req => {
 			if (req.url === 'https://4nuo1ouibd.execute-api.eu-west-3.amazonaws.com/csw_api_proxy/allchamps')
@@ -160,6 +160,8 @@ describe('basic', () => {
 		}, {timeout: 4000})
 	})
 	test('should see default settings in localStorage after launching app', async () => {
+		localStorage.clear()
+		sessionStorage.clear()
 		global.overwolf = overwolfMocked
 		//lol Client's already running
 		global.overwolf.games.launchers.getRunningLaunchersInfo = getRunningLaunchersInfo
@@ -175,27 +177,5 @@ describe('basic', () => {
 
 		const config = localStorage.getItem('config')
 		expect(config).toBe(configTest)
-	})
-	test('should settings', async () => {
-		const user = userEvent.setup()
-		global.overwolf = overwolfMocked
-		//lol Client's already running
-		global.overwolf.games.launchers.getRunningLaunchersInfo = getRunningLaunchersInfo
-		await act(() => {
-			render(
-				<ChakraProvider>
-					<Provider store={store}>
-						<MyApp my_window={myWindow} />
-					</Provider>
-				</ChakraProvider>
-			)
-		})
-
-		const config = localStorage.getItem('config')
-		expect(config).toBe(configTest)
-		await user.click(screen.getByTestId('settingsButton'))
-		const elem = screen.getByText('Aatrox').parentElement?.innerHTML
-		expect(elem).toContain('69')
-		//TODO l'user change le score de AAtrox
 	})
 })

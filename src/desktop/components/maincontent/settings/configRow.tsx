@@ -2,7 +2,7 @@
     Path + Filename: src/desktop/components/maincontent/settings/configRow.tsx
 */
 
-import React, {useState} from 'react'
+import React, {KeyboardEvent, useReducer, useState} from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import {useAppSelector} from '@utils/hooks'
@@ -44,11 +44,11 @@ function ConfigRow(props) {
 	const [opScoreUser, setOpScoreUser] = useState<string>(props.opScoreUser)
 	const settings = useAppSelector((state) => new Config(JSON.parse(state.slice.configSerialized)))
 
-	function handleOnChange(event) {
-		if (event.target.value.includes('.')) return
-		const valueEntered = event.target.value * 1
-		if (valueEntered == 0 && event.target.value === '') {
-			setOpScoreUser(event.target.value)
+	function handleOnChange({target} : { target : HTMLInputElement}) {
+		if (!target || (!(/[0-9]/.test(target.value)) && target.value != '')) return
+		const valueEntered = parseInt(target.value) || 0
+		if (valueEntered == 0 && target.value === '') {
+			setOpScoreUser(target.value)
 			return
 		}
 		if (Number.isInteger(valueEntered) && valueEntered <= 100) {
@@ -62,8 +62,8 @@ function ConfigRow(props) {
 		}
 	}
 
-	function handleOnBlur(event) {
-		const valueEntered = event.target.value
+	function handleOnBlur({target} : { target: HTMLInputElement}) {
+		const valueEntered = target.value
 		if (valueEntered === '') {
 			setOpScoreUser('' + 50)
 			const internalConfig = new Config(settings)
@@ -72,6 +72,17 @@ function ConfigRow(props) {
 				currentChamp.opScore_user = 50
 				sessionStorage.setItem('internalConfig', internalConfig.stringifyChampions())
 			}
+		}
+	}
+
+	function handleOnKeyDown(event : KeyboardEvent) {
+		const target : Partial<HTMLInputElement> = event.target
+		if (event.key == "Escape") {
+			if (target.blur)
+				target.blur()
+		} else if (event.key == "Enter") {
+			if (target.blur)
+				target.blur()
 		}
 	}
 
@@ -89,15 +100,20 @@ function ConfigRow(props) {
 				<label style={{display: 'flex', flex: '1'}}>
 					<ChampName>{props.champName}</ChampName>
 					<OP_ScoreContainer>
-						<InputStyled type={'text'} value={opScoreUser}
-									 size='xs' width={'50px'}
+						<InputStyled type={'text'}
+									 aria-label={`${props.champName}`}
+									 value={opScoreUser}
+									 size='xs'
+									 width={'50px'}
 									 variant={'outline'}
 									 fontSize={'14px'}
 									 fontWeight={'bold'}
 									 borderColor={'grey'}
 									 border={'2px'}
+									 onKeyDown={handleOnKeyDown}
 									 onChange={handleOnChange}
-									 onBlur={handleOnBlur} />
+									 onBlur={handleOnBlur}
+						/>
 						<OP_Score>{props.opScoreCSW}</OP_Score>
 					</OP_ScoreContainer>
 				</label>
