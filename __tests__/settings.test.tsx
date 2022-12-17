@@ -38,7 +38,7 @@ describe('settings', () => {
 	jest.spyOn(fetchDataDragon, 'getChampImg').mockResolvedValue('https://ddragon.leagueoflegends.com/cdn/12.13.1/img/champion/Talon.png')
 	jest.spyOn(fetchDataDragon, 'getChampSquareAsset').mockResolvedValue('https://ddragon.leagueoflegends.com/cdn/12.13.1/img/champion/Talon.png')
 
-	test('should settings', async () => {
+	test('should update immediately user score when user changes it', async () => {
 		localStorage.clear()
 		sessionStorage.clear()
 		const user = userEvent.setup()
