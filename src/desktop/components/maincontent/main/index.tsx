@@ -92,7 +92,8 @@ function Main() {
 			const champScore = isEnemyTeam ? champSelectDisplayed.enemies[i].champ.opScore_user : champSelectDisplayed.allies[i].champ.opScore_user
 			const champRecommendation = isEnemyTeam ? [] : champSelectDisplayed.allies[i].recommendations
 			profiles.push(<ChampionProfile isEnemyTeam={isEnemyTeam}
-										   key={uniqid()} img={img ? img : questionMark}
+										   key={uniqid()}
+										   img={img ? img : questionMark}
 										   champName={champName}
 										   champScore={champScore ? champScore : 50}
 										   champRecommendation={champRecommendation}
@@ -106,8 +107,8 @@ function Main() {
 	function computeWinrate(allies: ChampDisplayedType[], enemies: ChampDisplayedType[]): number {
 		let sumAllies = 0
 		let sumEnemies = 0
-		for (const elem of allies) sumAllies += elem.champ.opScore_user? elem.champ.opScore_user : 50
-		for (const elem of enemies) sumEnemies += elem.champ.opScore_user? elem.champ.opScore_user : 50
+		for (const elem of allies) sumAllies += elem.champ.opScore_user ? elem.champ.opScore_user : 50
+		for (const elem of enemies) sumEnemies += elem.champ.opScore_user ? elem.champ.opScore_user : 50
 		let winRate = (sumAllies / 5 - sumEnemies / 5) / 2 + 50
 		let isInferiorTo50 = false
 		if (winRate < 50) {

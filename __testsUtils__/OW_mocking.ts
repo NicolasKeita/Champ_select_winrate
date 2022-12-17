@@ -60,7 +60,7 @@ export function getRunningLaunchersInfo(callback) {
 	callback(clientsInfos)
 }
 
-export function onInfoUpdatesAddListener(callback) {
+export function onInfoUpdatesAddListener(callback: (event: any) => void) {
 	const infoGameFlow = {
 		feature: 'game_flow',
 		info: {
@@ -80,7 +80,11 @@ export function onInfoUpdatesAddListener(callback) {
 			}
 		}
 	}
-	setTimeout(callback, 1500, infoChampSelect)
+	// setTimeout(callback, 1500, infoChampSelect)
 	infoChampSelect.info.champ_select.raw = JSON.stringify(champ_select2)
 	setTimeout(callback, 2000, infoChampSelect)
+}
+
+export function onTerminatedAddListener(callback) {
+	setTimeout(callback, 500)
 }

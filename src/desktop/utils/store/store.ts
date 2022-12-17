@@ -108,7 +108,9 @@ function getRecommendations(allies: ChampDisplayedType[], playerId: number, allC
 	const allChampsFilteredWithRole = allChamps.filter(champ => champ.role == assignedRole)
 	if (allChampsFilteredWithRole.length == 0)
 		console.error('CSW_error: couldnt get recommendations')
-	allChampsFilteredWithRole.sort((a, b) => { if (b.opScore_user && a.opScore_user) return b.opScore_user - a.opScore_user; else return 0})
+	allChampsFilteredWithRole.sort((a, b) => (
+		(b.opScore_user && a.opScore_user) ? b.opScore_user - a.opScore_user : 0
+	))
 	return allChampsFilteredWithRole.slice(0, 5)
 }
 
@@ -151,11 +153,11 @@ export const fillChampSelectDisplayed = createAsyncThunk<BothTeam | void, FillCh
 			})
 		}
 
-		async function fillChampNameAndImgUrlFromId(champObject: Champion, championId: number) {
+		async function fillChampNameAndImgUrlFromId(champion: Champion, championId: number) {
 			if (championId == 0) return
-			champObject.imageUrl = await getChampImg(championId)
-			champObject.name = await getChampName(championId)
-			champObject.opScore_user = -1
+			champion.imageUrl = await getChampImg(championId)
+			champion.name = await getChampName(championId)
+			champion.opScore_user = -1
 		}
 
 		function fillAssignedRoleAndRecommendations(allies: ChampDisplayedType[], myTeam: never[], actorCellId: number, allChamps: Champion[], isActorCellRightSide = false) {

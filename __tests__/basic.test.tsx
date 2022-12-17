@@ -16,7 +16,7 @@ import {store} from '../src/desktop/utils/store/store'
 import allChamps from '../__testsUtils__/allChamps.json'
 import {configTest} from '../__testsUtils__/configTest'
 import {
-	getRunningLaunchersInfo, onInfoUpdatesAddListener,
+	getRunningLaunchersInfo, onInfoUpdatesAddListener, onTerminatedAddListener,
 	overwolfMocked
 } from '../__testsUtils__/OW_mocking'
 import {renderEntireApp} from '../__testsUtils__/renderEntireApp'
@@ -37,15 +37,7 @@ describe('basic', () => {
 	)
 	test('should display winrate in header', async () => {
 		global.overwolf = overwolfMocked
-		await act(() => {
-			render(
-				<ChakraProvider>
-					<Provider store={store}>
-						<MyApp my_window={myWindow} />
-					</Provider>
-				</ChakraProvider>
-			)
-		})
+		await act(() => {render(renderEntireApp())})
 		const winrateElem = screen.getByText(/winrate/i)
 		const FooterElem = screen.getByText(/League client is not open./i)
 		expect(winrateElem).toBeInTheDocument()
@@ -54,31 +46,12 @@ describe('basic', () => {
 	test('should display message when lol client is already open', async () => {
 		global.overwolf = overwolfMocked
 		global.overwolf.games.launchers.getRunningLaunchersInfo = getRunningLaunchersInfo
-		await act(() => {
-			render(
-				<ChakraProvider>
-					<Provider store={store}>
-						<MyApp my_window={myWindow} />
-					</Provider>
-				</ChakraProvider>
-			)
-		})
+		await act(() => {render(renderEntireApp())})
 		const FooterElem = screen.getByText(/You are not in champ select./i)
 		expect(FooterElem).toBeInTheDocument()
 	})
 	test('should display message when closing lol client', async () => {
 		global.overwolf = overwolfMocked
-
-		function getRunningLaunchersInfo(callback) {
-			const clientsInfos = {
-				launchers: [{id: 109021}]
-			}
-			callback(clientsInfos)
-		}
-
-		function onTerminatedAddListener(callback) {
-			setTimeout(callback, 500)
-		}
 
 		// open LoL client
 		global.overwolf.games.launchers.getRunningLaunchersInfo = getRunningLaunchersInfo
