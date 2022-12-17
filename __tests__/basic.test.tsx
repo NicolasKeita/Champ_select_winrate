@@ -16,9 +16,10 @@ import {store} from '../src/desktop/utils/store/store'
 import allChamps from '../__testsUtils__/allChamps.json'
 import {configTest} from '../__testsUtils__/configTest'
 import {
-	getRunningLaunchersInfo,
+	getRunningLaunchersInfo, onInfoUpdatesAddListener,
 	overwolfMocked
 } from '../__testsUtils__/OW_mocking'
+import {renderEntireApp} from '../__testsUtils__/renderEntireApp'
 
 const myWindow = new AppWindow(kWindowNames.desktop)
 
@@ -67,6 +68,7 @@ describe('basic', () => {
 	})
 	test('should display message when closing lol client', async () => {
 		global.overwolf = overwolfMocked
+
 		function getRunningLaunchersInfo(callback) {
 			const clientsInfos = {
 				launchers: [{id: 109021}]
@@ -100,63 +102,14 @@ describe('basic', () => {
 
 	test('should remove footer when entering in champ select matchmaking', async () => {
 		global.overwolf = overwolfMocked
-
-		function onInfoUpdatesAddListener(callback) {
-			const infoGameFlow = {
-				feature: 'game_flow',
-				info: {
-					game_flow: {
-						phase: 'Lobby'
-					}
-				}
-			}
-			setTimeout(callback, 1000, infoGameFlow)
-			infoGameFlow.info.game_flow.phase = 'ChampSelect'
-			setTimeout(callback, 2000, infoGameFlow)
-			const infoChampSelect = {
-				feature: 'champ_select',
-				info: {
-					champ_select: {
-						raw: JSON.stringify({
-							localPlayerCellId: 0,
-							actions: [
-								[{
-									actorCellId: 0,
-									ChampionId: 77,
-									isAllyAction: false,
-									type: 'ban'
-								}],
-								[],
-								[],
-								[],
-								[],
-								[],
-								[],
-								[]
-							]
-						})
-					}
-				}
-			}
-			setTimeout(callback, 3000, infoChampSelect)
-		}
-
 		// client is already running
 		global.overwolf.games.launchers.getRunningLaunchersInfo = getRunningLaunchersInfo
+		// Entering in champ select
 		global.overwolf.games.launchers.events.onInfoUpdates.addListener = onInfoUpdatesAddListener
 
-		await act(() => {
-			render(
-				<ChakraProvider>
-					<Provider store={store}>
-						<MyApp my_window={myWindow} />
-					</Provider>
-				</ChakraProvider>
-			)
-		})
+		await act(() => {render(renderEntireApp())})
 		await waitFor(() => {
-			const FooterElem = screen.getByTestId('footerMessage').innerHTML
-			expect(FooterElem).toBe('<div></div>')
+			expect(screen.getByRole('heading', {name: 'footerMessage'})).toBeEmptyDOMElement()
 		}, {timeout: 4000})
 	})
 	test('should see default settings in localStorage after launching app', async () => {

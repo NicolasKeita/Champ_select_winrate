@@ -5,14 +5,14 @@
 
 import userEvent from '@testing-library/user-event'
 import {
-	getRunningLaunchersInfo,
+	getRunningLaunchersInfo, onInfoUpdatesAddListener,
 	overwolfMocked
 } from '../__testsUtils__/OW_mocking'
 import {act, render, screen} from '@testing-library/react'
 import {renderEntireApp} from '../__testsUtils__/renderEntireApp'
 import fetch from 'jest-fetch-mock'
 import allChamps from '../__testsUtils__/allChamps.json'
-import { configTest } from '../__testsUtils__/configTest'
+import {configTest} from '../__testsUtils__/configTest'
 import '@testing-library/jest-dom'
 
 describe('settings', () => {
@@ -39,8 +39,14 @@ describe('settings', () => {
 
 		const config = localStorage.getItem('config')
 		expect(config).toBe(configTest)
+
+		global.overwolf.games.launchers.events.onInfoUpdates.addListener = onInfoUpdatesAddListener
+
+		// ↑ Enters in champ select
+
 		const settingButton = screen.getByTestId('settingsButton')
 		await user.click(settingButton)
+		// ↑ Goes to settings
 		let inputTextBoxAatrox = screen.getByRole('textbox', {name: 'Aatrox'})
 		if (!(inputTextBoxAatrox instanceof HTMLInputElement))
 			throw new Error('Expected HTMLInputElement')
@@ -50,6 +56,7 @@ describe('settings', () => {
 		expect(inputTextBoxAatrox).toHaveValue('50')
 		await user.clear(inputTextBoxAatrox)
 		await user.type(inputTextBoxAatrox, '99')
+		// ↑ set Aatrox user_score to 99
 		expect(inputTextBoxAatrox).toHaveValue('99')
 		await user.dblClick(settingButton)
 		inputTextBoxAatrox = screen.getByRole('textbox', {name: 'Aatrox'})

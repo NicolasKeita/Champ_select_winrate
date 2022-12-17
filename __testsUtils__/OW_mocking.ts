@@ -2,7 +2,11 @@
     Path + Filename: src/desktop/OW_mocking.ts
 */
 
-export const overwolfMocked : typeof overwolf = {
+import champ_select1 from './action1.json'
+import champ_select2 from './action2.json'
+
+
+export const overwolfMocked: typeof overwolf = {
 	games: {
 		launchers: {
 			events: {
@@ -54,4 +58,29 @@ export function getRunningLaunchersInfo(callback) {
 		launchers: [{id: 109021}]
 	}
 	callback(clientsInfos)
+}
+
+export function onInfoUpdatesAddListener(callback) {
+	const infoGameFlow = {
+		feature: 'game_flow',
+		info: {
+			game_flow: {
+				phase: 'Lobby'
+			}
+		}
+	}
+	setTimeout(callback, 500, infoGameFlow)
+	infoGameFlow.info.game_flow.phase = 'ChampSelect'
+	setTimeout(callback, 1000, infoGameFlow)
+	const infoChampSelect = {
+		feature: 'champ_select',
+		info: {
+			champ_select: {
+				raw: JSON.stringify(champ_select1)
+			}
+		}
+	}
+	setTimeout(callback, 1500, infoChampSelect)
+	infoChampSelect.info.champ_select.raw = JSON.stringify(champ_select2)
+	setTimeout(callback, 2000, infoChampSelect)
 }

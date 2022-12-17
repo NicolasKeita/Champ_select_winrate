@@ -87,7 +87,6 @@ function Footer(): JSX.Element {
 		window.ononline = () => { dispatch(setFooterMessage(101)) }
 	}, [dispatch])
 
-	let msg: JSX.Element
 	const renderer = ({seconds, completed}) => {
 		if (completed) {
 			const summonerRegion = sessionStorage.getItem('summonerRegion')
@@ -117,24 +116,32 @@ function Footer(): JSX.Element {
 			return <span>{seconds}</span>
 	}
 
+	let msg: JSX.Element
 	if (footerMessageID === 201) {
 		msg = (
-			<div>
+			<FooterTextStyle
+				messageDisplayedLength={messageDisplayed.length}
+				aria-label={'footerMessage'}
+			>
 				{messageDisplayed}
 				<Countdown date={date} key={key}
 						   renderer={renderer} />
 				<span> sec</span>
-			</div>)
+			</FooterTextStyle>)
 	} else {
-		msg = (<div>{messageDisplayed}</div>)
+		msg = (
+			<FooterTextStyle
+				messageDisplayedLength={messageDisplayed.length}
+				aria-label={'footerMessage'}
+			>
+				{messageDisplayed}
+			</FooterTextStyle>
+		)
 	}
 
 	return (
 		<FooterContainer>
-			<FooterTextStyle data-testid={'footerMessage'}
-							 messageDisplayedLength={messageDisplayed.length}>
-				{msg}
-			</FooterTextStyle>
+			{msg}
 		</FooterContainer>
 	)
 }
