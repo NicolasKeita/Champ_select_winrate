@@ -66,7 +66,7 @@ const ButtonSettings = () => {
 			style={{cursor: 'default'}}
 			bridge={myContextMenuBridge}
 			className={'window-control window-control-settings'}
-			data-testid={'settingsButton'}
+			aria-label={'settingsButton'}
 			onMouseDown={e => activateSettings(e)}
 			data={{
 				color,

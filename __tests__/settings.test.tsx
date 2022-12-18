@@ -8,21 +8,25 @@ import {
 	getRunningLaunchersInfo, onInfoUpdatesAddListener,
 	overwolfMocked
 } from '../__testsUtils__/OW_mocking'
-import {act, render, screen, waitFor} from '@testing-library/react'
-import {renderEntireApp} from '../__testsUtils__/renderEntireApp'
+import {act, render, screen, waitFor, cleanup} from '@testing-library/react'
+import {
+	renderEntireApp, renderEntireApp2,
+	renderWithProviders
+} from '../__testsUtils__/renderEntireApp'
 import fetch from 'jest-fetch-mock'
 import allChamps from '../__testsUtils__/allChamps.json'
 import {configTest} from '../__testsUtils__/configTest'
 import '@testing-library/jest-dom'
 import * as fetchDataDragon
 	from '../src/desktop/utils/fetchDataDragon/fetchDataDragon'
-import {
-	getChampImg,
-	getChampName
-} from '../src/desktop/utils/fetchDataDragon/fetchDataDragon'
+import {ChakraProvider} from '@chakra-ui/react'
+import MyApp from '../src/desktop/MyApp'
+import {AppWindow} from '../src/AppWindow'
+import {kWindowNames} from '../src/consts'
 
 
 describe('settings', () => {
+	const user = userEvent.setup()
 	jest.setTimeout(30000)
 	fetch.enableMocks()
 	fetch.mockResponse(req => {
@@ -47,7 +51,7 @@ describe('settings', () => {
 		// ↑ Put a client already running
 		global.overwolf.games.launchers.events.onInfoUpdates.addListener = onInfoUpdatesAddListener
 		// ↑ Enters in champ select
-		await act(() => { render(renderEntireApp())})
+		await act(() => { renderEntireApp2()})
 		expect(localStorage.getItem('config')).toBe(configTest)
 		await waitFor(() => {
 			const TalonElem = screen.getAllByText(/Talon/i)
@@ -56,22 +60,19 @@ describe('settings', () => {
 				const talonTile = TalonElem[0].parentElement
 				expect(talonTile).toContainHTML('35')
 			}
-		}, {timeout: 3000})
-		const settingButton = screen.getByTestId('settingsButton')
+		}, {timeout: 5000})
+		const settingButton = screen.getByLabelText('settingsButton')
 		await user.click(settingButton)
 		// ↑ Goes to settings
-		let inputTextBoxAatrox = screen.getByRole('textbox', {name: 'Talon'})
-		if (!(inputTextBoxAatrox instanceof HTMLInputElement))
+		let inputTextBoxTalon = screen.getByRole('textbox', {name: 'Talon'})
+		if (!(inputTextBoxTalon instanceof HTMLInputElement))
 			throw new Error('Expected HTMLInputElement')
-		expect(inputTextBoxAatrox).toHaveValue('35')
-		await user.clear(inputTextBoxAatrox)
-		await user.type(inputTextBoxAatrox, '[Escape]')
-		expect(inputTextBoxAatrox).toHaveValue('50')
-		await user.clear(inputTextBoxAatrox)
-		await user.type(inputTextBoxAatrox, '99')
-		// ↑ set Talon user_score to 99
-		expect(inputTextBoxAatrox).toHaveValue('99')
+		expect(inputTextBoxTalon).toHaveValue('35')
+		await user.type(inputTextBoxTalon, '[Backspace][Backspace]99')
+		// ↑ Puts 99 to talon score
+		expect(inputTextBoxTalon).toHaveValue('99')
 		await user.click(settingButton)
+		// ↑ goes back to homepage & see if Talon has 99 as score
 		const TalonElem = screen.getAllByText(/Talon/i)
 		expect(TalonElem).toBeDefined()
 		if (TalonElem.length && TalonElem.length >= 1) {
@@ -79,7 +80,28 @@ describe('settings', () => {
 			expect(talonTile).toContainHTML('99')
 		}
 		await user.click(settingButton)
-		inputTextBoxAatrox = screen.getByRole('textbox', {name: 'Talon'})
-		expect(inputTextBoxAatrox).toHaveValue('99')
+		// ↑ goes back to settings and check if talon still has 99 as score
+		inputTextBoxTalon = screen.getByRole('textbox', {name: 'Talon'})
+		expect(inputTextBoxTalon).toHaveValue('99')
+	})
+	test('should appear default 50 when removing user score completely', async () => {
+		localStorage.clear()
+		sessionStorage.clear()
+		const myWindow = new AppWindow(kWindowNames.desktop)
+		const user = userEvent.setup()
+		global.overwolf = overwolfMocked
+		await act(() => {renderEntireApp2()})
+		const settingButton = screen.getByLabelText('settingsButton')
+		await user.click(settingButton)
+		// ↑ Goes to settings
+		let inputTextBoxTalon = screen.getByRole('textbox', {name: 'Talon'})
+		if (!(inputTextBoxTalon instanceof HTMLInputElement))
+			throw new Error('Expected HTMLInputElement')
+		expect(inputTextBoxTalon).toHaveValue('35')
+		await waitFor(async () => {
+			inputTextBoxTalon = screen.getByRole('textbox', {name: 'Talon'})
+			await user.type(inputTextBoxTalon, '[Backspace][Backspace][Escape]')
+			expect(inputTextBoxTalon).toHaveValue('50')
+		}, {timeout: 5000})
 	})
 })

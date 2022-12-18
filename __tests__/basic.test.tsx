@@ -20,6 +20,8 @@ import {
 	overwolfMocked
 } from '../__testsUtils__/OW_mocking'
 import {renderEntireApp} from '../__testsUtils__/renderEntireApp'
+import * as fetchDataDragon
+	from '../src/desktop/utils/fetchDataDragon/fetchDataDragon'
 
 const myWindow = new AppWindow(kWindowNames.desktop)
 
@@ -35,6 +37,9 @@ describe('basic', () => {
 				return Promise.reject(new Error('URL is not handled by Jest tests'))
 		}
 	)
+	jest.spyOn(fetchDataDragon, 'getChampName').mockResolvedValue('Talon')
+	jest.spyOn(fetchDataDragon, 'getChampImg').mockResolvedValue('https://ddragon.leagueoflegends.com/cdn/12.13.1/img/champion/Talon.png')
+	jest.spyOn(fetchDataDragon, 'getChampSquareAsset').mockResolvedValue('https://ddragon.leagueoflegends.com/cdn/12.13.1/img/champion/Talon.png')
 	test('should display winrate in header', async () => {
 		global.overwolf = overwolfMocked
 		await act(() => {render(renderEntireApp())})

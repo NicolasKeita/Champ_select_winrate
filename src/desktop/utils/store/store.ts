@@ -6,7 +6,7 @@ import {
 	combineReducers,
 	configureStore, createAsyncThunk,
 	createSlice,
-	PayloadAction
+	PayloadAction, PreloadedState
 } from '@reduxjs/toolkit'
 import Config from '../../components/maincontent/settings/Config'
 import {
@@ -223,7 +223,7 @@ export const fillChampSelectDisplayed = createAsyncThunk<BothTeam | void, FillCh
 	})
 
 
-const slice = createSlice({
+export const slice = createSlice({
 	name: 'slice',
 	initialState: initialState,
 	reducers: {
@@ -344,10 +344,18 @@ export const store = configureStore({
 	reducer: mainReducer
 })
 
+// export function setupStore(preloadedState?: PreloadedState<RootState>) {
+// 	return configureStore({
+// 		reducer: rootReducer,
+// 		preloadedState
+// 	})
+// }
+
 store.subscribe(() => {
 	// console.log('new state : ')
 	// console.log(JSON.parse(store.getState().slice.configSerialized))
 })
 
 export type RootState = ReturnType<typeof store.getState>
+// export type AppStore = ReturnType<typeof store>
 export type AppDispatch = typeof store.dispatch

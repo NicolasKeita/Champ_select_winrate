@@ -80,9 +80,9 @@ export function onInfoUpdatesAddListener(callback: (event: any) => void) {
 			}
 		}
 	}
-	// setTimeout(callback, 1500, infoChampSelect)
-	infoChampSelect.info.champ_select.raw = JSON.stringify(champ_select2)
 	setTimeout(callback, 2000, infoChampSelect)
+	infoChampSelect.info.champ_select.raw = JSON.stringify(champ_select2)
+	setTimeout(callback, 4000, infoChampSelect)
 }
 
 export function onTerminatedAddListener(callback) {
