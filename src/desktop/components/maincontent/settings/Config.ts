@@ -4,11 +4,15 @@
 
 import {Champion, championConstructor} from './Champion'
 
+export enum ConfigPage {
+	CHAMPSELECT= 100,
+	HISTORY= 200
+}
+
 class Config {
 	constructor(payload: Partial<Config>) {
-		this._settingsPage = false
-		if (payload.settingsPage)
-			this._settingsPage = payload.settingsPage
+		this.currentPage = payload.currentPage ? payload.currentPage : ConfigPage.HISTORY
+		this._settingsPage = payload.settingsPage ? payload.settingsPage : false
 		this._champions = []
 		if (payload.champions) {
 			const allChampionsPlainArray = payload.champions
@@ -17,6 +21,8 @@ class Config {
 			}
 		}
 	}
+
+	public currentPage: ConfigPage
 
 	private _settingsPage: boolean
 

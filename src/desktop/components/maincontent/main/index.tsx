@@ -81,7 +81,7 @@ const ProfileLine = styled.div`
   }
 `
 
-function Main() {
+function ChampSelect() {
 	const champSelectDisplayed = useAppSelector((state) => state.slice.champSelectDisplayed)
 
 	function renderPlayersGrid(isEnemyTeam: boolean): JSX.Element {
@@ -143,4 +143,4 @@ function Main() {
 	)
 }
 
-export default Main
+export default ChampSelect

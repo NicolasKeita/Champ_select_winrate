@@ -8,9 +8,14 @@ import React from 'react'
 import styled from 'styled-components'
 
 import Footer from './../../components/maincontent/footer'
-import Main from './../../components/maincontent/main'
+import ChampSelect from './../../components/maincontent/main'
 import Settings from './../../components/maincontent/settings'
-import {selectBooleanSettingsPage} from '@utils/store/selectors'
+import {
+	selectBooleanSettingsPage,
+	selectCurrentPage
+} from '@utils/store/selectors'
+import { ConfigPage } from './settings/Config'
+import History from './main/history'
 
 const MainContentContainer = styled.div`
   display: flex;
@@ -22,21 +27,22 @@ const MainContentContainer = styled.div`
 
 function MainContent() {
 	const settingsPage = useAppSelector(selectBooleanSettingsPage())
+	const currentPage = useAppSelector(selectCurrentPage())
 
-	let currentPage: JSX.Element
+	let currentPageSet: JSX.Element
 	if (!settingsPage) {
-		currentPage =
+		currentPageSet =
 			<div id='main+footer'
 				 style={{display: 'flex', flexDirection: 'column', flex: 1}}>
-				<Main />
+				{currentPage === ConfigPage.CHAMPSELECT ? <ChampSelect /> : <History />}
 				<Footer />
 			</div>
 	} else
-		currentPage = <Settings />
+		currentPageSet = <Settings />
 
 	return (
 		<MainContentContainer id='mainContentContainer'>
-			{currentPage}
+			{currentPageSet}
 		</MainContentContainer>
 	)
 }

@@ -2,7 +2,7 @@
     Path + Filename: src/desktop/utils/store/selectors.ts
 */
 
-import Config from '../../components/maincontent/settings/Config'
+import Config, {ConfigPage} from '../../components/maincontent/settings/Config'
 
 //TODO put types there, on the state
 export const selectInstancedConfig = () => {
@@ -31,6 +31,18 @@ export const selectAllChampions = () => {
 				return configPlainObject.champions
 			else
 				return []
+		}
+	)
+}
+
+export const selectCurrentPage = () => {
+	return (
+		state => {
+			const configPlainObject: Config | undefined = JSON.parse(state.slice.configSerialized)
+			if (configPlainObject)
+				return configPlainObject.currentPage
+			else
+				return ConfigPage.HISTORY
 		}
 	)
 }

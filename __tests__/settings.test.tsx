@@ -26,6 +26,11 @@ import {kWindowNames} from '../src/consts'
 
 
 describe('settings', () => {
+	beforeEach(() => {
+		localStorage.clear()
+		sessionStorage.clear()
+		global.overwolf = overwolfMocked
+	})
 	const user = userEvent.setup()
 	jest.setTimeout(30000)
 	fetch.enableMocks()
@@ -42,11 +47,7 @@ describe('settings', () => {
 	jest.spyOn(fetchDataDragon, 'getChampImg').mockResolvedValue('https://ddragon.leagueoflegends.com/cdn/12.13.1/img/champion/Talon.png')
 	jest.spyOn(fetchDataDragon, 'getChampSquareAsset').mockResolvedValue('https://ddragon.leagueoflegends.com/cdn/12.13.1/img/champion/Talon.png')
 
-	test('should update immediately user score when user changes it', async () => {
-		localStorage.clear()
-		sessionStorage.clear()
-		const user = userEvent.setup()
-		global.overwolf = overwolfMocked
+	it('should update immediately user score when user changes it', async () => {
 		global.overwolf.games.launchers.getRunningLaunchersInfo = getRunningLaunchersInfo
 		// ↑ Put a client already running
 		global.overwolf.games.launchers.events.onInfoUpdates.addListener = onInfoUpdatesAddListener
@@ -84,12 +85,7 @@ describe('settings', () => {
 		inputTextBoxTalon = screen.getByRole('textbox', {name: 'Talon'})
 		expect(inputTextBoxTalon).toHaveValue('99')
 	})
-	test('should appear default 50 when removing user score completely', async () => {
-		localStorage.clear()
-		sessionStorage.clear()
-		const myWindow = new AppWindow(kWindowNames.desktop)
-		const user = userEvent.setup()
-		global.overwolf = overwolfMocked
+	it('should appear default 50 when removing user score completely', async () => {
 		await act(() => {renderEntireApp2()})
 		const settingButton = screen.getByLabelText('settingsButton')
 		await user.click(settingButton)
@@ -104,4 +100,18 @@ describe('settings', () => {
 			expect(inputTextBoxTalon).toHaveValue('50')
 		}, {timeout: 5000})
 	})
+
+	it('should be able to reset settings', async () => {
+		global.overwolf.games.launchers.getRunningLaunchersInfo = getRunningLaunchersInfo
+		// ↑ Put a client already running
+		global.overwolf.games.launchers.events.onInfoUpdates.addListener = onInfoUpdatesAddListener
+		// ↑ Enters in champ select
+		await act(() => {renderEntireApp2()})
+		const settingButton = screen.getByLabelText('settingsButton')
+		await user.click(settingButton)
+		// ↑ Goes to settings
+		// await waitFor(async () => {
+		// }, {timeout: 5000})
+	})
+	//TODO do a test about the reset button
 })

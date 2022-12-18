@@ -4,11 +4,12 @@
 
 import {
 	combineReducers,
-	configureStore, createAsyncThunk,
+	configureStore,
+	createAsyncThunk,
 	createSlice,
-	PayloadAction, PreloadedState
+	PayloadAction
 } from '@reduxjs/toolkit'
-import Config from '../../components/maincontent/settings/Config'
+import Config, {ConfigPage} from '../../components/maincontent/settings/Config'
 import {
 	Champion,
 	championConstructor,
@@ -17,7 +18,8 @@ import {
 import {
 	getChampImg,
 	getChampName,
-	getChampScore, getChampSquareAsset
+	getChampScore,
+	getChampSquareAsset
 } from '@utils/fetchDataDragon/fetchDataDragon'
 import {
 	fetchAllChampionsJson
@@ -74,7 +76,7 @@ type StoreStateType = {
 }
 
 const initialState = {
-	configSerialized: JSON.stringify({settingsPage: false, champions: []}),
+	configSerialized: JSON.stringify({settingsPage: false, currentPage: ConfigPage.HISTORY, champions: []}),
 	internalSettings: '',
 	footerMessageID: -1,
 	leagueClientStatus: -1,
@@ -228,7 +230,7 @@ export const slice = createSlice({
 	initialState: initialState,
 	reducers: {
 		toggleSettingsPage: (state) => {
-			const configPlainObject = JSON.parse(state.configSerialized)
+			const configPlainObject : Config = JSON.parse(state.configSerialized)
 			configPlainObject.settingsPage = !configPlainObject.settingsPage
 			state.configSerialized = JSON.stringify(configPlainObject)
 		},
@@ -249,6 +251,14 @@ export const slice = createSlice({
 			updateChampSelectDisplayedScores(state.champSelectDisplayed, configDeserialized.champions)
 		},
 		setClientStatus: (state, action: PayloadAction<number>) => {
+			const configPlainObject : Config = JSON.parse(state.configSerialized)
+			if (action.payload == 0)
+				configPlainObject.currentPage = ConfigPage.CHAMPSELECT
+			else
+				configPlainObject.currentPage = ConfigPage.HISTORY
+			state.configSerialized = JSON.stringify(configPlainObject)
+			localStorage.setItem('config', state.configSerialized)
+
 			state.leagueClientStatus = action.payload
 			sessionStorage.setItem('clientStatus', action.payload.toString())
 		},
@@ -322,6 +332,7 @@ export const slice = createSlice({
 			console.error(action.payload)
 			console.error('CSW_error: fetchAllChampions failed, retrying in 5sec')
 			setTimeout(fetchAllChampions, 5000)
+			//TODO try this, should i add Dispatch?
 		})
 	}
 })
@@ -344,18 +355,10 @@ export const store = configureStore({
 	reducer: mainReducer
 })
 
-// export function setupStore(preloadedState?: PreloadedState<RootState>) {
-// 	return configureStore({
-// 		reducer: rootReducer,
-// 		preloadedState
-// 	})
-// }
-
 store.subscribe(() => {
 	// console.log('new state : ')
 	// console.log(JSON.parse(store.getState().slice.configSerialized))
 })
 
 export type RootState = ReturnType<typeof store.getState>
-// export type AppStore = ReturnType<typeof store>
 export type AppDispatch = typeof store.dispatch

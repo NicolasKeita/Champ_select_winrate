@@ -5,7 +5,7 @@
 		"name": "Champ Select Winrate",
 		"author": "Nicolas Keita",
 		"author_display": "SpyNight",
-		"version": "1.1.2",
+		"version": "1.2.0",
 		"minimum-overwolf-version": "0.194.0",
 		"description": "Fully customizable champ select tool",
 		"dock_button_title": "Champ Select Win",
