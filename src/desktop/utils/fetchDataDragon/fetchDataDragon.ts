@@ -8,6 +8,7 @@ const championByIdCache = {}
 const championJson = {}
 let versionCache: string | undefined = undefined
 import questionMark from '@public/img/question_mark.jpg'
+import ASSETS from '../../../allChampsIcons'
 
 async function getLatestChampionDDragon(language = 'en_US') {
 	if (championJson[language]) return championJson[language]
@@ -24,15 +25,13 @@ async function getLatestChampionDDragon(language = 'en_US') {
 	return championJson[language]
 }
 
-function importAll(r) {
-	let images = {};
-	r.keys().forEach((item, index) => { images[item.replace('./', '')] = r(item); });
-	return images
-}
-const images = importAll(require.context('./../../../../public/img/champion', false, /\.(png|jpe?g|svg)$/));
-
 export async function getChampImgByName(name: string) {
-	return images[`${name}.png`]
+	let formattedName : string = name
+	if (!name.endsWith('.png'))
+		formattedName = name + '.png'
+	formattedName = formattedName.replace('.png', '_png')
+	formattedName = formattedName.toUpperCase()
+	return (ASSETS[`${formattedName}`])
 }
 
 export async function getChampionByKey(key, language = 'en_US') {
@@ -74,5 +73,10 @@ export function getChampScore(champName: string, settingsChampions: Champion[]):
 }
 
 export async function getChampSquareAsset(champNamePNG: string): Promise<string> {
-	return (champNamePNG == '' || !champNamePNG == undefined) ? questionMark : images[champNamePNG]
+	let formattedName : string = champNamePNG
+	if (!champNamePNG.endsWith('.png'))
+		formattedName = champNamePNG + '.png'
+	formattedName = formattedName.replace('.png', '_png')
+	formattedName = formattedName.toUpperCase()
+	return (champNamePNG == '' || !champNamePNG == undefined) ? questionMark : ASSETS[`${formattedName}`]
 }

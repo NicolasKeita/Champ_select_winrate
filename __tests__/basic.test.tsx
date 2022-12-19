@@ -26,10 +26,6 @@ import * as fetchDataDragon
 const myWindow = new AppWindow(kWindowNames.desktop)
 
 describe('basic', () => {
-	beforeEach( () => {
-		// @ts-ignore
-		// jest.spyOn(global.require, 'context')
-	})
 
 	jest.setTimeout(30000)
 	fetch.enableMocks()

@@ -79,6 +79,8 @@
 		"@reduxjs/toolkit": ">=1.9.1",
 		"@types/react": ">=18.0.26",
 		"@types/react-dom": ">=18.0.9",
+		"directory-metagen": ">=1.6.3",
+		"eima": ">=0.2.12",
 		"node-jsx": ">=0.13.3",
 		"react": ">=18.2.0",
 		"react-context-menu-hooks": ">=0.4.0",
