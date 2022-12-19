@@ -58,7 +58,7 @@ export async function fetchMatchHistory(matchId : string, summonerRegion : strin
 
 export async function isInGame(summonerRegion: string, encryptedSummonerId: string): Promise<boolean> {
 	const url = `https://4nuo1ouibd.execute-api.eu-west-3.amazonaws.com/csw_api_proxy/spectator/${encryptedSummonerId}/${summonerRegion.toLowerCase()}`
-	let res
+	let res : Response
 	try {
 		res = await fetch(url)
 	} catch (e) {
@@ -68,17 +68,15 @@ export async function isInGame(summonerRegion: string, encryptedSummonerId: stri
 	if (!res.ok && res.status != 404)
 		throw new Error('CSW_error: following call : fetch(' + url + ' caught error;  ')
 	try {
-		const data = await res.json()
-		if (data && data.status) {
-			// if (data.status.status_code === 204)
-			if (data.status.status_code === 404)
-				return false
+		if (res.status == 204)
+			return false
+		else {
+			const data = await res.json()
+			if (data && data.gameId)
+				return true
 			else
-				throw new Error(`CSW_error: fetch(${url}) returned an error code : ${data.status.status_code}`)
-		} else if (data && data.gameId)
-			return true
-		else
-			throw new Error(`CSW_error: fetch(${url}) returned an error unknown (without error code?)`)
+				throw new Error(`CSW_error: fetch(${url}) returned an error unknown (without error code?)`)
+		}
 	} catch (e) {
 		throw new Error('CSW_error: following call : res.json() caught error; previously : fetch(' + url)
 	}

@@ -80,6 +80,15 @@ function MyApp(props: My_PropType): JSX.Element {
 					} else if (game_flow.phase == 'GameStart' || game_flow.phase == 'InProgress') {
 						dispatch(setClientStatus(1))
 						dispatch(setFooterMessage(5))
+					} else if (game_flow.phase == 'WaitingForStats') {
+						dispatch(setClientStatus(1))
+						dispatch(setFooterMessage(1))
+						setTimeout(dispatch, 10000, fillHistoryDisplayed(
+							{
+								region: sessionStorage.getItem('summonerRegion') || "",
+								puuid: sessionStorage.getItem('puuid') || ""
+							}
+						))
 					} else if (game_flow.phase === 'None') {
 						const previousClientStatus = sessionStorage.getItem('clientStatus')
 						const previousFooterMessageId = sessionStorage.getItem('footerMessageId')

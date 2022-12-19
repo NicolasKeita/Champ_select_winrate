@@ -116,6 +116,17 @@ function updateChampSelectDisplayedScores(champSelectDisplayed: ChampSelectDispl
 	}
 }
 
+function updateHistoryDisplayedScores(historyDisplayed : HistoryDisplayedType[], allChamps: Champion[]) {
+	for (const match of historyDisplayed) {
+		for (const ally of match.allies) {
+			ally.opScore_user = getChampScore(ally.name, allChamps)
+		}
+		for (const enemy of match.enemies) {
+			enemy.opScore_user = getChampScore(enemy.name, allChamps)
+		}
+	}
+}
+
 type FillChampSelectDisplayedParamType = {
 	actions: never[][],
 	localPlayerCellId: number,
@@ -156,6 +167,10 @@ export const fillHistoryDisplayed = createAsyncThunk<HistoryDisplayedType[], {re
 	'fillHistoryDisplayed',
 	async (thunkParam, thunkAPI) => {
 		const historyDisplayedTmp : HistoryDisplayedType[] = initHistoryDisplayed()
+		if (thunkParam.region == "" || thunkParam.puuid == "") {
+			console.error("could not fill History")
+			return historyDisplayedTmp
+		}
 		const matchHistoryIds = await fetchMatchHistoryId(thunkParam.region, thunkParam.puuid)
 		const configDeserialized = new Config(JSON.parse(thunkAPI.getState().slice.configSerialized))
 		if (matchHistoryIds.length) {
@@ -310,6 +325,7 @@ export const slice = createSlice({
 			state.configSerialized = configDeserialized.stringify()
 			localStorage.setItem('config', configDeserialized.stringify())
 			updateChampSelectDisplayedScores(state.champSelectDisplayed, configDeserialized.champions)
+			updateHistoryDisplayedScores(state.historyDisplayed, configDeserialized.champions)
 		},
 		setClientStatus: (state, action: PayloadAction<number>) => {
 			const configPlainObject : Config = JSON.parse(state.configSerialized)
@@ -356,6 +372,7 @@ export const slice = createSlice({
 			g_x += 1
 			state.configSerialized = JSON.stringify(configPlainObject) + ' '.repeat(g_x)
 			updateChampSelectDisplayedScores(state.champSelectDisplayed, configPlainObject.champions)
+			updateHistoryDisplayedScores(state.historyDisplayed, configPlainObject.champions)
 		}
 	},
 	extraReducers: (builder) => {

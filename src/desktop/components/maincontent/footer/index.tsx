@@ -60,7 +60,7 @@ function Footer(): JSX.Element {
 			messageDisplayed = 'CSW only support draft game mode 5v5.'
 			break
 		case 5:
-			messageDisplayed = 'You are in-game.'
+			messageDisplayed = 'You are in-game. The app is only helpful in champ select.'
 			break
 		case 6:
 			messageDisplayed = 'Use Custom game only for testing. Features cannot be accurate if the game is not real.'

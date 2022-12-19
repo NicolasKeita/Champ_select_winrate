@@ -20,7 +20,8 @@ const ContextMenuStyled = styled(ContextMenu)`
 
 function MyContextMenu(): JSX.Element {
 	const dispatch = useAppDispatch()
-	const settings = useAppSelector(selectInstancedConfig())
+	const settings = useAppSelector(selectInstancedConfig()) // TODO what is this
+
 	const handleRightClick = () => {
 		dispatch(resetSettings())
 	}
