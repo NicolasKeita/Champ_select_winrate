@@ -25,6 +25,7 @@ import {
 	fetchAllChampionsJson
 } from '@utils/fetchLocalConfigJson/fetchChampionsFromConfigJson'
 import {fetchMatchHistory, fetchMatchHistoryId} from '@utils/LOL_API'
+import history from '../../components/maincontent/main/history'
 
 export type ChampDisplayedType = {
 	assignedRole: string
@@ -37,7 +38,7 @@ type ChampSelectDisplayedType = {
 	enemies: ChampDisplayedType[]
 }
 
-type HistoryDisplayedType = {
+export type HistoryDisplayedType = {
 	allies: Champion[]
 	enemies: Champion[]
 }
@@ -156,18 +157,34 @@ export const fillHistoryDisplayed = createAsyncThunk<HistoryDisplayedType[], {re
 	async (thunkParam, thunkAPI) => {
 		const historyDisplayedTmp : HistoryDisplayedType[] = initHistoryDisplayed()
 		const matchHistoryIds = await fetchMatchHistoryId(thunkParam.region, thunkParam.puuid)
+		const configDeserialized = new Config(JSON.parse(thunkAPI.getState().slice.configSerialized))
 		if (matchHistoryIds.length) {
 			for (let i = 0 ; i < 5 ; ++i) {
 				const matchInfo = await fetchMatchHistory(matchHistoryIds[i], thunkParam.region)
+				let imInAllyTeam
 				for (let x = 0 ; x < 10 ; ++x) {
+					//TODO why webstorm cannot find mistakes there
 					const participantChampName = matchInfo['info'].participants[x].championName
+					const encryptedSummonerId = (matchInfo['info'].participants[x].summonerId)
+					const myEncryptedSummonerId = sessionStorage.getItem('encryptedSummonerId')
+					if (encryptedSummonerId == myEncryptedSummonerId && x < 5) {
+						imInAllyTeam = true
+					}
 					if (x < 5) {
 						historyDisplayedTmp[i].allies[x].name = participantChampName
 						historyDisplayedTmp[i].allies[x].imageUrl = await getChampImgByName(participantChampName)
+						historyDisplayedTmp[i].allies[x].opScore_user = configDeserialized.getChampCurrConfig(participantChampName)?.opScore_user // TODO replace by this one line the two above
 					} else {
 						historyDisplayedTmp[i].enemies[x - 5].name = participantChampName
 						historyDisplayedTmp[i].enemies[x - 5].imageUrl = await getChampImgByName(participantChampName)
+						historyDisplayedTmp[i].enemies[x - 5].opScore_user = configDeserialized.getChampCurrConfig(participantChampName)?.opScore_user
 					}
+				}
+				if (!imInAllyTeam) {
+					//TODO is it the cleanest way to swap?
+					const tmpAlies = JSON.stringify(historyDisplayedTmp[i].allies)
+					historyDisplayedTmp[i].allies = JSON.parse(JSON.stringify(historyDisplayedTmp[i].enemies))
+					historyDisplayedTmp[i].enemies = JSON.parse(tmpAlies)
 				}
 			}
 		} else {
@@ -355,8 +372,6 @@ export const slice = createSlice({
 			}
 		})
 		builder.addCase(fillHistoryDisplayed.fulfilled, (state, action) => {
-			console.log("RECEIVED")
-			console.log(action.payload)
 			if (action.payload !== undefined) {
 				state.historyDisplayed = action.payload
 			}

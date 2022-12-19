@@ -73,19 +73,6 @@ export function getChampScore(champName: string, settingsChampions: Champion[]):
 	return 50
 }
 
-export async function getChampSquareAsset(champNamePNG: string): Promise<string> { //TODO remove
-	// async,
-	// remove version, remove CDN
-	if (champNamePNG == '' || !champNamePNG == undefined) {
-		return questionMark
-	}
-	let version
-	if (versionCache)
-		version = versionCache
-	else {
-		versionCache = (await fetch('https://ddragon.leagueoflegends.com/api/versions.json').then(async r => await r.json()))[0]
-		version = versionCache
-	}
-	// return `https://ddragon.leagueoflegends.com/cdn/${version}/img/champion/${champNamePNG}`
-	return images[champNamePNG]
+export async function getChampSquareAsset(champNamePNG: string): Promise<string> {
+	return (champNamePNG == '' || !champNamePNG == undefined) ? questionMark : images[champNamePNG]
 }
