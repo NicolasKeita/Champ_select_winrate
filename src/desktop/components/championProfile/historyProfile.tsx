@@ -28,7 +28,6 @@ const HistoryProfileContainer = styled.div`
 `
 
 interface PropsType {
-	isEnemyTeam: boolean,
 	champRecommendation: Champion[]
 }
 
@@ -38,6 +37,7 @@ function HistoryProfile(props : PropsType) : JSX.Element {
 		//if (props.isEnemyTeam || isUnsupportedGameMode) return null
 		const row: JSX.Element[] = []
 		for (let i = 0; i < 5; ++i) {
+			console.log("Received : ", props.champRecommendation[i].imageUrl)
 			row.push(<ChampRecommendationImg key={uniqid()}
 											 src={props.champRecommendation[i] ? props.champRecommendation[i].imageUrl : questionMark} />)
 		}

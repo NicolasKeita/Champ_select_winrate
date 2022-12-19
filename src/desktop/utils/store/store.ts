@@ -16,7 +16,7 @@ import {
 	getDefaultChampion
 } from '../../components/maincontent/settings/Champion'
 import {
-	getChampImg,
+	getChampImg, getChampImgByName,
 	getChampName,
 	getChampScore,
 	getChampSquareAsset
@@ -24,6 +24,7 @@ import {
 import {
 	fetchAllChampionsJson
 } from '@utils/fetchLocalConfigJson/fetchChampionsFromConfigJson'
+import {fetchMatchHistory, fetchMatchHistoryId} from '@utils/LOL_API'
 
 export type ChampDisplayedType = {
 	assignedRole: string
@@ -34,6 +35,11 @@ export type ChampDisplayedType = {
 type ChampSelectDisplayedType = {
 	allies: ChampDisplayedType[]
 	enemies: ChampDisplayedType[]
+}
+
+type HistoryDisplayedType = {
+	allies: Champion[]
+	enemies: Champion[]
 }
 
 export function getDefaultRecommendations(): Champion[] {
@@ -63,6 +69,16 @@ function initChampSelectDisplayed() {
 	}
 	return champSelectDisplayed
 }
+function initHistoryDisplayed() {
+	const historyDisplayed : HistoryDisplayedType[] = []
+	for (let i = 0; i < 5; ++i) {
+		historyDisplayed.push({
+			allies: getDefaultRecommendations(),
+			enemies: getDefaultRecommendations()
+		})
+	}
+	return historyDisplayed
+}
 
 type StoreStateType = {
 	configSerialized: string,
@@ -70,6 +86,7 @@ type StoreStateType = {
 	footerMessageID: number,
 	leagueClientStatus: number,
 	champSelectDisplayed: ChampSelectDisplayedType,
+	historyDisplayed: HistoryDisplayedType[],
 	summonerName: string,
 	summonerRegion: string,
 	encryptedSummonerId: string
@@ -81,6 +98,7 @@ const initialState = {
 	footerMessageID: -1,
 	leagueClientStatus: -1,
 	champSelectDisplayed: initChampSelectDisplayed(),
+	historyDisplayed: initHistoryDisplayed(),
 	summonerName: '',
 	summonerRegion: '',
 	encryptedSummonerId: ''
@@ -131,6 +149,32 @@ export const fetchAllChampions = createAsyncThunk<Champion[]>(
 		}
 	}
 )
+
+
+export const fillHistoryDisplayed = createAsyncThunk<HistoryDisplayedType[], {region: string, puuid: string}, {state: RootState}>(
+	'fillHistoryDisplayed',
+	async (thunkParam, thunkAPI) => {
+		const historyDisplayedTmp : HistoryDisplayedType[] = initHistoryDisplayed()
+		const matchHistoryIds = await fetchMatchHistoryId(thunkParam.region, thunkParam.puuid)
+		if (matchHistoryIds.length) {
+			for (let i = 0 ; i < 5 ; ++i) {
+				const matchInfo = await fetchMatchHistory(matchHistoryIds[i], thunkParam.region)
+				for (let x = 0 ; x < 10 ; ++x) {
+					const participantChampName = matchInfo['info'].participants[x].championName
+					if (x < 5) {
+						historyDisplayedTmp[i].allies[x].name = participantChampName
+						historyDisplayedTmp[i].allies[x].imageUrl = await getChampImgByName(participantChampName)
+					} else {
+						historyDisplayedTmp[i].enemies[x - 5].name = participantChampName
+						historyDisplayedTmp[i].enemies[x - 5].imageUrl = await getChampImgByName(participantChampName)
+					}
+				}
+			}
+		} else {
+			// TODO tell user to do some games
+		}
+		return historyDisplayedTmp
+	})
 
 export const fillChampSelectDisplayed = createAsyncThunk<BothTeam | void, FillChampSelectDisplayedParamType, {state: RootState}>(
 	'fillChampSelectDisplayed',
@@ -308,6 +352,13 @@ export const slice = createSlice({
 				for (const elem of state.champSelectDisplayed.enemies) {
 					elem.champ.opScore_user = getChampScore(elem.champ.name, JSON.parse(state.configSerialized).champions)
 				}
+			}
+		})
+		builder.addCase(fillHistoryDisplayed.fulfilled, (state, action) => {
+			console.log("RECEIVED")
+			console.log(action.payload)
+			if (action.payload !== undefined) {
+				state.historyDisplayed = action.payload
 			}
 		})
 		builder.addCase(fetchAllChampions.fulfilled, (state, action) => {

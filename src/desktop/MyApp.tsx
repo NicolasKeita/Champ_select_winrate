@@ -12,7 +12,7 @@ import FooterAD from './components/footerAD'
 import Config from './components/maincontent/settings/Config'
 import {
 	copyFromAnotherSetting, fetchAllChampions,
-	fillChampSelectDisplayed,
+	fillChampSelectDisplayed, fillHistoryDisplayed,
 	resetChampSelectDisplayed,
 	setClientStatus,
 	setFooterMessage
@@ -20,7 +20,11 @@ import {
 
 import {useAppDispatch} from '@utils/hooks'
 import LCU_API_connector from '@utils/LCU_API_connector'
-import {fetchEncryptedSummonerId} from '@utils/LOL_API'
+import {
+	fetchEncryptedSummonerId,
+	fetchMatchHistory,
+	fetchMatchHistoryId
+} from '@utils/LOL_API'
 import {
 	fetchCSWgameVersion
 } from '@utils/fetchLocalConfigJson/fetchChampionsFromConfigJson'
@@ -163,12 +167,15 @@ function MyApp(props: My_PropType): JSX.Element {
 						sessionStorage.setItem('summonerName', name)
 						sessionStorage.setItem('summonerRegion', region)
 						fetchEncryptedSummonerId(name, region)
-							.then(encryptedSummonerId => {
+							.then(({encryptedSummonerId, puuid}) => {
 								sessionStorage.setItem('encryptedSummonerId', encryptedSummonerId)
+								sessionStorage.setItem('puuid', puuid)
+								dispatch(fillHistoryDisplayed({region : region, puuid: puuid}))
 							})
 							.catch((e) => {
 								console.error(e + ' - retrying in 5sec')
 								sessionStorage.setItem('encryptedSummonerId', '')
+								sessionStorage.setItem('puuid', '')
 							})
 							.finally(() => {
 								const encryptedSummonerId = sessionStorage.getItem('encryptedSummonerId')

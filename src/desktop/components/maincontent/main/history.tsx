@@ -10,6 +10,7 @@ import questionMark from '@public/img/question_mark.jpg'
 import HistoryProfile from '../../championProfile/historyProfile'
 import uniqid from 'uniqid'
 import {championConstructor} from '../settings/Champion'
+import {useAppSelector} from '@utils/hooks'
 
 const HistoryContainer = styled.div`
   color: white;
@@ -94,60 +95,36 @@ const ProfileLine = styled.div`
 `
 
 function History() {
-	function renderHistoryGrid(isEnemyTeam: boolean): JSX.Element {
+	const historyDisplayed = useAppSelector(state => state.slice.historyDisplayed)
 
-		const fiveQuestionMark = [
-			championConstructor('', 50, 50, 'top', '', questionMark),
-			championConstructor('', 50, 50, 'top', '', questionMark),
-			championConstructor('', 50, 50, 'top', '', questionMark),
-			championConstructor('', 50, 50, 'top', '', questionMark),
-			championConstructor('', 50, 50, 'top', '', questionMark)
-		]
-		const profiles: JSX.Element[] = []
-		for (let i = 0; i < 2; ++i) {
-		// 	const img = isEnemyTeam ? champSelectDisplayed.enemies[i].champ.imageUrl : champSelectDisplayed.allies[i].champ.imageUrl
-		// 	const champName = isEnemyTeam ? champSelectDisplayed.enemies[i].champ.name : champSelectDisplayed.allies[i].champ.name
-		// 	const champScore = isEnemyTeam ? champSelectDisplayed.enemies[i].champ.opScore_user : champSelectDisplayed.allies[i].champ.opScore_user
-			const fiveQuestionMark = [
-				championConstructor('', 50, 50, 'top', '', questionMark),
-				championConstructor('', 50, 50, 'top', '', questionMark),
-				championConstructor('', 50, 50, 'top', '', questionMark),
-				championConstructor('', 50, 50, 'top', '', questionMark),
-				championConstructor('', 50, 50, 'top', '', questionMark)
-			]
-			const champRecommendation = fiveQuestionMark
-		// 	profiles.push(<ChampionProfile isEnemyTeam={isEnemyTeam}
-		// 								   key={uniqid()}
-		// 								   img={img ? img : questionMark}
-		// 								   champName={champName}
-		// 								   champScore={champScore ? champScore : 50}
-		// 								   champRecommendation={champRecommendation}
-			profiles.push(<HistoryProfile isEnemyTeam={isEnemyTeam}
-												   key={uniqid()}
-												   champRecommendation={champRecommendation}
-			/>)
-		// 	/>)
-		// 	if (i < 4) profiles.push(<ProfileLine isEnemyTeam={isEnemyTeam}
-		// 										  key={uniqid()} />)
-		// 	if (i < 4) profiles.push(<ProfileLine isEnemyTeam={isEnemyTeam}
-		// 										  key={uniqid()} />)
-		}
+	function renderHistoryGrid(historyDisplayed): JSX.Element[] {
+		const linesHistory : JSX.Element[] = []
 		const winrate = 50
 		const tooltipNumber = 'Numbers are coming from your own settings. Check your settings (top right icon) to change the default.'
-		return (
-			<TeamGrid>
-				<HistoryProfile isEnemyTeam={isEnemyTeam}
-								key={uniqid()}
-								champRecommendation={fiveQuestionMark} />
-				<Tooltip label={tooltipNumber}>
-					<h1>{winrate}%</h1>
-				</Tooltip>
-				<HistoryProfile isEnemyTeam={isEnemyTeam}
-								key={uniqid()}
-								champRecommendation={fiveQuestionMark} />
-			</TeamGrid>
-		)
+		for (let i = 0; i < 5; ++i) {
+			linesHistory.push(
+				<div key={uniqid()}>
+					<TeamGrid>
+						<HistoryProfile	key={uniqid()}
+										   champRecommendation={historyDisplayed[i].allies} />
+						<Tooltip label={tooltipNumber}>
+							<h1>{winrate}%</h1>
+						</Tooltip>
+						<HistoryProfile key={uniqid()}
+										champRecommendation={historyDisplayed[i].enemies} />
+					</TeamGrid>
+					{i < 4 &&
+						<div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+							<ProfileLine isEnemyTeam={false}/>
+							<ProfileLine isEnemyTeam={true}/>
+						</div>
+					}
+				</div>
+			)
+		}
+		return linesHistory
 	}
+
 	return (
 		<HistoryContainer>
 			<PercentageContainer>
@@ -156,30 +133,31 @@ function History() {
 				<WinrateLine />
 			</PercentageContainer>
 			<HistoryGrid>
-				{renderHistoryGrid(false)}
-				<div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-					<ProfileLine isEnemyTeam={false}/>
-					<ProfileLine isEnemyTeam={true}/>
-				</div>
-				{renderHistoryGrid(false)}
+				{renderHistoryGrid(historyDisplayed)}
+				{/*{renderLineHistoryGrid()}*/}
+				{/*<div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>*/}
+				{/*	<ProfileLine isEnemyTeam={false}/>*/}
+				{/*	<ProfileLine isEnemyTeam={true}/>*/}
+				{/*</div>*/}
+				{/*{renderLineHistoryGrid()}*/}
 
-				<div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-					<ProfileLine isEnemyTeam={false}/>
-					<ProfileLine isEnemyTeam={true}/>
-				</div>
-				{renderHistoryGrid(false)}
+				{/*<div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>*/}
+				{/*	<ProfileLine isEnemyTeam={false}/>*/}
+				{/*	<ProfileLine isEnemyTeam={true}/>*/}
+				{/*</div>*/}
+				{/*{renderLineHistoryGrid()}*/}
 
-				<div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-					<ProfileLine isEnemyTeam={false}/>
-					<ProfileLine isEnemyTeam={true}/>
-				</div>
-				{renderHistoryGrid(false)}
+				{/*<div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>*/}
+				{/*	<ProfileLine isEnemyTeam={false}/>*/}
+				{/*	<ProfileLine isEnemyTeam={true}/>*/}
+				{/*</div>*/}
+				{/*{renderLineHistoryGrid()}*/}
 
-				<div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-					<ProfileLine isEnemyTeam={false}/>
-					<ProfileLine isEnemyTeam={true}/>
-				</div>
-				{renderHistoryGrid(false)}
+				{/*<div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>*/}
+				{/*	<ProfileLine isEnemyTeam={false}/>*/}
+				{/*	<ProfileLine isEnemyTeam={true}/>*/}
+				{/*</div>*/}
+				{/*{renderLineHistoryGrid()}*/}
 			</HistoryGrid>
 		</HistoryContainer>
 	)
