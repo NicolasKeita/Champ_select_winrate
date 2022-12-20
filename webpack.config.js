@@ -12,7 +12,7 @@ module.exports = env => {
 			background: './src/background/background.tsx',
 			desktop: './src/desktop/desktop.tsx'
 		},
-		devtool: env.removeSourceMap ? false: 'inline-source-map',
+		devtool: env.removeSourceMap ? false : 'inline-source-map',
 		module: {
 			rules: [
 				{
@@ -38,6 +38,10 @@ module.exports = env => {
 		output: {
 			path: path.resolve(__dirname, 'dist/'),
 			filename: 'js/[name].js'
+		},
+		performance: {
+			maxAssetSize: 51200000,
+			maxEntrypointSize: 51200000
 		},
 		plugins: [
 			new CleanWebpackPlugin(),
