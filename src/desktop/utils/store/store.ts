@@ -26,6 +26,9 @@ import {
 } from '@utils/fetchLocalConfigJson/fetchChampionsFromConfigJson'
 import {fetchMatchHistory, fetchMatchHistoryId} from '@utils/LOL_API'
 import history from '../../components/maincontent/main/history'
+import { retryUntil, anyOf, maxRetries, delay} from 'extra-retry'
+import ms from 'ms'
+import {doWithRetry} from 'do-with-retry'
 
 export type ChampDisplayedType = {
 	assignedRole: string
@@ -171,16 +174,48 @@ export const fillHistoryDisplayed = createAsyncThunk<HistoryDisplayedType[], {re
 			console.error("could not fill History")
 			return historyDisplayedTmp
 		}
-		const matchHistoryIds = await fetchMatchHistoryId(thunkParam.region, thunkParam.puuid)
+		const options = {
+			maxAttempts: 20,
+			initTimeout: 1100,
+		};
+
+		let matchHistoryIds : string[] | undefined
+		// @ts-ignore
+		matchHistoryIds = await doWithRetry(async retry => {
+			try {
+				return await fetchMatchHistoryId(thunkParam.region, thunkParam.puuid)
+			} catch (e) {
+				retry(e)
+			}
+		}, options)
+			.catch(e => {
+			console.error("All attempts to fetchMatchHistoryId failed")
+			console.error(e.cause)
+		})
+
+		if (!matchHistoryIds || matchHistoryIds.length < 5)
+			return historyDisplayedTmp
 		const configDeserialized = new Config(JSON.parse(thunkAPI.getState().slice.configSerialized))
 		if (matchHistoryIds.length) {
-			for (let i = 0 ; i < 5 ; ++i) {
-				const matchInfo = await fetchMatchHistory(matchHistoryIds[i], thunkParam.region)
+			for (const [i, matchHistoryId] of matchHistoryIds.entries()) {
+				let matchInfo : never
+				// @ts-ignore
+				matchInfo = await doWithRetry(async retry => {
+					try {
+						return await fetchMatchHistory(matchHistoryId, thunkParam.region)
+					} catch (e) {
+						retry(e)
+					}
+				}, options)
+					.catch(e => {
+						console.error("All attempts to fetchMatchHistory failed")
+						console.error(e.cause)
+					})
+
 				let imInAllyTeam
 				for (let x = 0 ; x < 10 ; ++x) {
-					//TODO why webstorm cannot find mistakes there
-					const participantChampName = matchInfo['info'].participants[x].championName
-					const encryptedSummonerId = (matchInfo['info'].participants[x].summonerId)
+					const participantChampName = matchInfo['info']['participants'][x]['championName']
+					const encryptedSummonerId = (matchInfo['info']['participants'][x]['summonerId'])
 					const myEncryptedSummonerId = sessionStorage.getItem('encryptedSummonerId')
 					if (encryptedSummonerId == myEncryptedSummonerId && x < 5) {
 						imInAllyTeam = true

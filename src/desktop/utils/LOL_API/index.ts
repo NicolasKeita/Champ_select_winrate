@@ -2,6 +2,7 @@
     Path + Filename: src/desktop/utils/LOL_API/index.ts
 */
 
+
 export async function fetchEncryptedSummonerId(summonerName: string, summonerRegion: string): Promise<{encryptedSummonerId: string, puuid: string}> {
 	const url = `https://4nuo1ouibd.execute-api.eu-west-3.amazonaws.com/csw_api_proxy/summoner/${summonerName}/${summonerRegion.toLowerCase()}`
 	let res
@@ -25,13 +26,16 @@ export async function fetchMatchHistoryId(summonerRegion: string, puuid : string
 	let res
 	try {
 		res = await fetch(url)
+		if (res.status == 429) {
+			throw new Error('429 code ')
+		}
 	} catch (e) {
-		throw new Error('CSW_error: following call : fetch(' + url + ' caught' +
-			' error;  ')
+		throw new Error(
+			'CSW_error: following call : fetch(' + url + ' caught' + ' error;  '
+		)
 	}
 	try {
-		const data = await res.json()
-		return data
+		return await res.json()
 	} catch (err: unknown) {
 		const e = err as Error
 		throw new Error(e.message)
@@ -40,16 +44,22 @@ export async function fetchMatchHistoryId(summonerRegion: string, puuid : string
 
 export async function fetchMatchHistory(matchId : string, summonerRegion : string): Promise<string[]> {
 	const url = `https://4nuo1ouibd.execute-api.eu-west-3.amazonaws.com/csw_api_proxy/match/${summonerRegion.toLowerCase()}/${matchId}`
-	let res
+	let res : Response
 	try {
-		res = await fetch(url)
+		res = await fetch(url, {
+			headers: {
+				"X-Api-Key": "gRpS5xTEMG9V5EQP4a0DB3SBk8XLGydq9HlTU5HZ"
+			}
+		})
+		if (res.status == 429) {
+			throw new Error('429 code ')
+		}
 	} catch (e) {
-		throw new Error('CSW_error: following call : fetch(' + url + ' caught' +
-			' error;  ')
+		throw new Error(
+			'CSW_error: following call : fetch(' + url + ' caught' + ' error;  '+ e)
 	}
 	try {
-		const data = await res.json()
-		return data
+		return await res.json()
 	} catch (err: unknown) {
 		const e = err as Error
 		throw new Error(e.message)

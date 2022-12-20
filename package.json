@@ -8,7 +8,7 @@
 	},
 	"scripts": {
 		"test": "jest",
-		"build": "webpack --mode=development  --env makeOpk",
+		"build": "webpack --mode=production  --env makeOpk",
 		"dev": "webpack --watch --mode=development",
 		"watch": "webpack --watch --mode=development"
 	},
@@ -51,7 +51,6 @@
 		"jest-environment-jsdom": ">=29.3.1",
 		"jest-fetch-mock": ">=3.0.3",
 		"jest-transform-stub": ">=2.0.0",
-		"node-fetch": ">=3.3.0",
 		"node-jsx": ">=0.13.3",
 		"prettier": ">=2.8.1",
 		"react": ">=18.2.0",
@@ -80,6 +79,7 @@
 		"@types/react": ">=18.0.26",
 		"@types/react-dom": ">=18.0.9",
 		"directory-metagen": ">=1.6.3",
+		"do-with-retry": ">=1.0.3",
 		"eima": ">=0.2.12",
 		"node-jsx": ">=0.13.3",
 		"react": ">=18.2.0",
