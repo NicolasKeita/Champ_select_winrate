@@ -12,7 +12,7 @@ module.exports = env => {
 			background: './src/background/background.tsx',
 			desktop: './src/desktop/desktop.tsx'
 		},
-		devtool: 'inline-source-map',
+		devtool: env.removeSourceMap ? false: 'inline-source-map',
 		module: {
 			rules: [
 				{
