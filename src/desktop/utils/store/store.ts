@@ -25,9 +25,6 @@ import {
 	fetchAllChampionsJson
 } from '@utils/fetchLocalConfigJson/fetchChampionsFromConfigJson'
 import {fetchMatchHistory, fetchMatchHistoryId} from '@utils/LOL_API'
-import history from '../../components/maincontent/main/history'
-import { retryUntil, anyOf, maxRetries, delay} from 'extra-retry'
-import ms from 'ms'
 import {doWithRetry} from 'do-with-retry'
 
 export type ChampDisplayedType = {

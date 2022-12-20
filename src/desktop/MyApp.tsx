@@ -22,8 +22,6 @@ import {useAppDispatch} from '@utils/hooks'
 import LCU_API_connector from '@utils/LCU_API_connector'
 import {
 	fetchEncryptedSummonerId,
-	fetchMatchHistory,
-	fetchMatchHistoryId
 } from '@utils/LOL_API'
 import {
 	fetchCSWgameVersion
