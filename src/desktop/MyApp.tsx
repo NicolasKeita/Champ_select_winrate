@@ -15,13 +15,13 @@ import {
 	fillChampSelectDisplayed, fillHistoryDisplayed,
 	resetChampSelectDisplayed,
 	setClientStatus,
-	setFooterMessage
+	setFooterMessage, setHistoryIsLoading
 } from '@utils/store/store'
 
 import {useAppDispatch} from '@utils/hooks'
 import LCU_API_connector from '@utils/LCU_API_connector'
 import {
-	fetchEncryptedSummonerId,
+	fetchEncryptedSummonerId
 } from '@utils/LOL_API'
 import {
 	fetchCSWgameVersion
@@ -83,8 +83,8 @@ function MyApp(props: My_PropType): JSX.Element {
 						dispatch(setFooterMessage(1))
 						setTimeout(dispatch, 5000, fillHistoryDisplayed(
 							{
-								region: sessionStorage.getItem('summonerRegion') || "",
-								puuid: sessionStorage.getItem('puuid') || ""
+								region: sessionStorage.getItem('summonerRegion') || '',
+								puuid: sessionStorage.getItem('puuid') || ''
 							}
 						))
 					} else if (game_flow.phase === 'None') {
@@ -164,6 +164,10 @@ function MyApp(props: My_PropType): JSX.Element {
 		}
 
 		function fetchingSummonerNameAndRegionEvery5sec() {
+			dispatch(setHistoryIsLoading({
+				historyDisplayedIndex: -1,
+				isLoading: true
+			}))
 			const intervalId = setInterval(() => {
 				overwolf.games.launchers.events.getInfo(10902, (result) => {
 					if (result.success && result.res && result.res.summoner_info) {
@@ -177,7 +181,10 @@ function MyApp(props: My_PropType): JSX.Element {
 							.then(({encryptedSummonerId, puuid}) => {
 								sessionStorage.setItem('encryptedSummonerId', encryptedSummonerId)
 								sessionStorage.setItem('puuid', puuid)
-								dispatch(fillHistoryDisplayed({region : region, puuid: puuid}))
+								dispatch(fillHistoryDisplayed({
+									region: region,
+									puuid: puuid
+								}))
 							})
 							.catch((e) => {
 								console.error(e + ' - retrying in 5sec')

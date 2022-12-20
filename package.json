@@ -86,6 +86,7 @@
 		"react-context-menu-hooks": ">=0.4.0",
 		"react-countdown": ">=2.3.5",
 		"react-dom": ">=18.2.0",
+		"react-loading-indicators": ">=0.0.11",
 		"react-redux": ">=8.0.5",
 		"semver": ">=7.3.8",
 		"styled-components": ">=5.3.6",

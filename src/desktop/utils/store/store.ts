@@ -41,6 +41,8 @@ type ChampSelectDisplayedType = {
 export type HistoryDisplayedType = {
 	allies: Champion[]
 	enemies: Champion[]
+	matchId: string,
+	isLoading: boolean
 }
 
 export function getDefaultRecommendations(): Champion[] {
@@ -70,12 +72,15 @@ function initChampSelectDisplayed() {
 	}
 	return champSelectDisplayed
 }
+
 function initHistoryDisplayed() {
-	const historyDisplayed : HistoryDisplayedType[] = []
+	const historyDisplayed: HistoryDisplayedType[] = []
 	for (let i = 0; i < 5; ++i) {
 		historyDisplayed.push({
 			allies: getDefaultRecommendations(),
-			enemies: getDefaultRecommendations()
+			enemies: getDefaultRecommendations(),
+			isLoading: false,
+			matchId: '0'
 		})
 	}
 	return historyDisplayed
@@ -94,7 +99,11 @@ type StoreStateType = {
 }
 
 const initialState = {
-	configSerialized: JSON.stringify({settingsPage: false, currentPage: ConfigPage.HISTORY, champions: []}),
+	configSerialized: JSON.stringify({
+		settingsPage: false,
+		currentPage: ConfigPage.HISTORY,
+		champions: []
+	}),
 	internalSettings: '',
 	footerMessageID: -1,
 	leagueClientStatus: -1,
@@ -116,7 +125,7 @@ function updateChampSelectDisplayedScores(champSelectDisplayed: ChampSelectDispl
 	}
 }
 
-function updateHistoryDisplayedScores(historyDisplayed : HistoryDisplayedType[], allChamps: Champion[]) {
+function updateHistoryDisplayedScores(historyDisplayed: HistoryDisplayedType[], allChamps: Champion[]) {
 	for (const match of historyDisplayed) {
 		for (const ally of match.allies) {
 			ally.opScore_user = getChampScore(ally.name, allChamps)
@@ -163,20 +172,20 @@ export const fetchAllChampions = createAsyncThunk<Champion[]>(
 )
 
 
-export const fillHistoryDisplayed = createAsyncThunk<HistoryDisplayedType[], {region: string, puuid: string}, {state: RootState}>(
+export const fillHistoryDisplayed = createAsyncThunk<void, {region: string, puuid: string}, {state: RootState}>(
 	'fillHistoryDisplayed',
 	async (thunkParam, thunkAPI) => {
-		const historyDisplayedTmp : HistoryDisplayedType[] = initHistoryDisplayed()
-		if (thunkParam.region == "" || thunkParam.puuid == "") {
-			console.error("could not fill History")
-			return historyDisplayedTmp
+		const historyDisplayedTmp: HistoryDisplayedType[] = initHistoryDisplayed()
+		if (thunkParam.region == '' || thunkParam.puuid == '') {
+			console.error('could not fill History')
+			return
 		}
 		const options = {
 			maxAttempts: 20,
-			initTimeout: 1100,
-		};
+			initTimeout: 1100
+		}
 
-		let matchHistoryIds : string[] | undefined
+		let matchHistoryIds: string[] | undefined
 		// @ts-ignore
 		matchHistoryIds = await doWithRetry(async retry => {
 			try {
@@ -186,16 +195,21 @@ export const fillHistoryDisplayed = createAsyncThunk<HistoryDisplayedType[], {re
 			}
 		}, options)
 			.catch(e => {
-			console.error("All attempts to fetchMatchHistoryId failed")
-			console.error(e.cause)
-		})
+				console.error('All attempts to fetchMatchHistoryId failed')
+				console.error(e.cause)
+			})
 
 		if (!matchHistoryIds || matchHistoryIds.length < 5)
-			return historyDisplayedTmp
+			return
 		const configDeserialized = new Config(JSON.parse(thunkAPI.getState().slice.configSerialized))
 		if (matchHistoryIds.length) {
 			for (const [i, matchHistoryId] of matchHistoryIds.entries()) {
-				let matchInfo : never
+				historyDisplayedTmp[i].matchId = matchHistoryId
+				// thunkAPI.dispatch(setHistoryIsLoading({
+				// 	historyDisplayedIndex: i,
+				// 	isLoading: true
+				// }))
+				let matchInfo: never
 				// @ts-ignore
 				matchInfo = await doWithRetry(async retry => {
 					try {
@@ -205,12 +219,12 @@ export const fillHistoryDisplayed = createAsyncThunk<HistoryDisplayedType[], {re
 					}
 				}, options)
 					.catch(e => {
-						console.error("All attempts to fetchMatchHistory failed")
+						console.error('All attempts to fetchMatchHistory failed')
 						console.error(e.cause)
 					})
 
 				let imInAllyTeam
-				for (let x = 0 ; x < 10 ; ++x) {
+				for (let x = 0; x < 10; ++x) {
 					const participantChampName = matchInfo['info']['participants'][x]['championName']
 					const encryptedSummonerId = (matchInfo['info']['participants'][x]['summonerId'])
 					const myEncryptedSummonerId = sessionStorage.getItem('encryptedSummonerId')
@@ -233,11 +247,15 @@ export const fillHistoryDisplayed = createAsyncThunk<HistoryDisplayedType[], {re
 					historyDisplayedTmp[i].allies = JSON.parse(JSON.stringify(historyDisplayedTmp[i].enemies))
 					historyDisplayedTmp[i].enemies = JSON.parse(tmpAlies)
 				}
+				thunkAPI.dispatch(setHistoryMatch({
+					historyDisplayedIndex: i,
+					matchDisplayed: historyDisplayedTmp[i]
+				}))
 			}
 		} else {
 			// TODO tell user to do some games
 		}
-		return historyDisplayedTmp
+		// return historyDisplayedTmp
 	})
 
 export const fillChampSelectDisplayed = createAsyncThunk<BothTeam | void, FillChampSelectDisplayedParamType, {state: RootState}>(
@@ -338,9 +356,19 @@ export const slice = createSlice({
 	initialState: initialState,
 	reducers: {
 		toggleSettingsPage: (state) => {
-			const configPlainObject : Config = JSON.parse(state.configSerialized)
+			const configPlainObject: Config = JSON.parse(state.configSerialized)
 			configPlainObject.settingsPage = !configPlainObject.settingsPage
 			state.configSerialized = JSON.stringify(configPlainObject)
+		},
+		setHistoryIsLoading: (state, action: PayloadAction<{historyDisplayedIndex: number, isLoading: boolean}>) => {
+			if (action.payload.historyDisplayedIndex == -1) {
+				for (const historyMatchDisplayed of state.historyDisplayed)
+					historyMatchDisplayed.isLoading = action.payload.isLoading
+			} else
+				state.historyDisplayed[action.payload.historyDisplayedIndex].isLoading = action.payload.isLoading
+		},
+		setHistoryMatch: (state, action: PayloadAction<{historyDisplayedIndex: number, matchDisplayed: HistoryDisplayedType}>) => {
+			state.historyDisplayed[action.payload.historyDisplayedIndex] = action.payload.matchDisplayed
 		},
 		copyFromAnotherSetting: (state, action: PayloadAction<Config>) => {
 			const configDeserialized = new Config(JSON.parse(state.configSerialized))
@@ -360,7 +388,7 @@ export const slice = createSlice({
 			updateHistoryDisplayedScores(state.historyDisplayed, configDeserialized.champions)
 		},
 		setClientStatus: (state, action: PayloadAction<number>) => {
-			const configPlainObject : Config = JSON.parse(state.configSerialized)
+			const configPlainObject: Config = JSON.parse(state.configSerialized)
 			if (action.payload == 0)
 				configPlainObject.currentPage = ConfigPage.CHAMPSELECT
 			else
@@ -420,11 +448,11 @@ export const slice = createSlice({
 				}
 			}
 		})
-		builder.addCase(fillHistoryDisplayed.fulfilled, (state, action) => {
-			if (action.payload !== undefined) {
-				state.historyDisplayed = action.payload
-			}
-		})
+		// builder.addCase(fillHistoryDisplayed.fulfilled, (state, action) => {
+		// 	if (action.payload !== undefined) {
+		// 		state.historyDisplayed = action.payload
+		// 	}
+		// })
 		builder.addCase(fetchAllChampions.fulfilled, (state, action) => {
 			const configDeserialized = new Config(JSON.parse(state.configSerialized))
 			for (const elem of Object.values(action.payload)) {
@@ -459,7 +487,9 @@ export const {
 	copyFromAnotherSetting,
 	setFooterMessage,
 	setClientStatus,
-	resetSettings
+	resetSettings,
+	setHistoryIsLoading,
+	setHistoryMatch
 } = slice.actions
 
 const mainReducer = combineReducers({

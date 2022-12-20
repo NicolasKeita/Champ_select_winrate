@@ -7,8 +7,9 @@ import {Champion} from '../maincontent/settings/Champion'
 import styled from 'styled-components'
 import questionMark from '@public/img/question_mark.jpg'
 import uniqid from 'uniqid'
+import {Seek} from 'react-loading-indicators'
 
-const ChampRecommendationImg = styled.img`
+const TeamHistoryImg = styled.img`
   border-radius: 50%;
   width: 30px;
   height: 30px;
@@ -17,7 +18,7 @@ const ChampRecommendationImg = styled.img`
 `
 
 const HistoryProfileContainer = styled.div`
-	height : 50px;
+  height: 50px;
   display: flex;
   flex-direction: ${props => (props.isEnemyTeam ? 'row-reverse' : 'row')};
   padding: 0 12px 0 12px;
@@ -28,20 +29,26 @@ const HistoryProfileContainer = styled.div`
 `
 
 interface PropsType {
-	champRecommendation: Champion[]
+	teamHistory: Champion[]
+	isLoading: boolean
 }
 
-function HistoryProfile(props : PropsType) : JSX.Element {
+function HistoryProfile(props: PropsType): JSX.Element {
 
-	function renderChampionRecommendation(): JSX.Element[] | null {
+	function renderChampionRecommendation(): JSX.Element[] | JSX.Element | null {
 		//if (props.isEnemyTeam || isUnsupportedGameMode) return null
 		const row: JSX.Element[] = []
-		for (let i = 0; i < 5; ++i) {
-			row.push(<ChampRecommendationImg key={uniqid()}
-											 src={props.champRecommendation[i] ? props.champRecommendation[i].imageUrl : questionMark} />)
+		if (!props.isLoading) {
+			for (let i = 0; i < 5; ++i) {
+				row.push(<TeamHistoryImg key={uniqid()}
+										 src={props.teamHistory[i] ? props.teamHistory[i].imageUrl : questionMark} />)
+			}
+		} else {
+			return < Seek color='#e5ba5e' />
 		}
 		return row
 	}
+
 	return (
 		<HistoryProfileContainer>
 			<div style={{display: 'flex', flexDirection: 'row'}}>

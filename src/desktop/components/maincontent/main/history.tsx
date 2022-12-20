@@ -57,7 +57,7 @@ const TeamGrid = styled.div`
 `
 
 const LineDisplay = styled.div`
-	//display: flex;
+  //display: flex;
   //flex-direction: ;
 `
 
@@ -98,7 +98,6 @@ const ProfileLine = styled.div`
 function History() {
 	const historyDisplayed = useAppSelector(state => state.slice.historyDisplayed)
 
-
 	function computeWinrate(allies: Champion[], enemies: Champion[]): number {
 		let sumAllies = 0
 		let sumEnemies = 0
@@ -119,26 +118,34 @@ function History() {
 		}
 	}
 
-	function renderHistoryGrid(historyDisplayed : HistoryDisplayedType[]): JSX.Element[] {
-		const linesHistory : JSX.Element[] = []
+	function renderHistoryGrid(historyDisplayed: HistoryDisplayedType[]): JSX.Element[] {
+		const linesHistory: JSX.Element[] = []
 		const tooltipNumber = 'Numbers are coming from your own settings. Check your settings (top right icon) to change the default.'
 		for (let i = 0; i < 5; ++i) {
 			const winrate = computeWinrate(historyDisplayed[i].allies, historyDisplayed[i].enemies)
 			linesHistory.push(
 				<div key={uniqid()}>
 					<TeamGrid>
-						<HistoryProfile	key={uniqid()}
-										   champRecommendation={historyDisplayed[i].allies} />
+						<HistoryProfile key={uniqid()}
+										teamHistory={historyDisplayed[i].allies}
+										isLoading={historyDisplayed[i].isLoading}
+						/>
 						<Tooltip label={tooltipNumber}>
 							<h1>{winrate}%</h1>
 						</Tooltip>
 						<HistoryProfile key={uniqid()}
-										champRecommendation={historyDisplayed[i].enemies} />
+										teamHistory={historyDisplayed[i].enemies}
+										isLoading={historyDisplayed[i].isLoading}
+						/>
 					</TeamGrid>
 					{i < 4 &&
-						<div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-							<ProfileLine isEnemyTeam={false}/>
-							<ProfileLine isEnemyTeam={true}/>
+						<div style={{
+							display: 'flex',
+							flexDirection: 'row',
+							justifyContent: 'space-between'
+						}}>
+							<ProfileLine isEnemyTeam={false} />
+							<ProfileLine isEnemyTeam={true} />
 						</div>
 					}
 				</div>
@@ -151,7 +158,7 @@ function History() {
 		<HistoryContainer>
 			<PercentageContainer>
 				<WinrateLine isLeft />
-					<h1>Your ranked history</h1>
+				<h1>Your ranked history</h1>
 				<WinrateLine />
 			</PercentageContainer>
 			<HistoryGrid>
