@@ -102,13 +102,13 @@ describe('settings', () => {
 	})
 
 	it('should be able to reset settings', async () => {
-		global.overwolf.games.launchers.getRunningLaunchersInfo = getRunningLaunchersInfo
-		// ↑ Put a client already running
-		global.overwolf.games.launchers.events.onInfoUpdates.addListener = onInfoUpdatesAddListener
-		// ↑ Enters in champ select
-		await act(() => {renderEntireApp2()})
-		const settingButton = screen.getByLabelText('settingsButton')
-		await user.click(settingButton)
+		// global.overwolf.games.launchers.getRunningLaunchersInfo = getRunningLaunchersInfo
+		// // ↑ Put a client already running
+		// global.overwolf.games.launchers.events.onInfoUpdates.addListener = onInfoUpdatesAddListener
+		// // ↑ Enters in champ select
+		// await act(() => {renderEntireApp2()})
+		// const settingButton = screen.getByLabelText('settingsButton')
+		// await user.click(settingButton)
 		// ↑ Goes to settings
 		// await waitFor(async () => {
 		// }, {timeout: 5000})
