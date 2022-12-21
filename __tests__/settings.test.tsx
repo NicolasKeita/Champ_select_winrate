@@ -8,22 +8,14 @@ import {
 	getRunningLaunchersInfo, onInfoUpdatesAddListener,
 	overwolfMocked
 } from '../__testsUtils__/OW_mocking'
-import {act, render, screen, waitFor, cleanup} from '@testing-library/react'
-import {
-	renderEntireApp, renderEntireApp2,
-	renderWithProviders
-} from '../__testsUtils__/renderEntireApp'
+import {act, screen, waitFor} from '@testing-library/react'
+import {renderEntireApp} from '../__testsUtils__/renderEntireApp'
 import fetch from 'jest-fetch-mock'
 import allChamps from '../__testsUtils__/allChamps.json'
 import {configTest} from '../__testsUtils__/configTest'
 import '@testing-library/jest-dom'
 import * as fetchDataDragon
 	from '../src/desktop/utils/fetchDataDragon/fetchDataDragon'
-import {ChakraProvider} from '@chakra-ui/react'
-import MyApp from '../src/desktop/MyApp'
-import {AppWindow} from '../src/AppWindow'
-import {kWindowNames} from '../src/consts'
-
 
 describe('settings', () => {
 	beforeEach(() => {
@@ -45,14 +37,13 @@ describe('settings', () => {
 	)
 	jest.spyOn(fetchDataDragon, 'getChampName').mockResolvedValue('Talon')
 	jest.spyOn(fetchDataDragon, 'getChampImg').mockResolvedValue('https://ddragon.leagueoflegends.com/cdn/12.13.1/img/champion/Talon.png')
-	jest.spyOn(fetchDataDragon, 'getChampSquareAsset').mockResolvedValue('https://ddragon.leagueoflegends.com/cdn/12.13.1/img/champion/Talon.png')
 
 	it('should update immediately user score when user changes it', async () => {
 		global.overwolf.games.launchers.getRunningLaunchersInfo = getRunningLaunchersInfo
 		// ↑ Put a client already running
 		global.overwolf.games.launchers.events.onInfoUpdates.addListener = onInfoUpdatesAddListener
 		// ↑ Enters in champ select
-		await act(() => { renderEntireApp2()})
+		await act(() => { renderEntireApp()})
 		expect(localStorage.getItem('config')).toBe(configTest)
 		await waitFor(() => {
 			const TalonElem = screen.getAllByText(/Talon/i)
@@ -86,7 +77,7 @@ describe('settings', () => {
 		expect(inputTextBoxTalon).toHaveValue('99')
 	})
 	it('should appear default 50 when removing user score completely', async () => {
-		await act(() => {renderEntireApp2()})
+		await act(() => {renderEntireApp()})
 		const settingButton = screen.getByLabelText('settingsButton')
 		await user.click(settingButton)
 		// ↑ Goes to settings
@@ -101,17 +92,17 @@ describe('settings', () => {
 		}, {timeout: 5000})
 	})
 
-	it('should be able to reset settings', async () => {
-		// global.overwolf.games.launchers.getRunningLaunchersInfo = getRunningLaunchersInfo
-		// // ↑ Put a client already running
-		// global.overwolf.games.launchers.events.onInfoUpdates.addListener = onInfoUpdatesAddListener
-		// // ↑ Enters in champ select
-		// await act(() => {renderEntireApp2()})
-		// const settingButton = screen.getByLabelText('settingsButton')
-		// await user.click(settingButton)
-		// ↑ Goes to settings
-		// await waitFor(async () => {
-		// }, {timeout: 5000})
-	})
+	// it('should be able to reset settings', async () => {
+	// global.overwolf.games.launchers.getRunningLaunchersInfo = getRunningLaunchersInfo
+	// // ↑ Put a client already running
+	// global.overwolf.games.launchers.events.onInfoUpdates.addListener = onInfoUpdatesAddListener
+	// // ↑ Enters in champ select
+	// await act(() => {renderEntireApp2()})
+	// const settingButton = screen.getByLabelText('settingsButton')
+	// await user.click(settingButton)
+	// ↑ Goes to settings
+	// await waitFor(async () => {
+	// }, {timeout: 5000})
+	// })
 	//TODO do a test about the reset button
 })

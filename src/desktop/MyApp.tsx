@@ -134,6 +134,7 @@ function MyApp(props: My_PropType): JSX.Element {
 			}
 
 			function handleFeaturesCallbacks(info) {
+				// console.log(info)
 				if (info.feature === 'game_flow') handleGameFlow(info.info.game_flow)
 				if (info.feature === 'champ_select') handleChampSelect(info.info.champ_select)
 			}

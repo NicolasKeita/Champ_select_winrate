@@ -4,6 +4,7 @@
 
 import champ_select1 from './action1.json'
 import champ_select2 from './action2.json'
+import {copy} from 'copy-anything'
 
 
 export const overwolfMocked: typeof overwolf = {
@@ -83,6 +84,35 @@ export function onInfoUpdatesAddListener(callback: (event: any) => void) {
 	setTimeout(callback, 2000, infoChampSelect)
 	infoChampSelect.info.champ_select.raw = JSON.stringify(champ_select2)
 	setTimeout(callback, 4000, infoChampSelect)
+}
+
+export function onInfoUpdatesAddListenerSpamChampSelect(callback: (event: any) => void) {
+	const infoGameFlow = {
+		feature: 'game_flow',
+		info: {
+			game_flow: {
+				phase: 'Lobby'
+			}
+		}
+	}
+	const infoChampSelect = {
+		feature: 'champ_select',
+		info: {
+			champ_select: {
+				raw: JSON.stringify(champ_select1)
+			}
+		}
+	}
+	let i = 0
+	let period = 300
+	for (let x = 0; x < 10; ++x) {
+		infoGameFlow.info.game_flow.phase = 'Lobby'
+		setTimeout(callback, period * ++i, copy(infoGameFlow))
+		infoGameFlow.info.game_flow.phase = 'ChampSelect'
+		setTimeout(callback, period * ++i, copy(infoGameFlow))
+		setTimeout(callback, period * ++i, infoChampSelect)
+		infoGameFlow.info.game_flow.phase = 'Lobby'
+	}
 }
 
 export function onTerminatedAddListener(callback) {

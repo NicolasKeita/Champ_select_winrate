@@ -13,7 +13,7 @@ import {
 	getRunningLaunchersInfo, onInfoUpdatesAddListener, onTerminatedAddListener,
 	overwolfMocked
 } from '../__testsUtils__/OW_mocking'
-import {renderEntireApp2} from '../__testsUtils__/renderEntireApp'
+import {renderEntireApp} from '../__testsUtils__/renderEntireApp'
 import * as fetchDataDragon
 	from '../src/desktop/utils/fetchDataDragon/fetchDataDragon'
 
@@ -38,7 +38,7 @@ describe('basic', () => {
 	jest.spyOn(fetchDataDragon, 'getChampImg').mockResolvedValue('https://ddragon.leagueoflegends.com/cdn/12.13.1/img/champion/Talon.png')
 	jest.spyOn(fetchDataDragon, 'getChampSquareAsset').mockResolvedValue('https://ddragon.leagueoflegends.com/cdn/12.13.1/img/champion/Talon.png')
 	test('should display winrate in header', async () => {
-		await act(() => {renderEntireApp2()})
+		await act(() => {renderEntireApp()})
 		const winrateElem = screen.getByText(/winrate/i)
 		const FooterElem = screen.getByText(/League client is not open./i)
 		expect(winrateElem).toBeInTheDocument()
@@ -46,7 +46,7 @@ describe('basic', () => {
 	})
 	test('should display message when lol client is already open', async () => {
 		global.overwolf.games.launchers.getRunningLaunchersInfo = getRunningLaunchersInfo
-		await act(() => {renderEntireApp2()})
+		await act(() => {renderEntireApp()})
 		const FooterElem = screen.getByText(/You are not in champ select./i)
 		expect(FooterElem).toBeInTheDocument()
 	})
@@ -56,7 +56,7 @@ describe('basic', () => {
 		// closes LoL client
 		global.overwolf.games.launchers.onTerminated.addListener = onTerminatedAddListener
 
-		await act(() => {renderEntireApp2()})
+		await act(() => {renderEntireApp()})
 		await waitFor(() => {
 			const FooterElem = screen.getByText(/League client is not open./i)
 			expect(FooterElem).toBeInTheDocument()
@@ -69,7 +69,7 @@ describe('basic', () => {
 		// Entering in champ select
 		global.overwolf.games.launchers.events.onInfoUpdates.addListener = onInfoUpdatesAddListener
 
-		await act(() => {renderEntireApp2()})
+		await act(() => {renderEntireApp()})
 		await waitFor(() => {
 			expect(screen.getByRole('heading', {name: 'footerMessage'})).toBeEmptyDOMElement()
 		}, {timeout: 4000})
@@ -77,7 +77,7 @@ describe('basic', () => {
 	test('should see default settings in localStorage after launching app', async () => {
 		//lol Client's already running
 		global.overwolf.games.launchers.getRunningLaunchersInfo = getRunningLaunchersInfo
-		await act(() => {renderEntireApp2()})
+		await act(() => {renderEntireApp()})
 
 		const config = localStorage.getItem('config')
 		expect(config).toBe(configTest)

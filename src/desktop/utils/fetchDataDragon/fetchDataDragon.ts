@@ -22,11 +22,13 @@ async function getLatestChampionDDragon(language = 'en_US') {
 	} while (!response.ok)
 
 	championJson[language] = await response.json()
+	// console.log('champ')
+	// console.log(championJson[language])
 	return championJson[language]
 }
 
 export async function getChampImgByName(name: string) {
-	let formattedName : string = name
+	let formattedName: string = name
 	if (!name.endsWith('.png'))
 		formattedName = name + '.png'
 	formattedName = formattedName.replace('.png', '_png')
@@ -67,13 +69,13 @@ export async function getChampName(champId) {
 export function getChampScore(champName: string, settingsChampions: Champion[]): number {
 	for (const elem of settingsChampions) {
 		if (elem.name == champName)
-			return elem.opScore_user? elem.opScore_user : 50
+			return elem.opScore_user ? elem.opScore_user : 50
 	}
 	return 50
 }
 
 export async function getChampSquareAsset(champNamePNG: string): Promise<string> {
-	let formattedName : string = champNamePNG
+	let formattedName: string = champNamePNG
 	if (!champNamePNG.endsWith('.png'))
 		formattedName = champNamePNG + '.png'
 	formattedName = formattedName.replace('.png', '_png')
