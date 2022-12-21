@@ -205,10 +205,7 @@ export const fillHistoryDisplayed = createAsyncThunk<void, {region: string, puui
 		if (matchHistoryIds.length) {
 			for (const [i, matchHistoryId] of matchHistoryIds.entries()) {
 				historyDisplayedTmp[i].matchId = matchHistoryId
-				// thunkAPI.dispatch(setHistoryIsLoading({
-				// 	historyDisplayedIndex: i,
-				// 	isLoading: true
-				// }))
+				//TODO maybe matchId is already in the sessionStorage; if then don't fetch and just use the result you got previously inside sessionStorage
 				let matchInfo: never
 				// @ts-ignore
 				matchInfo = await doWithRetry(async retry => {
