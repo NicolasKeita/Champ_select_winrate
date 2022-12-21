@@ -1,1298 +1,1298 @@
 {
 	"Aatrox": {
-		"id": "266",
-		"image": "Aatrox.png",
-		"name": "Aatrox",
-		"nameFormatted": "Aatrox",
 		"opScore_CSW": 69,
-		"role": "top"
+		"role": "top",
+		"name": "Aatrox",
+		"image": "Aatrox.png",
+		"nameFormatted": "Aatrox",
+		"id": "266"
 	},
 	"Ahri": {
-		"id": "103",
-		"image": "Ahri.png",
-		"name": "Ahri",
-		"nameFormatted": "Ahri",
 		"opScore_CSW": 64,
-		"role": "mid"
+		"role": "middle",
+		"name": "Ahri",
+		"image": "Ahri.png",
+		"nameFormatted": "Ahri",
+		"id": "103"
 	},
 	"Akali": {
-		"id": "84",
-		"image": "Akali.png",
-		"name": "Akali",
-		"nameFormatted": "Akali",
 		"opScore_CSW": 75,
-		"role": "mid"
+		"role": "middle",
+		"name": "Akali",
+		"image": "Akali.png",
+		"nameFormatted": "Akali",
+		"id": "84"
 	},
 	"Akshan": {
-		"id": "166",
-		"image": "Akshan.png",
-		"name": "Akshan",
-		"nameFormatted": "Akshan",
 		"opScore_CSW": 70,
-		"role": "mid"
+		"role": "middle",
+		"name": "Akshan",
+		"image": "Akshan.png",
+		"nameFormatted": "Akshan",
+		"id": "166"
 	},
 	"Alistar": {
-		"id": "12",
-		"image": "Alistar.png",
-		"name": "Alistar",
-		"nameFormatted": "Alistar",
 		"opScore_CSW": 40,
-		"role": "support"
+		"role": "utility",
+		"name": "Alistar",
+		"image": "Alistar.png",
+		"nameFormatted": "Alistar",
+		"id": "12"
 	},
 	"Amumu": {
-		"id": "32",
-		"image": "Amumu.png",
-		"name": "Amumu",
-		"nameFormatted": "Amumu",
 		"opScore_CSW": 66,
-		"role": "jungle"
+		"role": "jungle",
+		"name": "Amumu",
+		"image": "Amumu.png",
+		"nameFormatted": "Amumu",
+		"id": "32"
 	},
 	"Anivia": {
-		"id": "34",
-		"image": "Anivia.png",
-		"name": "Anivia",
-		"nameFormatted": "Anivia",
 		"opScore_CSW": 63,
-		"role": "mid"
+		"role": "middle",
+		"name": "Anivia",
+		"image": "Anivia.png",
+		"nameFormatted": "Anivia",
+		"id": "34"
 	},
 	"Annie": {
-		"id": "1",
-		"image": "Annie.png",
-		"name": "Annie",
-		"nameFormatted": "Annie",
 		"opScore_CSW": 43,
-		"role": "mid"
+		"role": "middle",
+		"name": "Annie",
+		"image": "Annie.png",
+		"nameFormatted": "Annie",
+		"id": "1"
 	},
 	"Aphelios": {
-		"id": "523",
-		"image": "Aphelios.png",
-		"name": "Aphelios",
-		"nameFormatted": "Aphelios",
 		"opScore_CSW": 50,
-		"role": "adc"
+		"role": "bottom",
+		"name": "Aphelios",
+		"image": "Aphelios.png",
+		"nameFormatted": "Aphelios",
+		"id": "523"
 	},
 	"Ashe": {
-		"id": "22",
-		"image": "Ashe.png",
-		"name": "Ashe",
-		"nameFormatted": "Ashe",
 		"opScore_CSW": 48,
-		"role": "adc"
+		"role": "bottom",
+		"name": "Ashe",
+		"image": "Ashe.png",
+		"nameFormatted": "Ashe",
+		"id": "22"
 	},
 	"AurelionSol": {
-		"id": "136",
-		"image": "AurelionSol.png",
-		"name": "Aurelion Sol",
-		"nameFormatted": "AurelionSol",
 		"opScore_CSW": 63,
-		"role": "mid"
+		"role": "middle",
+		"name": "Aurelion Sol",
+		"image": "AurelionSol.png",
+		"nameFormatted": "AurelionSol",
+		"id": "136"
 	},
 	"Azir": {
-		"id": "268",
-		"image": "Azir.png",
-		"name": "Azir",
-		"nameFormatted": "Azir",
 		"opScore_CSW": 45,
-		"role": "mid"
+		"role": "middle",
+		"name": "Azir",
+		"image": "Azir.png",
+		"nameFormatted": "Azir",
+		"id": "268"
 	},
 	"Bard": {
-		"id": "432",
-		"image": "Bard.png",
-		"name": "Bard",
-		"nameFormatted": "Bard",
 		"opScore_CSW": 64,
-		"role": "support"
+		"role": "utility",
+		"name": "Bard",
+		"image": "Bard.png",
+		"nameFormatted": "Bard",
+		"id": "432"
 	},
 	"Belveth": {
-		"id": "200",
-		"image": "Belveth.png",
-		"name": "Bel'Veth",
-		"nameFormatted": "Belveth",
 		"opScore_CSW": 68,
-		"role": "jungle"
+		"role": "jungle",
+		"name": "Bel'Veth",
+		"image": "Belveth.png",
+		"nameFormatted": "Belveth",
+		"id": "200"
 	},
 	"Blitzcrank": {
-		"id": "53",
-		"image": "Blitzcrank.png",
-		"name": "Blitzcrank",
-		"nameFormatted": "Blitzcrank",
 		"opScore_CSW": 55,
-		"role": "support"
+		"role": "utility",
+		"name": "Blitzcrank",
+		"image": "Blitzcrank.png",
+		"nameFormatted": "Blitzcrank",
+		"id": "53"
 	},
 	"Brand": {
-		"id": "63",
-		"image": "Brand.png",
-		"name": "Brand",
-		"nameFormatted": "Brand",
 		"opScore_CSW": 57,
-		"role": "support"
+		"role": "utility",
+		"name": "Brand",
+		"image": "Brand.png",
+		"nameFormatted": "Brand",
+		"id": "63"
 	},
 	"Braum": {
-		"id": "201",
-		"image": "Braum.png",
-		"name": "Braum",
-		"nameFormatted": "Braum",
 		"opScore_CSW": 40,
-		"role": "support"
+		"role": "utility",
+		"name": "Braum",
+		"image": "Braum.png",
+		"nameFormatted": "Braum",
+		"id": "201"
 	},
 	"Caitlyn": {
-		"id": "51",
-		"image": "Caitlyn.png",
-		"name": "Caitlyn",
-		"nameFormatted": "Caitlyn",
 		"opScore_CSW": 75,
-		"role": "adc"
+		"role": "bottom",
+		"name": "Caitlyn",
+		"image": "Caitlyn.png",
+		"nameFormatted": "Caitlyn",
+		"id": "51"
 	},
 	"Camille": {
-		"id": "164",
-		"image": "Camille.png",
-		"name": "Camille",
-		"nameFormatted": "Camille",
 		"opScore_CSW": 72,
-		"role": "top"
+		"role": "top",
+		"name": "Camille",
+		"image": "Camille.png",
+		"nameFormatted": "Camille",
+		"id": "164"
 	},
 	"Cassiopeia": {
-		"id": "69",
-		"image": "Cassiopeia.png",
-		"name": "Cassiopeia",
-		"nameFormatted": "Cassiopeia",
 		"opScore_CSW": 54,
-		"role": "mid"
+		"role": "middle",
+		"name": "Cassiopeia",
+		"image": "Cassiopeia.png",
+		"nameFormatted": "Cassiopeia",
+		"id": "69"
 	},
 	"Chogath": {
-		"id": "31",
-		"image": "Chogath.png",
-		"name": "Cho'Gath",
-		"nameFormatted": "Chogath",
 		"opScore_CSW": 60,
-		"role": "top"
+		"role": "top",
+		"name": "Cho'Gath",
+		"image": "Chogath.png",
+		"nameFormatted": "Chogath",
+		"id": "31"
 	},
 	"Corki": {
-		"id": "42",
-		"image": "Corki.png",
-		"name": "Corki",
-		"nameFormatted": "Corki",
 		"opScore_CSW": 60,
-		"role": "mid"
+		"role": "middle",
+		"name": "Corki",
+		"image": "Corki.png",
+		"nameFormatted": "Corki",
+		"id": "42"
 	},
 	"Darius": {
-		"id": "122",
-		"image": "Darius.png",
-		"name": "Darius",
-		"nameFormatted": "Darius",
 		"opScore_CSW": 65,
-		"role": "top"
+		"role": "top",
+		"name": "Darius",
+		"image": "Darius.png",
+		"nameFormatted": "Darius",
+		"id": "122"
 	},
 	"Diana": {
-		"id": "131",
-		"image": "Diana.png",
-		"name": "Diana",
-		"nameFormatted": "Diana",
 		"opScore_CSW": 71,
-		"role": "jungle"
+		"role": "jungle",
+		"name": "Diana",
+		"image": "Diana.png",
+		"nameFormatted": "Diana",
+		"id": "131"
 	},
 	"Draven": {
-		"id": "119",
-		"image": "Draven.png",
-		"name": "Draven",
-		"nameFormatted": "Draven",
 		"opScore_CSW": 48,
-		"role": "adc"
+		"role": "bottom",
+		"name": "Draven",
+		"image": "Draven.png",
+		"nameFormatted": "Draven",
+		"id": "119"
 	},
 	"DrMundo": {
-		"id": "36",
-		"image": "DrMundo.png",
-		"name": "Dr. Mundo",
-		"nameFormatted": "DrMundo",
 		"opScore_CSW": 65,
-		"role": "jungle"
+		"role": "jungle",
+		"name": "Dr. Mundo",
+		"image": "DrMundo.png",
+		"nameFormatted": "DrMundo",
+		"id": "36"
 	},
 	"Ekko": {
-		"id": "245",
-		"image": "Ekko.png",
-		"name": "Ekko",
-		"nameFormatted": "Ekko",
 		"opScore_CSW": 66,
-		"role": "jungle"
+		"role": "jungle",
+		"name": "Ekko",
+		"image": "Ekko.png",
+		"nameFormatted": "Ekko",
+		"id": "245"
 	},
 	"Elise": {
-		"id": "60",
-		"image": "Elise.png",
-		"name": "Elise",
-		"nameFormatted": "Elise",
 		"opScore_CSW": 49,
-		"role": "jungle"
+		"role": "jungle",
+		"name": "Elise",
+		"image": "Elise.png",
+		"nameFormatted": "Elise",
+		"id": "60"
 	},
 	"Evelynn": {
-		"id": "28",
-		"image": "Evelynn.png",
-		"name": "Evelynn",
-		"nameFormatted": "Evelynn",
 		"opScore_CSW": 69,
-		"role": "jungle"
+		"role": "jungle",
+		"name": "Evelynn",
+		"image": "Evelynn.png",
+		"nameFormatted": "Evelynn",
+		"id": "28"
 	},
 	"Ezreal": {
-		"id": "81",
-		"image": "Ezreal.png",
-		"name": "Ezreal",
-		"nameFormatted": "Ezreal",
 		"opScore_CSW": 45,
-		"role": "adc"
+		"role": "bottom",
+		"name": "Ezreal",
+		"image": "Ezreal.png",
+		"nameFormatted": "Ezreal",
+		"id": "81"
 	},
 	"Fiddlesticks": {
-		"id": "9",
-		"image": "Fiddlesticks.png",
-		"name": "Fiddlesticks",
-		"nameFormatted": "Fiddlesticks",
 		"opScore_CSW": 70,
-		"role": "jungle"
+		"role": "jungle",
+		"name": "Fiddlesticks",
+		"image": "Fiddlesticks.png",
+		"nameFormatted": "Fiddlesticks",
+		"id": "9"
 	},
 	"Fiora": {
-		"id": "114",
-		"image": "Fiora.png",
-		"name": "Fiora",
-		"nameFormatted": "Fiora",
 		"opScore_CSW": 73,
-		"role": "top"
+		"role": "top",
+		"name": "Fiora",
+		"image": "Fiora.png",
+		"nameFormatted": "Fiora",
+		"id": "114"
 	},
 	"Fizz": {
-		"id": "105",
-		"image": "Fizz.png",
-		"name": "Fizz",
-		"nameFormatted": "Fizz",
 		"opScore_CSW": 48,
-		"role": "mid"
+		"role": "middle",
+		"name": "Fizz",
+		"image": "Fizz.png",
+		"nameFormatted": "Fizz",
+		"id": "105"
 	},
 	"Galio": {
-		"id": "3",
-		"image": "Galio.png",
-		"name": "Galio",
-		"nameFormatted": "Galio",
 		"opScore_CSW": 60,
-		"role": "mid"
+		"role": "middle",
+		"name": "Galio",
+		"image": "Galio.png",
+		"nameFormatted": "Galio",
+		"id": "3"
 	},
 	"Gangplank": {
-		"id": "41",
-		"image": "Gangplank.png",
-		"name": "Gangplank",
-		"nameFormatted": "Gangplank",
 		"opScore_CSW": 67,
-		"role": "top"
+		"role": "top",
+		"name": "Gangplank",
+		"image": "Gangplank.png",
+		"nameFormatted": "Gangplank",
+		"id": "41"
 	},
 	"Garen": {
-		"id": "86",
-		"image": "Garen.png",
-		"name": "Garen",
-		"nameFormatted": "Garen",
 		"opScore_CSW": 73,
-		"role": "top"
+		"role": "top",
+		"name": "Garen",
+		"image": "Garen.png",
+		"nameFormatted": "Garen",
+		"id": "86"
 	},
 	"Gnar": {
-		"id": "150",
-		"image": "Gnar.png",
-		"name": "Gnar",
-		"nameFormatted": "Gnar",
 		"opScore_CSW": 53,
-		"role": "top"
+		"role": "top",
+		"name": "Gnar",
+		"image": "Gnar.png",
+		"nameFormatted": "Gnar",
+		"id": "150"
 	},
 	"Gragas": {
-		"id": "79",
-		"image": "Gragas.png",
-		"name": "Gragas",
-		"nameFormatted": "Gragas",
 		"opScore_CSW": 71,
-		"role": "top"
+		"role": "top",
+		"name": "Gragas",
+		"image": "Gragas.png",
+		"nameFormatted": "Gragas",
+		"id": "79"
 	},
 	"Graves": {
-		"id": "104",
-		"image": "Graves.png",
-		"name": "Graves",
-		"nameFormatted": "Graves",
 		"opScore_CSW": 72,
-		"role": "jungle"
+		"role": "jungle",
+		"name": "Graves",
+		"image": "Graves.png",
+		"nameFormatted": "Graves",
+		"id": "104"
 	},
 	"Gwen": {
-		"id": "887",
-		"image": "Gwen.png",
-		"name": "Gwen",
-		"nameFormatted": "Gwen",
 		"opScore_CSW": 50,
-		"role": "top"
+		"role": "top",
+		"name": "Gwen",
+		"image": "Gwen.png",
+		"nameFormatted": "Gwen",
+		"id": "887"
 	},
 	"Hecarim": {
-		"id": "120",
-		"image": "Hecarim.png",
-		"name": "Hecarim",
-		"nameFormatted": "Hecarim",
 		"opScore_CSW": 70,
-		"role": "jungle"
+		"role": "jungle",
+		"name": "Hecarim",
+		"image": "Hecarim.png",
+		"nameFormatted": "Hecarim",
+		"id": "120"
 	},
 	"Heimerdinger": {
-		"id": "74",
-		"image": "Heimerdinger.png",
-		"name": "Heimerdinger",
-		"nameFormatted": "Heimerdinger",
 		"opScore_CSW": 60,
-		"role": "mid"
+		"role": "middle",
+		"name": "Heimerdinger",
+		"image": "Heimerdinger.png",
+		"nameFormatted": "Heimerdinger",
+		"id": "74"
 	},
 	"Illaoi": {
-		"id": "420",
-		"image": "Illaoi.png",
-		"name": "Illaoi",
-		"nameFormatted": "Illaoi",
 		"opScore_CSW": 67,
-		"role": "top"
+		"role": "top",
+		"name": "Illaoi",
+		"image": "Illaoi.png",
+		"nameFormatted": "Illaoi",
+		"id": "420"
 	},
 	"Irelia": {
-		"id": "39",
-		"image": "Irelia.png",
-		"name": "Irelia",
-		"nameFormatted": "Irelia",
 		"opScore_CSW": 53,
-		"role": "mid"
+		"role": "middle",
+		"name": "Irelia",
+		"image": "Irelia.png",
+		"nameFormatted": "Irelia",
+		"id": "39"
 	},
 	"Ivern": {
-		"id": "427",
-		"image": "Ivern.png",
-		"name": "Ivern",
-		"nameFormatted": "Ivern",
 		"opScore_CSW": 65,
-		"role": "jungle"
+		"role": "jungle",
+		"name": "Ivern",
+		"image": "Ivern.png",
+		"nameFormatted": "Ivern",
+		"id": "427"
 	},
 	"Janna": {
-		"id": "40",
-		"image": "Janna.png",
-		"name": "Janna",
-		"nameFormatted": "Janna",
 		"opScore_CSW": 68,
-		"role": "support"
+		"role": "utility",
+		"name": "Janna",
+		"image": "Janna.png",
+		"nameFormatted": "Janna",
+		"id": "40"
 	},
 	"JarvanIV": {
-		"id": "59",
-		"image": "JarvanIV.png",
-		"name": "Jarvan IV",
-		"nameFormatted": "JarvanIV",
 		"opScore_CSW": 62,
-		"role": "jungle"
+		"role": "jungle",
+		"name": "Jarvan IV",
+		"image": "JarvanIV.png",
+		"nameFormatted": "JarvanIV",
+		"id": "59"
 	},
 	"Jax": {
-		"id": "24",
-		"image": "Jax.png",
-		"name": "Jax",
-		"nameFormatted": "Jax",
 		"opScore_CSW": 54,
-		"role": "top"
+		"role": "top",
+		"name": "Jax",
+		"image": "Jax.png",
+		"nameFormatted": "Jax",
+		"id": "24"
 	},
 	"Jayce": {
-		"id": "126",
-		"image": "Jayce.png",
-		"name": "Jayce",
-		"nameFormatted": "Jayce",
 		"opScore_CSW": 43,
-		"role": "top"
+		"role": "top",
+		"name": "Jayce",
+		"image": "Jayce.png",
+		"nameFormatted": "Jayce",
+		"id": "126"
 	},
 	"Jhin": {
-		"id": "202",
-		"image": "Jhin.png",
-		"name": "Jhin",
-		"nameFormatted": "Jhin",
 		"opScore_CSW": 66,
-		"role": "adc"
+		"role": "bottom",
+		"name": "Jhin",
+		"image": "Jhin.png",
+		"nameFormatted": "Jhin",
+		"id": "202"
 	},
 	"Jinx": {
-		"id": "222",
-		"image": "Jinx.png",
-		"name": "Jinx",
-		"nameFormatted": "Jinx",
 		"opScore_CSW": 55,
-		"role": "adc"
+		"role": "bottom",
+		"name": "Jinx",
+		"image": "Jinx.png",
+		"nameFormatted": "Jinx",
+		"id": "222"
 	},
 	"Kaisa": {
-		"id": "145",
-		"image": "Kaisa.png",
-		"name": "Kai'Sa",
-		"nameFormatted": "Kaisa",
 		"opScore_CSW": 64,
-		"role": "adc"
+		"role": "bottom",
+		"name": "Kai'Sa",
+		"image": "Kaisa.png",
+		"nameFormatted": "Kaisa",
+		"id": "145"
 	},
 	"Kalista": {
-		"id": "429",
-		"image": "Kalista.png",
-		"name": "Kalista",
-		"nameFormatted": "Kalista",
 		"opScore_CSW": 45,
-		"role": "adc"
+		"role": "bottom",
+		"name": "Kalista",
+		"image": "Kalista.png",
+		"nameFormatted": "Kalista",
+		"id": "429"
 	},
 	"Karma": {
-		"id": "43",
-		"image": "Karma.png",
-		"name": "Karma",
-		"nameFormatted": "Karma",
 		"opScore_CSW": 56,
-		"role": "support"
+		"role": "utility",
+		"name": "Karma",
+		"image": "Karma.png",
+		"nameFormatted": "Karma",
+		"id": "43"
 	},
 	"Karthus": {
-		"id": "30",
-		"image": "Karthus.png",
-		"name": "Karthus",
-		"nameFormatted": "Karthus",
 		"opScore_CSW": 70,
-		"role": "jungle"
+		"role": "jungle",
+		"name": "Karthus",
+		"image": "Karthus.png",
+		"nameFormatted": "Karthus",
+		"id": "30"
 	},
 	"Kassadin": {
-		"id": "38",
-		"image": "Kassadin.png",
-		"name": "Kassadin",
-		"nameFormatted": "Kassadin",
 		"opScore_CSW": 70,
-		"role": "mid"
+		"role": "middle",
+		"name": "Kassadin",
+		"image": "Kassadin.png",
+		"nameFormatted": "Kassadin",
+		"id": "38"
 	},
 	"Katarina": {
-		"id": "55",
-		"image": "Katarina.png",
-		"name": "Katarina",
-		"nameFormatted": "Katarina",
 		"opScore_CSW": 57,
-		"role": "mid"
+		"role": "middle",
+		"name": "Katarina",
+		"image": "Katarina.png",
+		"nameFormatted": "Katarina",
+		"id": "55"
 	},
 	"Kayle": {
-		"id": "10",
-		"image": "Kayle.png",
-		"name": "Kayle",
-		"nameFormatted": "Kayle",
 		"opScore_CSW": 40,
-		"role": "top"
+		"role": "top",
+		"name": "Kayle",
+		"image": "Kayle.png",
+		"nameFormatted": "Kayle",
+		"id": "10"
 	},
 	"Kayn": {
-		"id": "141",
-		"image": "Kayn.png",
-		"name": "Kayn",
-		"nameFormatted": "Kayn",
 		"opScore_CSW": 67,
-		"role": "jungle"
+		"role": "jungle",
+		"name": "Kayn",
+		"image": "Kayn.png",
+		"nameFormatted": "Kayn",
+		"id": "141"
 	},
 	"Kennen": {
-		"id": "85",
-		"image": "Kennen.png",
-		"name": "Kennen",
-		"nameFormatted": "Kennen",
 		"opScore_CSW": 50,
-		"role": "top"
+		"role": "top",
+		"name": "Kennen",
+		"image": "Kennen.png",
+		"nameFormatted": "Kennen",
+		"id": "85"
 	},
 	"Khazix": {
-		"id": "121",
-		"image": "Khazix.png",
-		"name": "Kha'Zix",
-		"nameFormatted": "Khazix",
 		"opScore_CSW": 70,
-		"role": "jungle"
+		"role": "jungle",
+		"name": "Kha'Zix",
+		"image": "Khazix.png",
+		"nameFormatted": "Khazix",
+		"id": "121"
 	},
 	"Kindred": {
-		"id": "203",
-		"image": "Kindred.png",
-		"name": "Kindred",
-		"nameFormatted": "Kindred",
 		"opScore_CSW": 55,
-		"role": "jungle"
+		"role": "jungle",
+		"name": "Kindred",
+		"image": "Kindred.png",
+		"nameFormatted": "Kindred",
+		"id": "203"
 	},
 	"Kled": {
-		"id": "240",
-		"image": "Kled.png",
-		"name": "Kled",
-		"nameFormatted": "Kled",
 		"opScore_CSW": 68,
-		"role": "top"
+		"role": "top",
+		"name": "Kled",
+		"image": "Kled.png",
+		"nameFormatted": "Kled",
+		"id": "240"
 	},
 	"KogMaw": {
-		"id": "96",
-		"image": "KogMaw.png",
-		"name": "Kog'Maw",
-		"nameFormatted": "KogMaw",
 		"opScore_CSW": 45,
-		"role": "adc"
+		"role": "bottom",
+		"name": "Kog'Maw",
+		"image": "KogMaw.png",
+		"nameFormatted": "KogMaw",
+		"id": "96"
 	},
 	"KSante": {
-		"id": "897",
-		"image": "KSante.png",
-		"name": "K'Sante",
-		"nameFormatted": "KSante",
 		"opScore_CSW": 75,
-		"role": "top"
+		"role": "top",
+		"name": "K'Sante",
+		"image": "KSante.png",
+		"nameFormatted": "KSante",
+		"id": "897"
 	},
 	"Leblanc": {
-		"id": "7",
-		"image": "Leblanc.png",
-		"name": "LeBlanc",
-		"nameFormatted": "Leblanc",
 		"opScore_CSW": 55,
-		"role": "mid"
+		"role": "middle",
+		"name": "LeBlanc",
+		"image": "Leblanc.png",
+		"nameFormatted": "Leblanc",
+		"id": "7"
 	},
 	"LeeSin": {
-		"id": "64",
-		"image": "LeeSin.png",
-		"name": "Lee Sin",
-		"nameFormatted": "LeeSin",
 		"opScore_CSW": 43,
-		"role": "jungle"
+		"role": "jungle",
+		"name": "Lee Sin",
+		"image": "LeeSin.png",
+		"nameFormatted": "LeeSin",
+		"id": "64"
 	},
 	"Leona": {
-		"id": "89",
-		"image": "Leona.png",
-		"name": "Leona",
-		"nameFormatted": "Leona",
 		"opScore_CSW": 56,
-		"role": "support"
+		"role": "utility",
+		"name": "Leona",
+		"image": "Leona.png",
+		"nameFormatted": "Leona",
+		"id": "89"
 	},
 	"Lillia": {
-		"id": "876",
-		"image": "Lillia.png",
-		"name": "Lillia",
-		"nameFormatted": "Lillia",
 		"opScore_CSW": 72,
-		"role": "jungle"
+		"role": "jungle",
+		"name": "Lillia",
+		"image": "Lillia.png",
+		"nameFormatted": "Lillia",
+		"id": "876"
 	},
 	"Lissandra": {
-		"id": "127",
-		"image": "Lissandra.png",
-		"name": "Lissandra",
-		"nameFormatted": "Lissandra",
 		"opScore_CSW": 55,
-		"role": "mid"
+		"role": "middle",
+		"name": "Lissandra",
+		"image": "Lissandra.png",
+		"nameFormatted": "Lissandra",
+		"id": "127"
 	},
 	"Lucian": {
-		"id": "236",
-		"image": "Lucian.png",
-		"name": "Lucian",
-		"nameFormatted": "Lucian",
 		"opScore_CSW": 43,
-		"role": "adc"
+		"role": "bottom",
+		"name": "Lucian",
+		"image": "Lucian.png",
+		"nameFormatted": "Lucian",
+		"id": "236"
 	},
 	"Lulu": {
-		"id": "117",
-		"image": "Lulu.png",
-		"name": "Lulu",
-		"nameFormatted": "Lulu",
 		"opScore_CSW": 56,
-		"role": "support"
+		"role": "utility",
+		"name": "Lulu",
+		"image": "Lulu.png",
+		"nameFormatted": "Lulu",
+		"id": "117"
 	},
 	"Lux": {
-		"id": "99",
-		"image": "Lux.png",
-		"name": "Lux",
-		"nameFormatted": "Lux",
 		"opScore_CSW": 54,
-		"role": "support"
+		"role": "utility",
+		"name": "Lux",
+		"image": "Lux.png",
+		"nameFormatted": "Lux",
+		"id": "99"
 	},
 	"Malphite": {
-		"id": "54",
-		"image": "Malphite.png",
-		"name": "Malphite",
-		"nameFormatted": "Malphite",
 		"opScore_CSW": 57,
-		"role": "top"
+		"role": "top",
+		"name": "Malphite",
+		"image": "Malphite.png",
+		"nameFormatted": "Malphite",
+		"id": "54"
 	},
 	"Malzahar": {
-		"id": "90",
-		"image": "Malzahar.png",
-		"name": "Malzahar",
-		"nameFormatted": "Malzahar",
 		"opScore_CSW": 55,
-		"role": "mid"
+		"role": "middle",
+		"name": "Malzahar",
+		"image": "Malzahar.png",
+		"nameFormatted": "Malzahar",
+		"id": "90"
 	},
 	"Maokai": {
-		"id": "57",
-		"image": "Maokai.png",
-		"name": "Maokai",
-		"nameFormatted": "Maokai",
 		"opScore_CSW": 55,
-		"role": "support"
+		"role": "utility",
+		"name": "Maokai",
+		"image": "Maokai.png",
+		"nameFormatted": "Maokai",
+		"id": "57"
 	},
 	"MasterYi": {
-		"id": "11",
-		"image": "MasterYi.png",
-		"name": "Master Yi",
-		"nameFormatted": "MasterYi",
 		"opScore_CSW": 56,
-		"role": "jungle"
+		"role": "jungle",
+		"name": "Master Yi",
+		"image": "MasterYi.png",
+		"nameFormatted": "MasterYi",
+		"id": "11"
 	},
 	"MissFortune": {
-		"id": "21",
-		"image": "MissFortune.png",
-		"name": "Miss Fortune",
-		"nameFormatted": "MissFortune",
 		"opScore_CSW": 63,
-		"role": "adc"
+		"role": "bottom",
+		"name": "Miss Fortune",
+		"image": "MissFortune.png",
+		"nameFormatted": "MissFortune",
+		"id": "21"
 	},
 	"MonkeyKing": {
-		"id": "62",
-		"image": "MonkeyKing.png",
-		"name": "Wukong",
-		"nameFormatted": "MonkeyKing",
 		"opScore_CSW": 63,
-		"role": "jungle"
+		"role": "jungle",
+		"name": "Wukong",
+		"image": "MonkeyKing.png",
+		"nameFormatted": "MonkeyKing",
+		"id": "62"
 	},
 	"Mordekaiser": {
-		"id": "82",
-		"image": "Mordekaiser.png",
-		"name": "Mordekaiser",
-		"nameFormatted": "Mordekaiser",
 		"opScore_CSW": 62,
-		"role": "top"
+		"role": "top",
+		"name": "Mordekaiser",
+		"image": "Mordekaiser.png",
+		"nameFormatted": "Mordekaiser",
+		"id": "82"
 	},
 	"Morgana": {
-		"id": "25",
-		"image": "Morgana.png",
-		"name": "Morgana",
-		"nameFormatted": "Morgana",
 		"opScore_CSW": 52,
-		"role": "support"
+		"role": "utility",
+		"name": "Morgana",
+		"image": "Morgana.png",
+		"nameFormatted": "Morgana",
+		"id": "25"
 	},
 	"Nami": {
-		"id": "267",
-		"image": "Nami.png",
-		"name": "Nami",
-		"nameFormatted": "Nami",
 		"opScore_CSW": 52,
-		"role": "support"
+		"role": "utility",
+		"name": "Nami",
+		"image": "Nami.png",
+		"nameFormatted": "Nami",
+		"id": "267"
 	},
 	"Nasus": {
-		"id": "75",
-		"image": "Nasus.png",
-		"name": "Nasus",
-		"nameFormatted": "Nasus",
 		"opScore_CSW": 63,
-		"role": "top"
+		"role": "top",
+		"name": "Nasus",
+		"image": "Nasus.png",
+		"nameFormatted": "Nasus",
+		"id": "75"
 	},
 	"Nautilus": {
-		"id": "111",
-		"image": "Nautilus.png",
-		"name": "Nautilus",
-		"nameFormatted": "Nautilus",
 		"opScore_CSW": 55,
-		"role": "support"
+		"role": "utility",
+		"name": "Nautilus",
+		"image": "Nautilus.png",
+		"nameFormatted": "Nautilus",
+		"id": "111"
 	},
 	"Neeko": {
-		"id": "518",
-		"image": "Neeko.png",
-		"name": "Neeko",
-		"nameFormatted": "Neeko",
 		"opScore_CSW": 55,
-		"role": "mid"
+		"role": "middle",
+		"name": "Neeko",
+		"image": "Neeko.png",
+		"nameFormatted": "Neeko",
+		"id": "518"
 	},
 	"Nidalee": {
-		"id": "76",
-		"image": "Nidalee.png",
-		"name": "Nidalee",
-		"nameFormatted": "Nidalee",
 		"opScore_CSW": 30,
-		"role": "jungle"
+		"role": "jungle",
+		"name": "Nidalee",
+		"image": "Nidalee.png",
+		"nameFormatted": "Nidalee",
+		"id": "76"
 	},
 	"Nilah": {
-		"id": "895",
-		"image": "Nilah.png",
-		"name": "Nilah",
-		"nameFormatted": "Nilah",
 		"opScore_CSW": 45,
-		"role": "adc"
+		"role": "bottom",
+		"name": "Nilah",
+		"image": "Nilah.png",
+		"nameFormatted": "Nilah",
+		"id": "895"
 	},
 	"Nocturne": {
-		"id": "56",
-		"image": "Nocturne.png",
-		"name": "Nocturne",
-		"nameFormatted": "Nocturne",
 		"opScore_CSW": 65,
-		"role": "jungle"
+		"role": "jungle",
+		"name": "Nocturne",
+		"image": "Nocturne.png",
+		"nameFormatted": "Nocturne",
+		"id": "56"
 	},
 	"Nunu": {
-		"id": "20",
-		"image": "Nunu.png",
-		"name": "Nunu & Willump",
-		"nameFormatted": "Nunu",
 		"opScore_CSW": 60,
-		"role": "jungle"
+		"role": "jungle",
+		"name": "Nunu & Willump",
+		"image": "Nunu.png",
+		"nameFormatted": "Nunu",
+		"id": "20"
 	},
 	"Olaf": {
-		"id": "2",
-		"image": "Olaf.png",
-		"name": "Olaf",
-		"nameFormatted": "Olaf",
 		"opScore_CSW": 57,
-		"role": "top"
+		"role": "top",
+		"name": "Olaf",
+		"image": "Olaf.png",
+		"nameFormatted": "Olaf",
+		"id": "2"
 	},
 	"Orianna": {
-		"id": "61",
-		"image": "Orianna.png",
-		"name": "Orianna",
-		"nameFormatted": "Orianna",
 		"opScore_CSW": 40,
-		"role": "mid"
+		"role": "middle",
+		"name": "Orianna",
+		"image": "Orianna.png",
+		"nameFormatted": "Orianna",
+		"id": "61"
 	},
 	"Ornn": {
-		"id": "516",
-		"image": "Ornn.png",
-		"name": "Ornn",
-		"nameFormatted": "Ornn",
 		"opScore_CSW": 60,
-		"role": "jungle"
+		"role": "jungle",
+		"name": "Ornn",
+		"image": "Ornn.png",
+		"nameFormatted": "Ornn",
+		"id": "516"
 	},
 	"Pantheon": {
-		"id": "80",
-		"image": "Pantheon.png",
-		"name": "Pantheon",
-		"nameFormatted": "Pantheon",
 		"opScore_CSW": 65,
-		"role": "jungle"
+		"role": "jungle",
+		"name": "Pantheon",
+		"image": "Pantheon.png",
+		"nameFormatted": "Pantheon",
+		"id": "80"
 	},
 	"Poppy": {
-		"id": "78",
-		"image": "Poppy.png",
-		"name": "Poppy",
-		"nameFormatted": "Poppy",
 		"opScore_CSW": 63,
-		"role": "jungle"
+		"role": "jungle",
+		"name": "Poppy",
+		"image": "Poppy.png",
+		"nameFormatted": "Poppy",
+		"id": "78"
 	},
 	"Pyke": {
-		"id": "555",
-		"image": "Pyke.png",
-		"name": "Pyke",
-		"nameFormatted": "Pyke",
 		"opScore_CSW": 61,
-		"role": "support"
+		"role": "utility",
+		"name": "Pyke",
+		"image": "Pyke.png",
+		"nameFormatted": "Pyke",
+		"id": "555"
 	},
 	"Qiyana": {
-		"id": "246",
-		"image": "Qiyana.png",
-		"name": "Qiyana",
-		"nameFormatted": "Qiyana",
 		"opScore_CSW": 55,
-		"role": "mid"
+		"role": "middle",
+		"name": "Qiyana",
+		"image": "Qiyana.png",
+		"nameFormatted": "Qiyana",
+		"id": "246"
 	},
 	"Quinn": {
-		"id": "133",
-		"image": "Quinn.png",
-		"name": "Quinn",
-		"nameFormatted": "Quinn",
 		"opScore_CSW": 55,
-		"role": "top"
+		"role": "top",
+		"name": "Quinn",
+		"image": "Quinn.png",
+		"nameFormatted": "Quinn",
+		"id": "133"
 	},
 	"Rakan": {
-		"id": "497",
-		"image": "Rakan.png",
-		"name": "Rakan",
-		"nameFormatted": "Rakan",
 		"opScore_CSW": 44,
-		"role": "support"
+		"role": "utility",
+		"name": "Rakan",
+		"image": "Rakan.png",
+		"nameFormatted": "Rakan",
+		"id": "497"
 	},
 	"Rammus": {
-		"id": "33",
-		"image": "Rammus.png",
-		"name": "Rammus",
-		"nameFormatted": "Rammus",
 		"opScore_CSW": 60,
-		"role": "jungle"
+		"role": "jungle",
+		"name": "Rammus",
+		"image": "Rammus.png",
+		"nameFormatted": "Rammus",
+		"id": "33"
 	},
 	"RekSai": {
-		"id": "421",
-		"image": "RekSai.png",
-		"name": "Rek'Sai",
-		"nameFormatted": "RekSai",
 		"opScore_CSW": 53,
-		"role": "jungle"
+		"role": "jungle",
+		"name": "Rek'Sai",
+		"image": "RekSai.png",
+		"nameFormatted": "RekSai",
+		"id": "421"
 	},
 	"Rell": {
-		"id": "526",
-		"image": "Rell.png",
-		"name": "Rell",
-		"nameFormatted": "Rell",
 		"opScore_CSW": 49,
-		"role": "support"
+		"role": "utility",
+		"name": "Rell",
+		"image": "Rell.png",
+		"nameFormatted": "Rell",
+		"id": "526"
 	},
 	"Renata": {
-		"id": "888",
-		"image": "Renata.png",
-		"name": "Renata Glasc",
-		"nameFormatted": "Renata",
 		"opScore_CSW": 54,
-		"role": "support"
+		"role": "utility",
+		"name": "Renata Glasc",
+		"image": "Renata.png",
+		"nameFormatted": "Renata",
+		"id": "888"
 	},
 	"Renekton": {
-		"id": "58",
-		"image": "Renekton.png",
-		"name": "Renekton",
-		"nameFormatted": "Renekton",
 		"opScore_CSW": 60,
-		"role": "top"
+		"role": "top",
+		"name": "Renekton",
+		"image": "Renekton.png",
+		"nameFormatted": "Renekton",
+		"id": "58"
 	},
 	"Rengar": {
-		"id": "107",
-		"image": "Rengar.png",
-		"name": "Rengar",
-		"nameFormatted": "Rengar",
 		"opScore_CSW": 45,
-		"role": "jungle"
+		"role": "jungle",
+		"name": "Rengar",
+		"image": "Rengar.png",
+		"nameFormatted": "Rengar",
+		"id": "107"
 	},
 	"Riven": {
-		"id": "92",
-		"image": "Riven.png",
-		"name": "Riven",
-		"nameFormatted": "Riven",
 		"opScore_CSW": 55,
-		"role": "top"
+		"role": "top",
+		"name": "Riven",
+		"image": "Riven.png",
+		"nameFormatted": "Riven",
+		"id": "92"
 	},
 	"Rumble": {
-		"id": "68",
-		"image": "Rumble.png",
-		"name": "Rumble",
-		"nameFormatted": "Rumble",
 		"opScore_CSW": 50,
-		"role": "top"
+		"role": "top",
+		"name": "Rumble",
+		"image": "Rumble.png",
+		"nameFormatted": "Rumble",
+		"id": "68"
 	},
 	"Ryze": {
-		"id": "13",
-		"image": "Ryze.png",
-		"name": "Ryze",
-		"nameFormatted": "Ryze",
 		"opScore_CSW": 48,
-		"role": "mid"
+		"role": "middle",
+		"name": "Ryze",
+		"image": "Ryze.png",
+		"nameFormatted": "Ryze",
+		"id": "13"
 	},
 	"Samira": {
-		"id": "360",
-		"image": "Samira.png",
-		"name": "Samira",
-		"nameFormatted": "Samira",
 		"opScore_CSW": 50,
-		"role": "adc"
+		"role": "bottom",
+		"name": "Samira",
+		"image": "Samira.png",
+		"nameFormatted": "Samira",
+		"id": "360"
 	},
 	"Sejuani": {
-		"id": "113",
-		"image": "Sejuani.png",
-		"name": "Sejuani",
-		"nameFormatted": "Sejuani",
 		"opScore_CSW": 63,
-		"role": "jungle"
+		"role": "jungle",
+		"name": "Sejuani",
+		"image": "Sejuani.png",
+		"nameFormatted": "Sejuani",
+		"id": "113"
 	},
 	"Senna": {
-		"id": "235",
-		"image": "Senna.png",
-		"name": "Senna",
-		"nameFormatted": "Senna",
 		"opScore_CSW": 56,
-		"role": "support"
+		"role": "utility",
+		"name": "Senna",
+		"image": "Senna.png",
+		"nameFormatted": "Senna",
+		"id": "235"
 	},
 	"Seraphine": {
-		"id": "147",
-		"image": "Seraphine.png",
-		"name": "Seraphine",
-		"nameFormatted": "Seraphine",
 		"opScore_CSW": 56,
-		"role": "support"
+		"role": "utility",
+		"name": "Seraphine",
+		"image": "Seraphine.png",
+		"nameFormatted": "Seraphine",
+		"id": "147"
 	},
 	"Sett": {
-		"id": "875",
-		"image": "Sett.png",
-		"name": "Sett",
-		"nameFormatted": "Sett",
 		"opScore_CSW": 63,
-		"role": "top"
+		"role": "top",
+		"name": "Sett",
+		"image": "Sett.png",
+		"nameFormatted": "Sett",
+		"id": "875"
 	},
 	"Shaco": {
-		"id": "35",
-		"image": "Shaco.png",
-		"name": "Shaco",
-		"nameFormatted": "Shaco",
 		"opScore_CSW": 67,
-		"role": "jungle"
+		"role": "jungle",
+		"name": "Shaco",
+		"image": "Shaco.png",
+		"nameFormatted": "Shaco",
+		"id": "35"
 	},
 	"Shen": {
-		"id": "98",
-		"image": "Shen.png",
-		"name": "Shen",
-		"nameFormatted": "Shen",
 		"opScore_CSW": 52,
-		"role": "top"
+		"role": "top",
+		"name": "Shen",
+		"image": "Shen.png",
+		"nameFormatted": "Shen",
+		"id": "98"
 	},
 	"Shyvana": {
-		"id": "102",
-		"image": "Shyvana.png",
-		"name": "Shyvana",
-		"nameFormatted": "Shyvana",
 		"opScore_CSW": 68,
-		"role": "jungle"
+		"role": "jungle",
+		"name": "Shyvana",
+		"image": "Shyvana.png",
+		"nameFormatted": "Shyvana",
+		"id": "102"
 	},
 	"Singed": {
-		"id": "27",
-		"image": "Singed.png",
-		"name": "Singed",
-		"nameFormatted": "Singed",
 		"opScore_CSW": 70,
-		"role": "top"
+		"role": "top",
+		"name": "Singed",
+		"image": "Singed.png",
+		"nameFormatted": "Singed",
+		"id": "27"
 	},
 	"Sion": {
-		"id": "14",
-		"image": "Sion.png",
-		"name": "Sion",
-		"nameFormatted": "Sion",
 		"opScore_CSW": 70,
-		"role": "top"
+		"role": "top",
+		"name": "Sion",
+		"image": "Sion.png",
+		"nameFormatted": "Sion",
+		"id": "14"
 	},
 	"Sivir": {
-		"id": "15",
-		"image": "Sivir.png",
+		"opScore_CSW": 62,
+		"role": "bottom",
 		"name": "Sivir",
+		"image": "Sivir.png",
 		"nameFormatted": "Sivir",
-		"opScore_CSW": 63,
-		"role": "adc"
+		"id": "15"
 	},
 	"Skarner": {
-		"id": "72",
-		"image": "Skarner.png",
-		"name": "Skarner",
-		"nameFormatted": "Skarner",
 		"opScore_CSW": 50,
-		"role": "jungle"
+		"role": "jungle",
+		"name": "Skarner",
+		"image": "Skarner.png",
+		"nameFormatted": "Skarner",
+		"id": "72"
 	},
 	"Sona": {
-		"id": "37",
-		"image": "Sona.png",
-		"name": "Sona",
-		"nameFormatted": "Sona",
 		"opScore_CSW": 50,
-		"role": "support"
+		"role": "utility",
+		"name": "Sona",
+		"image": "Sona.png",
+		"nameFormatted": "Sona",
+		"id": "37"
 	},
 	"Soraka": {
-		"id": "16",
-		"image": "Soraka.png",
-		"name": "Soraka",
-		"nameFormatted": "Soraka",
 		"opScore_CSW": 57,
-		"role": "support"
+		"role": "utility",
+		"name": "Soraka",
+		"image": "Soraka.png",
+		"nameFormatted": "Soraka",
+		"id": "16"
 	},
 	"Swain": {
-		"id": "50",
-		"image": "Swain.png",
-		"name": "Swain",
-		"nameFormatted": "Swain",
 		"opScore_CSW": 63,
-		"role": "support"
+		"role": "utility",
+		"name": "Swain",
+		"image": "Swain.png",
+		"nameFormatted": "Swain",
+		"id": "50"
 	},
 	"Sylas": {
-		"id": "517",
-		"image": "Sylas.png",
-		"name": "Sylas",
-		"nameFormatted": "Sylas",
 		"opScore_CSW": 75,
-		"role": "mid"
+		"role": "middle",
+		"name": "Sylas",
+		"image": "Sylas.png",
+		"nameFormatted": "Sylas",
+		"id": "517"
 	},
 	"Syndra": {
-		"id": "134",
-		"image": "Syndra.png",
-		"name": "Syndra",
-		"nameFormatted": "Syndra",
 		"opScore_CSW": 60,
-		"role": "mid"
+		"role": "middle",
+		"name": "Syndra",
+		"image": "Syndra.png",
+		"nameFormatted": "Syndra",
+		"id": "134"
 	},
 	"TahmKench": {
-		"id": "223",
-		"image": "TahmKench.png",
-		"name": "Tahm Kench",
-		"nameFormatted": "TahmKench",
 		"opScore_CSW": 60,
-		"role": "top"
+		"role": "top",
+		"name": "Tahm Kench",
+		"image": "TahmKench.png",
+		"nameFormatted": "TahmKench",
+		"id": "223"
 	},
 	"Taliyah": {
-		"id": "163",
-		"image": "Taliyah.png",
-		"name": "Taliyah",
-		"nameFormatted": "Taliyah",
 		"opScore_CSW": 66,
-		"role": "jungle"
+		"role": "jungle",
+		"name": "Taliyah",
+		"image": "Taliyah.png",
+		"nameFormatted": "Taliyah",
+		"id": "163"
 	},
 	"Talon": {
-		"id": "91",
-		"image": "Talon.png",
-		"name": "Talon",
-		"nameFormatted": "Talon",
 		"opScore_CSW": 35,
-		"role": "mid"
+		"role": "middle",
+		"name": "Talon",
+		"image": "Talon.png",
+		"nameFormatted": "Talon",
+		"id": "91"
 	},
 	"Taric": {
-		"id": "44",
-		"image": "Taric.png",
-		"name": "Taric",
-		"nameFormatted": "Taric",
 		"opScore_CSW": 45,
-		"role": "support"
+		"role": "utility",
+		"name": "Taric",
+		"image": "Taric.png",
+		"nameFormatted": "Taric",
+		"id": "44"
 	},
 	"Teemo": {
-		"id": "17",
-		"image": "Teemo.png",
-		"name": "Teemo",
-		"nameFormatted": "Teemo",
 		"opScore_CSW": 58,
-		"role": "top"
+		"role": "top",
+		"name": "Teemo",
+		"image": "Teemo.png",
+		"nameFormatted": "Teemo",
+		"id": "17"
 	},
 	"Thresh": {
-		"id": "412",
-		"image": "Thresh.png",
-		"name": "Thresh",
-		"nameFormatted": "Thresh",
 		"opScore_CSW": 46,
-		"role": "support"
+		"role": "utility",
+		"name": "Thresh",
+		"image": "Thresh.png",
+		"nameFormatted": "Thresh",
+		"id": "412"
 	},
 	"Tristana": {
-		"id": "18",
-		"image": "Tristana.png",
-		"name": "Tristana",
-		"nameFormatted": "Tristana",
 		"opScore_CSW": 49,
-		"role": "adc"
+		"role": "bottom",
+		"name": "Tristana",
+		"image": "Tristana.png",
+		"nameFormatted": "Tristana",
+		"id": "18"
 	},
 	"Trundle": {
-		"id": "48",
-		"image": "Trundle.png",
-		"name": "Trundle",
-		"nameFormatted": "Trundle",
 		"opScore_CSW": 55,
-		"role": "jungle"
+		"role": "jungle",
+		"name": "Trundle",
+		"image": "Trundle.png",
+		"nameFormatted": "Trundle",
+		"id": "48"
 	},
 	"Tryndamere": {
-		"id": "23",
-		"image": "Tryndamere.png",
-		"name": "Tryndamere",
-		"nameFormatted": "Tryndamere",
 		"opScore_CSW": 57,
-		"role": "top"
+		"role": "top",
+		"name": "Tryndamere",
+		"image": "Tryndamere.png",
+		"nameFormatted": "Tryndamere",
+		"id": "23"
 	},
 	"TwistedFate": {
-		"id": "4",
-		"image": "TwistedFate.png",
-		"name": "Twisted Fate",
-		"nameFormatted": "TwistedFate",
 		"opScore_CSW": 48,
-		"role": "mid"
+		"role": "middle",
+		"name": "Twisted Fate",
+		"image": "TwistedFate.png",
+		"nameFormatted": "TwistedFate",
+		"id": "4"
 	},
 	"Twitch": {
-		"id": "29",
-		"image": "Twitch.png",
-		"name": "Twitch",
-		"nameFormatted": "Twitch",
 		"opScore_CSW": 60,
-		"role": "adc"
+		"role": "bottom",
+		"name": "Twitch",
+		"image": "Twitch.png",
+		"nameFormatted": "Twitch",
+		"id": "29"
 	},
 	"Udyr": {
-		"id": "77",
-		"image": "Udyr.png",
-		"name": "Udyr",
-		"nameFormatted": "Udyr",
 		"opScore_CSW": 65,
-		"role": "jungle"
+		"role": "jungle",
+		"name": "Udyr",
+		"image": "Udyr.png",
+		"nameFormatted": "Udyr",
+		"id": "77"
 	},
 	"Urgot": {
-		"id": "6",
-		"image": "Urgot.png",
-		"name": "Urgot",
-		"nameFormatted": "Urgot",
 		"opScore_CSW": 58,
-		"role": "top"
+		"role": "top",
+		"name": "Urgot",
+		"image": "Urgot.png",
+		"nameFormatted": "Urgot",
+		"id": "6"
 	},
 	"Varus": {
-		"id": "110",
-		"image": "Varus.png",
-		"name": "Varus",
-		"nameFormatted": "Varus",
 		"opScore_CSW": 63,
-		"role": "adc"
+		"role": "bottom",
+		"name": "Varus",
+		"image": "Varus.png",
+		"nameFormatted": "Varus",
+		"id": "110"
 	},
 	"Vayne": {
-		"id": "67",
-		"image": "Vayne.png",
-		"name": "Vayne",
-		"nameFormatted": "Vayne",
 		"opScore_CSW": 40,
-		"role": "adc"
+		"role": "bottom",
+		"name": "Vayne",
+		"image": "Vayne.png",
+		"nameFormatted": "Vayne",
+		"id": "67"
 	},
 	"Veigar": {
-		"id": "45",
-		"image": "Veigar.png",
-		"name": "Veigar",
-		"nameFormatted": "Veigar",
 		"opScore_CSW": 70,
-		"role": "mid"
+		"role": "middle",
+		"name": "Veigar",
+		"image": "Veigar.png",
+		"nameFormatted": "Veigar",
+		"id": "45"
 	},
 	"Velkoz": {
-		"id": "161",
-		"image": "Velkoz.png",
-		"name": "Vel'Koz",
-		"nameFormatted": "Velkoz",
 		"opScore_CSW": 57,
-		"role": "support"
+		"role": "utility",
+		"name": "Vel'Koz",
+		"image": "Velkoz.png",
+		"nameFormatted": "Velkoz",
+		"id": "161"
 	},
 	"Vex": {
-		"id": "711",
-		"image": "Vex.png",
-		"name": "Vex",
-		"nameFormatted": "Vex",
 		"opScore_CSW": 68,
-		"role": "mid"
+		"role": "middle",
+		"name": "Vex",
+		"image": "Vex.png",
+		"nameFormatted": "Vex",
+		"id": "711"
 	},
 	"Vi": {
-		"id": "254",
-		"image": "Vi.png",
-		"name": "Vi",
-		"nameFormatted": "Vi",
 		"opScore_CSW": 56,
-		"role": "jungle"
+		"role": "jungle",
+		"name": "Vi",
+		"image": "Vi.png",
+		"nameFormatted": "Vi",
+		"id": "254"
 	},
 	"Viego": {
-		"id": "234",
-		"image": "Viego.png",
-		"name": "Viego",
-		"nameFormatted": "Viego",
 		"opScore_CSW": 72,
-		"role": "jungle"
+		"role": "jungle",
+		"name": "Viego",
+		"image": "Viego.png",
+		"nameFormatted": "Viego",
+		"id": "234"
 	},
 	"Viktor": {
-		"id": "112",
-		"image": "Viktor.png",
-		"name": "Viktor",
-		"nameFormatted": "Viktor",
 		"opScore_CSW": 70,
-		"role": "mid"
+		"role": "middle",
+		"name": "Viktor",
+		"image": "Viktor.png",
+		"nameFormatted": "Viktor",
+		"id": "112"
 	},
 	"Vladimir": {
-		"id": "8",
-		"image": "Vladimir.png",
-		"name": "Vladimir",
-		"nameFormatted": "Vladimir",
 		"opScore_CSW": 65,
-		"role": "mid"
+		"role": "middle",
+		"name": "Vladimir",
+		"image": "Vladimir.png",
+		"nameFormatted": "Vladimir",
+		"id": "8"
 	},
 	"Volibear": {
-		"id": "106",
-		"image": "Volibear.png",
-		"name": "Volibear",
-		"nameFormatted": "Volibear",
 		"opScore_CSW": 67,
-		"role": "jungle"
+		"role": "jungle",
+		"name": "Volibear",
+		"image": "Volibear.png",
+		"nameFormatted": "Volibear",
+		"id": "106"
 	},
 	"Warwick": {
-		"id": "19",
-		"image": "Warwick.png",
-		"name": "Warwick",
-		"nameFormatted": "Warwick",
 		"opScore_CSW": 65,
-		"role": "jungle"
+		"role": "jungle",
+		"name": "Warwick",
+		"image": "Warwick.png",
+		"nameFormatted": "Warwick",
+		"id": "19"
 	},
 	"Xayah": {
-		"id": "498",
-		"image": "Xayah.png",
-		"name": "Xayah",
-		"nameFormatted": "Xayah",
 		"opScore_CSW": 55,
-		"role": "adc"
+		"role": "bottom",
+		"name": "Xayah",
+		"image": "Xayah.png",
+		"nameFormatted": "Xayah",
+		"id": "498"
 	},
 	"Xerath": {
-		"id": "101",
-		"image": "Xerath.png",
-		"name": "Xerath",
-		"nameFormatted": "Xerath",
 		"opScore_CSW": 57,
-		"role": "support"
+		"role": "utility",
+		"name": "Xerath",
+		"image": "Xerath.png",
+		"nameFormatted": "Xerath",
+		"id": "101"
 	},
 	"XinZhao": {
-		"id": "5",
-		"image": "XinZhao.png",
-		"name": "Xin Zhao",
-		"nameFormatted": "XinZhao",
 		"opScore_CSW": 55,
-		"role": "jungle"
+		"role": "jungle",
+		"name": "Xin Zhao",
+		"image": "XinZhao.png",
+		"nameFormatted": "XinZhao",
+		"id": "5"
 	},
 	"Yasuo": {
-		"id": "157",
-		"image": "Yasuo.png",
-		"name": "Yasuo",
-		"nameFormatted": "Yasuo",
 		"opScore_CSW": 30,
-		"role": "mid"
+		"role": "middle",
+		"name": "Yasuo",
+		"image": "Yasuo.png",
+		"nameFormatted": "Yasuo",
+		"id": "157"
 	},
 	"Yone": {
-		"id": "777",
-		"image": "Yone.png",
-		"name": "Yone",
-		"nameFormatted": "Yone",
 		"opScore_CSW": 66,
-		"role": "mid"
+		"role": "middle",
+		"name": "Yone",
+		"image": "Yone.png",
+		"nameFormatted": "Yone",
+		"id": "777"
 	},
 	"Yorick": {
-		"id": "83",
-		"image": "Yorick.png",
-		"name": "Yorick",
-		"nameFormatted": "Yorick",
 		"opScore_CSW": 64,
-		"role": "top"
+		"role": "top",
+		"name": "Yorick",
+		"image": "Yorick.png",
+		"nameFormatted": "Yorick",
+		"id": "83"
 	},
 	"Yuumi": {
-		"id": "350",
-		"image": "Yuumi.png",
-		"name": "Yuumi",
-		"nameFormatted": "Yuumi",
 		"opScore_CSW": 60,
-		"role": "support"
+		"role": "utility",
+		"name": "Yuumi",
+		"image": "Yuumi.png",
+		"nameFormatted": "Yuumi",
+		"id": "350"
 	},
 	"Zac": {
-		"id": "154",
-		"image": "Zac.png",
-		"name": "Zac",
-		"nameFormatted": "Zac",
 		"opScore_CSW": 63,
-		"role": "jungle"
+		"role": "jungle",
+		"name": "Zac",
+		"image": "Zac.png",
+		"nameFormatted": "Zac",
+		"id": "154"
 	},
 	"Zed": {
-		"id": "238",
-		"image": "Zed.png",
-		"name": "Zed",
-		"nameFormatted": "Zed",
 		"opScore_CSW": 60,
-		"role": "mid"
+		"role": "middle",
+		"name": "Zed",
+		"image": "Zed.png",
+		"nameFormatted": "Zed",
+		"id": "238"
 	},
 	"Zeri": {
-		"id": "221",
-		"image": "Zeri.png",
-		"name": "Zeri",
-		"nameFormatted": "Zeri",
 		"opScore_CSW": 50,
-		"role": "adc"
+		"role": "bottom",
+		"name": "Zeri",
+		"image": "Zeri.png",
+		"nameFormatted": "Zeri",
+		"id": "221"
 	},
 	"Ziggs": {
-		"id": "115",
-		"image": "Ziggs.png",
-		"name": "Ziggs",
-		"nameFormatted": "Ziggs",
 		"opScore_CSW": 60,
-		"role": "mid"
+		"role": "middle",
+		"name": "Ziggs",
+		"image": "Ziggs.png",
+		"nameFormatted": "Ziggs",
+		"id": "115"
 	},
 	"Zilean": {
-		"id": "26",
-		"image": "Zilean.png",
-		"name": "Zilean",
-		"nameFormatted": "Zilean",
 		"opScore_CSW": 50,
-		"role": "support"
+		"role": "utility",
+		"name": "Zilean",
+		"image": "Zilean.png",
+		"nameFormatted": "Zilean",
+		"id": "26"
 	},
 	"Zoe": {
-		"id": "142",
-		"image": "Zoe.png",
-		"name": "Zoe",
-		"nameFormatted": "Zoe",
 		"opScore_CSW": 61,
-		"role": "mid"
+		"role": "middle",
+		"name": "Zoe",
+		"image": "Zoe.png",
+		"nameFormatted": "Zoe",
+		"id": "142"
 	},
 	"Zyra": {
-		"id": "143",
-		"image": "Zyra.png",
-		"name": "Zyra",
-		"nameFormatted": "Zyra",
 		"opScore_CSW": 57,
-		"role": "support"
+		"role": "utility",
+		"name": "Zyra",
+		"image": "Zyra.png",
+		"nameFormatted": "Zyra",
+		"id": "143"
 	}
 }

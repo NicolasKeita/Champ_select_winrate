@@ -1,12 +1,11 @@
 const fs = require('fs')
-const filename = 'champion_CSW.json'
 
 let DDallchamps = undefined
 let myAllchamps = undefined
 
 DDallchamps = fs.readFileSync('champion.json', 'utf8')
 DDallchamps = JSON.parse(DDallchamps)
-myAllchamps = fs.readFileSync('champion_CSW_save.json', 'utf8')
+myAllchamps = fs.readFileSync('champion_CSW_save_recent.json', 'utf8')
 myAllchamps = JSON.parse(myAllchamps)
 
 const myAllchampsCpy = updateJson(DDallchamps, myAllchamps)

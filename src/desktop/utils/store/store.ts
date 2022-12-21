@@ -26,6 +26,8 @@ import {
 } from '@utils/fetchLocalConfigJson/fetchChampionsFromConfigJson'
 import {fetchMatchHistory, fetchMatchHistoryId} from '@utils/LOL_API'
 import {doWithRetry} from 'do-with-retry'
+import {copy} from 'copy-anything'
+import championProfile from '../../components/championProfile'
 
 export type ChampDisplayedType = {
 	assignedRole: string
@@ -445,24 +447,13 @@ export const slice = createSlice({
 				}
 			}
 		})
-		// builder.addCase(fillHistoryDisplayed.fulfilled, (state, action) => {
-		// 	if (action.payload !== undefined) {
-		// 		state.historyDisplayed = action.payload
-		// 	}
-		// })
 		builder.addCase(fetchAllChampions.fulfilled, (state, action) => {
 			const configDeserialized = new Config(JSON.parse(state.configSerialized))
 			for (const elem of Object.values(action.payload)) {
-				const newChamp = championConstructor(elem.name, elem.opScore_user, elem.opScore_CSW, elem.role, elem.image, elem.imageUrl)
-				const duplicate = configDeserialized.champions.find(elemConfig => elemConfig.name === elem.name)
+				let duplicate = configDeserialized.champions.find(elemConfig => elemConfig.name === elem.name)
 				if (duplicate) {
-					duplicate.name = elem.name
-					duplicate.opScore_user = elem.opScore_user
-					duplicate.opScore_CSW = elem.opScore_CSW
-					duplicate.role = elem.role
-					duplicate.image = elem.image
-					duplicate.imageUrl = elem.imageUrl
-				} else configDeserialized.champions.push(newChamp)
+					duplicate = copy(elem)
+				} else configDeserialized.champions.push(copy(elem))
 			}
 			localStorage.setItem('config', configDeserialized.stringify())
 			state.configSerialized = configDeserialized.stringify()
