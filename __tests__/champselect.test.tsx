@@ -6,7 +6,6 @@
 import userEvent from '@testing-library/user-event'
 import {
 	getRunningLaunchersInfo,
-	onInfoUpdatesAddListener,
 	onInfoUpdatesAddListenerSpamChampSelect,
 	overwolfMocked
 } from '../__testsUtils__/OW_mocking'
@@ -14,7 +13,6 @@ import {act, screen, waitFor} from '@testing-library/react'
 import {renderEntireApp} from '../__testsUtils__/renderEntireApp'
 import fetch from 'jest-fetch-mock'
 import allChamps from '../__testsUtils__/allChamps.json'
-import {configTest} from '../__testsUtils__/configTest'
 import '@testing-library/jest-dom'
 import * as fetchDataDragon
 	from '../src/desktop/utils/fetchDataDragon/fetchDataDragon'

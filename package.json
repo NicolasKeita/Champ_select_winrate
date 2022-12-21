@@ -9,7 +9,7 @@
 		"test": "jest",
 		"build": "webpack --mode=production  --env makeOpk  --env removeSourceMap",
 		"dev": "webpack --watch --mode=development",
-		"watch": "webpack --watch --mode=development"
+		"watch": "webpack --watch --mode=production"
 	},
 	"keywords": [],
 	"author": "SpyNight",
