@@ -10,7 +10,7 @@ import questionMark from '@public/img/question_mark.jpg'
 import HistoryProfile from '../../championProfile/historyProfile'
 import uniqid from 'uniqid'
 import {Champion, championConstructor} from '../settings/Champion'
-import {useAppSelector} from '@utils/hooks'
+import {useAppDispatch, useAppSelector} from '@utils/hooks'
 import {ChampDisplayedType, HistoryDisplayedType} from '@utils/store/store'
 
 const HistoryContainer = styled.div`
@@ -96,13 +96,15 @@ const ProfileLine = styled.div`
 `
 
 function History() {
+	// console.log("history config")
+	// console.log(localStorage.getItem('config'))
 	const historyDisplayed = useAppSelector(state => state.slice.historyDisplayed)
 
 	function computeWinrate(allies: Champion[], enemies: Champion[]): number {
 		let sumAllies = 0
 		let sumEnemies = 0
-		for (const champion of allies) sumAllies += champion.opScore_user ? champion.opScore_user : 50
-		for (const champion of enemies) sumEnemies += champion.opScore_user ? champion.opScore_user : 50
+		for (const champion of allies) sumAllies += champion.opScore_user != undefined ? champion.opScore_user : 50
+		for (const champion of enemies) sumEnemies += champion.opScore_user != undefined ? champion.opScore_user : 50
 		let winRate = (sumAllies / 5 - sumEnemies / 5) / 2 + 50
 		let isInferiorTo50 = false
 		if (winRate < 50) {

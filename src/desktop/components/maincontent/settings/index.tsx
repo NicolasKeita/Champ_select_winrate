@@ -42,7 +42,7 @@ function Settings() {
 
 	function renderListChampNameWithOPScore() {
 		return allChamps.map(elem => {
-			return <ConfigRow key={uniqid()} champName={elem.name} opScoreCSW={+elem.opScore_CSW} opScoreUser={elem.opScore_user?+elem.opScore_user: 50} />
+			return <ConfigRow key={uniqid()} champName={elem.name} opScoreCSW={+elem.opScore_CSW} opScoreUser={elem.opScore_user != undefined ?+elem.opScore_user: 50} />
 		})
 	}
 

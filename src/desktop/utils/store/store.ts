@@ -375,6 +375,7 @@ export const slice = createSlice({
 			state.configSerialized = configDeserialized.stringify()
 		},
 		updateAllUserScores: (state, action: PayloadAction<Champion[]>) => {
+			console.log("Updateallscore")
 			const configDeserialized = new Config(JSON.parse(state.configSerialized))
 			for (const elem of Object.values(action.payload)) {
 				const champion = configDeserialized.getChampCurrConfig(elem.name)

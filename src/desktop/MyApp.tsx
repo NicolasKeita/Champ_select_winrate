@@ -43,19 +43,20 @@ const LCU_interface = new LCU_API_connector()
 function MyApp(props: My_PropType): JSX.Element {
 	const my_window = props.my_window
 	const dispatch = useAppDispatch()
+	const config: Config = JSON.parse(localStorage.getItem('config') ?? '{}')
+	if (Object.keys(config).length != 0 && config.champions && config.champions.length != 0) {
+		dispatch(copyFromAnotherSetting(config))
+	}
 
 	useEffect(() => {
 
 		function initializeDefaultConfig() {
 			fetchCSWgameVersion()
 				.then(gameVersion => {
-					const userGameVersion = localStorage.getItem('CSW_gameVersion')
-					const config: Config = JSON.parse(localStorage.getItem('config') ?? '{}')
-					if (userGameVersion != gameVersion || Object.keys(config).length == 0 || !config.champions || config.champions.length == 0) {
+					const userGameVersion : string | null = localStorage.getItem('CSW_gameVersion')
+					if (userGameVersion != gameVersion) {
 						localStorage.setItem('CSW_gameVersion', gameVersion)
 						dispatch(fetchAllChampions())
-					} else {
-						dispatch(copyFromAnotherSetting(config))
 					}
 				})
 				.catch(e => {
