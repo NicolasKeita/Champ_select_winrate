@@ -450,10 +450,13 @@ export const slice = createSlice({
 		builder.addCase(fetchAllChampions.fulfilled, (state, action) => {
 			const configDeserialized = new Config(JSON.parse(state.configSerialized))
 			for (const elem of Object.values(action.payload)) {
-				let duplicate = configDeserialized.champions.find(elemConfig => elemConfig.name === elem.name)
+				const duplicate = configDeserialized.champions.find(elemConfig => elemConfig.name === elem.name)
 				if (duplicate) {
-					duplicate = copy(elem)
-				} else configDeserialized.champions.push(copy(elem))
+					const userScore = duplicate.opScore_user
+					Object.assign(duplicate, copy(elem))
+					duplicate.opScore_user = userScore
+				} else
+					configDeserialized.champions.push(copy(elem))
 			}
 			localStorage.setItem('config', configDeserialized.stringify())
 			state.configSerialized = configDeserialized.stringify()

@@ -66,7 +66,7 @@ class LCU_API_connector {
 	}
 
 	public addAllListeners(clientsInfos, callbackWhenOWSendAnyNewEvent) {
-		// console.log('Adding listeners')
+		console.log('Adding listeners')
 		if (this.isLeagueClient(clientsInfos)) unregisterEvents()
 		registerEvents(callbackWhenOWSendAnyNewEvent)
 		setTimeout(this.setFeatures, 1000)
