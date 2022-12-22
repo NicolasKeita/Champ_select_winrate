@@ -70,9 +70,9 @@ export function onInfoUpdatesAddListener(callback: (event: any) => void) {
 			}
 		}
 	}
-	setTimeout(callback, 500, infoGameFlow)
+	setTimeout(callback, 300, copy(infoGameFlow))
 	infoGameFlow.info.game_flow.phase = 'ChampSelect'
-	setTimeout(callback, 1000, infoGameFlow)
+	setTimeout(callback, 600, copy(infoGameFlow))
 	const infoChampSelect = {
 		feature: 'champ_select',
 		info: {
@@ -81,9 +81,9 @@ export function onInfoUpdatesAddListener(callback: (event: any) => void) {
 			}
 		}
 	}
-	setTimeout(callback, 2000, infoChampSelect)
+	setTimeout(callback, 900, copy(infoChampSelect))
 	infoChampSelect.info.champ_select.raw = JSON.stringify(champ_select2)
-	setTimeout(callback, 4000, infoChampSelect)
+	setTimeout(callback, 1200, copy(infoChampSelect))
 }
 
 export function onInfoUpdatesAddListenerSpamChampSelect(callback: (event: any) => void) {

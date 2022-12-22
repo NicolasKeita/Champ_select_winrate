@@ -16,14 +16,16 @@ import {configTest} from '../__testsUtils__/configTest'
 import '@testing-library/jest-dom'
 import * as fetchDataDragon
 	from '../src/desktop/utils/fetchDataDragon/fetchDataDragon'
+import {UserEvent} from '@testing-library/user-event/setup/setup'
 
 describe('settings', () => {
+	let user : UserEvent
 	beforeEach(() => {
 		localStorage.clear()
 		sessionStorage.clear()
 		global.overwolf = overwolfMocked
+		user = userEvent.setup()
 	})
-	const user = userEvent.setup()
 	jest.setTimeout(30000)
 	fetch.enableMocks()
 	fetch.mockResponse(req => {
@@ -92,7 +94,7 @@ describe('settings', () => {
 		}, {timeout: 5000})
 	})
 
-	// it('should be able to reset settings', async () => {
+	// it('should keep settings in localStorage when closing app', async () => {
 	// global.overwolf.games.launchers.getRunningLaunchersInfo = getRunningLaunchersInfo
 	// // ↑ Put a client already running
 	// global.overwolf.games.launchers.events.onInfoUpdates.addListener = onInfoUpdatesAddListener
@@ -105,4 +107,6 @@ describe('settings', () => {
 	// }, {timeout: 5000})
 	// })
 	//TODO do a test about the reset button
+	//TODO test about closing app and still have user setting
+	//TODO test about update version but have CSWscore updated but not userScore
 })
