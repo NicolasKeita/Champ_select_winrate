@@ -6,6 +6,7 @@ import champ_select1 from './action1.json'
 import champ_select2 from './action2.json'
 import {copy} from 'copy-anything'
 
+export const talonCSWScore = 35
 
 export const overwolfMocked: typeof overwolf = {
 	games: {
@@ -47,6 +48,7 @@ export const overwolfMocked: typeof overwolf = {
 	//@ts-ignore
 	windows: {
 		dragMove: () => {},
+		obtainDeclaredWindow: () => {},
 		onStateChanged: {
 			addListener: (callback) => {},
 			removeListener: (callback) => {}

@@ -7,8 +7,7 @@ import {ContextMenu} from 'react-context-menu-hooks'
 import {myContextMenuBridge} from './myContextMenuBridge'
 import styled from 'styled-components'
 
-import {useAppDispatch, useAppSelector} from '@utils/hooks'
-import {selectInstancedConfig} from '@utils/store/selectors'
+import {useAppDispatch} from '@utils/hooks'
 import {resetSettings} from '@utils/store/store'
 
 const ContextMenuStyled = styled(ContextMenu)`
@@ -20,7 +19,6 @@ const ContextMenuStyled = styled(ContextMenu)`
 
 function MyContextMenu(): JSX.Element {
 	const dispatch = useAppDispatch()
-	const settings = useAppSelector(selectInstancedConfig()) // TODO what is this
 
 	const handleRightClick = () => {
 		dispatch(resetSettings())

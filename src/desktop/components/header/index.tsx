@@ -115,6 +115,7 @@ function Header(props) {
 				<button className={'window-control window-control-minimize'}
 						onMouseDown={minimize} />
 				<button className={'window-control window-control-close'}
+						aria-label={'shutdownAppButton'}
 						onMouseDown={close} />
 			</div>
 		</HeaderContainer>
