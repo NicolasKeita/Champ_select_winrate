@@ -12,7 +12,7 @@ module.exports = env => {
 			background: './src/background/background.tsx',
 			desktop: './src/desktop/desktop.tsx'
 		},
-		devtool: env.removeSourceMap ? false : 'inline-source-map',
+		devtool: env['removeSourceMap'] ? false : 'inline-source-map',
 		module: {
 			rules: [
 				{
@@ -22,12 +22,11 @@ module.exports = env => {
 				},
 				{
 					test: /\.css$/i,
-					use: [{loader: 'css-loader', options: {url: false}}],
-					exclude: /node_modules/
+					use: ['style-loader', 'css-loader']
 				},
 				{
 					test: /\.(png|jpe?g|ttf|webp|svg)$/,
-					type: 'asset/resource'
+					type: 'asset'
 				}
 			]
 		},
@@ -37,7 +36,9 @@ module.exports = env => {
 		},
 		output: {
 			path: path.resolve(__dirname, 'dist/'),
-			filename: 'js/[name].js'
+			filename: 'js/[name].js',
+			clean: true,
+			assetModuleFilename: 'assets/[hash][ext][query]'
 		},
 		performance: {
 			maxAssetSize: 51200000,
@@ -46,7 +47,10 @@ module.exports = env => {
 		plugins: [
 			new CleanWebpackPlugin(),
 			new CopyPlugin({
-				patterns: [{from: 'public', to: './'}]
+				patterns: [
+					{from: 'public/OWassets', to: './OWassets'},
+					{from: 'public/manifest.json', to: './manifest.json'}
+				]
 			}),
 			new HtmlWebpackPlugin({
 				template: './src/background/background.html',

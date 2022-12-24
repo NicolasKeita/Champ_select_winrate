@@ -1,6 +1,6 @@
 {
 	"name": "champ_select_winrate",
-	"version": "1.2.0",
+	"version": "1.2.1",
 	"description": "Fully customizable champ select tool",
 	"lint-staged": {
 		"*": "eslint --max-warnings 0 --fix"

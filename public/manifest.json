@@ -5,15 +5,15 @@
 		"name": "Champ Select Winrate",
 		"author": "Nicolas Keita",
 		"author_display": "SpyNight",
-		"version": "1.2.0",
+		"version": "1.2.1",
 		"minimum-overwolf-version": "0.194.0",
 		"description": "Fully customizable champ select tool",
 		"dock_button_title": "Champ Select Win",
-		"icon": "icons/IconMouseOver.png",
-		"icon_gray": "icons/IconMouseNormal.png",
-		"launcher_icon": "icons/desktop-icon.ico",
-		"splash_image": "icons/IconMouseOver.png",
-		"window_icon": "icons/IconMouseOver.png"
+		"icon": "OWassets/IconMouseOver.png",
+		"icon_gray": "OWassets/IconMouseNormal.png",
+		"launcher_icon": "OWassets/desktop-icon.ico",
+		"splash_image": "OWassets/IconMouseOver.png",
+		"window_icon": "OWassets/IconMouseOver.png"
 	},
 	"permissions": ["GameInfo", "Extensions", "Streaming", "Profile"],
 	"data": {
