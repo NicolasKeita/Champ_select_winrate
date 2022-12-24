@@ -20,7 +20,6 @@ import {myContextMenuBridge} from './myContextMenu/myContextMenuBridge'
 import {updateAllUserScores} from '@utils/store/store'
 import {useAppDispatch} from '@utils/hooks'
 import {toggleSettingsPage} from '@utils/store/store'
-import {Champion} from '../maincontent/settings/Champion'
 
 const HeaderContainer = styled.header`
   background: linear-gradient(to right, rgb(63, 62, 62), #363636, #323232);
