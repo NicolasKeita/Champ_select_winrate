@@ -53,7 +53,7 @@ function MyApp(props: My_PropType): JSX.Element {
 		function initializeDefaultConfig() {
 			fetchCSWgameVersion()
 				.then(gameVersion => {
-					const userGameVersion : string | null = localStorage.getItem('CSW_gameVersion')
+					const userGameVersion: string | null = localStorage.getItem('CSW_gameVersion')
 					if (userGameVersion != gameVersion) {
 						localStorage.setItem('CSW_gameVersion', gameVersion)
 						dispatch(fetchAllChampions())

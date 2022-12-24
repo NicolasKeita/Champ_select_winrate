@@ -4,7 +4,6 @@
 
 import React, {useEffect, useRef, useState} from 'react'
 import styled from 'styled-components'
-import PropTypes from 'prop-types'
 
 import {AppWindow} from '../../../AppWindow'
 
@@ -21,6 +20,7 @@ import {myContextMenuBridge} from './myContextMenu/myContextMenuBridge'
 import {updateAllUserScores} from '@utils/store/store'
 import {useAppDispatch} from '@utils/hooks'
 import {toggleSettingsPage} from '@utils/store/store'
+import {Champion} from '../maincontent/settings/Champion'
 
 const HeaderContainer = styled.header`
   background: linear-gradient(to right, rgb(63, 62, 62), #363636, #323232);
@@ -82,7 +82,11 @@ const ButtonSettings = () => {
 	)
 }
 
-function Header(props) {
+interface PropsType {
+	my_window: AppWindow
+}
+
+function Header(props: PropsType) {
 	const my_window = props.my_window
 	const headerRef = useRef(null)
 	const dispatch = useAppDispatch()
@@ -120,10 +124,6 @@ function Header(props) {
 			</div>
 		</HeaderContainer>
 	)
-}
-
-Header.propTypes = {
-	my_window: PropTypes.instanceOf(AppWindow)
 }
 
 export default Header

@@ -1,7 +1,6 @@
 const path = require('path'),
 	HtmlWebpackPlugin = require('html-webpack-plugin'),
 	CopyPlugin = require('copy-webpack-plugin'),
-	{CleanWebpackPlugin} = require('clean-webpack-plugin'),
 	OverwolfPlugin = require('./overwolf.webpack'),
 	TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin')
 
@@ -45,7 +44,6 @@ module.exports = env => {
 			maxEntrypointSize: 51200000
 		},
 		plugins: [
-			new CleanWebpackPlugin(),
 			new CopyPlugin({
 				patterns: [
 					{from: 'public/OWassets', to: './OWassets'},

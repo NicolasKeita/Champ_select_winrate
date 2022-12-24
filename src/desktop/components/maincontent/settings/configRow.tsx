@@ -2,12 +2,12 @@
     Path + Filename: src/desktop/components/maincontent/settings/configRow.tsx
 */
 
-import React, {KeyboardEvent, useReducer, useState} from 'react'
-import PropTypes from 'prop-types'
+import React, {KeyboardEvent, useState} from 'react'
 import styled from 'styled-components'
 import {useAppSelector} from '@utils/hooks'
 import Config from './Config'
 import {Input} from '@chakra-ui/react'
+import {Champion} from './Champion'
 
 const ChampName = styled.h1`
   background: -webkit-linear-gradient(#ab6630, #b79e4d);
@@ -40,11 +40,17 @@ const InputStyled = styled(Input)`
 `
 const OP_Score = styled.div``
 
-function ConfigRow(props) {
-	const [opScoreUser, setOpScoreUser] = useState<string>(props.opScoreUser)
+interface PropsType {
+	champName: string,
+	opScoreCSW: number,
+	opScoreUser: number
+}
+
+function ConfigRow(props: PropsType) {
+	const [opScoreUser, setOpScoreUser] = useState<string>(props.opScoreUser.toString())
 	const settings = useAppSelector((state) => new Config(JSON.parse(state.slice.configSerialized)))
 
-	function handleOnChange({target} : { target : HTMLInputElement}) {
+	function handleOnChange({target}: {target: HTMLInputElement}) {
 		if (!target || (!(/[0-9]/.test(target.value)) && target.value != '')) return
 		const valueEntered = parseInt(target.value) || 0
 		if (valueEntered == 0 && target.value === '') {
@@ -62,7 +68,7 @@ function ConfigRow(props) {
 		}
 	}
 
-	function handleOnBlur({target} : { target: HTMLInputElement}) {
+	function handleOnBlur({target}: {target: HTMLInputElement}) {
 		const valueEntered = target.value
 		if (valueEntered === '') {
 			setOpScoreUser('' + 50)
@@ -75,12 +81,12 @@ function ConfigRow(props) {
 		}
 	}
 
-	function handleOnKeyDown(event : KeyboardEvent) {
-		const target : Partial<HTMLInputElement> = event.target
-		if (event.key == "Escape") {
+	function handleOnKeyDown(event: KeyboardEvent) {
+		const target: Partial<HTMLInputElement> = event.target
+		if (event.key == 'Escape') {
 			if (target.blur)
 				target.blur()
-		} else if (event.key == "Enter") {
+		} else if (event.key == 'Enter') {
 			if (target.blur)
 				target.blur()
 		}
@@ -120,12 +126,6 @@ function ConfigRow(props) {
 			</form>
 		</div>
 	)
-}
-
-ConfigRow.propTypes = {
-	champName: PropTypes.string,
-	opScoreCSW: PropTypes.number,
-	opScoreUser: PropTypes.number
 }
 
 export default ConfigRow
