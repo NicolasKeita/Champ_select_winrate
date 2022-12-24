@@ -72,7 +72,7 @@
 		"copy-anything": ">=3.0.3",
 		"do-with-retry": ">=1.0.3",
 		"react": ">=18.2.0",
-		"react-context-menu-hooks": ">=0.4.0",
+		"react-contexify": ">=6.0.0",
 		"react-countdown": ">=2.3.5",
 		"react-dom": ">=18.2.0",
 		"react-loading-indicators": ">=0.0.11",

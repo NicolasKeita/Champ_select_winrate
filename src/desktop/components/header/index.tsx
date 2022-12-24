@@ -2,7 +2,7 @@
     Path + Filename: src/desktop/components/header/index.ts
 */
 
-import React, {useEffect, useRef, useState} from 'react'
+import React, {useEffect, useRef} from 'react'
 import styled from 'styled-components'
 
 import {AppWindow} from '../../../AppWindow'
@@ -12,14 +12,12 @@ import '@public/css/general.css'
 import '@public/css/modal.css'
 import '@public/css/header.css'
 
-import {ContextMenuTriggerArea} from 'react-context-menu-hooks'
-import '@public/css/ContextMenu.css'
-import MyContextMenu from './myContextMenu/myContextMenu'
-import {myContextMenuBridge} from './myContextMenu/myContextMenuBridge'
-
-import {updateAllUserScores} from '@utils/store/store'
+import {resetSettings, updateAllUserScores} from '@utils/store/store'
 import {useAppDispatch} from '@utils/hooks'
 import {toggleSettingsPage} from '@utils/store/store'
+
+import {Menu, Item, useContextMenu} from 'react-contexify'
+import './ReactContexify.css'
 
 const HeaderContainer = styled.header`
   background: linear-gradient(to right, rgb(63, 62, 62), #363636, #323232);
@@ -44,42 +42,6 @@ const CSWName = styled.h1`
   padding-left: 20px;
   cursor: inherit;
 `
-
-const ButtonSettings = () => {
-	const [color, setColor] = useState<string>('blue')
-	const [shape, setShape] = useState<string>('circle')
-	const dispatch = useAppDispatch()
-
-	function activateSettings(e) {
-		if (e.buttons == 1) {
-			dispatch(toggleSettingsPage())
-			const internalConfig = sessionStorage.getItem('internalConfig')
-			if (internalConfig) {
-				dispatch(updateAllUserScores(JSON.parse(internalConfig)))
-			}
-		}
-	}
-
-	return (
-		<ContextMenuTriggerArea
-			style={{cursor: 'default'}}
-			bridge={myContextMenuBridge}
-			className={'window-control window-control-settings'}
-			aria-label={'settingsButton'}
-			onMouseDown={e => activateSettings(e)}
-			data={{
-				color,
-				changeColor: newColor => {
-					setColor(newColor)
-				},
-				shape,
-				changeShape: newColor => {
-					setShape(newColor)
-				}
-			}}
-		></ContextMenuTriggerArea>
-	)
-}
 
 interface PropsType {
 	my_window: AppWindow
@@ -108,13 +70,47 @@ function Header(props: PropsType) {
 		my_window.setDrag(headerRef.current)
 	}, [my_window])
 
+	function handleContextMenu(event) {
+		show({
+			event,
+			props: {
+				key: 'value'
+			}
+		})
+	}
+
+	function activateSettings(e) {
+		//TODO this take too long overall. Get the PErformance going !
+		if (e.buttons == 1) {
+			dispatch(toggleSettingsPage())
+			const internalConfig = sessionStorage.getItem('internalConfig')
+			if (internalConfig) {
+				dispatch(updateAllUserScores(JSON.parse(internalConfig)))
+			}
+		}
+	}
+
+	const {show} = useContextMenu({
+		id: 'settingsButton'
+	})
+
 	return (
 		<HeaderContainer className={'app-header'} ref={headerRef}>
 			<Logo>CSW</Logo>
 			<CSWName>Champ Select Winrate</CSWName>
 			<div className='window-controls-group'>
-				<MyContextMenu />
-				<ButtonSettings />
+				<button className={'window-control window-control-settings'}
+						onMouseDown={e => activateSettings(e)}
+						onContextMenu={handleContextMenu}
+						style={{cursor: 'pointer'}}
+						aria-label={'settingsButton'}
+				/>
+				<Menu id={'settingsButton'}>
+					<Item onClick={() => {dispatch(resetSettings())}}>
+						Reset config
+					</Item>
+				</Menu>
+
 				<button className={'window-control window-control-minimize'}
 						onMouseDown={minimize} />
 				<button className={'window-control window-control-close'}
