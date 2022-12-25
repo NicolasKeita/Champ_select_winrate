@@ -119,13 +119,6 @@ const initialState = {
 let g_x = 0
 
 function updateChampSelectDisplayedScores(champSelectDisplayed: ChampSelectDisplayedType, allChamps: Champion[]) {
-	// for (const ally of champSelectDisplayed.allies) {
-	// 	ally.champ.opScore_user = getChampScoreByName(ally.champ.name, allChamps)
-	// }
-	// for (const enemy of champSelectDisplayed.enemies) {
-	// 	enemy.champ.opScore_user = getChampScoreByName(enemy.champ.name, allChamps)
-	// }
-
 	const allChampsToQuery: string[] = []
 	for (const ally of champSelectDisplayed.allies) {
 		allChampsToQuery.push(ally.champ.name)
@@ -145,7 +138,6 @@ function updateChampSelectDisplayedScores(champSelectDisplayed: ChampSelectDispl
 }
 
 function updateHistoryDisplayedScores(historyDisplayed: HistoryDisplayedType[], allChamps: Champion[]) {
-	return
 	const allChampsToQuery: string[] = []
 	for (const match of historyDisplayed) {
 		for (const ally of match.allies) {
