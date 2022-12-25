@@ -4,14 +4,13 @@
 
 import React from 'react'
 import styled from 'styled-components'
-import {Tooltip} from '@chakra-ui/react'
-import ChampionProfile from '../../championProfile'
-import questionMark from '@public/img/question_mark.jpg'
 import HistoryProfile from '../../championProfile/historyProfile'
 import uniqid from 'uniqid'
-import {Champion, championConstructor} from '../settings/Champion'
-import {useAppDispatch, useAppSelector} from '@utils/hooks'
-import {ChampDisplayedType, HistoryDisplayedType} from '@utils/store/store'
+import {useAppSelector} from '@utils/hooks'
+import {HistoryDisplayedType} from '@utils/store/store'
+import Tippy from '@tippyjs/react'
+import './tippy.css'
+import computeWinrate from '@utils/maths/computeWinrateBetweenTwoTeams'
 
 const HistoryContainer = styled.div`
   color: white;
@@ -43,7 +42,6 @@ const WinrateLine = styled.div`
 const HistoryGrid = styled.div`
   display: flex;
   justify-content: space-between;
-  //align-items: ;
   flex-direction: column;
 `
 
@@ -54,11 +52,6 @@ const TeamGrid = styled.div`
   background: -webkit-linear-gradient(#a8540c, #b79e4d);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-`
-
-const LineDisplay = styled.div`
-  //display: flex;
-  //flex-direction: ;
 `
 
 const ProfileLine = styled.div`
@@ -96,29 +89,7 @@ const ProfileLine = styled.div`
 `
 
 function History() {
-	// console.log("history config")
-	// console.log(localStorage.getItem('config'))
 	const historyDisplayed = useAppSelector(state => state.slice.historyDisplayed)
-
-	function computeWinrate(allies: Champion[], enemies: Champion[]): number {
-		let sumAllies = 0
-		let sumEnemies = 0
-		for (const champion of allies) sumAllies += champion.opScore_user != undefined ? champion.opScore_user : 50
-		for (const champion of enemies) sumEnemies += champion.opScore_user != undefined ? champion.opScore_user : 50
-		let winRate = (sumAllies / 5 - sumEnemies / 5) / 2 + 50
-		let isInferiorTo50 = false
-		if (winRate < 50) {
-			isInferiorTo50 = true
-			winRate = 50 - winRate + 50
-		}
-		winRate = 100.487 - 4965.35 * Math.exp(-0.0917014 * winRate)
-		if (isInferiorTo50) {
-			winRate = 100 - winRate
-			return Math.floor(winRate)
-		} else {
-			return Math.ceil(winRate)
-		}
-	}
 
 	function renderHistoryGrid(historyDisplayed: HistoryDisplayedType[]): JSX.Element[] {
 		const linesHistory: JSX.Element[] = []
@@ -132,9 +103,11 @@ function History() {
 										teamHistory={historyDisplayed[i].allies}
 										isLoading={historyDisplayed[i].isLoading}
 						/>
-						<Tooltip label={tooltipNumber}>
-							<h1>{winrate}%</h1>
-						</Tooltip>
+						<Tippy content={<span>{tooltipNumber}</span>}>
+							<h1>
+								{winrate}%
+							</h1>
+						</Tippy>
 						<HistoryProfile key={uniqid()}
 										teamHistory={historyDisplayed[i].enemies}
 										isLoading={historyDisplayed[i].isLoading}

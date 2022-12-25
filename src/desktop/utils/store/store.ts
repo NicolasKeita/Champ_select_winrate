@@ -12,13 +12,14 @@ import {
 import Config, {ConfigPage} from '../../components/maincontent/settings/Config'
 import {
 	Champion,
-	championConstructor,
 	getDefaultChampion
 } from '../../components/maincontent/settings/Champion'
 import {
-	getChampImg, getChampImgByName,
+	getChampImg,
+	getChampImgByName,
 	getChampName,
-	getChampScore,
+	getChampScoreByName,
+	getChampScoreByNames,
 	getChampSquareAsset
 } from '@utils/fetchDataDragon/fetchDataDragon'
 import {
@@ -27,7 +28,6 @@ import {
 import {fetchMatchHistory, fetchMatchHistoryId} from '@utils/LOL_API'
 import {doWithRetry} from 'do-with-retry'
 import {copy} from 'copy-anything'
-import championProfile from '../../components/championProfile'
 
 export type ChampDisplayedType = {
 	assignedRole: string
@@ -119,23 +119,63 @@ const initialState = {
 let g_x = 0
 
 function updateChampSelectDisplayedScores(champSelectDisplayed: ChampSelectDisplayedType, allChamps: Champion[]) {
-	for (const elem of champSelectDisplayed.allies) {
-		elem.champ.opScore_user = getChampScore(elem.champ.name, allChamps)
+	// for (const ally of champSelectDisplayed.allies) {
+	// 	ally.champ.opScore_user = getChampScoreByName(ally.champ.name, allChamps)
+	// }
+	// for (const enemy of champSelectDisplayed.enemies) {
+	// 	enemy.champ.opScore_user = getChampScoreByName(enemy.champ.name, allChamps)
+	// }
+
+	const allChampsToQuery: string[] = []
+	for (const ally of champSelectDisplayed.allies) {
+		allChampsToQuery.push(ally.champ.name)
 	}
-	for (const elem of champSelectDisplayed.enemies) {
-		elem.champ.opScore_user = getChampScore(elem.champ.name, allChamps)
+	for (const enemy of champSelectDisplayed.enemies) {
+		allChampsToQuery.push(enemy.champ.name)
+	}
+	const allChampsToQueryFulfilled = getChampScoreByNames(allChampsToQuery, allChamps)
+	if (Object.keys(allChampsToQueryFulfilled).length == 0)
+		return
+	for (const ally of champSelectDisplayed.allies) {
+		ally.champ.opScore_user = allChampsToQueryFulfilled[`${ally.champ.name}`]
+	}
+	for (const enemy of champSelectDisplayed.allies) {
+		enemy.champ.opScore_user = allChampsToQueryFulfilled[`${enemy.champ.name}`]
 	}
 }
 
 function updateHistoryDisplayedScores(historyDisplayed: HistoryDisplayedType[], allChamps: Champion[]) {
+	return
+	const allChampsToQuery: string[] = []
 	for (const match of historyDisplayed) {
 		for (const ally of match.allies) {
-			ally.opScore_user = getChampScore(ally.name, allChamps)
+			allChampsToQuery.push(ally.name)
 		}
 		for (const enemy of match.enemies) {
-			enemy.opScore_user = getChampScore(enemy.name, allChamps)
+			allChampsToQuery.push(enemy.name)
 		}
 	}
+	const allChampsToQueryFulfilled = getChampScoreByNames(allChampsToQuery, allChamps)
+	if (Object.keys(allChampsToQueryFulfilled).length == 0)
+		return
+	for (const match of historyDisplayed) {
+		for (const ally of match.allies) {
+			ally.opScore_user = allChampsToQueryFulfilled[`${ally.name}`]
+		}
+		for (const enemy of match.enemies) {
+			enemy.opScore_user = allChampsToQueryFulfilled[`${enemy.name}`]
+		}
+	}
+
+	// for (const match of historyDisplayed) {
+	// 	for (const ally of match.allies) {
+	// 		ally.opScore_user = getChampScoreByName(ally.name, allChamps)
+	// 	}
+	// 	for (const enemy of match.enemies) {
+	// 		enemy.opScore_user = getChampScoreByName(enemy.name, allChamps)
+	// 	}
+	// }
+
 }
 
 type FillChampSelectDisplayedParamType = {
@@ -383,8 +423,10 @@ export const slice = createSlice({
 			}
 			state.configSerialized = configDeserialized.stringify()
 			localStorage.setItem('config', configDeserialized.stringify())
-			updateChampSelectDisplayedScores(state.champSelectDisplayed, configDeserialized.champions)
-			updateHistoryDisplayedScores(state.historyDisplayed, configDeserialized.champions)
+			if (configDeserialized.currentPage == ConfigPage.HISTORY)
+				updateHistoryDisplayedScores(state.historyDisplayed, configDeserialized.champions)
+			else if (configDeserialized.currentPage == ConfigPage.CHAMPSELECT)
+				updateChampSelectDisplayedScores(state.champSelectDisplayed, configDeserialized.champions)
 		},
 		setClientStatus: (state, action: PayloadAction<number>) => {
 			const configPlainObject: Config = JSON.parse(state.configSerialized)
@@ -419,7 +461,8 @@ export const slice = createSlice({
 			configPlainObject.champions.length = 0
 			sessionStorage.removeItem('internalConfig')
 			const userConfigString = localStorage.getItem('config')
-			if (!userConfigString) console.error('CSW_error: config in localstorage not found')
+			if (!userConfigString)
+				console.error('CSW_error: config in localstorage not found')
 			else {
 				const userConfig: Config = JSON.parse(userConfigString)
 				for (const champion of userConfig.champions) {
@@ -430,8 +473,10 @@ export const slice = createSlice({
 			}
 			g_x += 1
 			state.configSerialized = JSON.stringify(configPlainObject) + ' '.repeat(g_x)
-			updateChampSelectDisplayedScores(state.champSelectDisplayed, configPlainObject.champions)
-			updateHistoryDisplayedScores(state.historyDisplayed, configPlainObject.champions)
+			if (configPlainObject.currentPage == ConfigPage.CHAMPSELECT)
+				updateChampSelectDisplayedScores(state.champSelectDisplayed, configPlainObject.champions)
+			else if (configPlainObject.currentPage == ConfigPage.HISTORY)
+				updateHistoryDisplayedScores(state.historyDisplayed, configPlainObject.champions)
 		}
 	},
 	extraReducers: (builder) => {
@@ -439,11 +484,11 @@ export const slice = createSlice({
 			if (action.payload !== undefined) {
 				state.champSelectDisplayed.allies = JSON.parse(JSON.stringify(action.payload.allies))
 				for (const elem of state.champSelectDisplayed.allies) {
-					elem.champ.opScore_user = getChampScore(elem.champ.name, JSON.parse(state.configSerialized).champions)
+					elem.champ.opScore_user = getChampScoreByName(elem.champ.name, JSON.parse(state.configSerialized).champions)
 				}
 				state.champSelectDisplayed.enemies = JSON.parse(JSON.stringify(action.payload.enemies))
 				for (const elem of state.champSelectDisplayed.enemies) {
-					elem.champ.opScore_user = getChampScore(elem.champ.name, JSON.parse(state.configSerialized).champions)
+					elem.champ.opScore_user = getChampScoreByName(elem.champ.name, JSON.parse(state.configSerialized).champions)
 				}
 			}
 		})

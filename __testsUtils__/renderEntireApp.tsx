@@ -1,4 +1,3 @@
-import {ChakraProvider} from '@chakra-ui/react'
 import {Provider} from 'react-redux'
 import React, {PropsWithChildren} from 'react'
 import {slice} from '../src/desktop/utils/store/store'
@@ -15,11 +14,7 @@ import {copy} from 'copy-anything'
 const myWindow = new AppWindow(kWindowNames.desktop)
 
 export function renderEntireApp() {
-	renderWithProviders(
-		<ChakraProvider>
-			<MyApp my_window={copy(myWindow)} />
-		</ChakraProvider>
-	)
+	renderWithProviders(<MyApp my_window={copy(myWindow)} />)
 }
 
 interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {

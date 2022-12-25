@@ -14,7 +14,7 @@ import {
 	selectBooleanSettingsPage,
 	selectCurrentPage
 } from '@utils/store/selectors'
-import { ConfigPage } from './settings/Config'
+import {ConfigPage} from './settings/Config'
 import History from './main/history'
 
 const MainContentContainer = styled.div`
@@ -34,7 +34,8 @@ function MainContent() {
 		currentPageSet =
 			<div id='main+footer'
 				 style={{display: 'flex', flexDirection: 'column', flex: 1}}>
-				{currentPage === ConfigPage.CHAMPSELECT ? <ChampSelect /> : <History />}
+				{currentPage === ConfigPage.CHAMPSELECT ? <ChampSelect /> :
+					<History />}
 				<Footer />
 			</div>
 	} else

@@ -6,8 +6,6 @@ import React, {KeyboardEvent, useState} from 'react'
 import styled from 'styled-components'
 import {useAppSelector} from '@utils/hooks'
 import Config from './Config'
-import {Input} from '@chakra-ui/react'
-import {Champion} from './Champion'
 
 const ChampName = styled.h1`
   background: -webkit-linear-gradient(#ab6630, #b79e4d);
@@ -24,8 +22,8 @@ const OP_ScoreContainer = styled.div`
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 `
-const InputStyled = styled(Input)`
-  //width: 50px;
+const InputStyled = styled.input`
+  width: 50px;
   margin-left: -30px;
   border-radius: 4px;
   background: rgba(63, 62, 62, 0);
@@ -47,6 +45,10 @@ interface PropsType {
 }
 
 function ConfigRow(props: PropsType) {
+	//TODO avant faire la technique de useMemo pour que le second render soit propre
+	// car lorsque je render 23 items, je recharge les 13 premiers ? j'aimerai juste les ajouter
+	//TODO faire la technique de load 13 items puis 23 puis 33 en fonction du scroll du user
+
 	const [opScoreUser, setOpScoreUser] = useState<string>(props.opScoreUser.toString())
 	const settings = useAppSelector((state) => new Config(JSON.parse(state.slice.configSerialized)))
 
@@ -94,7 +96,8 @@ function ConfigRow(props: PropsType) {
 
 
 	return (
-		<div style={{display: 'flex', flex: '1'}} key={'1'}>
+		<div
+			style={{display: 'flex', flex: '1'}}>
 			<form
 				style={{
 					display: 'flex',

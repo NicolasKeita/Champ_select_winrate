@@ -102,7 +102,6 @@ function Header(props: PropsType) {
 				<button className={'window-control window-control-settings'}
 						onMouseDown={e => activateSettings(e)}
 						onContextMenu={handleContextMenu}
-						style={{cursor: 'pointer'}}
 						aria-label={'settingsButton'}
 				/>
 				<Menu id={'settingsButton'}>

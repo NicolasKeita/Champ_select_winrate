@@ -42,7 +42,14 @@ function Settings() {
 
 	function renderListChampNameWithOPScore() {
 		return allChamps.map(elem => {
-			return <ConfigRow key={uniqid()} champName={elem.name} opScoreCSW={+elem.opScore_CSW} opScoreUser={elem.opScore_user != undefined ?+elem.opScore_user: 50} />
+			return (
+				<ConfigRow
+					key={uniqid()}
+					champName={elem.name}
+					opScoreCSW={+elem.opScore_CSW}
+					opScoreUser={elem.opScore_user != undefined ? +elem.opScore_user : 50}
+				/>
+			)
 		})
 	}
 
@@ -57,6 +64,11 @@ function Settings() {
 			</RowContainer>
 		)
 	}
+
+	// const {ref, inView, entry} = useInView({
+	// 	/* Optional options */
+	// 	threshold: 0
+	// })
 
 	return (
 		<SettingsContainer id={'SettingsContainer'}>

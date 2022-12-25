@@ -66,12 +66,24 @@ export async function getChampName(champId) {
 	return (await getChampionByKey(champId)).name
 }
 
-export function getChampScore(champName: string, settingsChampions: Champion[]): number {
-	for (const elem of settingsChampions) {
-		if (elem.name == champName)
-			return elem.opScore_user != undefined ? elem.opScore_user : 50
+export function getChampScoreByName(champName: string, allChampions: Champion[]): number {
+	for (const champion of allChampions) {
+		if (champion.name == champName)
+			return champion.opScore_user != undefined ? champion.opScore_user : 50
 	}
 	return 50
+}
+
+export function getChampScoreByNames(champNames: string[], allChampions: Champion[]): any {
+	const result = {}
+	for (const champion of allChampions) {
+		if (champNames.includes(champion.name)) {
+			result[`${champion.name}`] = champion.opScore_user != undefined ? champion.opScore_user : 50
+			if (Object.keys(result).length == champNames.length)
+				return result
+		}
+	}
+	return result
 }
 
 export async function getChampSquareAsset(champNamePNG: string): Promise<string> {

@@ -8,9 +8,9 @@ import uniqid from 'uniqid'
 
 import ChampionProfile from '../../championProfile'
 import {useAppSelector} from '@utils/hooks'
-import {ChampDisplayedType} from '@utils/store/store'
-import {Tooltip} from '@chakra-ui/react'
 import questionMark from '@public/img/question_mark.jpg'
+import Tippy from '@tippyjs/react'
+import computeWinrate from '@utils/maths/computeWinrateBetweenTwoTeams'
 
 const PercentageContainer = styled.div`
   display: flex;
@@ -104,35 +104,17 @@ function ChampSelect() {
 		return <div>{profiles}</div>
 	}
 
-	function computeWinrate(allies: ChampDisplayedType[], enemies: ChampDisplayedType[]): number {
-		let sumAllies = 0
-		let sumEnemies = 0
-		for (const elem of allies) sumAllies += elem.champ.opScore_user != undefined ? elem.champ.opScore_user : 50
-		for (const elem of enemies) sumEnemies += elem.champ.opScore_user != undefined ? elem.champ.opScore_user : 50
-		let winRate = (sumAllies / 5 - sumEnemies / 5) / 2 + 50
-		let isInferiorTo50 = false
-		if (winRate < 50) {
-			isInferiorTo50 = true
-			winRate = 50 - winRate + 50
-		}
-		winRate = 100.487 - 4965.35 * Math.exp(-0.0917014 * winRate)
-		if (isInferiorTo50) {
-			winRate = 100 - winRate
-			return Math.floor(winRate)
-		} else {
-			return Math.ceil(winRate)
-		}
-	}
-
-	const winrate = computeWinrate(champSelectDisplayed.allies, champSelectDisplayed.enemies)
+	const allies = champSelectDisplayed.allies.map((ally) => ally.champ)
+	const enemies = champSelectDisplayed.enemies.map((enemy) => enemy.champ)
+	const winrate = computeWinrate(allies, enemies)
 	const tooltipNumber = 'Numbers are coming from your own settings. Check your settings (top right icon) to change the default.'
 	return (
 		<MainContainer>
 			<PercentageContainer>
 				<WinrateLine isLeft />
-				<Tooltip label={tooltipNumber}>
+				<Tippy content={<span>{tooltipNumber}</span>}>
 					<h1>{winrate}%</h1>
-				</Tooltip>
+				</Tippy>
 				<WinrateLine />
 			</PercentageContainer>
 			<PlayersGrid>
