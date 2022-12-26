@@ -36,8 +36,8 @@ describe('settings', () => {
 				return Promise.reject(new Error('URL is not handled by Jest tests'))
 		}
 	)
-	jest.spyOn(fetchDataDragon, 'getChampName').mockResolvedValue('Talon')
-	jest.spyOn(fetchDataDragon, 'getChampImg').mockResolvedValue('https://ddragon.leagueoflegends.com/cdn/12.13.1/img/champion/Talon.png')
+	// jest.spyOn(fetchDataDragon, 'getChampName').mockResolvedValue('Talon')
+	// jest.spyOn(fetchDataDragon, 'getChampImg').mockResolvedValue('https://ddragon.leagueoflegends.com/cdn/12.13.1/img/champion/Talon.png')
 
 	it('should update immediately user score when user changes it', async () => {
 		localStorage.clear()
@@ -70,13 +70,11 @@ describe('settings', () => {
 			target: settingButton
 		}])
 		let resetButton = screen.getByText('Reset config')
-		if (!resetButton)
-			throw new Error('resetbutton not parent')
 		await user.click(resetButton)
 		await waitFor(async () => {
 			inputTextBoxTalon = screen.getByRole('textbox', {name: 'Talon'})
 			expect(inputTextBoxTalon).toHaveValue(`${talonCSWScore}`)
-		}, {timeout: 500})
+		}, {timeout: 1000})
 
 		await user.type(inputTextBoxTalon, '[Backspace][Backspace]99')
 		// ↑ Puts 99 to talon score
@@ -103,15 +101,14 @@ describe('settings', () => {
 			const talonTile = TalonElem[0].parentElement
 			expect(talonTile).toContainHTML('99')
 		}
+		screen.debug()
 
 		await user.pointer([{target: settingButton}, {
 			keys: '[MouseRight]',
 			target: settingButton
 		}])
 		resetButton = screen.getByText('Reset config')
-		if (!resetButton)
-			throw new Error('resetbutton not parent')
-
+		// @ts-ignore
 		await user.click(resetButton)
 		// ↑ reset score
 		await waitFor(async () => {

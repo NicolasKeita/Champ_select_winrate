@@ -65,11 +65,6 @@ function Settings() {
 		)
 	}
 
-	// const {ref, inView, entry} = useInView({
-	// 	/* Optional options */
-	// 	threshold: 0
-	// })
-
 	return (
 		<SettingsContainer id={'SettingsContainer'}>
 			{renderTitleRow()}

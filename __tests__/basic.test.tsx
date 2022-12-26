@@ -34,9 +34,9 @@ describe('basic', () => {
 				return Promise.reject(new Error('URL is not handled by Jest tests'))
 		}
 	)
-	jest.spyOn(fetchDataDragon, 'getChampName').mockResolvedValue('Talon')
-	jest.spyOn(fetchDataDragon, 'getChampImg').mockResolvedValue('https://ddragon.leagueoflegends.com/cdn/12.13.1/img/champion/Talon.png')
-	jest.spyOn(fetchDataDragon, 'getChampSquareAsset').mockResolvedValue('https://ddragon.leagueoflegends.com/cdn/12.13.1/img/champion/Talon.png')
+	// jest.spyOn(fetchDataDragon, 'getChampName').mockResolvedValue('Talon')
+	// jest.spyOn(fetchDataDragon, 'getChampImg').mockResolvedValue('https://ddragon.leagueoflegends.com/cdn/12.13.1/img/champion/Talon.png')
+	// jest.spyOn(fetchDataDragon, 'getChampImgByNamePNG').mockResolvedValue('https://ddragon.leagueoflegends.com/cdn/12.13.1/img/champion/Talon.png')
 	test('should display winrate in header', async () => {
 		await act(() => {renderEntireApp()})
 		const winrateElem = screen.getByText(/winrate/i)

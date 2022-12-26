@@ -6,6 +6,8 @@ import React, {KeyboardEvent, useState} from 'react'
 import styled from 'styled-components'
 import {useAppSelector} from '@utils/hooks'
 import Config from './Config'
+import {copy} from 'copy-anything'
+import {selectAllChampions} from '@utils/store/selectors'
 
 const ChampName = styled.h1`
   background: -webkit-linear-gradient(#ab6630, #b79e4d);
@@ -50,7 +52,7 @@ function ConfigRow(props: PropsType) {
 	//TODO faire la technique de load 13 items puis 23 puis 33 en fonction du scroll du user
 
 	const [opScoreUser, setOpScoreUser] = useState<string>(props.opScoreUser.toString())
-	const settings = useAppSelector((state) => new Config(JSON.parse(state.slice.configSerialized)))
+	const allChamps = useAppSelector(selectAllChampions())
 
 	function handleOnChange({target}: {target: HTMLInputElement}) {
 		if (!target || (!(/[0-9]/.test(target.value)) && target.value != '')) return
@@ -61,11 +63,11 @@ function ConfigRow(props: PropsType) {
 		}
 		if (Number.isInteger(valueEntered) && valueEntered <= 100) {
 			setOpScoreUser(valueEntered.toString())
-			const internalConfig = new Config(settings)
-			const currentChamp = internalConfig.getChampCurrConfig(props.champName)
+			const currentChamp = copy(allChamps.find((champ) => champ.name == props.champName))
 			if (currentChamp) {
 				currentChamp.opScore_user = valueEntered
-				sessionStorage.setItem('internalConfig', internalConfig.stringifyChampions())
+				const allChampsUpdated = allChamps.map((champion) => champion.name == props.champName ? currentChamp : champion)
+				sessionStorage.setItem('internalConfig', JSON.stringify(allChampsUpdated))
 			}
 		}
 	}
@@ -74,11 +76,11 @@ function ConfigRow(props: PropsType) {
 		const valueEntered = target.value
 		if (valueEntered === '') {
 			setOpScoreUser('' + 50)
-			const internalConfig = new Config(settings)
-			const currentChamp = internalConfig.getChampCurrConfig(props.champName)
+			const currentChamp = copy(allChamps.find((champ) => champ.name == props.champName))
 			if (currentChamp) {
 				currentChamp.opScore_user = 50
-				sessionStorage.setItem('internalConfig', internalConfig.stringifyChampions())
+				const allChampsUpdated = allChamps.map((champion) => champion.name == props.champName ? currentChamp : champion)
+				sessionStorage.setItem('internalConfig', JSON.stringify(allChampsUpdated))
 			}
 		}
 	}
