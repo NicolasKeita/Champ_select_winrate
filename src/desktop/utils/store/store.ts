@@ -47,7 +47,8 @@ export type HistoryDisplayedType = {
 	allies: Champion[]
 	enemies: Champion[]
 	matchId: string,
-	isLoading: boolean
+	isLoading: boolean,
+	userWon: boolean
 }
 
 export function getDefaultRecommendations(): Champion[] {
@@ -85,7 +86,8 @@ function initHistoryDisplayed() {
 			allies: getDefaultRecommendations(),
 			enemies: getDefaultRecommendations(),
 			isLoading: false,
-			matchId: '0'
+			matchId: '0',
+			userWon: true
 		})
 	}
 	return historyDisplayed
@@ -114,8 +116,6 @@ const initialState = {
 	summonerRegion: '',
 	encryptedSummonerId: ''
 } as StoreStateType
-
-let g_x = 0
 
 function updateChampSelectDisplayedScores(champSelectDisplayed: ChampSelectDisplayedType, allChamps: Champion[]) {
 	const allChampsToQuery: string[] = []
@@ -220,6 +220,18 @@ export const fillHistoryDisplayed = createAsyncThunk<void, {region: string, puui
 			return
 		// const configDeserialized = new Config(JSON.parse(thunkAPI.getState().slice.configSerialized))
 		const allChamps = thunkAPI.getState().slice.config.champions
+
+		function getWinningTeam(teams) {
+			if (!teams.length || teams.length != 2)
+				return null
+			if (teams[0]['win'] == true)
+				return teams[0]['teamId']
+			else if (teams[0]['win'] == false)
+				return teams[1]['teamId']
+			else
+				return null
+		}
+
 		if (matchHistoryIds.length) {
 			for (const [i, matchHistoryId] of matchHistoryIds.entries()) {
 				historyDisplayedTmp[i].matchId = matchHistoryId
@@ -238,13 +250,19 @@ export const fillHistoryDisplayed = createAsyncThunk<void, {region: string, puui
 						console.error(e.cause)
 					})
 
+
+				historyDisplayedTmp[i].userWon = false
+
+				const winningTeam = getWinningTeam(matchInfo['info']['teams'])
 				let imInAllyTeam
+				let userTeam = '100'
 				for (let x = 0; x < 10; ++x) {
 					const participantChampName = matchInfo['info']['participants'][x]['championName']
 					const encryptedSummonerId = (matchInfo['info']['participants'][x]['summonerId'])
 					const myEncryptedSummonerId = sessionStorage.getItem('encryptedSummonerId')
 					if (encryptedSummonerId == myEncryptedSummonerId && x < 5) {
 						imInAllyTeam = true
+						userTeam = matchInfo['info']['participants'][x]['teamId']
 					}
 					if (x < 5) {
 						historyDisplayedTmp[i].allies[x].name = participantChampName
@@ -258,10 +276,19 @@ export const fillHistoryDisplayed = createAsyncThunk<void, {region: string, puui
 				}
 				if (!imInAllyTeam) {
 					//TODO is it the cleanest way to swap?
-					const tmpAlies = JSON.stringify(historyDisplayedTmp[i].allies)
-					historyDisplayedTmp[i].allies = JSON.parse(JSON.stringify(historyDisplayedTmp[i].enemies))
+					const tmpAlies = JSON.stringify(
+						historyDisplayedTmp[i].allies
+					)
+					historyDisplayedTmp[i].allies = JSON.parse(
+						JSON.stringify(historyDisplayedTmp[i].enemies)
+					)
 					historyDisplayedTmp[i].enemies = JSON.parse(tmpAlies)
 				}
+				if (userTeam == winningTeam || winningTeam == null) {
+					historyDisplayedTmp[i].userWon = true
+				} else
+					historyDisplayedTmp[i].userWon = false
+
 				thunkAPI.dispatch(setHistoryMatch({
 					historyDisplayedIndex: i,
 					matchDisplayed: historyDisplayedTmp[i]

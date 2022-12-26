@@ -97,20 +97,24 @@ function History() {
 		for (let i = 0; i < 5; ++i) {
 			const winrate = computeWinrate(historyDisplayed[i].allies, historyDisplayed[i].enemies)
 			linesHistory.push(
-				<div key={uniqid()}>
+				<React.Fragment key={uniqid()}>
 					<TeamGrid>
-						<HistoryProfile key={uniqid()}
-										teamHistory={historyDisplayed[i].allies}
-										isLoading={historyDisplayed[i].isLoading}
+						<HistoryProfile
+							teamHistory={historyDisplayed[i].allies}
+							isLoading={historyDisplayed[i].isLoading}
+							userWon={historyDisplayed[i].userWon}
+							isEnemyTeam={false}
 						/>
 						<Tippy content={<span>{tooltipNumber}</span>}>
 							<h1>
 								{winrate}%
 							</h1>
 						</Tippy>
-						<HistoryProfile key={uniqid()}
-										teamHistory={historyDisplayed[i].enemies}
-										isLoading={historyDisplayed[i].isLoading}
+						<HistoryProfile
+							teamHistory={historyDisplayed[i].enemies}
+							isLoading={historyDisplayed[i].isLoading}
+							userWon={!historyDisplayed[i].userWon}
+							isEnemyTeam={true}
 						/>
 					</TeamGrid>
 					{i < 4 &&
@@ -123,7 +127,7 @@ function History() {
 							<ProfileLine isEnemyTeam={true} />
 						</div>
 					}
-				</div>
+				</React.Fragment>
 			)
 		}
 		return linesHistory

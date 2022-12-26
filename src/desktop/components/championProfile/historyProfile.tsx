@@ -20,22 +20,34 @@ const TeamHistoryImg = styled.img`
 const HistoryProfileContainer = styled.div`
   height: 50px;
   display: flex;
-  flex-direction: ${props => (props.isEnemyTeam ? 'row-reverse' : 'row')};
   padding: 0 12px 0 12px;
-
-  background: -webkit-linear-gradient(#ab6630, #b79e4d);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  background: ${props => {
+    if (props.isLoading) return 'none'
+    if (!props.isEnemyTeam) {
+      if (props.userWon)
+        return `linear-gradient(135deg, transparent 0%, #785a28 2%, #B79E4DFF 10%, transparent 15%)`
+      else
+        return `linear-gradient(135deg, transparent 0%, #9e1818 2%, red 10%, transparent 15%)`
+    } else {
+      if (props.userWon) {
+        return `linear-gradient(225deg, transparent 0%, #785a28 2%, #B79E4DFF 10%, transparent 15%)`
+      } else {
+        return `linear-gradient(225deg, transparent 0%, #9e1818 2%, red 10%, transparent 15%)`
+      }
+    }
+  }};
 `
 
 interface PropsType {
 	teamHistory: Champion[]
-	isLoading: boolean
+	isLoading: boolean,
+	userWon: boolean,
+	isEnemyTeam: boolean
 }
 
 function HistoryProfile(props: PropsType): JSX.Element {
 
-	function renderChampionRecommendation(): JSX.Element[] | JSX.Element | null {
+	function renderChampionTeam(): JSX.Element[] | JSX.Element | null {
 		//if (props.isEnemyTeam || isUnsupportedGameMode) return null
 		const row: JSX.Element[] = []
 		if (!props.isLoading) {
@@ -50,10 +62,12 @@ function HistoryProfile(props: PropsType): JSX.Element {
 	}
 
 	return (
-		<HistoryProfileContainer>
-			<div style={{display: 'flex', flexDirection: 'row'}}>
-				{renderChampionRecommendation()}
-			</div>
+		<HistoryProfileContainer
+			userWon={props.userWon}
+			isLoading={props.isLoading}
+			isEnemyTeam={props.isEnemyTeam}
+		>
+			{renderChampionTeam()}
 		</HistoryProfileContainer>
 	)
 }

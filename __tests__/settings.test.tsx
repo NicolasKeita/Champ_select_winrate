@@ -3,7 +3,7 @@
 */
 
 
-import userEvent, {PointerEventsCheckLevel} from '@testing-library/user-event'
+import userEvent from '@testing-library/user-event'
 import {
 	getRunningLaunchersInfo, onInfoUpdatesAddListener,
 	overwolfMocked, talonCSWScore
@@ -39,8 +39,6 @@ describe('settings', () => {
 				return Promise.reject(new Error('URL is not handled by Jest tests'))
 		}
 	)
-	// jest.spyOn(fetchDataDragon, 'getChampName').mockResolvedValue('Talon')
-	// jest.spyOn(fetchDataDragon, 'getChampImg').mockResolvedValue('https://ddragon.leagueoflegends.com/cdn/12.13.1/img/champion/Talon.png')
 
 	it('should update immediately user score when user changes it', async () => {
 		localStorage.clear()
@@ -107,6 +105,29 @@ describe('settings', () => {
 			expect(inputTextBoxTalon).toHaveValue('50')
 		}, {timeout: 5000})
 	})
+})
+
+
+describe('settingsExtra', () => {
+	let user: UserEvent
+	beforeEach(() => {
+		global.overwolf = overwolfMocked
+		user = userEvent.setup({
+			// delay: null,
+		})
+		sessionStorage.clear()
+	})
+	jest.setTimeout(30000)
+	fetch.enableMocks()
+	fetch.mockResponse(req => {
+			if (req.url === 'https://4nuo1ouibd.execute-api.eu-west-3.amazonaws.com/csw_api_proxy/allchamps')
+				return Promise.resolve(JSON.stringify(allChamps))
+			else if (req.url === 'https://4nuo1ouibd.execute-api.eu-west-3.amazonaws.com/csw_api_proxy/cswgameversion')
+				return Promise.resolve('12.23.0')
+			else
+				return Promise.reject(new Error('URL is not handled by Jest tests'))
+		}
+	)
 
 	it('should keep settings in localStorage when closing app', async () => {
 		localStorage.clear()
@@ -136,19 +157,4 @@ describe('settings', () => {
 			expect(inputTextBoxTalon).toHaveValue('99')
 		}, {timeout: 5000})
 	})
-
-	// it('should reset settings correctly', async () => {
-	// 	localStorage.clear()
-	// 	await act(() => {renderEntireApp()})
-	// 	const settingButton = screen.getByLabelText('settingsButton')
-	// 	await user.click(settingButton)
-	// 	// ↑ Goes to settings
-	// 	let inputTextBoxTalon = screen.getByRole('textbox', {name: 'Talon'})
-	// 	if (!(inputTextBoxTalon instanceof HTMLInputElement))
-	// 		throw new Error('Expected HTMLInputElement')
-	// 	expect(inputTextBoxTalon).toHaveValue(`${talonCSWScore}`)
-	// 	await user.type(inputTextBoxTalon, '[Backspace][Backspace]99')
-	// 	expect(inputTextBoxTalon).toHaveValue('99')
-	// })
-	//TODO test about update version but have CSWscore updated but not userScore
 })
