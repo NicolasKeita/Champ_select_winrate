@@ -64,6 +64,8 @@ export function getRunningLaunchersInfo(callback) {
 }
 
 export function onInfoUpdatesAddListener(callback: (event: any) => void) {
+	const period = 300
+	let i = 0
 	const infoGameFlow = {
 		feature: 'game_flow',
 		info: {
@@ -72,9 +74,9 @@ export function onInfoUpdatesAddListener(callback: (event: any) => void) {
 			}
 		}
 	}
-	setTimeout(callback, 300, copy(infoGameFlow))
+	setTimeout(callback, period * ++i, copy(infoGameFlow))
 	infoGameFlow.info.game_flow.phase = 'ChampSelect'
-	setTimeout(callback, 600, copy(infoGameFlow))
+	setTimeout(callback, period * ++i, copy(infoGameFlow))
 	const infoChampSelect = {
 		feature: 'champ_select',
 		info: {
@@ -83,9 +85,9 @@ export function onInfoUpdatesAddListener(callback: (event: any) => void) {
 			}
 		}
 	}
-	setTimeout(callback, 900, copy(infoChampSelect))
+	setTimeout(callback, period * ++i, copy(infoChampSelect))
 	infoChampSelect.info.champ_select.raw = JSON.stringify(champ_select2)
-	setTimeout(callback, 1200, copy(infoChampSelect))
+	setTimeout(callback, period * ++i, copy(infoChampSelect))
 }
 
 export function onInfoUpdatesAddListenerSpamChampSelect(callback: (event: any) => void) {

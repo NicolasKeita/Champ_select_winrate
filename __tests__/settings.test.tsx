@@ -3,7 +3,7 @@
 */
 
 
-import userEvent from '@testing-library/user-event'
+import userEvent, {PointerEventsCheckLevel} from '@testing-library/user-event'
 import {
 	getRunningLaunchersInfo, onInfoUpdatesAddListener,
 	overwolfMocked, talonCSWScore
@@ -22,9 +22,12 @@ describe('settings', () => {
 	let user: UserEvent
 	beforeEach(() => {
 		global.overwolf = overwolfMocked
-		user = userEvent.setup({delay: null})
+		user = userEvent.setup({
+			// delay: null,
+		})
 		sessionStorage.clear()
 	})
+	//TODO try waitForelementtoBeRemoved for context menu resset settings
 	jest.setTimeout(30000)
 	fetch.enableMocks()
 	fetch.mockResponse(req => {
@@ -65,21 +68,6 @@ describe('settings', () => {
 		await user.type(inputTextBoxTalon, '[Backspace][Backspace]99')
 		// ↑ Puts 99 to talon score
 		expect(inputTextBoxTalon).toHaveValue('99')
-		await user.pointer([{target: settingButton}, {
-			keys: '[MouseRight]',
-			target: settingButton
-		}])
-		let resetButton = screen.getByText('Reset config')
-		await user.click(resetButton)
-		await waitFor(async () => {
-			inputTextBoxTalon = screen.getByRole('textbox', {name: 'Talon'})
-			expect(inputTextBoxTalon).toHaveValue(`${talonCSWScore}`)
-		}, {timeout: 1000})
-
-		await user.type(inputTextBoxTalon, '[Backspace][Backspace]99')
-		// ↑ Puts 99 to talon score
-		expect(inputTextBoxTalon).toHaveValue('99')
-
 		await user.click(settingButton)
 		// ↑ goes back to champSelect & see if Talon has 99 as score
 		let TalonElem = screen.getAllByText(/Talon/i)
@@ -101,24 +89,6 @@ describe('settings', () => {
 			const talonTile = TalonElem[0].parentElement
 			expect(talonTile).toContainHTML('99')
 		}
-		screen.debug()
-
-		await user.pointer([{target: settingButton}, {
-			keys: '[MouseRight]',
-			target: settingButton
-		}])
-		resetButton = screen.getByText('Reset config')
-		// @ts-ignore
-		await user.click(resetButton)
-		// ↑ reset score
-		await waitFor(async () => {
-			TalonElem = screen.getAllByText(/Talon/i)
-			expect(TalonElem).toBeDefined()
-			if (TalonElem.length && TalonElem.length >= 1) {
-				const talonTile = TalonElem[0].parentElement
-				expect(talonTile).toContainHTML(`${talonCSWScore}`)
-			}
-		}, {timeout: 800})
 	})
 	it('should appear default 50 when removing user score completely', async () => {
 		localStorage.clear()
@@ -157,13 +127,14 @@ describe('settings', () => {
 	it('should keep settings in localStorage when closing app2', async () => {
 		//notice localstorage is not cleared
 		await act(() => {renderEntireApp()})
-		const settingButton = screen.getByLabelText('settingsButton')
-		await user.click(settingButton)
+		expect(screen.getByText('CSW OP Score'))
 		// ↑ Goes to settings
-		let inputTextBoxTalon = screen.getByRole('textbox', {name: 'Talon'})
-		if (!(inputTextBoxTalon instanceof HTMLInputElement))
-			throw new Error('Expected HTMLInputElement')
-		expect(inputTextBoxTalon).toHaveValue('99')
+		await waitFor(async () => {
+			let inputTextBoxTalon = screen.getByRole('textbox', {name: 'Talon'})
+			if (!(inputTextBoxTalon instanceof HTMLInputElement))
+				throw new Error('Expected HTMLInputElement')
+			expect(inputTextBoxTalon).toHaveValue('99')
+		}, {timeout: 5000})
 	})
 
 	// it('should reset settings correctly', async () => {

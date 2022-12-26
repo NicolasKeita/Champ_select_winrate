@@ -3,7 +3,12 @@
 */
 
 import React from 'react'
-import {act, waitFor, screen} from '@testing-library/react'
+import {
+	act,
+	waitFor,
+	screen,
+	waitForElementToBeRemoved, getByText
+} from '@testing-library/react'
 import '@testing-library/jest-dom'
 import fetch from 'jest-fetch-mock'
 
@@ -24,6 +29,8 @@ describe('basic', () => {
 		global.overwolf = overwolfMocked
 	})
 	jest.setTimeout(30000)
+	jest.useFakeTimers()
+	jest.spyOn(global, 'setTimeout')
 	fetch.enableMocks()
 	fetch.mockResponse(req => {
 			if (req.url === 'https://4nuo1ouibd.execute-api.eu-west-3.amazonaws.com/csw_api_proxy/allchamps')
@@ -70,9 +77,12 @@ describe('basic', () => {
 		global.overwolf.games.launchers.events.onInfoUpdates.addListener = onInfoUpdatesAddListener
 
 		await act(() => {renderEntireApp()})
-		await waitFor(() => {
-			expect(screen.getByRole('heading', {name: 'footerMessage'})).toBeEmptyDOMElement()
-		}, {timeout: 4000})
+		await waitForElementToBeRemoved(
+			screen.getByText('Your ranked history')
+			, {timeout: 300 * 5})
+		expect(
+			screen.getByRole('heading', {name: 'footerMessage'}))
+			.toBeEmptyDOMElement()
 	})
 	test('should see default settings in localStorage after launching app', async () => {
 		//lol Client's already running
