@@ -475,15 +475,11 @@ export const slice = createSlice({
 			state.summonerRegion = action.payload
 		},
 		resetSettings: (state) => {
-			// const configPlainObject: Config = JSON.parse(state.configSerialized)
-			// if (!configPlainObject.champions) return
-
 			for (const champ of state.config.champions) {
 				champ.opScore_user = champ.opScore_CSW
 			}
 			sessionStorage.removeItem('internalConfig')
-			// g_x += 1
-			// state.configSerialized = JSON.stringify(configPlainObject) + ' '.repeat(g_x)
+			localStorage.setItem('config', JSON.stringify(state.config))
 			if (state.config.currentPage == ConfigPage.CHAMPSELECT)
 				updateChampSelectDisplayedScores(state.champSelectDisplayed, state.config.champions)
 			else if (state.config.currentPage == ConfigPage.HISTORY)
