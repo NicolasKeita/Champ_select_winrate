@@ -222,14 +222,18 @@ export const fillHistoryDisplayed = createAsyncThunk<void, {region: string, puui
 		const allChamps = thunkAPI.getState().slice.config.champions
 
 		function getWinningTeam(teams) {
-			if (!teams.length || teams.length != 2)
+			if (!teams.length || teams.length != 2) {
+				console.error('CSW_history : Cannot find a winner for the game')
 				return null
+			}
 			if (teams[0]['win'] == true)
 				return teams[0]['teamId']
 			else if (teams[0]['win'] == false)
 				return teams[1]['teamId']
-			else
+			else {
+				console.error('CSW_history : Cannot find a winner for the game')
 				return null
+			}
 		}
 
 		if (matchHistoryIds.length) {
@@ -253,15 +257,17 @@ export const fillHistoryDisplayed = createAsyncThunk<void, {region: string, puui
 
 				historyDisplayedTmp[i].userWon = false
 
-				const winningTeam = getWinningTeam(matchInfo['info']['teams'])
+				const winningTeam: string = getWinningTeam(matchInfo['info']['teams'])
 				let imInAllyTeam
 				let userTeam = '100'
 				for (let x = 0; x < 10; ++x) {
 					const participantChampName = matchInfo['info']['participants'][x]['championName']
 					const encryptedSummonerId = (matchInfo['info']['participants'][x]['summonerId'])
 					const myEncryptedSummonerId = sessionStorage.getItem('encryptedSummonerId')
-					if (encryptedSummonerId == myEncryptedSummonerId && x < 5) {
-						imInAllyTeam = true
+					if (encryptedSummonerId == myEncryptedSummonerId) {
+						if (x < 5) {
+							imInAllyTeam = true
+						}
 						userTeam = matchInfo['info']['participants'][x]['teamId']
 					}
 					if (x < 5) {
@@ -284,10 +290,7 @@ export const fillHistoryDisplayed = createAsyncThunk<void, {region: string, puui
 					)
 					historyDisplayedTmp[i].enemies = JSON.parse(tmpAlies)
 				}
-				if (userTeam == winningTeam || winningTeam == null) {
-					historyDisplayedTmp[i].userWon = true
-				} else
-					historyDisplayedTmp[i].userWon = false
+				historyDisplayedTmp[i].userWon = userTeam == winningTeam || winningTeam == null
 
 				thunkAPI.dispatch(setHistoryMatch({
 					historyDisplayedIndex: i,
