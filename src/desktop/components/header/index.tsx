@@ -12,7 +12,11 @@ import '@public/css/general.css'
 import '@public/css/modal.css'
 import '@public/css/header.css'
 
-import {resetSettings, updateAllUserScores} from '@utils/store/store'
+import {
+	rerenderSettings,
+	resetSettings,
+	updateAllUserScores
+} from '@utils/store/store'
 import {useAppDispatch, useAppSelector} from '@utils/hooks'
 import {toggleSettingsPage} from '@utils/store/store'
 
@@ -51,7 +55,7 @@ function Header(props: PropsType) {
 	const my_window = props.my_window
 	const headerRef = useRef(null)
 	const dispatch = useAppDispatch()
-	const footerMessage = useAppSelector(state => state.slice.footerMessageID)
+	// const footerMessage = useAppSelector(state => state.slice.footerMessageID)
 
 	// if (footerMessage == 5)
 	// 	my_window.currWindow.minimize()
@@ -108,7 +112,10 @@ function Header(props: PropsType) {
 						aria-label={'settingsButton'}
 				/>
 				<Menu id={'settingsButton'}>
-					<Item onClick={() => {dispatch(resetSettings())}}>
+					<Item onClick={() => {
+						dispatch(resetSettings())
+						dispatch(rerenderSettings())
+					}}>
 						Reset config
 					</Item>
 				</Menu>
