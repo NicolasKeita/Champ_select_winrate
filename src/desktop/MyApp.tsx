@@ -11,6 +11,7 @@ import MainContent from './components/maincontent'
 import FooterAD from './components/footerAD'
 import Config from './components/maincontent/settings/Config'
 import {
+	cleanHistoryMatch,
 	copyFromAnotherSetting, fetchAllChampions,
 	fillChampSelectDisplayed, fillHistoryDisplayed,
 	resetChampSelectDisplayed,
@@ -167,6 +168,7 @@ function MyApp(props: My_PropType): JSX.Element {
 		}
 
 		function fetchingSummonerNameAndRegionEvery5sec() {
+			dispatch(cleanHistoryMatch())
 			dispatch(setHistoryIsLoading({
 				historyDisplayedIndex: -1,
 				isLoading: true

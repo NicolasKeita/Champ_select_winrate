@@ -217,10 +217,20 @@ export const fillHistoryDisplayed = createAsyncThunk<void, {region: string, puui
 			})
 
 		if (!matchHistoryIds || matchHistoryIds.length < 5) {
-			thunkAPI.dispatch(setHistoryIsLoading({
-				historyDisplayedIndex: -1,
-				isLoading: false
-			}))
+			if (!matchHistoryIds) {
+				thunkAPI.dispatch(setHistoryIsLoading({
+					historyDisplayedIndex: -1,
+					isLoading: false
+				}))
+				return
+			}
+			for (let i = matchHistoryIds.length; i < 5; ++i) {
+				thunkAPI.dispatch(setHistoryIsLoading({
+					historyDisplayedIndex: -1,
+					isLoading: false
+				}))
+				thunkAPI.dispatch(setFooterMessage(7))
+			}
 			return
 		}
 		const allChamps = thunkAPI.getState().slice.config.champions
@@ -427,6 +437,9 @@ export const slice = createSlice({
 		setHistoryMatch: (state, action: PayloadAction<{historyDisplayedIndex: number, matchDisplayed: HistoryDisplayedType}>) => {
 			state.historyDisplayed[action.payload.historyDisplayedIndex] = action.payload.matchDisplayed
 		},
+		cleanHistoryMatch: (state) => {
+			state.historyDisplayed = initHistoryDisplayed()
+		},
 		copyFromAnotherSetting: (state, action: PayloadAction<Config>) => {
 			// const configDeserialized = new Config(JSON.parse(state.configSerialized))
 			// configDeserialized.copyFromAnotherSetting(action.payload)
@@ -452,9 +465,8 @@ export const slice = createSlice({
 			if (action.payload == 0 || (action.payload !== 0 && state.footerMessageID == 5))
 				state.config.currentPage = ConfigPage.CHAMPSELECT
 			else {
-				// console.error('TEMP !')
 				state.config.currentPage = ConfigPage.HISTORY
-			}// state.config.currentPage = ConfigPage.HISTORY
+			}
 			localStorage.setItem('config', JSON.stringify(state.config))
 
 			state.leagueClientStatus = action.payload
@@ -534,7 +546,8 @@ export const {
 	setClientStatus,
 	resetSettings,
 	setHistoryIsLoading,
-	setHistoryMatch
+	setHistoryMatch,
+	cleanHistoryMatch
 } = slice.actions
 
 const mainReducer = combineReducers({
