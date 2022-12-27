@@ -38,7 +38,7 @@ export type ChampDisplayedType = {
 	recommendations: Champion[]
 }
 
-type ChampSelectDisplayedType = {
+export type ChampSelectDisplayedType = {
 	allies: ChampDisplayedType[]
 	enemies: ChampDisplayedType[]
 }
@@ -169,7 +169,7 @@ function getRecommendations(allies: ChampDisplayedType[], playerId: number, allC
 	let assignedRole = allies[playerId].assignedRole
 	if (assignedRole == '')
 		assignedRole = 'utility'
-	const allChampsFilteredWithRole = copy(allChamps.filter(champ => champ.role == assignedRole))
+	const allChampsFilteredWithRole = copy(allChamps.filter(champ => champ.role == assignedRole)) // TODO Laisser en readonly et ne pas copier, update les allchamps avec l'url
 	if (allChampsFilteredWithRole.length == 0)
 		console.error('CSW_error: couldnt get recommendations')
 	allChampsFilteredWithRole.sort((a, b) => (
@@ -399,6 +399,7 @@ export const fillChampSelectDisplayed = createAsyncThunk<ChampSelectDisplayedTyp
 
 		for (const ally of allies) {
 			for (const recommendation of ally.recommendations) {
+				// TODO Laisser en readonly et ne pas copier, update les allchamps avec l'url (dispatch)
 				recommendation.imageUrl = getChampImgByNamePNG(recommendation.image)
 			}
 		}
@@ -448,12 +449,12 @@ export const slice = createSlice({
 				updateHistoryDisplayedScores(state.historyDisplayed, state.config.champions)
 		},
 		setClientStatus: (state, action: PayloadAction<number>) => {
-			// const configPlainObject: Config = JSON.parse(state.configSerialized)
-			if (action.payload == 0)
+			if (action.payload == 0 || (action.payload !== 0 && state.footerMessageID == 5))
 				state.config.currentPage = ConfigPage.CHAMPSELECT
-			else
+			else {
+				// console.error('TEMP !')
 				state.config.currentPage = ConfigPage.HISTORY
-			// state.configSerialized = JSON.stringify(configPlainObject)
+			}// state.config.currentPage = ConfigPage.HISTORY
 			localStorage.setItem('config', JSON.stringify(state.config))
 
 			state.leagueClientStatus = action.payload

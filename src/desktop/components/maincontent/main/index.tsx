@@ -32,14 +32,12 @@ const WinrateLine = styled.div`
 const MainContainer = styled.div`
   color: white;
   width: 100%;
-  text-align: center;
   background: linear-gradient(to right, #252424, #363636, #252424);
   padding-bottom: 10px;
 `
 
 const PlayersGrid = styled.div`
   display: flex;
-  justify-content: space-between;
 `
 
 const TeamGrid = styled.div`
@@ -97,6 +95,9 @@ function ChampSelect() {
 										   champName={champName}
 										   champScore={champScore ? champScore : 50}
 										   champRecommendation={champRecommendation}
+										   champSelectDisplayed={champSelectDisplayed}
+										   index={i}
+
 			/>)
 			if (i < 4) profiles.push(<ProfileLine isEnemyTeam={isEnemyTeam}
 												  key={uniqid()} />)
@@ -109,7 +110,7 @@ function ChampSelect() {
 	const winrate = computeWinrate(allies, enemies)
 	const tooltipNumber = 'Numbers are coming from your own settings. Check your settings (top right icon) to change the default.'
 	return (
-		<MainContainer>
+		<MainContainer aria-label={'ChampSelect'}>
 			<PercentageContainer>
 				<WinrateLine isLeft />
 				<Tippy content={<span>{tooltipNumber}</span>}>

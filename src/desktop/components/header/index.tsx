@@ -13,7 +13,7 @@ import '@public/css/modal.css'
 import '@public/css/header.css'
 
 import {resetSettings, updateAllUserScores} from '@utils/store/store'
-import {useAppDispatch} from '@utils/hooks'
+import {useAppDispatch, useAppSelector} from '@utils/hooks'
 import {toggleSettingsPage} from '@utils/store/store'
 
 import {Menu, Item, useContextMenu} from 'react-contexify'
@@ -51,6 +51,10 @@ function Header(props: PropsType) {
 	const my_window = props.my_window
 	const headerRef = useRef(null)
 	const dispatch = useAppDispatch()
+	const footerMessage = useAppSelector(state => state.slice.footerMessageID)
+
+	// if (footerMessage == 5)
+	// 	my_window.currWindow.minimize()
 
 	function minimize(e) {
 		if (e.buttons == 1) my_window.currWindow.minimize()
@@ -80,7 +84,6 @@ function Header(props: PropsType) {
 	}
 
 	function activateSettings(e) {
-		//TODO this take too long overall. Get the PErformance going !
 		if (e.buttons == 1) {
 			dispatch(toggleSettingsPage())
 			const internalConfig = sessionStorage.getItem('internalConfig')

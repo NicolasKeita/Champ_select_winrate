@@ -22,6 +22,8 @@ import {renderEntireApp} from '../__testsUtils__/renderEntireApp'
 import * as fetchDataDragon
 	from '../src/desktop/utils/fetchDataDragon/fetchDataDragon'
 
+
+//TODO try jest.spyon(global, 'Overwolf')
 describe('basic', () => {
 	beforeEach(() => {
 		localStorage.clear()

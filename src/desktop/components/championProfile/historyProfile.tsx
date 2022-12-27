@@ -2,7 +2,7 @@
     Path + Filename: src/desktop/components/championProfile/historyProfile.tsx
 */
 
-import React from 'react'
+import React, {useReducer, useState} from 'react'
 import {Champion} from '../maincontent/settings/Champion'
 import styled from 'styled-components'
 import questionMark from '@public/img/question_mark.jpg'
@@ -46,11 +46,18 @@ interface PropsType {
 }
 
 function HistoryProfile(props: PropsType): JSX.Element {
+	const [isLoading, setIsLoading] = useState(props.isLoading)
+
+	if (isLoading) {
+		setTimeout(() => {
+			setIsLoading(false)
+		}, 15000)
+	}
 
 	function renderChampionTeam(): JSX.Element[] | JSX.Element | null {
 		//if (props.isEnemyTeam || isUnsupportedGameMode) return null
 		const row: JSX.Element[] = []
-		if (!props.isLoading) {
+		if (!isLoading) {
 			for (let i = 0; i < 5; ++i) {
 				row.push(<TeamHistoryImg key={uniqid()}
 										 src={props.teamHistory[i] ? props.teamHistory[i].imageUrl : questionMark} />)
@@ -64,7 +71,7 @@ function HistoryProfile(props: PropsType): JSX.Element {
 	return (
 		<HistoryProfileContainer
 			userWon={props.userWon}
-			isLoading={props.isLoading}
+			isLoading={isLoading}
 			isEnemyTeam={props.isEnemyTeam}
 		>
 			{renderChampionTeam()}

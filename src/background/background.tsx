@@ -21,12 +21,15 @@ class BackgroundController {
 		this._windows[kWindowNames.desktop] = new OWWindow(kWindowNames.desktop)
 
 		// When a a supported game game is started or is ended, toggle the app's windows
+		//TODO when entering in champ select maximize the window
 		this._gameListener = new OWGameListener({
 			onGameStarted: this.toggleWindows.bind(this),
 			onGameEnded: this.toggleWindows.bind(this)
 		})
 
-		overwolf.extensions.onAppLaunchTriggered.addListener(e => this.onAppLaunchTriggered(e))
+		overwolf.extensions.onAppLaunchTriggered.addListener(e =>
+			this.onAppLaunchTriggered(e)
+		)
 	}
 
 	// Implementing the Singleton design pattern
@@ -45,6 +48,7 @@ class BackgroundController {
 
 		const currWindowName = kWindowNames.desktop
 
+		console.log(currWindowName)
 		this._windows[currWindowName].restore()
 	}
 
@@ -54,25 +58,28 @@ class BackgroundController {
 		if (!e || e.origin.includes('gamelaunchevent')) {
 			return
 		}
+		this._windows[kWindowNames.desktop].restore()
+		return
 
-		if (await this.isSupportedGameRunning()) {
-			this._windows[kWindowNames.desktop].close()
-		} else {
-			this._windows[kWindowNames.desktop].restore()
-		}
+		// if (await this.isSupportedGameRunning()) {
+		// 	console.log('closing')
+		// 	this._windows[kWindowNames.desktop].close()
+		// } else {
+		// 	this._windows[kWindowNames.desktop].restore()
+		// }
 	}
 
 	private toggleWindows(info: RunningGameInfo) {
 		return
-		if (!info || !this.isSupportedGame(info)) {
-			return
-		}
-
-		if (info.isRunning) {
-			this._windows[kWindowNames.desktop].close()
-		} else {
-			this._windows[kWindowNames.desktop].restore()
-		}
+		// if (!info || !this.isSupportedGame(info)) {
+		// 	return
+		// }
+		//
+		// if (info.isRunning) {
+		// 	this._windows[kWindowNames.desktop].close()
+		// } else {
+		// 	this._windows[kWindowNames.desktop].restore()
+		// }
 	}
 
 	private async isSupportedGameRunning(): Promise<boolean> {

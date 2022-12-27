@@ -77,8 +77,9 @@ function MyApp(props: My_PropType): JSX.Element {
 						dispatch(setClientStatus(3))
 						dispatch(setFooterMessage(3))
 					} else if (game_flow.phase == 'GameStart' || game_flow.phase == 'InProgress') {
-						dispatch(setClientStatus(1))
+						//TODO careful put footermessage above, change logic so I cannot do mistakes
 						dispatch(setFooterMessage(5))
+						dispatch(setClientStatus(1))
 					} else if (game_flow.phase == 'WaitingForStats') {
 						dispatch(setClientStatus(1))
 						dispatch(setFooterMessage(1))
