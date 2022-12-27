@@ -6,8 +6,7 @@ import React from 'react'
 import {
 	act,
 	waitFor,
-	screen,
-	waitForElementToBeRemoved, getByText
+	screen
 } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import fetch from 'jest-fetch-mock'
@@ -19,20 +18,15 @@ import {
 	overwolfMocked
 } from '../__testsUtils__/OW_mocking'
 import {renderEntireApp} from '../__testsUtils__/renderEntireApp'
-import * as fetchDataDragon
-	from '../src/desktop/utils/fetchDataDragon/fetchDataDragon'
 
-
-//TODO try jest.spyon(global, 'Overwolf')
 describe('basic', () => {
 	beforeEach(() => {
 		localStorage.clear()
 		sessionStorage.clear()
 		global.overwolf = overwolfMocked
 	})
-	jest.setTimeout(30000)
 	jest.useFakeTimers()
-	jest.spyOn(global, 'setTimeout')
+	jest.setTimeout(5000)
 	fetch.enableMocks()
 	fetch.mockResponse(req => {
 			if (req.url === 'https://4nuo1ouibd.execute-api.eu-west-3.amazonaws.com/csw_api_proxy/allchamps')
@@ -43,9 +37,6 @@ describe('basic', () => {
 				return Promise.reject(new Error('URL is not handled by Jest tests'))
 		}
 	)
-	// jest.spyOn(fetchDataDragon, 'getChampName').mockResolvedValue('Talon')
-	// jest.spyOn(fetchDataDragon, 'getChampImg').mockResolvedValue('https://ddragon.leagueoflegends.com/cdn/12.13.1/img/champion/Talon.png')
-	// jest.spyOn(fetchDataDragon, 'getChampImgByNamePNG').mockResolvedValue('https://ddragon.leagueoflegends.com/cdn/12.13.1/img/champion/Talon.png')
 	test('should display winrate in header', async () => {
 		await act(() => {renderEntireApp()})
 		const winrateElem = screen.getByText(/winrate/i)
@@ -73,15 +64,10 @@ describe('basic', () => {
 	})
 
 	test('should remove footer when entering in champ select matchmaking', async () => {
-		// client is already running
 		global.overwolf.games.launchers.getRunningLaunchersInfo = getRunningLaunchersInfo
-		// Entering in champ select
 		global.overwolf.games.launchers.events.onInfoUpdates.addListener = onInfoUpdatesAddListener
-
-		await act(() => {renderEntireApp()})
-		await waitForElementToBeRemoved(
-			screen.getByText('Your ranked history')
-			, {timeout: 300 * 5})
+		await act(() => { renderEntireApp() })
+		await act(() => { jest.advanceTimersByTime(10000) })
 		expect(
 			screen.getByRole('heading', {name: 'footerMessage'}))
 			.toBeEmptyDOMElement()

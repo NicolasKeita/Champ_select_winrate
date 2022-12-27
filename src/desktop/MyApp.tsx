@@ -118,7 +118,8 @@ function MyApp(props: My_PropType): JSX.Element {
 
 			function handleChampSelect(champ_select) {
 				const raw = JSON.parse(champ_select.raw)
-				if (raw.localPlayerCellId == -1) return
+				if (raw.localPlayerCellId == -1)
+					return
 				dispatch(setClientStatus(0))
 				dispatch(setFooterMessage(0))
 				if (raw.actions.length == 8) {

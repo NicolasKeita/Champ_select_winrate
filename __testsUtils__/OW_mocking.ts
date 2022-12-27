@@ -5,6 +5,13 @@
 import champ_select1 from './action1.json'
 import champ_select2 from './action2.json'
 import {copy} from 'copy-anything'
+import {
+	act,
+	waitFor,
+	screen,
+	waitForElementToBeRemoved, getByText
+} from '@testing-library/react'
+
 
 export const talonCSWScore = 35
 
@@ -64,7 +71,7 @@ export function getRunningLaunchersInfo(callback) {
 }
 
 export function onInfoUpdatesAddListener(callback: (event: any) => void) {
-	const period = 300
+	const period = 300 // For some reasons, I cannot go lower
 	let i = 0
 	const infoGameFlow = {
 		feature: 'game_flow',
