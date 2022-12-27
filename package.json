@@ -1,6 +1,6 @@
 {
 	"name": "champ_select_winrate",
-	"version": "1.2.2",
+	"version": "1.2.3",
 	"description": "Fully customizable champ select tool",
 	"scripts": {
 		"test": "jest",

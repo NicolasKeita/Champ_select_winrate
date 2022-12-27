@@ -216,9 +216,13 @@ export const fillHistoryDisplayed = createAsyncThunk<void, {region: string, puui
 				console.error(e.cause)
 			})
 
-		if (!matchHistoryIds || matchHistoryIds.length < 5)
+		if (!matchHistoryIds || matchHistoryIds.length < 5) {
+			thunkAPI.dispatch(setHistoryIsLoading({
+				historyDisplayedIndex: -1,
+				isLoading: false
+			}))
 			return
-		// const configDeserialized = new Config(JSON.parse(thunkAPI.getState().slice.configSerialized))
+		}
 		const allChamps = thunkAPI.getState().slice.config.champions
 
 		function getWinningTeam(teams) {
@@ -236,72 +240,68 @@ export const fillHistoryDisplayed = createAsyncThunk<void, {region: string, puui
 			}
 		}
 
-		if (matchHistoryIds.length) {
-			for (const [i, matchHistoryId] of matchHistoryIds.entries()) {
-				historyDisplayedTmp[i].matchId = matchHistoryId
-				//TODO maybe matchId is already in the sessionStorage; if then don't fetch and just use the result you got previously inside sessionStorage
-				let matchInfo: never
-				// @ts-ignore
-				matchInfo = await doWithRetry(async retry => {
-					try {
-						return await fetchMatchHistory(matchHistoryId, thunkParam.region)
-					} catch (e) {
-						retry(e)
-					}
-				}, options)
-					.catch(e => {
-						console.error('All attempts to fetchMatchHistory failed')
-						console.error(e.cause)
-					})
+		for (const [i, matchHistoryId] of matchHistoryIds.entries()) {
+			historyDisplayedTmp[i].matchId = matchHistoryId
+			//TODO maybe matchId is already in the sessionStorage; if then don't fetch and just use the result you got previously inside sessionStorage
+			let matchInfo: never
+			// @ts-ignore
+			matchInfo = await doWithRetry(async retry => {
+				try {
+					return await fetchMatchHistory(matchHistoryId, thunkParam.region)
+				} catch (e) {
+					retry(e)
+				}
+			}, options)
+				.catch(e => {
+					console.error('All attempts to fetchMatchHistory failed')
+					console.error(e.cause)
+				})
 
 
-				historyDisplayedTmp[i].userWon = false
+			historyDisplayedTmp[i].userWon = false
 
-				const winningTeam: string = getWinningTeam(matchInfo['info']['teams'])
-				let imInAllyTeam
-				let userTeam = '100'
-				for (let x = 0; x < 10; ++x) {
-					const participantChampName = matchInfo['info']['participants'][x]['championName']
-					const encryptedSummonerId = (matchInfo['info']['participants'][x]['summonerId'])
-					const myEncryptedSummonerId = sessionStorage.getItem('encryptedSummonerId')
-					if (encryptedSummonerId == myEncryptedSummonerId) {
-						if (x < 5) {
-							imInAllyTeam = true
-						}
-						userTeam = matchInfo['info']['participants'][x]['teamId']
-					}
+			const winningTeam: string = getWinningTeam(matchInfo['info']['teams'])
+			let imInAllyTeam
+			let userTeam = '100'
+			for (let x = 0; x < 10; ++x) {
+				const participantChampName = matchInfo['info']['participants'][x]['championName']
+				const encryptedSummonerId = (matchInfo['info']['participants'][x]['summonerId'])
+				const myEncryptedSummonerId = sessionStorage.getItem('encryptedSummonerId')
+				if (encryptedSummonerId == myEncryptedSummonerId) {
 					if (x < 5) {
-						historyDisplayedTmp[i].allies[x].name = participantChampName
-						historyDisplayedTmp[i].allies[x].imageUrl = getChampImgByFormattedName(participantChampName)
-						historyDisplayedTmp[i].allies[x].opScore_user = allChamps.find((champ) => champ.name == participantChampName)?.opScore_user
-					} else {
-						historyDisplayedTmp[i].enemies[x - 5].name = participantChampName
-						historyDisplayedTmp[i].enemies[x - 5].imageUrl = getChampImgByFormattedName(participantChampName)
-						historyDisplayedTmp[i].enemies[x - 5].opScore_user = allChamps.find((champ) => champ.name == participantChampName)?.opScore_user
+						imInAllyTeam = true
 					}
+					userTeam = matchInfo['info']['participants'][x]['teamId']
 				}
-				if (!imInAllyTeam) {
-					//TODO is it the cleanest way to swap?
-					const tmpAlies = JSON.stringify(
-						historyDisplayedTmp[i].allies
-					)
-					historyDisplayedTmp[i].allies = JSON.parse(
-						JSON.stringify(historyDisplayedTmp[i].enemies)
-					)
-					historyDisplayedTmp[i].enemies = JSON.parse(tmpAlies)
+				if (x < 5) {
+					historyDisplayedTmp[i].allies[x].name = participantChampName
+					historyDisplayedTmp[i].allies[x].imageUrl = getChampImgByFormattedName(participantChampName)
+					historyDisplayedTmp[i].allies[x].opScore_user = allChamps.find((champ) => champ.name == participantChampName)?.opScore_user
+				} else {
+					historyDisplayedTmp[i].enemies[x - 5].name = participantChampName
+					historyDisplayedTmp[i].enemies[x - 5].imageUrl = getChampImgByFormattedName(participantChampName)
+					historyDisplayedTmp[i].enemies[x - 5].opScore_user = allChamps.find((champ) => champ.name == participantChampName)?.opScore_user
 				}
-				historyDisplayedTmp[i].userWon = userTeam == winningTeam || winningTeam == null
-
-				thunkAPI.dispatch(setHistoryMatch({
-					historyDisplayedIndex: i,
-					matchDisplayed: historyDisplayedTmp[i]
-				}))
 			}
-		} else {
-			// TODO tell user to do some games
+			if (!imInAllyTeam) {
+				//TODO is it the cleanest way to swap?
+				const tmpAlies = JSON.stringify(
+					historyDisplayedTmp[i].allies
+				)
+				historyDisplayedTmp[i].allies = JSON.parse(
+					JSON.stringify(historyDisplayedTmp[i].enemies)
+				)
+				historyDisplayedTmp[i].enemies = JSON.parse(tmpAlies)
+			}
+			historyDisplayedTmp[i].userWon = userTeam == winningTeam || winningTeam == null
+
+			thunkAPI.dispatch(setHistoryMatch({
+				historyDisplayedIndex: i,
+				matchDisplayed: historyDisplayedTmp[i]
+			}))
 		}
-		// return historyDisplayedTmp
-	})
+	}
+)
 
 export const fillChampSelectDisplayed = createAsyncThunk<ChampSelectDisplayedType | void, FillChampSelectDisplayedParamType, {state: RootState}>(
 	'fillChampSelectDisplayed',

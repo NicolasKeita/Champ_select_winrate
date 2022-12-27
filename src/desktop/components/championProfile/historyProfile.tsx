@@ -49,6 +49,7 @@ function HistoryProfile(props: PropsType): JSX.Element {
 	const [isLoading, setIsLoading] = useState(props.isLoading)
 
 	if (isLoading) {
+		// This is a insurance it does not load forever
 		setTimeout(() => {
 			setIsLoading(false)
 		}, 15000)

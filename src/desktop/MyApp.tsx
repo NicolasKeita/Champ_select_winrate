@@ -15,7 +15,8 @@ import {
 	fillChampSelectDisplayed, fillHistoryDisplayed,
 	resetChampSelectDisplayed,
 	setClientStatus,
-	setFooterMessage, setHistoryIsLoading
+	setFooterMessage,
+	setHistoryIsLoading
 } from '@utils/store/store'
 
 import {useAppDispatch} from '@utils/hooks'
