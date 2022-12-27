@@ -85,7 +85,7 @@ function MyApp(props: My_PropType): JSX.Element {
 					} else if (game_flow.phase == 'WaitingForStats') {
 						dispatch(setClientStatus(1))
 						dispatch(setFooterMessage(1))
-						setTimeout(dispatch, 10000, fillHistoryDisplayed(
+						setTimeout(dispatch, 12000, fillHistoryDisplayed(
 							{
 								region: sessionStorage.getItem('summonerRegion') || '',
 								puuid: sessionStorage.getItem('puuid') || ''

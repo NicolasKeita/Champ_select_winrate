@@ -231,7 +231,6 @@ export const fillHistoryDisplayed = createAsyncThunk<void, {region: string, puui
 				}))
 				thunkAPI.dispatch(setFooterMessage(7))
 			}
-			return
 		}
 		const allChamps = thunkAPI.getState().slice.config.champions
 
