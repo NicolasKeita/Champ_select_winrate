@@ -27,6 +27,8 @@ describe('settings', () => {
 		global.overwolf = overwolfMocked
 		user = userEvent.setup()
 	})
+	jest.useRealTimers()
+	//jest.useFakeTimers()
 	jest.setTimeout(30000)
 	fetch.enableMocks()
 	fetch.mockResponse(req => {
@@ -38,9 +40,6 @@ describe('settings', () => {
 				return Promise.reject(new Error('URL is not handled by Jest tests'))
 		}
 	)
-	// jest.spyOn(fetchDataDragon, 'getChampName').mockResolvedValue('Talon')
-	// jest.spyOn(fetchDataDragon, 'getChampImg').mockResolvedValue('https://ddragon.leagueoflegends.com/cdn/12.13.1/img/champion/Talon.png')
-	// jest.spyOn(fetchDataDragon, 'getChampImgByNamePNG').mockResolvedValue('https://ddragon.leagueoflegends.com/cdn/12.13.1/img/champion/Talon.png')
 
 	it('should enter in champ select correctly', async () => {
 		global.overwolf.games.launchers.getRunningLaunchersInfo = getRunningLaunchersInfo
@@ -48,6 +47,7 @@ describe('settings', () => {
 		global.overwolf.games.launchers.events.onInfoUpdates.addListener = onInfoUpdatesAddListenerSpamChampSelect
 		// ↑ Enters in champ select
 		await act(() => { renderEntireApp() })
+		// await act(() => { jest.advanceTimersByTime(10000) })
 		let HistoryTitle
 		let TalonElem
 		for (let x = 0; x < 10; ++x) {

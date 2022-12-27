@@ -19,13 +19,15 @@ import {UserEvent} from '@testing-library/user-event/setup/setup'
 describe('settings', () => {
 	let user: UserEvent
 	beforeEach(() => {
+		sessionStorage.clear()
 		global.overwolf = overwolfMocked
 		user = userEvent.setup({
 			// delay: null,
 		})
-		sessionStorage.clear()
 	})
 	//TODO try waitForelementtoBeRemoved for context menu resset settings
+	// jest.useFakeTimers()
+	jest.useRealTimers()
 	jest.setTimeout(30000)
 	fetch.enableMocks()
 	fetch.mockResponse(req => {
@@ -45,6 +47,7 @@ describe('settings', () => {
 		global.overwolf.games.launchers.events.onInfoUpdates.addListener = onInfoUpdatesAddListener
 		// ↑ Enters in champ select
 		await act(() => { renderEntireApp()})
+		// await act(() => { jest.advanceTimersByTime(10000) })
 		expect(localStorage.getItem('config')).toBe(configTest)
 		await waitFor(() => {
 			const TalonElem = screen.getAllByText(/Talon/i)
@@ -90,6 +93,7 @@ describe('settings', () => {
 		localStorage.clear()
 		user = userEvent.setup({delay: null})
 		await act(() => {renderEntireApp()})
+		// await act(() => { jest.advanceTimersByTime(10000) })
 		const settingButton = screen.getByLabelText('settingsButton')
 		await user.click(settingButton)
 		// ↑ Goes to settings
@@ -115,6 +119,8 @@ describe('settingsExtra', () => {
 		})
 		sessionStorage.clear()
 	})
+	// jest.useFakeTimers()
+	jest.useRealTimers()
 	jest.setTimeout(30000)
 	fetch.enableMocks()
 	fetch.mockResponse(req => {
@@ -130,6 +136,7 @@ describe('settingsExtra', () => {
 	it('should keep settings in localStorage when closing app', async () => {
 		localStorage.clear()
 		await act(() => {renderEntireApp()})
+		// await act(() => { jest.advanceTimersByTime(10000) })
 		const settingButton = screen.getByLabelText('settingsButton')
 		await user.click(settingButton)
 		// ↑ Goes to settings
@@ -146,6 +153,7 @@ describe('settingsExtra', () => {
 	it('should keep settings in localStorage when closing app2', async () => {
 		//notice localstorage is not cleared
 		await act(() => {renderEntireApp()})
+		// await act(() => { jest.advanceTimersByTime(10000) })
 		expect(screen.getByText('CSW OP Score'))
 		// ↑ Goes to settings
 		await waitFor(async () => {

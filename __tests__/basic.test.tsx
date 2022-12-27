@@ -77,9 +77,9 @@ describe('basic', () => {
 		global.overwolf.games.launchers.getRunningLaunchersInfo = getRunningLaunchersInfo
 		await act(() => {renderEntireApp()})
 
-		await waitFor(() => {
-			const config = localStorage.getItem('config')
-			expect(config).toBe(configTest)
-		}, {timeout: 1000})
+		// await waitFor(() => {
+		const config = localStorage.getItem('config')
+		expect(config).toBe(configTest)
+		// }, {timeout: 1000})
 	})
 })
