@@ -48,7 +48,6 @@ class BackgroundController {
 
 		const currWindowName = kWindowNames.desktop
 
-		console.log(currWindowName)
 		this._windows[currWindowName].restore()
 	}
 
@@ -62,7 +61,6 @@ class BackgroundController {
 		return
 
 		// if (await this.isSupportedGameRunning()) {
-		// 	console.log('closing')
 		// 	this._windows[kWindowNames.desktop].close()
 		// } else {
 		// 	this._windows[kWindowNames.desktop].restore()
