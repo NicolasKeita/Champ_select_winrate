@@ -216,12 +216,9 @@ export const fillHistoryDisplayed = createAsyncThunk<void, {region: string, puui
 			}
 		}, options)
 			.catch(e => {
-				console.error('All attempts to fetchMatchHistoryId failed')
-				console.error(e.cause)
-			}) as string[] | undefined
+				throw e.cause
+			}) as string[]
 
-		if (!matchHistoryIds)
-			throw new Error('All attempts to fetchMatchHistoryId failed')
 		if (matchHistoryIds.length < 5) {
 			for (let i = matchHistoryIds.length; i < 5; ++i) {
 				thunkAPI.dispatch(setHistoryIsLoading({
@@ -259,14 +256,10 @@ export const fillHistoryDisplayed = createAsyncThunk<void, {region: string, puui
 				}
 			}, options)
 				.catch(e => {
-					console.error('All attempts to fetchMatchHistory failed')
-					console.error(e.cause)
-				}) as FetchMatchHistoryType | undefined
+					throw e.cause
+				}) as FetchMatchHistoryType
 
 			historyDisplayedTmp[i].userWon = false
-
-			if (!matchInfo)
-				throw new Error('fetchMatchHistory failed all attempts')
 			const winningTeam = getWinningTeam(matchInfo.info.teams)
 			let imInAllyTeam
 			let userTeam = 100
@@ -513,15 +506,13 @@ export const slice = createSlice({
 			}
 		})
 		builder.addCase(fillHistoryDisplayed.rejected, (state, action) => {
-			if (!action.payload) {
-				slice.caseReducers.setHistoryIsLoading(state, {
-					type: action.type,
-					payload: {
-						historyDisplayedIndex: null,
-						isLoading: false
-					}
-				})
-			}
+			slice.caseReducers.setHistoryIsLoading(state, {
+				type: action.type,
+				payload: {
+					historyDisplayedIndex: null,
+					isLoading: false
+				}
+			})
 		})
 		builder.addCase(fetchAllChampions.fulfilled, (state, action) => {
 			for (const championPayload of Object.values(action.payload)) {
