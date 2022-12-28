@@ -21,9 +21,7 @@ describe('settings', () => {
 	beforeEach(() => {
 		sessionStorage.clear()
 		global.overwolf = overwolfMocked
-		user = userEvent.setup({
-			// delay: null,
-		})
+		user = userEvent.setup()
 	})
 	//TODO try waitForelementtoBeRemoved for context menu resset settings
 	// jest.useFakeTimers()

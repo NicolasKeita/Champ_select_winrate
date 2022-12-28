@@ -14,8 +14,6 @@ import {renderEntireApp} from '../__testsUtils__/renderEntireApp'
 import fetch from 'jest-fetch-mock'
 import allChamps from '../__testsUtils__/allChamps.json'
 import '@testing-library/jest-dom'
-import * as fetchDataDragon
-	from '../src/desktop/utils/fetchDataDragon/fetchDataDragon'
 import {UserEvent} from '@testing-library/user-event/setup/setup'
 
 

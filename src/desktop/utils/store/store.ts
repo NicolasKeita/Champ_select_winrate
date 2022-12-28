@@ -31,6 +31,10 @@ import {fetchMatchHistory, fetchMatchHistoryId} from '@utils/LOL_API'
 import {doWithRetry} from 'do-with-retry'
 import {copy} from 'copy-anything'
 import {DeepReadonly} from 'ts-essentials'
+import {
+	FetchMatchHistoryType,
+	Team
+} from '@utils/LOL_API/fetchMatchHistory_type'
 
 export type ChampDisplayedType = {
 	assignedRole: string
@@ -204,9 +208,7 @@ export const fillHistoryDisplayed = createAsyncThunk<void, {region: string, puui
 			initTimeout: 1100
 		}
 
-		let matchHistoryIds: string[] | undefined
-		// @ts-ignore
-		matchHistoryIds = await doWithRetry(async retry => {
+		const matchHistoryIds = await doWithRetry(async retry => {
 			try {
 				return await fetchMatchHistoryId(thunkParam.region, thunkParam.puuid)
 			} catch (e) {
@@ -216,35 +218,30 @@ export const fillHistoryDisplayed = createAsyncThunk<void, {region: string, puui
 			.catch(e => {
 				console.error('All attempts to fetchMatchHistoryId failed')
 				console.error(e.cause)
-			})
+			}) as string[] | undefined
 
-		if (!matchHistoryIds || matchHistoryIds.length < 5) {
-			if (!matchHistoryIds) {
-				thunkAPI.dispatch(setHistoryIsLoading({
-					historyDisplayedIndex: -1,
-					isLoading: false
-				}))
-				return
-			}
+		if (!matchHistoryIds)
+			throw new Error('All attempts to fetchMatchHistoryId failed')
+		if (matchHistoryIds.length < 5) {
 			for (let i = matchHistoryIds.length; i < 5; ++i) {
 				thunkAPI.dispatch(setHistoryIsLoading({
-					historyDisplayedIndex: -1,
+					historyDisplayedIndex: i,
 					isLoading: false
 				}))
-				thunkAPI.dispatch(setFooterMessage(7))
 			}
+			thunkAPI.dispatch(setFooterMessage(7))
 		}
 		const allChamps = thunkAPI.getState().slice.config.champions
 
-		function getWinningTeam(teams) {
+		function getWinningTeam(teams: Team[]) {
 			if (!teams.length || teams.length != 2) {
 				console.error('CSW_history : Cannot find a winner for the game')
 				return null
 			}
-			if (teams[0]['win'] == true)
-				return teams[0]['teamId']
-			else if (teams[0]['win'] == false)
-				return teams[1]['teamId']
+			if (teams[0].win)
+				return teams[0].teamId
+			else if (!teams[0].win)
+				return teams[1].teamId
 			else {
 				console.error('CSW_history : Cannot find a winner for the game')
 				return null
@@ -254,9 +251,7 @@ export const fillHistoryDisplayed = createAsyncThunk<void, {region: string, puui
 		for (const [i, matchHistoryId] of matchHistoryIds.entries()) {
 			historyDisplayedTmp[i].matchId = matchHistoryId
 			//TODO maybe matchId is already in the sessionStorage; if then don't fetch and just use the result you got previously inside sessionStorage
-			let matchInfo: never
-			// @ts-ignore
-			matchInfo = await doWithRetry(async retry => {
+			const matchInfo = await doWithRetry(async retry => {
 				try {
 					return await fetchMatchHistory(matchHistoryId, thunkParam.region)
 				} catch (e) {
@@ -266,23 +261,24 @@ export const fillHistoryDisplayed = createAsyncThunk<void, {region: string, puui
 				.catch(e => {
 					console.error('All attempts to fetchMatchHistory failed')
 					console.error(e.cause)
-				})
-
+				}) as FetchMatchHistoryType | undefined
 
 			historyDisplayedTmp[i].userWon = false
 
-			const winningTeam: string = getWinningTeam(matchInfo['info']['teams'])
+			if (!matchInfo)
+				throw new Error('fetchMatchHistory failed all attempts')
+			const winningTeam = getWinningTeam(matchInfo.info.teams)
 			let imInAllyTeam
-			let userTeam = '100'
+			let userTeam = 100
 			for (let x = 0; x < 10; ++x) {
-				const participantChampName = matchInfo['info']['participants'][x]['championName']
-				const encryptedSummonerId = (matchInfo['info']['participants'][x]['summonerId'])
+				const participantChampName = matchInfo.info.participants[x].championName
+				const encryptedSummonerId = (matchInfo.info.participants[x].summonerId)
 				const myEncryptedSummonerId = sessionStorage.getItem('encryptedSummonerId')
 				if (encryptedSummonerId == myEncryptedSummonerId) {
 					if (x < 5) {
 						imInAllyTeam = true
 					}
-					userTeam = matchInfo['info']['participants'][x]['teamId']
+					userTeam = matchInfo.info.participants[x].teamId
 				}
 				if (x < 5) {
 					historyDisplayedTmp[i].allies[x].name = participantChampName
@@ -428,8 +424,8 @@ export const slice = createSlice({
 			// configPlainObject.settingsPage = !configPlainObject.settingsPage
 			// state.configSerialized = JSON.stringify(configPlainObject)
 		},
-		setHistoryIsLoading: (state, action: PayloadAction<{historyDisplayedIndex: number, isLoading: boolean}>) => {
-			if (action.payload.historyDisplayedIndex == -1) {
+		setHistoryIsLoading: (state, action: PayloadAction<{historyDisplayedIndex: number | null, isLoading: boolean}>) => {
+			if (action.payload.historyDisplayedIndex == null) {
 				for (const historyMatchDisplayed of state.historyDisplayed)
 					historyMatchDisplayed.isLoading = action.payload.isLoading
 			} else
@@ -514,6 +510,17 @@ export const slice = createSlice({
 				for (const enemy of state.champSelectDisplayed.enemies) {
 					enemy.champ.opScore_user = getChampScoreByName(enemy.champ.name, state.config.champions)
 				}
+			}
+		})
+		builder.addCase(fillHistoryDisplayed.rejected, (state, action) => {
+			if (!action.payload) {
+				slice.caseReducers.setHistoryIsLoading(state, {
+					type: action.type,
+					payload: {
+						historyDisplayedIndex: null,
+						isLoading: false
+					}
+				})
 			}
 		})
 		builder.addCase(fetchAllChampions.fulfilled, (state, action) => {

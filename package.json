@@ -4,6 +4,7 @@
 	"description": "Fully customizable champ select tool",
 	"scripts": {
 		"test": "jest",
+		"coverage": "jest --coverage --collectCoverageFrom=src/**/* --collectCoverageFrom=!src/background/* --collectCoverageFrom=!src/AppWindow.ts",
 		"build": "webpack --mode=production  --env makeOpk  --env removeSourceMap",
 		"dev": "webpack --watch --mode=development",
 		"watch": "webpack --watch --mode=production",

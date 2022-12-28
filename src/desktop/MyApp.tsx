@@ -63,7 +63,7 @@ function MyApp(props: My_PropType): JSX.Element {
 				})
 				.catch(e => {
 					console.error(e + ' retrying in 5sec')
-					setTimeout(initializeDefaultConfig, 5000)
+					setTimeout(initializeDefaultConfig, 5000) // TODO use do-retry instead of this retry logic
 				})
 		}
 
@@ -171,7 +171,7 @@ function MyApp(props: My_PropType): JSX.Element {
 		function fetchingSummonerNameAndRegionEvery5sec() {
 			dispatch(cleanHistoryMatch())
 			dispatch(setHistoryIsLoading({
-				historyDisplayedIndex: -1,
+				historyDisplayedIndex: null,
 				isLoading: true
 			}))
 			const intervalId = setInterval(() => {
