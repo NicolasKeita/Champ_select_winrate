@@ -203,10 +203,6 @@ export const fillHistoryDisplayed = createAsyncThunk<void, {region: string, puui
 			console.error('could not fill History')
 			return
 		}
-		const options = {
-			maxAttempts: 20,
-			initTimeout: 1100
-		}
 
 		const matchHistoryIds = await doWithRetry(async retry => {
 			try {
@@ -214,7 +210,7 @@ export const fillHistoryDisplayed = createAsyncThunk<void, {region: string, puui
 			} catch (e) {
 				retry(e)
 			}
-		}, options)
+		}, {maxAttempts: 20, initTimeout: 1100})
 			.catch(e => {
 				throw e.cause
 			}) as string[]
@@ -254,7 +250,7 @@ export const fillHistoryDisplayed = createAsyncThunk<void, {region: string, puui
 				} catch (e) {
 					retry(e)
 				}
-			}, options)
+			}, {maxAttempts: 20, initTimeout: 1100})
 				.catch(e => {
 					throw e.cause
 				}) as FetchMatchHistoryType
