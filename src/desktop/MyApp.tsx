@@ -30,11 +30,11 @@ const MyAppContainer = styled.div`
   flex: 1;
 `
 
-type My_PropType = {
+type PropType = {
 	my_window: AppWindow
 }
 
-function MyApp(props: My_PropType): JSX.Element {
+function MyApp(props: PropType): JSX.Element {
 	const my_window = props.my_window
 	const dispatch = useAppDispatch()
 
@@ -58,7 +58,7 @@ function MyApp(props: My_PropType): JSX.Element {
 				} catch (e) {
 					retry(e)
 				}
-			}, {maxAttempts: 20, initTimeout: 1100})
+			})
 				.catch(e => {
 					throw e.cause
 				}) as string
@@ -71,10 +71,10 @@ function MyApp(props: My_PropType): JSX.Element {
 	}, [dispatch])
 
 	let Footer: JSX.Element
-	if (false)
-		Footer = <FooterAD />
-	else
-		Footer = <ReplacementFooterAD />
+	// if (false)
+	// Footer = <FooterAD />
+	// else
+	Footer = <ReplacementFooterAD />
 	return (
 		<MyAppContainer id='myApp'>
 			<Header my_window={my_window} />

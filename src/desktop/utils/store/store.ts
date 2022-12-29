@@ -210,7 +210,7 @@ export const fillHistoryDisplayed = createAsyncThunk<void, {region: string, puui
 			} catch (e) {
 				retry(e)
 			}
-		}, {maxAttempts: 20, initTimeout: 1100})
+		})
 			.catch(e => {
 				throw e.cause
 			}) as string[]
@@ -250,7 +250,7 @@ export const fillHistoryDisplayed = createAsyncThunk<void, {region: string, puui
 				} catch (e) {
 					retry(e)
 				}
-			}, {maxAttempts: 20, initTimeout: 1100})
+			})
 				.catch(e => {
 					throw e.cause
 				}) as FetchMatchHistoryType

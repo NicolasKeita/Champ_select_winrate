@@ -3,8 +3,8 @@
 	"version": "1.2.3",
 	"description": "Fully customizable champ select tool",
 	"scripts": {
-		"test": "jest",
-		"coverage": "jest --coverage --collectCoverageFrom=src/**/* --collectCoverageFrom=!src/background/* --collectCoverageFrom=!src/AppWindow.ts",
+		"test": "jest --silent",
+		"coverage": "jest --silent --coverage --collectCoverageFrom=src/**/* --collectCoverageFrom=!src/background/* --collectCoverageFrom=!src/AppWindow.ts --collectCoverageFrom=!src/desktop/desktop.tsx",
 		"build": "webpack --mode=production  --env makeOpk  --env removeSourceMap",
 		"dev": "webpack --watch --mode=development",
 		"watch": "webpack --watch --mode=production",
@@ -81,6 +81,7 @@
 		"react-loading-indicators": ">=0.0.11",
 		"react-redux": ">=8.0.5",
 		"styled-components": ">=5.3.6",
-		"uniqid": ">=5.4.0"
+		"uniqid": ">=5.4.0",
+		"web-vitals": ">=3.1.0"
 	}
 }

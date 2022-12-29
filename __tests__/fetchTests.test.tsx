@@ -13,11 +13,7 @@ import '@testing-library/jest-dom'
 import fetch from 'jest-fetch-mock'
 
 import allChamps from '../__testsUtils__/allChamps.json'
-import {configTest} from '../__testsUtils__/configTest'
-import {
-	getRunningLaunchersInfo, onInfoUpdatesAddListener, onTerminatedAddListener,
-	overwolfMocked
-} from '../__testsUtils__/OW_mocking'
+import {overwolfMocked} from '../__testsUtils__/OW_mocking'
 import {renderEntireApp} from '../__testsUtils__/renderEntireApp'
 
 
@@ -27,9 +23,11 @@ describe('fetchTests', () => {
 		sessionStorage.clear()
 		global.overwolf = overwolfMocked
 	})
-	jest.useFakeTimers()
-	jest.setTimeout(5000)
+	afterEach(() => {
+		jest.restoreAllMocks()
+	})
 	fetch.enableMocks()
+	jest.useFakeTimers()
 
 	test('fetchVersionFail', async () => {
 		fetch.mockResponse(req => {
@@ -40,6 +38,12 @@ describe('fetchTests', () => {
 			else
 				return Promise.reject(new Error('URL is not handled by Jest tests'))
 		})
+
+		const logErrSpy = jest.spyOn(console, 'error')
 		await act(() => {renderEntireApp()})
+		jest.runAllTimers()
+		await waitFor(() =>
+				expect(logErrSpy).toHaveBeenCalled()
+			, {timeout: 1000 * 60})
 	})
 })
