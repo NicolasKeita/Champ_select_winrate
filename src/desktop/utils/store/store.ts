@@ -107,7 +107,8 @@ type StoreStateType = {
 	summonerName: string,
 	summonerRegion: string,
 	encryptedSummonerId: string,
-	rerenderSettings: boolean
+	rerenderSettings: boolean,
+	helpPageVisible: boolean
 }
 
 const initialState = {
@@ -120,7 +121,8 @@ const initialState = {
 	summonerName: '',
 	summonerRegion: '',
 	encryptedSummonerId: '',
-	rerenderSettings: false
+	rerenderSettings: false,
+	helpPageVisible: false
 } as StoreStateType
 
 function updateChampSelectDisplayedScores(champSelectDisplayed: ChampSelectDisplayedType, allChamps: Champion[]) {
@@ -408,10 +410,12 @@ export const slice = createSlice({
 	initialState: initialState,
 	reducers: {
 		toggleSettingsPage: (state) => {
-			// const configPlainObject: Config = JSON.parse(state.configSerialized)
 			state.config.settingsPage = !state.config.settingsPage
-			// configPlainObject.settingsPage = !configPlainObject.settingsPage
-			// state.configSerialized = JSON.stringify(configPlainObject)
+			state.helpPageVisible = false
+		},
+		toggleHelpPage: (state) => {
+			state.helpPageVisible = !state.helpPageVisible
+			state.config.settingsPage = false
 		},
 		setHistoryIsLoading: (state, action: PayloadAction<{historyDisplayedIndex: number | null, isLoading: boolean}>) => {
 			if (action.payload.historyDisplayedIndex == null) {
@@ -546,7 +550,8 @@ export const {
 	setHistoryIsLoading,
 	setHistoryMatch,
 	cleanHistoryMatch,
-	rerenderSettings
+	rerenderSettings,
+	toggleHelpPage
 } = slice.actions
 
 const mainReducer = combineReducers({

@@ -14,10 +14,10 @@ import '@public/css/header.css'
 
 import {
 	rerenderSettings,
-	resetSettings,
+	resetSettings, toggleHelpPage,
 	updateAllUserScores
 } from '@utils/store/store'
-import {useAppDispatch, useAppSelector} from '@utils/hooks'
+import {useAppDispatch} from '@utils/hooks'
 import {toggleSettingsPage} from '@utils/store/store'
 
 import {Menu, Item, useContextMenu} from 'react-contexify'
@@ -97,6 +97,12 @@ function Header(props: PropsType) {
 		}
 	}
 
+	function activateHelp(e) {
+		if (e.buttons == 1) {
+			dispatch(toggleHelpPage())
+		}
+	}
+
 	const {show} = useContextMenu({
 		id: 'settingsButton'
 	})
@@ -106,6 +112,10 @@ function Header(props: PropsType) {
 			<Logo>CSW</Logo>
 			<CSWName>Champ Select Winrate</CSWName>
 			<div className='window-controls-group'>
+				<button className={'window-control window-control-support'}
+						onMouseDown={e => activateHelp(e)}
+						aria-label={'helpButton'}
+				/>
 				<button className={'window-control window-control-settings'}
 						onMouseDown={e => activateSettings(e)}
 						onContextMenu={handleContextMenu}

@@ -23,9 +23,10 @@
 		"parser": "@typescript-eslint/parser",
 		"project": ["./tsconfig.json"]
 	},
-	"ignorePatterns": ["webpack.config.js", "overwolf.webpack.js", "jest.config.js", "__tests__/", "__testsUtils__","node_modules/"],
+	"ignorePatterns": ["webpack.config.js", "overwolf.webpack.js", "jest.config.js", "__tests__/", "__testsUtils__", "node_modules/"],
 	"plugins": [
 		"react",
+		"html",
 		"react-hooks",
 		"@typescript-eslint",
 		"jest",

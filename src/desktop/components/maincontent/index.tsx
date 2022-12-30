@@ -16,6 +16,7 @@ import {
 } from '@utils/store/selectors'
 import {ConfigPage} from './settings/Config'
 import History from './main/history'
+import HelpPage from './main/helpPage'
 
 const MainContentContainer = styled.div`
   display: flex;
@@ -28,9 +29,10 @@ const MainContentContainer = styled.div`
 function MainContent() {
 	const settingsPage = useAppSelector(selectBooleanSettingsPage())
 	const currentPage = useAppSelector(selectCurrentPage())
+	const helpPageVisible = useAppSelector(state => state.slice.helpPageVisible)
 
 	let currentPageSet: JSX.Element
-	if (!settingsPage) {
+	if (!settingsPage && !helpPageVisible) {
 		currentPageSet =
 			<div id='main+footer'
 				 style={{display: 'flex', flexDirection: 'column', flex: 1}}>
@@ -38,8 +40,10 @@ function MainContent() {
 					<History />}
 				<Footer />
 			</div>
-	} else
+	} else if (settingsPage) {
 		currentPageSet = <Settings />
+	} else
+		currentPageSet = <HelpPage />
 
 	return (
 		<MainContentContainer id='mainContentContainer'>
