@@ -4,40 +4,41 @@
 
 import React from 'react'
 import help1 from '@public/img/Help1.jpg'
-import help2 from '@public/img/Help2.png'
+import help2 from '@public/img/Help2.jpg'
+import help3 from '@public/img/Help3.jpg'
+import help4 from '@public/img/Help4.jpg'
 import {Splide, SplideSlide} from '@splidejs/react-splide'
 
-// Default theme
 import '@public/css/splide/splide.min.css'
-import '@public/css/splide/arrows.css'
-
-// or other themes
-// import '@splidejs/react-splide/css/skyblue'
-// import '@splidejs/react-splide/css/sea-green'
-
-// or only core styles
-// import '@splidejs/react-splide/css/core'
+import '@public/css/splide/customCss.css'
 
 function HelpPage() {
-
 	return (
-		<div style={{display: 'flex', height: 432, width: 400}}>
+		<div
+			style={{display: 'flex', height: 432, width: 400}}>
 			<Splide
 				options={{
 					classes: {
-						next: 'splide__arrow--next your-class-next',
-						pagination: 'splide__pagination your-class-pagination'
+						next: 'splide__arrow--next your-class-next'
 					},
-					type: 'loop',
 					height: 424,
-					width: 400
+					width: 400,
+					lazyLoad: true,
+					preloadPages: 1
 				}}
+
 				aria-label='React Splide Example'>
 				<SplideSlide>
 					<img src={help1} alt='Image1' />
 				</SplideSlide>
 				<SplideSlide>
-					<img src={help2} alt='Image 2' />
+					<img src={help2} alt='Image2' />
+				</SplideSlide>
+				<SplideSlide>
+					<img src={help3} alt='Image3' />
+				</SplideSlide>
+				<SplideSlide>
+					<img src={help4} alt='Image4' />
 				</SplideSlide>
 			</Splide>
 
