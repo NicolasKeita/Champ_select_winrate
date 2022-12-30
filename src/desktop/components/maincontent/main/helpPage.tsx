@@ -3,13 +3,12 @@
 */
 
 import React from 'react'
-import ImageGallery from 'react-image-gallery'
 import help1 from '@public/img/Help1.jpg'
 import help2 from '@public/img/Help2.png'
 import {Splide, SplideSlide} from '@splidejs/react-splide'
 
 // Default theme
-import '@splidejs/react-splide/css'
+import '@public/css/splide/splide.min.css'
 import '@public/css/splide/arrows.css'
 
 // or other themes
