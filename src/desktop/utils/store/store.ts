@@ -567,5 +567,6 @@ store.subscribe(() => {
 	// console.log(JSON.parse(store.getState().slice.configSerialized))
 })
 
+export type StoreType = typeof store
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch

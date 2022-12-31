@@ -9,6 +9,7 @@ import uniqid from 'uniqid'
 import ConfigRow from './configRow'
 import {Champion} from '../desktop/components/maincontent/settings/Champion'
 import {selectAllChampions} from '@utils/store/selectors'
+import {useAppSelector} from '@utils/hooks'
 
 const SettingsContainer = styled.div`
   background: linear-gradient(to right, #252424, #363636, #252424);
@@ -40,16 +41,16 @@ const OP_ScoreContainer = styled.div`
 `
 
 function Settings() {
-	// const allChamps = useAppSelector(selectAllChampions())
-	// useAppSelector((state) => state.slice.rerenderSettings)
+	const allChamps = useAppSelector(selectAllChampions())
+	useAppSelector((state) => state.slice.rerenderSettings)
 
-	const allChamps: Champion[] = Array(150).fill({
-		id: 0,
-		image: '',
-		nameFormatted: '',
-		role: '',
-		name: 'talon', opScore_CSW: 50, opScore_user: 50
-	}, 0, 150)
+	// const allChamps: Champion[] = Array(150).fill({
+	// 	id: 0,
+	// 	image: '',
+	// 	nameFormatted: '',
+	// 	role: '',
+	// 	name: 'talon', opScore_CSW: 50, opScore_user: 50
+	// }, 0, 150)
 
 	function renderListChampNameWithOPScore() {
 		return allChamps.map(elem => {

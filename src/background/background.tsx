@@ -5,6 +5,10 @@ import {kWindowNames, kGameClassIds} from '../consts'
 import RunningGameInfo = overwolf.games.RunningGameInfo
 import AppLaunchTriggeredEvent = overwolf.extensions.AppLaunchTriggeredEvent
 
+import {store} from '@utils/store/store'
+//@ts-ignore
+window.store = store
+
 // The background controller holds all of the app's background logic - hence its name. it has
 // many possible use cases, for example sharing data between windows, or, in our case,
 // managing which window is currently presented to the user. To that end, it holds a dictionary

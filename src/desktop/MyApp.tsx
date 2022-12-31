@@ -31,11 +31,10 @@ const MyAppContainer = styled.div`
 `
 
 type PropType = {
-	my_window: AppWindow
+	myWindow: AppWindow
 }
 
 function MyApp(props: PropType): JSX.Element {
-	const my_window = props.my_window
 	const dispatch = useAppDispatch()
 
 	tryPopulateStoreWithSettingsFromLocalStorage(dispatch)
@@ -77,7 +76,7 @@ function MyApp(props: PropType): JSX.Element {
 	Footer = <ReplacementFooterAD />
 	return (
 		<MyAppContainer id='myApp'>
-			<Header myWindow={my_window} />
+			<Header myWindow={props.myWindow} />
 			<MainContent />
 			{Footer}
 		</MyAppContainer>
