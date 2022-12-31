@@ -55,9 +55,6 @@ function ConfigRow(props: PropsType) {
 	//TODO faire la technique de load 13 items puis 23 puis 33 en fonction du scroll du user
 
 	const [opScoreUser, setOpScoreUser] = useState<string>(props.opScoreUser.toString())
-
-	// const allChamps = useAppSelector(selectAllChampions())
-	const allChamps = props.allChamps
 	const dispatch = useAppDispatch()
 
 	function handleOnChange({target}: {target: HTMLInputElement}) {
@@ -73,13 +70,6 @@ function ConfigRow(props: PropsType) {
 				champName: props.champName,
 				champUserScore: valueEntered
 			}))
-
-			// const currentChamp = copy(allChamps.find((champ) => champ.name == props.champName))
-			// if (currentChamp) {
-			// 	currentChamp.opScore_user = valueEntered
-			// 	const allChampsUpdated = allChamps.map((champion) => champion.name == props.champName ? currentChamp : champion)
-			// 	sessionStorage.setItem('internalConfig', JSON.stringify(allChampsUpdated))
-			// }
 		}
 	}
 
@@ -87,12 +77,10 @@ function ConfigRow(props: PropsType) {
 		const valueEntered = target.value
 		if (valueEntered === '') {
 			setOpScoreUser('' + 50)
-			const currentChamp = copy(allChamps.find((champ) => champ.name == props.champName))
-			if (currentChamp) {
-				currentChamp.opScore_user = 50
-				const allChampsUpdated = allChamps.map((champion) => champion.name == props.champName ? currentChamp : champion)
-				sessionStorage.setItem('internalConfig', JSON.stringify(allChampsUpdated))
-			}
+			dispatch(updateChamp({
+				champName: props.champName,
+				champUserScore: 50
+			}))
 		}
 	}
 

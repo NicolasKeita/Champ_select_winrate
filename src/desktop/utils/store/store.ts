@@ -425,7 +425,7 @@ export const slice = createSlice({
 				console.error(`CSW_error: could not updateUserScore. Champ Name : ${action.payload.champName}, score : ${action.payload.champUserScore}`)
 				return
 			}
-			if (action.payload.champUserScore)
+			if (action.payload.champUserScore != undefined)
 				championToChange.opScore_user = action.payload.champUserScore
 			if (action.payload.champImageUrl)
 				championToChange.imageUrl = action.payload.champImageUrl

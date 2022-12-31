@@ -71,6 +71,8 @@ function Header(props: PropsType) {
 				dispatch(updateAllUserScores(JSON.parse(internalConfig)))
 			}
 			my_window.currWindow.close()
+			// const backgroundWindow = overwolf.windows.getMainWindow()
+			// backgroundWindow.backgroundControllerInstance.closeSettingWindow?andBoth?()
 		}
 	}
 

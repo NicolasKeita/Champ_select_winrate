@@ -9,7 +9,6 @@ import styled from 'styled-components'
 
 import Footer from './../../components/maincontent/footer'
 import ChampSelect from './../../components/maincontent/main'
-import Settings from './../../components/maincontent/settings'
 import {
 	selectBooleanSettingsPage,
 	selectCurrentPage
@@ -27,12 +26,11 @@ const MainContentContainer = styled.div`
 `
 
 function MainContent() {
-	const settingsPage = useAppSelector(selectBooleanSettingsPage())
 	const currentPage = useAppSelector(selectCurrentPage())
 	const helpPageVisible = useAppSelector(state => state.slice.helpPageVisible)
 
 	let currentPageSet: JSX.Element
-	if (!settingsPage && !helpPageVisible) {
+	if (!helpPageVisible) {
 		currentPageSet =
 			<div id='main+footer'
 				 style={{display: 'flex', flexDirection: 'column', flex: 1}}>
@@ -40,8 +38,6 @@ function MainContent() {
 					<History />}
 				<Footer />
 			</div>
-	} else if (settingsPage) {
-		currentPageSet = <Settings />
 	} else
 		currentPageSet = <HelpPage />
 

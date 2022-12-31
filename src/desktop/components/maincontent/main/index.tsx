@@ -80,7 +80,6 @@ const ProfileLine = styled.div`
 `
 
 function ChampSelect() {
-	console.log('Render Champselct')
 	const champSelectDisplayed = useAppSelector((state) => state.slice.champSelectDisplayed)
 
 	function renderPlayersGrid(isEnemyTeam: boolean): JSX.Element {
