@@ -71,6 +71,7 @@ interface PropsType {
 }
 
 function ChampionProfile(props: PropsType): JSX.Element {
+
 	function renderChampionRecommendation(): JSX.Element[] | null {
 		const isUnsupportedGameMode = !!sessionStorage.getItem('unsupported game_mode')
 		if (props.isEnemyTeam) return null

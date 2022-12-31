@@ -9,6 +9,8 @@ import Config from '../desktop/components/maincontent/settings/Config'
 import {copy} from 'copy-anything'
 import {selectAllChampions} from '@utils/store/selectors'
 import {Champion} from '../desktop/components/maincontent/settings/Champion'
+import {useAppDispatch} from '@utils/hooks'
+import {updateChamp} from '@utils/store/store'
 
 const ChampName = styled.h1`
   background: -webkit-linear-gradient(#ab6630, #b79e4d);
@@ -56,6 +58,7 @@ function ConfigRow(props: PropsType) {
 
 	// const allChamps = useAppSelector(selectAllChampions())
 	const allChamps = props.allChamps
+	const dispatch = useAppDispatch()
 
 	function handleOnChange({target}: {target: HTMLInputElement}) {
 		if (!target || (!(/[0-9]/.test(target.value)) && target.value != '')) return
@@ -66,12 +69,17 @@ function ConfigRow(props: PropsType) {
 		}
 		if (Number.isInteger(valueEntered) && valueEntered <= 100) {
 			setOpScoreUser(valueEntered.toString())
-			const currentChamp = copy(allChamps.find((champ) => champ.name == props.champName))
-			if (currentChamp) {
-				currentChamp.opScore_user = valueEntered
-				const allChampsUpdated = allChamps.map((champion) => champion.name == props.champName ? currentChamp : champion)
-				sessionStorage.setItem('internalConfig', JSON.stringify(allChampsUpdated))
-			}
+			dispatch(updateChamp({
+				champName: props.champName,
+				champUserScore: valueEntered
+			}))
+
+			// const currentChamp = copy(allChamps.find((champ) => champ.name == props.champName))
+			// if (currentChamp) {
+			// 	currentChamp.opScore_user = valueEntered
+			// 	const allChampsUpdated = allChamps.map((champion) => champion.name == props.champName ? currentChamp : champion)
+			// 	sessionStorage.setItem('internalConfig', JSON.stringify(allChampsUpdated))
+			// }
 		}
 	}
 

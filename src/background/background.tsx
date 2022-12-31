@@ -6,7 +6,7 @@ import RunningGameInfo = overwolf.games.RunningGameInfo
 import AppLaunchTriggeredEvent = overwolf.extensions.AppLaunchTriggeredEvent
 
 import {store} from '@utils/store/store'
-//@ts-ignore
+
 window.store = store
 
 // The background controller holds all of the app's background logic - hence its name. it has

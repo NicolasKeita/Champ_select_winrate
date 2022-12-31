@@ -144,6 +144,12 @@ function updateChampSelectDisplayedScores(champSelectDisplayed: ChampSelectDispl
 	}
 }
 
+function updateChampSelectDisplayedRecommendations(champSelectDisplayed: ChampSelectDisplayedType, allChamps: Champion[]) {
+	for (const [i, ally] of champSelectDisplayed.allies.entries()) {
+		ally.recommendations = getRecommendations(champSelectDisplayed.allies, i, allChamps)
+	}
+}
+
 function updateHistoryDisplayedScores(historyDisplayed: HistoryDisplayedType[], allChamps: Champion[]) {
 	const allChampsToQuery: string[] = []
 	for (const match of historyDisplayed) {
@@ -173,11 +179,11 @@ type FillChampSelectDisplayedParamType = {
 	myTeam: never[]
 }
 
-function getRecommendations(allies: ChampDisplayedType[], playerId: number, allChamps: readonly Champion[]): Champion[] {
+function getRecommendations(allies: ChampDisplayedType[], playerId: number, allChamps: Champion[]): Champion[] {
 	let assignedRole = allies[playerId].assignedRole
 	if (assignedRole == '')
 		assignedRole = 'utility'
-	const allChampsFilteredWithRole = copy(allChamps.filter(champ => champ.role == assignedRole)) // TODO Laisser en readonly et ne pas copier, update les allchamps avec l'url
+	const allChampsFilteredWithRole = allChamps.filter(champ => champ.role == assignedRole)
 	if (allChampsFilteredWithRole.length == 0)
 		console.error('CSW_error: couldnt get recommendations')
 	allChampsFilteredWithRole.sort((a, b) => (
@@ -309,27 +315,10 @@ export const fillChampSelectDisplayed = createAsyncThunk<ChampSelectDisplayedTyp
 		const champSelectDisplayed = initChampSelectDisplayed()
 		const allies = champSelectDisplayed.allies
 		const enemies = champSelectDisplayed.enemies
-		// const configPlainObject: Config = JSON.parse(thunkAPI.getState().slice.configSerialized)
-		const allChamps = Object.freeze(thunkAPI.getState().slice.config.champions)
-		// const allChamps = configPlainObject.champions
-
-		// //TODO merge this below, the return type and return ChampSELECTdisplayedType
-		// for (let i = 0; i < 5; ++i) {
-		// 	allies.push({
-		// 		assignedRole: '',
-		// 		champ: getDefaultChampion(),
-		// 		recommendations: getDefaultRecommendations()
-		// 	})
-		// 	enemies.push({
-		// 		assignedRole: '',
-		// 		champ: getDefaultChampion(),
-		// 		recommendations: getDefaultRecommendations()
-		// 	})
-		// }
+		const allChamps = thunkAPI.getState().slice.config.champions
 
 		function fillChampNameAndImgUrlFromId(champion: Champion, championId: number) {
 			if (championId == 0) return
-			// const configPlainObject: Config = JSON.parse(thunkAPI.getState().slice.configSerialized)
 			const championSearched = thunkAPI.getState().slice.config.champions.find((champ) => champ.id == championId)
 			if (!championSearched) {
 				console.error(`CSW_error: Store all champions is probably empty. Debug: champion Id : ${championId}`)
@@ -340,7 +329,8 @@ export const fillChampSelectDisplayed = createAsyncThunk<ChampSelectDisplayedTyp
 			champion.opScore_user = -1
 		}
 
-		function fillAssignedRoleAndRecommendations(allies: ChampDisplayedType[], myTeam: never[], actorCellId: number, allChamps: DeepReadonly<Champion[]>, isActorCellRightSide = false) {
+		//TODO set up le type de myTeam
+		function fillAssignedRoleAndRecommendations(allies: ChampDisplayedType[], myTeam: never[], actorCellId: number, allChamps: Champion[], isActorCellRightSide = false) {
 			let actorCellIdTeam = actorCellId
 			if (isActorCellRightSide) actorCellIdTeam += 5
 			for (const {assignedPosition, cellId} of myTeam) {
@@ -394,13 +384,6 @@ export const fillChampSelectDisplayed = createAsyncThunk<ChampSelectDisplayedTyp
 				}
 			}
 		}
-
-		for (const ally of allies) {
-			for (const recommendation of ally.recommendations) {
-				// TODO Laisser en readonly et ne pas copier, update les allchamps avec l'url (dispatch)
-				recommendation.imageUrl = getChampImgByNamePNG(recommendation.image)
-			}
-		}
 		return champSelectDisplayed
 	})
 
@@ -434,24 +417,36 @@ export const slice = createSlice({
 			state.rerenderSettings = !state.rerenderSettings
 		},
 		copyFromAnotherSetting: (state, action: PayloadAction<Config>) => {
-			// const configDeserialized = new Config(JSON.parse(state.configSerialized))
-			// configDeserialized.copyFromAnotherSetting(action.payload)
-			// state.configSerialized = configDeserialized.stringify()
 			configAssign(state.config, action.payload)
 		},
+		updateChamp: (state, action: PayloadAction<{champName: string, champUserScore?: number, champImageUrl?: string}>) => {
+			const championToChange = state.config.champions.find((champ) => champ.name == action.payload.champName)
+			if (!championToChange) {
+				console.error(`CSW_error: could not updateUserScore. Champ Name : ${action.payload.champName}, score : ${action.payload.champUserScore}`)
+				return
+			}
+			if (action.payload.champUserScore)
+				championToChange.opScore_user = action.payload.champUserScore
+			if (action.payload.champImageUrl)
+				championToChange.imageUrl = action.payload.champImageUrl
+			localStorage.setItem('config', JSON.stringify(state.config))
+			if (state.config.currentPage == ConfigPage.CHAMPSELECT) {
+				updateChampSelectDisplayedScores(state.champSelectDisplayed, state.config.champions)
+				updateChampSelectDisplayedRecommendations(state.champSelectDisplayed, state.config.champions)
+			} else if (state.config.currentPage == ConfigPage.HISTORY)
+				updateHistoryDisplayedScores(state.historyDisplayed, state.config.champions)
+		},
 		updateAllUserScores: (state, action: PayloadAction<Champion[]>) => {
-			// const configDeserialized = new Config(JSON.parse(state.configSerialized))
 			for (const elem of Object.values(action.payload)) {
 				const champion = state.config.champions.find((champ) => champ.name == elem.name)
-				// const champion = configDeserialized.getChampCurrConfig(elem.name)
 				if (champion) champion.opScore_user = elem.opScore_user
 				else console.log('CSW_error: couldnt update Score')
 			}
-			// state.configSerialized = configDeserialized.stringify()
 			localStorage.setItem('config', JSON.stringify(state.config))
-			if (state.config.currentPage == ConfigPage.CHAMPSELECT)
+			if (state.config.currentPage == ConfigPage.CHAMPSELECT) {
 				updateChampSelectDisplayedScores(state.champSelectDisplayed, state.config.champions)
-			else if (state.config.currentPage == ConfigPage.HISTORY)
+				updateChampSelectDisplayedRecommendations(state.champSelectDisplayed, state.config.champions)
+			} else if (state.config.currentPage == ConfigPage.HISTORY)
 				updateHistoryDisplayedScores(state.historyDisplayed, state.config.champions)
 		},
 		setClientStatus: (state, action: PayloadAction<number>) => {
@@ -486,9 +481,10 @@ export const slice = createSlice({
 			}
 			sessionStorage.removeItem('internalConfig')
 			localStorage.setItem('config', JSON.stringify(state.config))
-			if (state.config.currentPage == ConfigPage.CHAMPSELECT)
+			if (state.config.currentPage == ConfigPage.CHAMPSELECT) {
 				updateChampSelectDisplayedScores(state.champSelectDisplayed, state.config.champions)
-			else if (state.config.currentPage == ConfigPage.HISTORY)
+				updateChampSelectDisplayedRecommendations(state.champSelectDisplayed, state.config.champions)
+			} else if (state.config.currentPage == ConfigPage.HISTORY)
 				updateHistoryDisplayedScores(state.historyDisplayed, state.config.champions)
 		}
 	},
@@ -525,9 +521,10 @@ export const slice = createSlice({
 					state.config.champions.push(championPayload)
 			}
 			localStorage.setItem('config', JSON.stringify(state.config))
-			if (state.config.currentPage == ConfigPage.CHAMPSELECT)
+			if (state.config.currentPage == ConfigPage.CHAMPSELECT) {
 				updateChampSelectDisplayedScores(state.champSelectDisplayed, state.config.champions)
-			else if (state.config.currentPage == ConfigPage.HISTORY)
+				updateChampSelectDisplayedRecommendations(state.champSelectDisplayed, state.config.champions)
+			} else if (state.config.currentPage == ConfigPage.HISTORY)
 				updateHistoryDisplayedScores(state.historyDisplayed, state.config.champions)
 		})
 		builder.addCase(fetchAllChampions.rejected, (_state, action) => {
@@ -541,6 +538,7 @@ export const slice = createSlice({
 
 export const {
 	toggleSettingsPage,
+	updateChamp,
 	updateAllUserScores,
 	resetChampSelectDisplayed,
 	copyFromAnotherSetting,

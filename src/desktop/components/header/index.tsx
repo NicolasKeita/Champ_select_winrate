@@ -88,16 +88,23 @@ function Header(props: PropsType) {
 	}
 
 	function activateSettings(e) {
-		const backgroundWindow = overwolf.windows.getMainWindow()
-		backgroundWindow.backgroundControllerInstance.toggleSettingsWindow()
-
 		if (e.buttons == 1) {
-			dispatch(toggleSettingsPage())
+			const backgroundWindow = overwolf.windows.getMainWindow()
+			backgroundWindow.backgroundControllerInstance.toggleSettingsWindow()
+
 			const internalConfig = sessionStorage.getItem('internalConfig')
 			if (internalConfig) {
 				dispatch(updateAllUserScores(JSON.parse(internalConfig)))
 			}
 		}
+
+		// if (e.buttons == 1) {
+		// 	dispatch(toggleSettingsPage())
+		// 	const internalConfig = sessionStorage.getItem('internalConfig')
+		// 	if (internalConfig) {
+		// 		dispatch(updateAllUserScores(JSON.parse(internalConfig)))
+		// 	}
+		// }
 	}
 
 	function activateHelp(e) {

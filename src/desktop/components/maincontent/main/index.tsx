@@ -80,6 +80,7 @@ const ProfileLine = styled.div`
 `
 
 function ChampSelect() {
+	console.log('Render Champselct')
 	const champSelectDisplayed = useAppSelector((state) => state.slice.champSelectDisplayed)
 
 	function renderPlayersGrid(isEnemyTeam: boolean): JSX.Element {
@@ -93,7 +94,7 @@ function ChampSelect() {
 										   key={uniqid()}
 										   img={img ? img : questionMark}
 										   champName={champName}
-										   champScore={champScore ? champScore : 50}
+										   champScore={champScore != undefined ? champScore : 50}
 										   champRecommendation={champRecommendation}
 										   champSelectDisplayed={champSelectDisplayed}
 										   index={i}

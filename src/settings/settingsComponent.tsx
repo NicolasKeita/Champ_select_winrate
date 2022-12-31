@@ -41,16 +41,8 @@ const OP_ScoreContainer = styled.div`
 `
 
 function Settings() {
-	const allChamps = useAppSelector(selectAllChampions())
+	const allChamps = useAppSelector(selectAllChampions(), () => {return true})
 	useAppSelector((state) => state.slice.rerenderSettings)
-
-	// const allChamps: Champion[] = Array(150).fill({
-	// 	id: 0,
-	// 	image: '',
-	// 	nameFormatted: '',
-	// 	role: '',
-	// 	name: 'talon', opScore_CSW: 50, opScore_user: 50
-	// }, 0, 150)
 
 	function renderListChampNameWithOPScore() {
 		return allChamps.map(elem => {
