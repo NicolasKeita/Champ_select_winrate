@@ -2,13 +2,13 @@
 	"manifest_version": 1,
 	"type": "WebApp",
 	"meta": {
-		"name": "Champ Select Winrate",
+		"name": "Champ Select Winrate Test",
 		"author": "Nicolas Keita",
 		"author_display": "SpyNight",
-		"version": "1.2.4",
+		"version": "2.0.0",
 		"minimum-overwolf-version": "0.194.0",
 		"description": "Fully customizable champ select tool",
-		"dock_button_title": "Champ Select Win",
+		"dock_button_title": "Champ Select Test",
 		"icon": "OWassets/IconMouseOver.png",
 		"icon_gray": "OWassets/IconMouseNormal.png",
 		"launcher_icon": "OWassets/desktop-icon.ico",
@@ -39,6 +39,26 @@
 			},
 			"desktop": {
 				"file": "desktop.html",
+				"desktop_only": true,
+				"native_window": true,
+				"resizable": false,
+				"transparent": true,
+				"override_on_update": true,
+				"block_top_window_navigation": true,
+				"popup_blocker": true,
+				"mute": true,
+				"size": {
+					"width": 400,
+					"height": 780
+				},
+				"min_size": {
+					"width": 400,
+					"height": 780
+				}
+			},
+			"settings": {
+
+				"file": "settings.html",
 				"desktop_only": true,
 				"native_window": true,
 				"resizable": false,

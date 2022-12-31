@@ -48,11 +48,11 @@ const CSWName = styled.h1`
 `
 
 interface PropsType {
-	my_window: AppWindow
+	myWindow: AppWindow
 }
 
 function Header(props: PropsType) {
-	const my_window = props.my_window
+	const my_window = props.myWindow
 	const headerRef = useRef(null)
 	const dispatch = useAppDispatch()
 	// const footerMessage = useAppSelector(state => state.slice.footerMessageID)
@@ -88,6 +88,9 @@ function Header(props: PropsType) {
 	}
 
 	function activateSettings(e) {
+		const backgroundWindow = overwolf.windows.getMainWindow()
+		backgroundWindow.backgroundControllerInstance.toggleSettingsWindow()
+
 		if (e.buttons == 1) {
 			dispatch(toggleSettingsPage())
 			const internalConfig = sessionStorage.getItem('internalConfig')

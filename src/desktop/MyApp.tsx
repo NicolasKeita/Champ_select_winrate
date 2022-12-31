@@ -77,7 +77,7 @@ function MyApp(props: PropType): JSX.Element {
 	Footer = <ReplacementFooterAD />
 	return (
 		<MyAppContainer id='myApp'>
-			<Header my_window={my_window} />
+			<Header myWindow={my_window} />
 			<MainContent />
 			{Footer}
 		</MyAppContainer>

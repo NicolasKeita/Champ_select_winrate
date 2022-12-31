@@ -9,7 +9,8 @@ module.exports = env => {
 		target: 'web',
 		entry: {
 			background: './src/background/background.tsx',
-			desktop: './src/desktop/desktop.tsx'
+			desktop: './src/desktop/desktop.tsx',
+			settings: './src/settings/settings.tsx'
 		},
 		devtool: env['removeSourceMap'] ? false : 'inline-source-map',
 		module: {
@@ -59,6 +60,11 @@ module.exports = env => {
 				template: './src/desktop/desktop.html',
 				filename: path.resolve(__dirname, './dist/desktop.html'),
 				chunks: ['desktop']
+			}),
+			new HtmlWebpackPlugin({
+				template: './src/settings/settings.html',
+				filename: path.resolve(__dirname, './dist/settings.html'),
+				chunks: ['settings']
 			}),
 			new OverwolfPlugin(env)
 		]

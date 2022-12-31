@@ -11,7 +11,7 @@ import AppLaunchTriggeredEvent = overwolf.extensions.AppLaunchTriggeredEvent
 // of the windows available in the app.
 // Our background controller implements the Singleton design pattern, since only one
 // instance of it should exist.
-class BackgroundController {
+export class BackgroundController {
 	private static _instance: BackgroundController
 	private _windows: Record<string, OWWindow> = {}
 	private _gameListener: OWGameListener
@@ -19,9 +19,10 @@ class BackgroundController {
 	private constructor() {
 		// Populating the background controller's window dictionary
 		this._windows[kWindowNames.desktop] = new OWWindow(kWindowNames.desktop)
+		this._windows[kWindowNames.settings] = new OWWindow(
+			kWindowNames.settings
+		)
 
-		// When a a supported game game is started or is ended, toggle the app's windows
-		//TODO when entering in champ select maximize the window
 		this._gameListener = new OWGameListener({
 			onGameStarted: this.toggleWindows.bind(this),
 			onGameEnded: this.toggleWindows.bind(this)
@@ -41,14 +42,29 @@ class BackgroundController {
 		return BackgroundController._instance
 	}
 
+	public async toggleSettingsWindow() {
+		let settingsWindowState: string | undefined = undefined
+		try {
+			settingsWindowState = (
+				await this._windows[kWindowNames.settings].getWindowState()
+			).window_state
+		} catch (e) {
+			console.error('CSW_error: overwolf.window.getWindowState() failed')
+			console.error(e)
+		}
+		if (settingsWindowState == 'minimized') {
+			this._windows[kWindowNames.settings].restore()
+		} else {
+			this._windows[kWindowNames.settings].close()
+		}
+	}
+
 	// When running the app, start listening to games' status and decide which window should
 	// be launched first, based on whether a supported game is currently running
 	public async run() {
+		console.log('Run')
 		this._gameListener.start()
-
-		const currWindowName = kWindowNames.desktop
-
-		this._windows[currWindowName].restore()
+		this._windows[kWindowNames.desktop].restore()
 	}
 
 	private async onAppLaunchTriggered(e: AppLaunchTriggeredEvent) {
@@ -92,4 +108,6 @@ class BackgroundController {
 	}
 }
 
-BackgroundController.instance().run()
+const BCInstance = BackgroundController.instance()
+window.backgroundControllerInstance = BCInstance
+BCInstance.run()
