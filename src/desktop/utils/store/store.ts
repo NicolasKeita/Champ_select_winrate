@@ -20,9 +20,7 @@ import {
 } from '../../components/maincontent/settings/Champion'
 import {
 	getChampImgByFormattedName,
-	getChampScoreByName,
-	getChampScoreByNames,
-	getChampImgByNamePNG
+	getChampScoreByNames
 } from '@utils/fetchDataDragon/fetchDataDragon'
 import {
 	fetchAllChampionsJson
@@ -30,11 +28,11 @@ import {
 import {fetchMatchHistory, fetchMatchHistoryId} from '@utils/LOL_API'
 import {doWithRetry} from 'do-with-retry'
 import {copy} from 'copy-anything'
-import {DeepReadonly} from 'ts-essentials'
 import {
 	FetchMatchHistoryType,
 	Team
 } from '@utils/LOL_API/fetchMatchHistory_type'
+import {createStateSyncMiddleware, initMessageListener} from 'redux-state-sync'
 
 export type ChampDisplayedType = {
 	assignedRole: string
@@ -312,6 +310,7 @@ export const fillChampSelectDisplayed = createAsyncThunk<ChampSelectDisplayedTyp
 	async (thunkParam, thunkAPI) => {
 		if (thunkParam.actions.length == 0)
 			return
+		//TODO SEtup the type de thunkparam qui est le type du fetch
 		const champSelectDisplayed = initChampSelectDisplayed()
 		const allies = champSelectDisplayed.allies
 		const enemies = champSelectDisplayed.enemies
@@ -324,9 +323,12 @@ export const fillChampSelectDisplayed = createAsyncThunk<ChampSelectDisplayedTyp
 				console.error(`CSW_error: Store all champions is probably empty. Debug: champion Id : ${championId}`)
 				return
 			}
-			champion.name = championSearched.name
-			champion.imageUrl = getChampImgByFormattedName(championSearched.nameFormatted)
-			champion.opScore_user = -1
+			return championSearched
+			//TODO return ?
+
+			// champion.name = championSearched.name
+			// champion.imageUrl = getChampImgByFormattedName(championSearched.nameFormatted)
+			// champion.opScore_user = -1
 		}
 
 		//TODO set up le type de myTeam
@@ -355,11 +357,17 @@ export const fillChampSelectDisplayed = createAsyncThunk<ChampSelectDisplayedTyp
 				} of action) {
 					if (type == 'pick') {
 						if (isAllyAction) {
-							fillChampNameAndImgUrlFromId(allies[actorCellId].champ, championId)
+							// fillChampNameAndImgUrlFromId(allies[actorCellId].champ, championId) //TODO FIX BOTH REWORK
+							if (championId != 0) {
+								allies[actorCellId].champ = allChamps.find((champ) => champ.id == championId) || getDefaultChampion()
+							}
 							fillAssignedRoleAndRecommendations(allies, thunkParam.myTeam, actorCellId, allChamps)
 						} else {
-							fillChampNameAndImgUrlFromId(enemies[actorCellIdEnemy].champ, championId)
-							actorCellIdEnemy += 1
+							if (championId != 0) {
+								enemies[actorCellIdEnemy++].champ = allChamps.find((champ) => champ.id == championId) || getDefaultChampion()
+							}
+							// fillChampNameAndImgUrlFromId(enemies[actorCellIdEnemy].champ, championId)
+							// actorCellIdEnemy += 1
 						}
 					}
 				}
@@ -374,12 +382,18 @@ export const fillChampSelectDisplayed = createAsyncThunk<ChampSelectDisplayedTyp
 					if ((actorCellId < 5 && thunkParam.localPlayerCellId < 5) || (actorCellId >= 5 && thunkParam.localPlayerCellId >= 5)) {
 						if (actorCellId >= 5)
 							actorCellId -= 5
-						fillChampNameAndImgUrlFromId(allies[actorCellId].champ, championId)
+						if (championId != 0) {
+							allies[actorCellId].champ = allChamps.find((champ) => champ.id == championId) || getDefaultChampion()
+						}
+						// fillChampNameAndImgUrlFromId(allies[actorCellId].champ, championId)
 						fillAssignedRoleAndRecommendations(allies, thunkParam.myTeam, actorCellId, allChamps, isActorCellRightSide)
 					} else {
 						if (actorCellId >= 5)
 							actorCellId -= 5
-						fillChampNameAndImgUrlFromId(enemies[actorCellId].champ, championId)
+						if (championId != 0) {
+							enemies[actorCellId].champ = allChamps.find((champ) => champ.id == championId) || getDefaultChampion()
+						}
+						// fillChampNameAndImgUrlFromId(enemies[actorCellId].champ, championId)
 					}
 				}
 			}
@@ -492,13 +506,13 @@ export const slice = createSlice({
 		builder.addCase(fillChampSelectDisplayed.fulfilled, (state, action) => {
 			if (action.payload) {
 				state.champSelectDisplayed.allies.splice(0, action.payload.allies.length, ...action.payload.allies)
-				for (const ally of state.champSelectDisplayed.allies) {
-					ally.champ.opScore_user = getChampScoreByName(ally.champ.name, state.config.champions)
-				}
+				// for (const ally of state.champSelectDisplayed.allies) {
+				// 	ally.champ.opScore_user = getChampScoreByName(ally.champ.name, state.config.champions)
+				// }
 				state.champSelectDisplayed.enemies.splice(0, action.payload.enemies.length, ...action.payload.enemies)
-				for (const enemy of state.champSelectDisplayed.enemies) {
-					enemy.champ.opScore_user = getChampScoreByName(enemy.champ.name, state.config.champions)
-				}
+				// for (const enemy of state.champSelectDisplayed.enemies) {
+				// 	enemy.champ.opScore_user = getChampScoreByName(enemy.champ.name, state.config.champions)
+				// }
 			}
 		})
 		builder.addCase(fillHistoryDisplayed.rejected, (state, action) => {
@@ -512,6 +526,7 @@ export const slice = createSlice({
 		})
 		builder.addCase(fetchAllChampions.fulfilled, (state, action) => {
 			for (const championPayload of Object.values(action.payload)) {
+				championPayload.imageUrl = getChampImgByFormattedName(championPayload.nameFormatted)
 				const duplicate = state.config.champions.find(elemConfig => elemConfig.name === championPayload.name)
 				if (duplicate) {
 					const userScore = duplicate.opScore_user
@@ -557,8 +572,10 @@ const mainReducer = combineReducers({
 })
 
 export const store = configureStore({
-	reducer: mainReducer
+	reducer: mainReducer,
+	middleware: getDefaultMiddleware => getDefaultMiddleware().concat(createStateSyncMiddleware())
 })
+initMessageListener(store)
 
 store.subscribe(() => {
 	// console.log('new state : ')

@@ -4,10 +4,6 @@
 
 import React, {KeyboardEvent, useState} from 'react'
 import styled from 'styled-components'
-// import {useAppSelector} from '@utils/hooks'
-import Config from '../desktop/components/maincontent/settings/Config'
-import {copy} from 'copy-anything'
-import {selectAllChampions} from '@utils/store/selectors'
 import {Champion} from '../desktop/components/maincontent/settings/Champion'
 import {useAppDispatch} from '@utils/hooks'
 import {updateChamp} from '@utils/store/store'
