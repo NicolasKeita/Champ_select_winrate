@@ -8,7 +8,7 @@ import {Champion} from '../maincontent/settings/Champion'
 import uniqid from 'uniqid'
 import questionMark from '@public/img/question_mark.jpg'
 import Tippy from '@tippyjs/react'
-import {ChampDisplayedType, ChampSelectDisplayedType} from '@utils/store/store'
+import {ChampSelectDisplayedType} from '../../../background/store/slice'
 import computeWinrate from '@utils/maths/computeWinrateBetweenTwoTeams'
 
 const ChampionImg = styled.img`

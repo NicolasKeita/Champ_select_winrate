@@ -21,7 +21,7 @@ export class AppWindow {
 		}
 		if (closeButton) {
 			closeButton.addEventListener('click', () => {
-				this.mainWindow.close()
+				this.mainWindow.hide()
 			})
 		}
 		if (minimizeButton) {

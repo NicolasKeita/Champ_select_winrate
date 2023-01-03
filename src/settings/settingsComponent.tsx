@@ -4,11 +4,8 @@
 
 import React from 'react'
 import styled from 'styled-components'
-// import {useAppSelector} from '@utils/hooks'
 import uniqid from 'uniqid'
 import ConfigRow from './configRow'
-import {Champion} from '../desktop/components/maincontent/settings/Champion'
-import {selectAllChampions} from '@utils/store/selectors'
 import {useAppSelector} from '@utils/hooks'
 
 const SettingsContainer = styled.div`
@@ -41,8 +38,13 @@ const OP_ScoreContainer = styled.div`
 `
 
 function Settings() {
-	const allChamps = useAppSelector(selectAllChampions(), () => {return true})
-	useAppSelector((state) => state.slice.rerenderSettings)
+	// const allChamps = useAppSelector(selectAllChampions(), () => {return true})
+	// const allChamps = useAppSelector(state => state.slice.config.champions, () => {return true})
+	const allChamps = useAppSelector(state => state.slice.config.champions, () => {return true})
+	console.log('In settings: all champs')
+	console.log(allChamps)
+
+	// const allChamps = Array(150).fill(getDefaultChampion(), 0, 150)
 
 	function renderListChampNameWithOPScore() {
 		return allChamps.map(elem => {

@@ -5,20 +5,18 @@
 import React, {useEffect, useRef} from 'react'
 import styled from 'styled-components'
 
-import {AppWindow} from '../../../AppWindow'
 
 import '@public/css/desktop.css'
 import '@public/css/general.css'
 import '@public/css/modal.css'
 import '@public/css/header.css'
+import {kWindowNames} from '../../../consts'
 
 import {
 	rerenderSettings,
-	resetSettings, toggleHelpPage,
-	updateAllUserScores
-} from '@utils/store/store'
+	resetSettings, toggleHelpPage
+} from '../../../background/store/slice'
 import {useAppDispatch} from '@utils/hooks'
-import {toggleSettingsPage} from '@utils/store/store'
 
 import {Menu, Item, useContextMenu} from 'react-contexify'
 import './ReactContexify.css'
@@ -47,12 +45,7 @@ const CSWName = styled.h1`
   cursor: inherit;
 `
 
-interface PropsType {
-	myWindow: AppWindow
-}
-
-function Header(props: PropsType) {
-	const my_window = props.myWindow
+function Header() {
 	const headerRef = useRef(null)
 	const dispatch = useAppDispatch()
 	// const footerMessage = useAppSelector(state => state.slice.footerMessageID)
@@ -61,24 +54,20 @@ function Header(props: PropsType) {
 	// 	my_window.currWindow.minimize()
 
 	function minimize(e) {
-		if (e.buttons == 1) my_window.currWindow.minimize()
+		if (e.buttons == 1) {
+			overwolf.windows.minimize(kWindowNames.desktop)
+		}
 	}
 
 	function close(e) {
 		if (e.buttons == 1) {
-			const internalConfig = sessionStorage.getItem('internalConfig')
-			if (internalConfig) {
-				dispatch(updateAllUserScores(JSON.parse(internalConfig)))
-			}
-			my_window.currWindow.close()
-			// const backgroundWindow = overwolf.windows.getMainWindow()
-			// backgroundWindow.backgroundControllerInstance.closeSettingWindow?andBoth?()
+			overwolf.windows.close(kWindowNames.desktop)
 		}
 	}
 
 	useEffect(() => {
-		my_window.setDrag(headerRef.current)
-	}, [my_window])
+		overwolf.windows.getMainWindow().backgroundControllerInstance().setDragToWindow(kWindowNames.desktop, headerRef.current)
+	}, [])
 
 	function handleContextMenu(event) {
 		show({
@@ -92,21 +81,8 @@ function Header(props: PropsType) {
 	function activateSettings(e) {
 		if (e.buttons == 1) {
 			const backgroundWindow = overwolf.windows.getMainWindow()
-			backgroundWindow.backgroundControllerInstance.toggleSettingsWindow()
-
-			const internalConfig = sessionStorage.getItem('internalConfig')
-			if (internalConfig) {
-				dispatch(updateAllUserScores(JSON.parse(internalConfig)))
-			}
+			backgroundWindow.backgroundControllerInstance().toggleSettingsWindow()
 		}
-
-		// if (e.buttons == 1) {
-		// 	dispatch(toggleSettingsPage())
-		// 	const internalConfig = sessionStorage.getItem('internalConfig')
-		// 	if (internalConfig) {
-		// 		dispatch(updateAllUserScores(JSON.parse(internalConfig)))
-		// 	}
-		// }
 	}
 
 	function activateHelp(e) {

@@ -3,7 +3,6 @@
 */
 
 import {
-	AppDispatch,
 	cleanHistoryMatch,
 	fillChampSelectDisplayed,
 	fillHistoryDisplayed,
@@ -11,9 +10,10 @@ import {
 	setClientStatus,
 	setFooterMessage,
 	setHistoryIsLoading
-} from '@utils/store/store'
+} from '../../../background/store/slice'
 import {fetchEncryptedSummonerId} from '@utils/LOL_API'
 import LCU_API_connector from '@utils/LCU_API_connector'
+import {AppDispatch} from '../../../background/store/store'
 
 const LCU_interface = new LCU_API_connector()
 

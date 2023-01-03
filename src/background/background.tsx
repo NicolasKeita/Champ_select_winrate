@@ -1,27 +1,18 @@
 import {OWGames, OWGameListener, OWWindow} from '@overwolf/overwolf-api-ts'
-
 import {kWindowNames, kGameClassIds} from '../consts'
-
 import RunningGameInfo = overwolf.games.RunningGameInfo
 import AppLaunchTriggeredEvent = overwolf.extensions.AppLaunchTriggeredEvent
 
-import {store} from '@utils/store/store'
+// import store from './store/store'
 
-window.store = store
-
-// The background controller holds all of the app's background logic - hence its name. it has
-// many possible use cases, for example sharing data between windows, or, in our case,
-// managing which window is currently presented to the user. To that end, it holds a dictionary
-// of the windows available in the app.
-// Our background controller implements the Singleton design pattern, since only one
-// instance of it should exist.
 export class BackgroundController {
 	private static _instance: BackgroundController
+	public storeChange: number
 	private _windows: Record<string, OWWindow> = {}
 	private _gameListener: OWGameListener
 
 	private constructor() {
-		// Populating the background controller's window dictionary
+		this.storeChange = 0
 		this._windows[kWindowNames.desktop] = new OWWindow(kWindowNames.desktop)
 		this._windows[kWindowNames.settings] = new OWWindow(
 			kWindowNames.settings
@@ -46,6 +37,10 @@ export class BackgroundController {
 		return BackgroundController._instance
 	}
 
+	public setDragToWindow(windowName, htmlElement) {
+		this._windows[windowName].dragMove(htmlElement)
+	}
+
 	public async toggleSettingsWindow() {
 		let settingsWindowState: string | undefined = undefined
 		try {
@@ -57,16 +52,13 @@ export class BackgroundController {
 			console.error(e)
 		}
 		if (settingsWindowState == 'minimized') {
-			this._windows[kWindowNames.settings].restore()
+			overwolf.windows.restore(kWindowNames.settings)
 		} else {
-			this._windows[kWindowNames.settings].close()
+			overwolf.windows.close(kWindowNames.settings)
 		}
 	}
 
-	// When running the app, start listening to games' status and decide which window should
-	// be launched first, based on whether a supported game is currently running
 	public async run() {
-		console.log('Run')
 		this._gameListener.start()
 		this._windows[kWindowNames.desktop].restore()
 	}
@@ -112,6 +104,5 @@ export class BackgroundController {
 	}
 }
 
-const BCInstance = BackgroundController.instance()
-window.backgroundControllerInstance = BCInstance
-BCInstance.run()
+BackgroundController.instance().run()
+window.backgroundControllerInstance = BackgroundController.instance

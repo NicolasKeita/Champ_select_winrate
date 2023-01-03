@@ -9,10 +9,7 @@ import styled from 'styled-components'
 
 import Footer from './../../components/maincontent/footer'
 import ChampSelect from './../../components/maincontent/main'
-import {
-	selectBooleanSettingsPage,
-	selectCurrentPage
-} from '@utils/store/selectors'
+import {selectCurrentPage} from '../../../background/store/selectors'
 import {ConfigPage} from './settings/Config'
 import History from './main/history'
 import HelpPage from './main/helpPage'

@@ -15,11 +15,8 @@ const MyAppContainer = styled.div`
   flex: 1;
 `
 
-type PropType = {
-	myWindow: AppWindow
-}
 
-function MyApp(props: PropType): JSX.Element {
+function MyApp(): JSX.Element {
 
 	let Footer: JSX.Element
 	// if (false)
@@ -28,7 +25,7 @@ function MyApp(props: PropType): JSX.Element {
 	Footer = <ReplacementFooterAD />
 	return (
 		<MyAppContainer>
-			<Header myWindow={props.myWindow} />
+			<Header />
 			<Settings />
 			{Footer}
 		</MyAppContainer>

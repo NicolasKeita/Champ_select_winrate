@@ -1,9 +1,10 @@
 import {BackgroundController} from './src/background/background'
-import {StoreType} from '@utils/store/store'
+import {store} from '../background/store/store'
 
 declare global {
 	interface Window {
 		backgroundControllerInstance?: BackgroundController
-		store?: StoreType
+		settingsStore?: typeof store
+		desktopStore?: typeof store
 	}
 }

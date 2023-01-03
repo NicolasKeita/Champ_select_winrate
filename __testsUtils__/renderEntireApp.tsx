@@ -8,7 +8,7 @@ import {render} from '@testing-library/react'
 import type {RenderOptions} from '@testing-library/react'
 import {configureStore} from '@reduxjs/toolkit'
 
-import {store as AppStore} from '../src/desktop/utils/store/store'
+import {reduxStore as AppStore} from '../src/desktop/utils/store/store'
 import {copy} from 'copy-anything'
 
 const myWindow = new AppWindow(kWindowNames.desktop)

@@ -5,16 +5,14 @@
 import React, {useEffect} from 'react'
 import styled from 'styled-components'
 
-import {AppWindow} from '../AppWindow'
 import Header from './components/header'
 import MainContent from './components/maincontent'
-import FooterAD from './components/footerAD'
+// import FooterAD from './components/footerAD'
 import Config from './components/maincontent/settings/Config'
 import {
-	AppDispatch,
 	copyFromAnotherSetting,
 	fetchAllChampions
-} from '@utils/store/store'
+} from '../background/store/slice'
 
 import {useAppDispatch} from '@utils/hooks'
 import {
@@ -23,6 +21,7 @@ import {
 import ReplacementFooterAD from './components/footerAD/replacement'
 import {doWithRetry} from 'do-with-retry'
 import {addLCU_listeners} from '@utils/LCU_API_connector/addLCU_listeners'
+import {AppDispatch} from '../background/store/store'
 
 const MyAppContainer = styled.div`
   display: flex;
@@ -30,11 +29,7 @@ const MyAppContainer = styled.div`
   flex: 1;
 `
 
-type PropType = {
-	myWindow: AppWindow
-}
-
-function MyApp(props: PropType): JSX.Element {
+function MyApp(): JSX.Element {
 	const dispatch = useAppDispatch()
 
 	tryPopulateStoreWithSettingsFromLocalStorage(dispatch)
@@ -76,7 +71,7 @@ function MyApp(props: PropType): JSX.Element {
 	Footer = <ReplacementFooterAD />
 	return (
 		<MyAppContainer id='myApp'>
-			<Header myWindow={props.myWindow} />
+			<Header />
 			<MainContent />
 			{Footer}
 		</MyAppContainer>

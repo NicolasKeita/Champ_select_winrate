@@ -3,23 +3,27 @@ import {Provider} from 'react-redux'
 import ReactDOM from 'react-dom/client'
 
 import MyApp from './MyApp'
-import {AppWindow} from '../AppWindow'
-import {kWindowNames} from '../consts'
 import '@public/css/desktop.css'
-import {store} from '@utils/store/store'
+import store from './store/store'
+import {copyFromAnotherSetting} from '../background/store/slice'
+import Config from '../desktop/components/maincontent/settings/Config'
 
-let backgroundStore = overwolf.windows.getMainWindow().store
-if (!backgroundStore) {
-	console.error('Receive a Window Object without any store inside')
-	backgroundStore = store
+const settingsStore = store
+const config: Config = JSON.parse(localStorage.getItem('config') ?? '{}')
+if (
+	Object.keys(config).length != 0 &&
+	config.champions &&
+	config.champions.length != 0
+) {
+	settingsStore.dispatch(copyFromAnotherSetting(config))
 }
-const myWindow = new AppWindow(kWindowNames.settings)
+overwolf.windows.getMainWindow().settingsStore = settingsStore
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
 	<React.StrictMode>
-		<Provider store={backgroundStore}>
-			<MyApp myWindow={myWindow} />
+		<Provider store={settingsStore}>
+			<MyApp />
 		</Provider>
 	</React.StrictMode>
 )

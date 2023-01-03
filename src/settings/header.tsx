@@ -10,9 +10,8 @@ import '@public/css/general.css'
 import '@public/css/modal.css'
 import '@public/css/header.css'
 
-import {updateAllUserScores} from '@utils/store/store'
-// import {useAppDispatch} from '@utils/hooks'
 import {AppWindow} from '../AppWindow'
+import {kWindowNames} from '../consts'
 
 const HeaderContainer = styled.header`
   background: linear-gradient(to right, rgb(63, 62, 62), #363636, #323232);
@@ -38,33 +37,25 @@ const CSWName = styled.h1`
   cursor: inherit;
 `
 
-interface PropsType {
-	myWindow: AppWindow
-}
-
-function Header(props: PropsType) {
-	const myWindow = props.myWindow
+function Header() {
 	const headerRef = useRef(null)
 
-	// const dispatch = useAppDispatch()
-
 	function minimize(e) {
-		if (e.buttons == 1) myWindow.currWindow.minimize()
+		if (e.buttons == 1) {
+			overwolf.windows.minimize(kWindowNames.settings)
+		}
 	}
 
 	function close(e) {
 		if (e.buttons == 1) {
-			const internalConfig = sessionStorage.getItem('internalConfig')
-			if (internalConfig) {
-				// dispatch(updateAllUserScores(JSON.parse(internalConfig)))
-			}
-			myWindow.currWindow.close()
+			// overwolf.windows.getMainWindow()
+			overwolf.windows.close(kWindowNames.settings)
 		}
 	}
 
 	useEffect(() => {
-		myWindow.setDrag(headerRef.current)
-	}, [myWindow])
+		overwolf.windows.getMainWindow().backgroundControllerInstance().setDragToWindow(kWindowNames.settings, headerRef.current)
+	}, [])
 
 	return (
 		<HeaderContainer className={'app-header'} ref={headerRef}>
