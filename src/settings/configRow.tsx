@@ -50,15 +50,11 @@ function ConfigRow(props: PropsType) {
 	// car lorsque je render 23 items, je recharge les 13 premiers ? j'aimerai juste les ajouter
 	//TODO faire la technique de load 13 items puis 23 puis 33 en fonction du scroll du user
 
-
 	const [opScoreUser, setOpScoreUser] = useState<string>(props.opScoreUser.toString())
-
 	const dispatch = useAppDispatch()
 
 	function handleOnChange({target}: {target: HTMLInputElement}) {
-		// console.log(target.value)
-		// console.log(!(/[0-9]/.test(target.value)))
-		if (!target || (!(/[0-9]/.test(target.value)) && target.value != '')) return
+		if (!target || (!(/^[0-9]+$/.test(target.value)) && target.value != '')) return
 		const valueEntered = parseInt(target.value) || 0
 		if (valueEntered == 0 && target.value === '') {
 			setOpScoreUser(target.value)
