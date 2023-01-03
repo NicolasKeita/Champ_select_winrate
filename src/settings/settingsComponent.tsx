@@ -38,13 +38,7 @@ const OP_ScoreContainer = styled.div`
 `
 
 function Settings() {
-	// const allChamps = useAppSelector(selectAllChampions(), () => {return true})
-	// const allChamps = useAppSelector(state => state.slice.config.champions, () => {return true})
 	const allChamps = useAppSelector(state => state.slice.config.champions, () => {return true})
-	console.log('In settings: all champs')
-	console.log(allChamps)
-
-	// const allChamps = Array(150).fill(getDefaultChampion(), 0, 150)
 
 	function renderListChampNameWithOPScore() {
 		return allChamps.map(elem => {
