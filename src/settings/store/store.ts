@@ -26,4 +26,7 @@ store.subscribe(() => {
 	// console.log('Setting subscribe: ')
 	// console.log(JSON.stringify(store))
 })
+
+export type RootState = ReturnType<typeof store.getState>
+export type AppDispatch = typeof store.dispatch
 export default store

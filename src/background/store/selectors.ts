@@ -2,7 +2,7 @@
     Path + Filename: src/desktop/utils/store/selectors.ts
 */
 
-import {RootState} from './store'
+import {RootState} from '../../desktop/utils/store/store'
 
 //TODO transform into function instead of arrow function
 export const selectConfig = () => {

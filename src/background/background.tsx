@@ -3,8 +3,6 @@ import {kWindowNames, kGameClassIds} from '../consts'
 import RunningGameInfo = overwolf.games.RunningGameInfo
 import AppLaunchTriggeredEvent = overwolf.extensions.AppLaunchTriggeredEvent
 
-// import store from './store/store'
-
 export class BackgroundController {
 	private static _instance: BackgroundController
 	public storeChange: number

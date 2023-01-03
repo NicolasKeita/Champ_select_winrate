@@ -21,7 +21,7 @@ import {
 import ReplacementFooterAD from './components/footerAD/replacement'
 import {doWithRetry} from 'do-with-retry'
 import {addLCU_listeners} from '@utils/LCU_API_connector/addLCU_listeners'
-import {AppDispatch} from '../background/store/store'
+import {AppDispatch} from '@utils/store/store'
 
 const MyAppContainer = styled.div`
   display: flex;

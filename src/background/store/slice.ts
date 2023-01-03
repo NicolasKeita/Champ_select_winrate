@@ -30,7 +30,7 @@ import {
 	FetchMatchHistoryType,
 	Team
 } from '@utils/LOL_API/fetchMatchHistory_type'
-import {RootState} from './store'
+import {RootState} from '@utils/store/store'
 
 export type ChampDisplayedType = {
 	assignedRole: string
