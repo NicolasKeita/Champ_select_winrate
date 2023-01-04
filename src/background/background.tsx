@@ -2,6 +2,7 @@ import {OWGames, OWGameListener, OWWindow} from '@overwolf/overwolf-api-ts'
 import {kWindowNames, kGameClassIds} from '../consts'
 import RunningGameInfo = overwolf.games.RunningGameInfo
 import AppLaunchTriggeredEvent = overwolf.extensions.AppLaunchTriggeredEvent
+import WindowStateEx = overwolf.windows.enums.WindowStateEx
 
 export class BackgroundController {
 	private static _instance: BackgroundController
@@ -44,12 +45,12 @@ export class BackgroundController {
 		try {
 			settingsWindowState = (
 				await this._windows[kWindowNames.settings].getWindowState()
-			).window_state
+			).window_state_ex
 		} catch (e) {
 			console.error('CSW_error: overwolf.window.getWindowState() failed')
 			console.error(e)
 		}
-		if (settingsWindowState == 'minimized') {
+		if (settingsWindowState != WindowStateEx.NORMAL) {
 			overwolf.windows.restore(kWindowNames.settings)
 		} else {
 			overwolf.windows.close(kWindowNames.settings)

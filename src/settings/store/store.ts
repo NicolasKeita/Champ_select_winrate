@@ -5,25 +5,21 @@
 import {configureStore} from '@reduxjs/toolkit'
 import mainReducer from '../../background/store/reducer'
 import {kWindowNames} from '../../consts'
+import WindowStateEx = overwolf.windows.enums.WindowStateEx
 
 const sendActionToDesktopStore = store => next => action => {
 	if (action.noDuplicate)
 		return next(action)
 	const desktopStore = overwolf.windows.getMainWindow().desktopStore
-	// overwolf.windows.getWindowState(kWindowNames.desktop, (result) => {
-	// 	console.log('result in setting')
-	// 	console.log(result)
-	// 	if (desktopStore) {
-	// 		desktopStore.dispatch(Object.assign(action, {noDuplicate: true}))
-	// 	} else {
-	// 		console.error('DesktopStore is not yet in the backgroundWindow')
-	// 	}
-	// })
-	if (desktopStore) {
-		desktopStore.dispatch(Object.assign(action, {noDuplicate: true}))
-	} else {
-		console.error('DesktopStore is not yet in the backgroundWindow')
-	}
+	overwolf.windows.getWindowState(kWindowNames.desktop, (result) => {
+		if (result.window_state_ex != WindowStateEx.CLOSED && desktopStore) {
+			desktopStore.dispatch(Object.assign(action, {noDuplicate: true}))
+		} else {
+			console.error('CSW_error:' +
+				'trying to send actions to the desktop windows but it is closed.' +
+				'When the desktop window is closed the settings window should also be closed.')
+		}
+	})
 	return next(action)
 }
 
