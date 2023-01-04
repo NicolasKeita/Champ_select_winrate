@@ -39,6 +39,7 @@ const OP_ScoreContainer = styled.div`
 
 function Settings() {
 	const allChamps = useAppSelector(state => state.slice.config.champions, () => {return true})
+	useAppSelector(state => state.slice.rerenderSettings)
 
 	function renderListChampNameWithOPScore() {
 		return allChamps.map(elem => {

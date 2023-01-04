@@ -21,6 +21,12 @@ export class BackgroundController {
 				event.window_state_ex == WindowStateEx.CLOSED
 			) {
 				this._windows[kWindowNames.settings].close()
+				delete window.desktopStore
+			} else if (
+				event.window_name == kWindowNames.settings &&
+				event.window_state_ex == WindowStateEx.CLOSED
+			) {
+				delete window.settingsStore
 			}
 		})
 
