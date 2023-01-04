@@ -1,21 +1,28 @@
-import {OWGames, OWGameListener, OWWindow} from '@overwolf/overwolf-api-ts'
-import {kWindowNames, kGameClassIds} from '../consts'
+import {OWGameListener, OWGames, OWWindow} from '@overwolf/overwolf-api-ts'
+import {kGameClassIds, kWindowNames} from '../consts'
 import RunningGameInfo = overwolf.games.RunningGameInfo
 import AppLaunchTriggeredEvent = overwolf.extensions.AppLaunchTriggeredEvent
 import WindowStateEx = overwolf.windows.enums.WindowStateEx
 
 export class BackgroundController {
 	private static _instance: BackgroundController
-	public storeChange: number
 	private _windows: Record<string, OWWindow> = {}
 	private _gameListener: OWGameListener
 
 	private constructor() {
-		this.storeChange = 0
 		this._windows[kWindowNames.desktop] = new OWWindow(kWindowNames.desktop)
 		this._windows[kWindowNames.settings] = new OWWindow(
 			kWindowNames.settings
 		)
+
+		overwolf.windows.onStateChanged.addListener(event => {
+			if (
+				event.window_name == kWindowNames.desktop &&
+				event.window_state_ex == WindowStateEx.CLOSED
+			) {
+				this._windows[kWindowNames.settings].close()
+			}
+		})
 
 		this._gameListener = new OWGameListener({
 			onGameStarted: this.toggleWindows.bind(this),
@@ -47,7 +54,9 @@ export class BackgroundController {
 				await this._windows[kWindowNames.settings].getWindowState()
 			).window_state_ex
 		} catch (e) {
-			console.error('CSW_error: overwolf.window.getWindowState() failed')
+			console.error(
+				'CSW_error: OWWindow_instance.getWindowState() failed'
+			)
 			console.error(e)
 		}
 		if (settingsWindowState != WindowStateEx.NORMAL) {
