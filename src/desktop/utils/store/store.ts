@@ -4,10 +4,17 @@
 
 import {configureStore} from '@reduxjs/toolkit'
 import mainReducer from '../../../background/store/reducer'
+import {kWindowNames} from '../../../consts'
 
 const sendActionToSettingsStore = store => next => action => {
 	if (!action.noDuplicate) {
 		const settingsStore = overwolf.windows.getMainWindow().settingsStore
+		// overwolf.windows.getWindowState(kWindowNames.settings, () => {
+		// 	if (settingsStore) {
+		// 		settingsStore.dispatch(Object.assign(action, {noDuplicate: true}))
+		// 	}
+
+		// })
 		if (settingsStore) {
 			settingsStore.dispatch(Object.assign(action, {noDuplicate: true}))
 		}

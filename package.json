@@ -80,11 +80,6 @@
 		"react-dom": ">=18.2.0",
 		"react-loading-indicators": ">=0.0.11",
 		"react-redux": ">=8.0.5",
-		"redux-blabber": ">=0.1.2",
-		"redux-electron-store": ">=0.6.6",
-		"redux-remember": ">=3.1.9",
-		"redux-state-sync": ">=3.1.4",
-		"rxjs": ">=7.8.0",
 		"styled-components": ">=5.3.6",
 		"uniqid": ">=5.4.0",
 		"web-vitals": ">=3.1.0"

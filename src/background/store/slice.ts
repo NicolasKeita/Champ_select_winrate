@@ -400,9 +400,6 @@ export const fillChampSelectDisplayed = createAsyncThunk<ChampSelectDisplayedTyp
 	})
 
 
-import {rememberReducer, rememberEnhancer} from 'redux-remember'
-
-
 export const slice = createSlice({
 	name: 'slice',
 	initialState: initialState,
