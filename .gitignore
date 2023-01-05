@@ -1,6 +1,5 @@
 .idea/
-releases/tmp/
-releases/tmp2/
+releases/tmp*/
 
 # Logs
 logs

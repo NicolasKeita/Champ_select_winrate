@@ -2,11 +2,12 @@
     Path + Filename: src/desktop/components/maincontent/settings/configRow.tsx
 */
 
-import React, {KeyboardEvent, useState} from 'react'
+import React, {KeyboardEvent, useRef, useState} from 'react'
 import styled from 'styled-components'
 import {Champion} from '../desktop/components/maincontent/settings/Champion'
 import {useAppDispatch} from '@utils/hooks'
 import {updateChamp} from '../background/store/slice'
+import Collapsible from 'react-collapsible'
 
 const ChampName = styled.h1`
   background: -webkit-linear-gradient(#ab6630, #b79e4d);
@@ -50,11 +51,23 @@ function ConfigRow(props: PropsType) {
 	// car lorsque je render 23 items, je recharge les 13 premiers ? j'aimerai juste les ajouter
 	//TODO faire la technique de load 13 items puis 23 puis 33 en fonction du scroll du user
 
-	const [opScoreUser, setOpScoreUser] = useState<string>(props.opScoreUser.toString())
+	const [opScoreUser, setOpScoreUserEx] = useState<string>(props.opScoreUser.toString())
 	const dispatch = useAppDispatch()
+	const inputRef = useRef(null)
+
+	function setOpScoreUser(opScoreUser: string) {
+		if (inputRef && inputRef.current) {
+			// @ts-ignore TODO ask preact
+			inputRef.current.value = opScoreUser
+		}
+		setOpScoreUserEx(opScoreUser)
+	}
 
 	function handleOnChange({target}: {target: HTMLInputElement}) {
-		if (!target || (!(/^[0-9]+$/.test(target.value)) && target.value != '')) return
+		if (!target || (!(/^[0-9]+$/.test(target.value)) && target.value != '')) {
+			setOpScoreUser(opScoreUser)
+			return
+		}
 		const valueEntered = parseInt(target.value) || 0
 		if (valueEntered == 0 && target.value === '') {
 			setOpScoreUser(target.value)
@@ -66,6 +79,8 @@ function ConfigRow(props: PropsType) {
 				champName: props.champName,
 				champUserScore: valueEntered
 			}))
+		} else {
+			setOpScoreUser(opScoreUser)
 		}
 	}
 
@@ -94,7 +109,9 @@ function ConfigRow(props: PropsType) {
 
 	return (
 		<div
-			style={{display: 'flex', flex: '1'}}>
+			style={{display: 'flex', flex: '1'}}
+		>
+			{/*<Collapsible trigger={*/}
 			<form
 				style={{
 					display: 'flex',
@@ -109,6 +126,7 @@ function ConfigRow(props: PropsType) {
 						<InputStyled type={'text'}
 									 aria-label={`${props.champName}`}
 									 value={opScoreUser}
+									 ref={inputRef}
 									 size='xs'
 									 width={'50px'}
 									 variant={'outline'}
@@ -124,6 +142,9 @@ function ConfigRow(props: PropsType) {
 					</OP_ScoreContainer>
 				</label>
 			</form>
+			{/*}>*/}
+			{/*		Hi*/}
+			{/*	</Collapsible>*/}
 		</div>
 	)
 }

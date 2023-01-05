@@ -74,7 +74,8 @@ export class BackgroundController {
 
 	public async run() {
 		this._gameListener.start()
-		this._windows[kWindowNames.desktop].restore()
+		this._windows[kWindowNames.desktop].restore() //TODO uncomment
+		// this._windows[kWindowNames.settings].restore() //TODO remove
 	}
 
 	private async onAppLaunchTriggered(e: AppLaunchTriggeredEvent) {

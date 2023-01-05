@@ -8,8 +8,12 @@ import HistoryProfile from '../../championProfile/historyProfile'
 import uniqid from 'uniqid'
 import {useAppSelector} from '@utils/hooks'
 import {HistoryDisplayedType} from '../../../../background/store/slice'
-import Tippy from '@tippyjs/react'
-import './tippy.css'
+import './tooltip.css'
+import Tooltip from 'rc-tooltip'
+import './react-tooltip.css'
+import './assets/bootstrap_white.css'
+import './assets/bootstrap.css'
+
 import computeWinrate from '@utils/maths/computeWinrateBetweenTwoTeams'
 
 const HistoryContainer = styled.div`
@@ -48,10 +52,10 @@ const HistoryGrid = styled.div`
 const TeamGrid = styled.div`
   display: flex;
   justify-content: space-between;
-  font-size: 22px;
-  background: -webkit-linear-gradient(#a8540c, #b79e4d);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  //font-size: 22px;
+  //background: -webkit-linear-gradient(#a8540c, #b79e4d);
+  //-webkit-background-clip: text;
+  //-webkit-text-fill-color: transparent;
 `
 
 const ProfileLine = styled.div`
@@ -88,6 +92,7 @@ const ProfileLine = styled.div`
   }
 `
 
+
 function History() {
 	const historyDisplayed = useAppSelector(state => state.slice.historyDisplayed)
 
@@ -96,20 +101,28 @@ function History() {
 		const tooltipNumber = 'Numbers are coming from your own settings. Check your settings (top right icon) to change the default.'
 		for (let i = 0; i < 5; ++i) {
 			const winrate = computeWinrate(historyDisplayed[i].allies, historyDisplayed[i].enemies)
+			const key = uniqid()
 			linesHistory.push(
-				<React.Fragment key={uniqid()}>
-					<TeamGrid>
+				<React.Fragment key={key}>
+					<TeamGrid aria-label={'teamGrid'}>
 						<HistoryProfile
 							teamHistory={historyDisplayed[i].allies}
 							isLoading={historyDisplayed[i].isLoading}
 							userWon={historyDisplayed[i].userWon}
 							isEnemyTeam={false}
 						/>
-						<Tippy content={<span>{tooltipNumber}</span>}>
-							<h1>
+						<Tooltip
+							placement={'top'}
+							overlayClassName={'winrateTooltip'}
+							overlay={<span>{tooltipNumber}</span>}
+						>
+							<span
+								style={{fontSize: '22px'}}
+								className={'CSWColoredTextGradiant'}
+							>
 								{winrate}%
-							</h1>
-						</Tippy>
+							</span>
+						</Tooltip>
 						<HistoryProfile
 							teamHistory={historyDisplayed[i].enemies}
 							isLoading={historyDisplayed[i].isLoading}
@@ -134,13 +147,13 @@ function History() {
 	}
 
 	return (
-		<HistoryContainer>
+		<HistoryContainer aria-label={'HistoryContainer'}>
 			<PercentageContainer>
 				<WinrateLine isLeft />
 				<h1>Your ranked history</h1>
 				<WinrateLine />
 			</PercentageContainer>
-			<HistoryGrid>
+			<HistoryGrid aria-label={'HistoryGrid'}>
 				{renderHistoryGrid(historyDisplayed)}
 			</HistoryGrid>
 		</HistoryContainer>

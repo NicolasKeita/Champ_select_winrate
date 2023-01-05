@@ -8,6 +8,11 @@ import store from './store/store'
 import {copyFromAnotherSetting} from '../background/store/slice'
 import Config from '../desktop/components/maincontent/settings/Config'
 
+import '@public/css/desktop.css'
+import '@public/css/general.css'
+import '@public/css/modal.css'
+import '@public/css/header.css'
+
 const settingsStore = store
 const config: Config = JSON.parse(localStorage.getItem('config') ?? '{}')
 if (

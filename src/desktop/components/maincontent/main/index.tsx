@@ -9,8 +9,8 @@ import uniqid from 'uniqid'
 import ChampionProfile from '../../championProfile'
 import {useAppSelector} from '@utils/hooks'
 import questionMark from '@public/img/question_mark.jpg'
-import Tippy from '@tippyjs/react'
 import computeWinrate from '@utils/maths/computeWinrateBetweenTwoTeams'
+import Tooltip from 'rc-tooltip'
 
 const PercentageContainer = styled.div`
   display: flex;
@@ -109,13 +109,40 @@ function ChampSelect() {
 	const enemies = champSelectDisplayed.enemies.map((enemy) => enemy.champ)
 	const winrate = computeWinrate(allies, enemies)
 	const tooltipNumber = 'Numbers are coming from your own settings. Check your settings (top right icon) to change the default.'
+	//TODO
 	return (
 		<MainContainer aria-label={'ChampSelect'}>
 			<PercentageContainer>
 				<WinrateLine isLeft />
-				<Tippy content={<span>{tooltipNumber}</span>}>
-					<h1>{winrate}%</h1>
-				</Tippy>
+				{/*<h1 content={<span>{tooltipNumber}</span>}>*/}
+				{/*	<h1 className={'CSWColoredTextGradiant'}>{winrate}%</h1>*/}
+				{/*</h1>*/}
+
+				{/*<h1 id={`winrateChampSelect`}*/}
+				{/*	data-tooltip-content={tooltipNumber}*/}
+				{/*	style={{fontSize: '22px'}}*/}
+				{/*	className={'CSWColoredTextGradiant'}*/}
+				{/*>*/}
+				{/*	{winrate}%*/}
+				{/*</h1>*/}
+				{/*<Tooltip*/}
+				{/*	anchorId={`winrateChampSelect`}*/}
+				{/*	className={'winrateTooltip'}*/}
+				{/*/>*/}
+
+				<Tooltip
+					placement={'top'}
+					overlayClassName={'winrateTooltip'}
+					overlay={<span>{tooltipNumber}</span>}
+				>
+							<span
+								style={{fontSize: '22px'}}
+								className={'CSWColoredTextGradiant'}
+							>
+								{winrate}%
+							</span>
+				</Tooltip>
+
 				<WinrateLine />
 			</PercentageContainer>
 			<PlayersGrid>

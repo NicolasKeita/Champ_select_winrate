@@ -7,9 +7,9 @@ import styled from 'styled-components'
 import {Champion} from '../maincontent/settings/Champion'
 import uniqid from 'uniqid'
 import questionMark from '@public/img/question_mark.jpg'
-import Tippy from '@tippyjs/react'
 import {ChampSelectDisplayedType} from '../../../background/store/slice'
 import computeWinrate from '@utils/maths/computeWinrateBetweenTwoTeams'
+import Tooltip from 'rc-tooltip'
 
 const ChampionImg = styled.img`
   border-radius: 50%;
@@ -88,11 +88,17 @@ function ChampionProfile(props: PropsType): JSX.Element {
 			const winrate = computeWinrate(allies, enemies)
 			const tooltipNumber = `If this player picks ${props.champRecommendation[i].name}, your winrate changes to ${winrate}`
 			row.push(
-				<Tippy key={uniqid()} content={<span>{tooltipNumber}</span>}>
-					<ChampRecommendationImg
-						src={props.champRecommendation[i] ? props.champRecommendation[i].imageUrl : questionMark}
-					/>
-				</Tippy>
+				<React.Fragment key={uniqid()}>
+					<Tooltip
+						placement={'top'}
+						overlayClassName={'winrateTooltip'}
+						overlay={<span>{tooltipNumber}</span>}
+					>
+						<ChampRecommendationImg
+							src={props.champRecommendation[i] ? props.champRecommendation[i].imageUrl : questionMark}
+						/>
+					</Tooltip>
+				</React.Fragment>
 			)
 		}
 		return row

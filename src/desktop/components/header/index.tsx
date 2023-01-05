@@ -26,7 +26,6 @@ const HeaderContainer = styled.header`
   padding: 8px;
   display: flex;
   align-items: center;
-  z-index: 9999;
 `
 const Logo = styled.h1`
   font-size: 26px;

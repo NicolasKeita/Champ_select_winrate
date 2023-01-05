@@ -8,6 +8,7 @@ body {
     background-color: black;
     color: black;
     font-family: sans-serif;
+    max-width: 400px;
     width: 400px;
 }
 
