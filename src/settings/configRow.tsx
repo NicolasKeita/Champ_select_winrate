@@ -2,7 +2,7 @@
     Path + Filename: src/desktop/components/maincontent/settings/configRow.tsx
 */
 
-import React, {KeyboardEvent, useRef, useState} from 'react'
+import React, {KeyboardEvent, useState} from 'react'
 import styled from 'styled-components'
 import {Champion} from '../desktop/components/maincontent/settings/Champion'
 import {useAppDispatch} from '@utils/hooks'
@@ -50,24 +50,14 @@ function ConfigRow(props: PropsType) {
 	//TODO avant faire la technique de useMemo pour que le second render soit propre
 	// car lorsque je render 23 items, je recharge les 13 premiers ? j'aimerai juste les ajouter
 	//TODO faire la technique de load 13 items puis 23 puis 33 en fonction du scroll du user
+	//TODO check react-window on npm
 
-	const [opScoreUser, setOpScoreUserEx] = useState<string>(props.opScoreUser.toString())
+	const [opScoreUser, setOpScoreUser] = useState<string>(props.opScoreUser.toString())
 	const dispatch = useAppDispatch()
-	const inputRef = useRef(null)
-
-	function setOpScoreUser(opScoreUser: string) {
-		if (inputRef && inputRef.current) {
-			// @ts-ignore TODO ask preact
-			inputRef.current.value = opScoreUser
-		}
-		setOpScoreUserEx(opScoreUser)
-	}
 
 	function handleOnChange({target}: {target: HTMLInputElement}) {
-		if (!target || (!(/^[0-9]+$/.test(target.value)) && target.value != '')) {
-			setOpScoreUser(opScoreUser)
+		if (!target || (!(/^[0-9]+$/.test(target.value)) && target.value != ''))
 			return
-		}
 		const valueEntered = parseInt(target.value) || 0
 		if (valueEntered == 0 && target.value === '') {
 			setOpScoreUser(target.value)
@@ -79,8 +69,6 @@ function ConfigRow(props: PropsType) {
 				champName: props.champName,
 				champUserScore: valueEntered
 			}))
-		} else {
-			setOpScoreUser(opScoreUser)
 		}
 	}
 
@@ -126,7 +114,6 @@ function ConfigRow(props: PropsType) {
 						<InputStyled type={'text'}
 									 aria-label={`${props.champName}`}
 									 value={opScoreUser}
-									 ref={inputRef}
 									 size='xs'
 									 width={'50px'}
 									 variant={'outline'}

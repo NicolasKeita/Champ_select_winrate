@@ -3,8 +3,7 @@
 	"type": "WebApp",
 	"meta": {
 		"name": "Champ Select Winrate",
-		"author": "Nicolas Keita",
-		"author_display": "SpyNight",
+		"author": "SpyNight",
 		"version": "2.0.3",
 		"minimum-overwolf-version": "0.194.0",
 		"description": "Fully customizable champ select tool",

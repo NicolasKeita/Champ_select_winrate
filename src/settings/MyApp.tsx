@@ -5,7 +5,6 @@
 import React from 'react'
 import styled from 'styled-components'
 import Header from './header'
-import {AppWindow} from '../AppWindow'
 import ReplacementFooterAD from '../desktop/components/footerAD/replacement'
 import Settings from './settingsComponent'
 
@@ -14,7 +13,6 @@ const MyAppContainer = styled.div`
   flex-direction: column;
   flex: 1;
 `
-
 
 function MyApp(): JSX.Element {
 

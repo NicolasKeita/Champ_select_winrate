@@ -1,29 +1,33 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&family=Roboto:wght@400;700&display=swap');
+/*@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&family=Roboto:wght@400;700&display=swap');*/
 
 *,
 *:before,
 *:after {
-	font-size: inherit;
-	font-family: inherit;
-	font-weight: inherit;
-	font-style: inherit;
+    font-size: inherit;
+    font-family: inherit;
+    font-weight: inherit;
+    font-style: inherit;
 }
 
 body {
-	font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto', sans-serif;
 }
 
 h1,
 h2 {
-	margin: 0;
-	cursor: default;
+    margin: 0;
+    cursor: default;
 }
 
 button {
-	padding: 0;
-	border: none;
+    padding: 0;
+    border: none;
 }
 
 button:focus {
-	outline: none;
+    outline: none;
+}
+
+img {
+    -webkit-user-drag: none;
 }
