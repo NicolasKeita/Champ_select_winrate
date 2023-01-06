@@ -8,6 +8,7 @@
 		"plugin:react/recommended",
 		"plugin:@typescript-eslint/recommended",
 		"eslint:recommended",
+		"plugin:react-hooks/recommended",
 		"prettier"
 		//		"standard-with-typescript" regarder la syntax
 	],
