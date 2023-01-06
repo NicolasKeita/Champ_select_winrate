@@ -48,7 +48,6 @@ function Header() {
 
 	function close(e) {
 		if (e.buttons == 1) {
-			// overwolf.windows.getMainWindow()
 			overwolf.windows.close(kWindowNames.settings)
 		}
 	}
