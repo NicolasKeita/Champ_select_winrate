@@ -1,8 +1,9 @@
-const path = require('path'),
-	HtmlWebpackPlugin = require('html-webpack-plugin'),
-	CopyPlugin = require('copy-webpack-plugin'),
-	OverwolfPlugin = require('./overwolf.webpack'),
-	TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin')
+const path = require('path')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const CopyPlugin = require('copy-webpack-plugin')
+const OverwolfPlugin = require('./overwolf.webpack')
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin')
+const TerserPlugin = require('terser-webpack-plugin')
 
 module.exports = env => {
 	return {
@@ -31,20 +32,27 @@ module.exports = env => {
 			]
 		},
 		resolve: {
-			alias: {
-				// react: 'preact/compat',
-				// 'react-dom/test-utils': 'preact/test-utils',
-				// 'react-dom': 'preact/compat', // Must be below test-utils
-				// 'react/jsx-runtime': 'preact/jsx-runtime'
-			},
 			extensions: ['.ts', '.js', '.tsx', 'jsx'],
 			plugins: [new TsconfigPathsPlugin({configFile: './tsconfig.json'})]
 		},
 		output: {
 			path: path.resolve(__dirname, 'dist/'),
-			filename: 'js/[name].js',
+			filename: 'js/[name].min.js',
 			clean: true,
 			assetModuleFilename: 'assets/[hash][ext][query]'
+		},
+		optimization: {
+			minimize: true,
+			minimizer: [
+				new TerserPlugin({
+					terserOptions: {
+						format: {
+							comments: false
+						}
+					},
+					extractComments: false
+				})
+			]
 		},
 		performance: {
 			maxAssetSize: 51200000,
