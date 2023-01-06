@@ -5,8 +5,8 @@
 import React from 'react'
 import styled from 'styled-components'
 import uniqid from 'uniqid'
-import ConfigRow from './configRow'
 import {useAppSelector} from '@utils/hooks'
+import ConfigRow from './configRow'
 
 const SettingsContainer = styled.div`
   background: linear-gradient(to right, #252424, #363636, #252424);

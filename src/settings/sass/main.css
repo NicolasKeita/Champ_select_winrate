@@ -132,7 +132,7 @@ h1, span {
 
 .Collapsible__contentInner {
     padding: 10px;
-    border: 1px solid rgb(235, 235, 235);
+    /*border: 1px solid rgb(235, 235, 235);*/
     border-top: 0;
 }
 

@@ -1,6 +1,6 @@
 {
 	"name": "champ_select_winrate",
-	"version": "2.0.3",
+	"version": "2.0.4",
 	"description": "Fully customizable champ select tool",
 	"scripts": {
 		"test": "jest --silent",
@@ -69,6 +69,7 @@
 	"dependencies": {
 		"@reduxjs/toolkit": ">=1.9.1",
 		"@splidejs/react-splide": ">=0.7.12",
+		"@tidy-ui/chip": ">=0.14.1",
 		"@types/rc-tooltip": ">=3.7.7",
 		"copy-anything": ">=3.0.3",
 		"do-with-retry": ">=1.0.3",
@@ -80,6 +81,7 @@
 		"react-dom": ">=18.2.0",
 		"react-loading-indicators": ">=0.0.11",
 		"react-redux": ">=8.0.5",
+		"rsuite": ">=5.24.0",
 		"style-loader": ">=3.3.1",
 		"styled-components": ">=5.3.6",
 		"uniqid": ">=5.4.0",

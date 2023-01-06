@@ -10,12 +10,9 @@ import WindowStateEx = overwolf.windows.enums.WindowStateEx
 const sendActionToSettingsStore = store => next => action => {
 	if (!action.noDuplicate) {
 		const settingsStore = overwolf.windows.getMainWindow().settingsStore
-		// overwolf.windows.getWindowState(kWindowNames.settings, (result) => {
-		// 	if (result.window_state_ex !== WindowStateEx.CLOSED &&
 		if (settingsStore) {
 			settingsStore.dispatch(Object.assign(action, {noDuplicate: true}))
 		}
-		// })
 	}
 	return next(action)
 }

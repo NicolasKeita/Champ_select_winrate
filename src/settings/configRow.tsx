@@ -8,6 +8,10 @@ import {Champion} from '../desktop/components/maincontent/settings/Champion'
 import {useAppDispatch} from '@utils/hooks'
 import {updateChamp} from '../background/store/slice'
 import Collapsible from 'react-collapsible'
+import {Chip} from '@tidy-ui/chip'
+import {TagGroup, Tag, Input, IconButton} from 'rsuite'
+import PlusIcon from '@rsuite/icons/Plus'
+import './rsuite.css'
 import './sass/main.css'
 
 const ChampName = styled.h1`
@@ -131,6 +135,54 @@ function ConfigRow(props: PropsType) {
 	//TODO faire la technique de load 13 items puis 23 puis 33 en fonction du scroll du user
 	//TODO check react-window on npm
 
+	const [tags, setTags] = React.useState(['javascript', 'css', 'react'])
+	const [typing, setTyping] = React.useState(false)
+	const [inputValue, setInputValue] = React.useState('')
+
+	const removeTag = tag => {
+		const nextTags = tags.filter(item => item !== tag)
+		setTags(nextTags)
+	}
+
+	const addTag = () => {
+		const nextTags = inputValue ? [...tags, inputValue] : tags
+		setTags(nextTags)
+		setTyping(false)
+		setInputValue('')
+	}
+
+	const handleButtonClick = () => {
+		setTyping(true)
+	}
+
+
+	const renderInput = () => {
+		if (typing) {
+			return (
+				<Input
+					className='tag-input'
+					size='xs'
+					style={{width: 70}}
+					value={inputValue}
+					onChange={setInputValue}
+					onBlur={addTag}
+					onPressEnter={addTag}
+				/>
+			)
+		} else {
+			return (
+				<IconButton
+					className='tag-add-btn'
+					onClick={handleButtonClick}
+					icon={<PlusIcon />}
+					appearance='ghost'
+					size='xs'
+				/>
+			)
+		}
+	}
+
+
 	return (
 		<Collapsible
 			trigger={
@@ -141,7 +193,17 @@ function ConfigRow(props: PropsType) {
 					allChamps={props.allChamps}
 				/>
 			}>
-			Hi
+			<div>
+				<TagGroup>
+					{tags.map((item, index) => (
+						<Tag key={index} closable
+							 onClose={() => removeTag(item)}>
+							{item}
+						</Tag>
+					))}
+				</TagGroup>
+				{renderInput()}
+			</div>
 		</Collapsible>
 	)
 }

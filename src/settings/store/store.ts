@@ -8,12 +8,9 @@ import {kWindowNames} from '../../consts'
 import WindowStateEx = overwolf.windows.enums.WindowStateEx
 
 const sendActionToDesktopStore = store => next => action => {
-	if (action.noDuplicate) {
+	if (action.noDuplicate)
 		return next(action)
-	}
 	const desktopStore = overwolf.windows.getMainWindow().desktopStore
-	// overwolf.windows.getWindowState(kWindowNames.desktop, (result) => {
-	// 	if (result.window_state_ex != WindowStateEx.CLOSED &&
 	if (desktopStore) {
 		desktopStore.dispatch(Object.assign(action, {noDuplicate: true}))
 	} else {
@@ -21,7 +18,6 @@ const sendActionToDesktopStore = store => next => action => {
 			'trying to send actions to the desktop windows but it is closed.' +
 			'When the desktop window is closed the settings window should also be closed.')
 	}
-	// })
 	return next(action)
 }
 
