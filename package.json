@@ -8,7 +8,8 @@
 		"build": "webpack --mode=production  --env makeOpk  --env removeSourceMap",
 		"dev": "webpack --watch --mode=development",
 		"watch": "webpack --watch --mode=production",
-		"rebuild": "rm -rf package-lock.json dist/ node_modules/ && npm install & npm run build"
+		"rebuild": "rm -rf package-lock.json dist/ node_modules/ && npm install & npm run build",
+		"clean": "rm -rf dist"
 	},
 	"keywords": [],
 	"author": "SpyNight",
