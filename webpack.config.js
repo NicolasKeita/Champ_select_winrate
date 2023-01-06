@@ -42,7 +42,6 @@ module.exports = env => {
 			assetModuleFilename: 'assets/[hash][ext][query]'
 		},
 		optimization: {
-			minimize: true,
 			minimizer: [
 				new TerserPlugin({
 					terserOptions: {

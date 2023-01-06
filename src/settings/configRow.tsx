@@ -8,6 +8,7 @@ import {Champion} from '../desktop/components/maincontent/settings/Champion'
 import {useAppDispatch} from '@utils/hooks'
 import {updateChamp} from '../background/store/slice'
 import Collapsible from 'react-collapsible'
+import './sass/main.css'
 
 const ChampName = styled.h1`
   background: -webkit-linear-gradient(#ab6630, #b79e4d);
@@ -46,12 +47,7 @@ interface PropsType {
 	allChamps: Champion[]
 }
 
-function ConfigRow(props: PropsType) {
-	//TODO avant faire la technique de useMemo pour que le second render soit propre
-	// car lorsque je render 23 items, je recharge les 13 premiers ? j'aimerai juste les ajouter
-	//TODO faire la technique de load 13 items puis 23 puis 33 en fonction du scroll du user
-	//TODO check react-window on npm
-
+function ConfigRowTrigger(props: PropsType) {
 	const [opScoreUser, setOpScoreUser] = useState<string>(props.opScoreUser.toString())
 	const dispatch = useAppDispatch()
 
@@ -94,45 +90,59 @@ function ConfigRow(props: PropsType) {
 		}
 	}
 
+	//TODO CSS change the cursor ?
 
 	return (
-		<div
-			style={{display: 'flex', flex: '1'}}
+		<form
+			style={{
+				display: 'flex',
+				flex: '1',
+				justifyContent: 'space-evenly'
+			}}
+			onSubmit={e => e.preventDefault()}
 		>
-			{/*<Collapsible trigger={*/}
-			<form
-				style={{
-					display: 'flex',
-					flex: '1',
-					justifyContent: 'space-evenly'
-				}}
-				onSubmit={e => e.preventDefault()}
-			>
-				<label style={{display: 'flex', flex: '1'}}>
-					<ChampName>{props.champName}</ChampName>
-					<OP_ScoreContainer>
-						<InputStyled type={'text'}
-									 aria-label={`${props.champName}`}
-									 value={opScoreUser}
-									 size='xs'
-									 width={'50px'}
-									 variant={'outline'}
-									 fontSize={'14px'}
-									 fontWeight={'bold'}
-									 borderColor={'grey'}
-									 border={'2px'}
-									 onKeyDown={handleOnKeyDown}
-									 onChange={handleOnChange}
-									 onBlur={handleOnBlur}
-						/>
-						<OP_Score>{props.opScoreCSW}</OP_Score>
-					</OP_ScoreContainer>
-				</label>
-			</form>
-			{/*}>*/}
-			{/*		Hi*/}
-			{/*	</Collapsible>*/}
-		</div>
+			<label style={{display: 'flex', flex: '1'}}>
+				<ChampName>{props.champName}</ChampName>
+				<OP_ScoreContainer>
+					<InputStyled type={'text'}
+								 aria-label={`${props.champName}`}
+								 value={opScoreUser}
+								 size='xs'
+								 width={'50px'}
+								 variant={'outline'}
+								 fontSize={'14px'}
+								 fontWeight={'bold'}
+								 borderColor={'grey'}
+								 border={'2px'}
+								 onKeyDown={handleOnKeyDown}
+								 onChange={handleOnChange}
+								 onBlur={handleOnBlur}
+					/>
+					<OP_Score>{props.opScoreCSW}</OP_Score>
+				</OP_ScoreContainer>
+			</label>
+		</form>
+	)
+}
+
+function ConfigRow(props: PropsType) {
+	//TODO avant faire la technique de useMemo pour que le second render soit propre
+	// car lorsque je render 23 items, je recharge les 13 premiers ? j'aimerai juste les ajouter
+	//TODO faire la technique de load 13 items puis 23 puis 33 en fonction du scroll du user
+	//TODO check react-window on npm
+
+	return (
+		<Collapsible
+			trigger={
+				<ConfigRowTrigger
+					champName={props.champName}
+					opScoreCSW={props.opScoreCSW}
+					opScoreUser={props.opScoreUser}
+					allChamps={props.allChamps}
+				/>
+			}>
+			Hi
+		</Collapsible>
 	)
 }
 

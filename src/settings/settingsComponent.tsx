@@ -60,8 +60,8 @@ function Settings() {
 			<RowContainer style={{paddingBottom: '12px'}}>
 				<ChampName>ChampName</ChampName>
 				<OP_ScoreContainer>
-					<div>Your OP Score</div>
-					<div>CSW OP Score</div>
+					<h1>Your OP Score</h1>
+					<h1>CSW OP Score</h1>
 				</OP_ScoreContainer>
 			</RowContainer>
 		)

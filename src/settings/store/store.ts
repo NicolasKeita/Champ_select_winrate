@@ -8,8 +8,9 @@ import {kWindowNames} from '../../consts'
 import WindowStateEx = overwolf.windows.enums.WindowStateEx
 
 const sendActionToDesktopStore = store => next => action => {
-	if (action.noDuplicate)
+	if (action.noDuplicate) {
 		return next(action)
+	}
 	const desktopStore = overwolf.windows.getMainWindow().desktopStore
 	// overwolf.windows.getWindowState(kWindowNames.desktop, (result) => {
 	// 	if (result.window_state_ex != WindowStateEx.CLOSED &&
