@@ -135,7 +135,7 @@ function ConfigRow(props: PropsType) {
 	//TODO faire la technique de load 13 items puis 23 puis 33 en fonction du scroll du user
 	//TODO check react-window on npm
 
-	const [tags, setTags] = React.useState(['javascript', 'css', 'react'])
+	const [tags, setTags] = React.useState(['javascript', 'css', 'react', 'javascript', 'css', 'react', 'javascript', 'css', 'react'])
 	const [typing, setTyping] = React.useState(false)
 	const [inputValue, setInputValue] = React.useState('')
 
@@ -172,6 +172,7 @@ function ConfigRow(props: PropsType) {
 		} else {
 			return (
 				<IconButton
+					style={{marginLeft: '10px'}}
 					className='tag-add-btn'
 					onClick={handleButtonClick}
 					icon={<PlusIcon />}
@@ -185,6 +186,7 @@ function ConfigRow(props: PropsType) {
 
 	return (
 		<Collapsible
+			transitionTime={10}
 			trigger={
 				<ConfigRowTrigger
 					champName={props.champName}
@@ -193,16 +195,18 @@ function ConfigRow(props: PropsType) {
 					allChamps={props.allChamps}
 				/>
 			}>
-			<div>
-				<TagGroup>
+			<div style={{display: 'flex'}}>
+				<TagGroup
+					style={{display: 'flex', flexWrap: 'wrap'}}
+				>
 					{tags.map((item, index) => (
 						<Tag key={index} closable
 							 onClose={() => removeTag(item)}>
 							{item}
 						</Tag>
 					))}
+					{renderInput()}
 				</TagGroup>
-				{renderInput()}
 			</div>
 		</Collapsible>
 	)

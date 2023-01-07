@@ -10,11 +10,9 @@ import ConfigRow from './configRow'
 
 const SettingsContainer = styled.div`
   background: linear-gradient(to right, #252424, #363636, #252424);
-  flex: 1;
   padding: 12px 0 0 12px;
   overflow-y: scroll;
   height: 424px;
-  max-height: 424px;
 `
 const RowContainer = styled.div`
   display: flex;
