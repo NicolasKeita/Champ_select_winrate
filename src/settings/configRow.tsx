@@ -48,7 +48,7 @@ interface PropsType {
 	champName: string,
 	opScoreCSW: number,
 	opScoreUser: number,
-	allChamps: Champion[]
+	allChamps: Champion[],
 }
 
 function ConfigRowTrigger(props: PropsType) {
@@ -186,7 +186,10 @@ function ConfigRow(props: PropsType) {
 
 	return (
 		<Collapsible
+			// open={props.isAccordionOpen}
 			transitionTime={10}
+			// onOpen={() => {console.log('hi')}}
+			lazyRender={true}
 			trigger={
 				<ConfigRowTrigger
 					champName={props.champName}
@@ -195,19 +198,20 @@ function ConfigRow(props: PropsType) {
 					allChamps={props.allChamps}
 				/>
 			}>
-			<div style={{display: 'flex'}}>
-				<TagGroup
-					style={{display: 'flex', flexWrap: 'wrap'}}
-				>
-					{tags.map((item, index) => (
-						<Tag key={index} closable
-							 onClose={() => removeTag(item)}>
-							{item}
-						</Tag>
-					))}
-					{renderInput()}
-				</TagGroup>
-			</div>
+			<TagGroup
+				style={{display: 'flex', flexWrap: 'wrap'}}
+			>
+				{tags.map((item, index) => (
+					<Tag
+						key={index} closable
+						onClose={() => removeTag(item)}
+						color={'red'}
+					>
+						{item}
+					</Tag>
+				))}
+				{renderInput()}
+			</TagGroup>
 		</Collapsible>
 	)
 }

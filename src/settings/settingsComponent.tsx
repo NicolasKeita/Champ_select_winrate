@@ -7,6 +7,9 @@ import styled from 'styled-components'
 import uniqid from 'uniqid'
 import {useAppSelector} from '@utils/hooks'
 import ConfigRow from './configRow'
+import {VariableSizeList as List} from 'react-window'
+import {Virtuoso} from 'react-virtuoso'
+
 
 const SettingsContainer = styled.div`
   background: linear-gradient(to right, #252424, #363636, #252424);
@@ -39,9 +42,10 @@ function Settings() {
 	const allChamps = useAppSelector(state => state.slice.config.champions, () => {return true})
 	useAppSelector(state => state.slice.rerenderSettings)
 
-	function renderListChampNameWithOPScore() {
-		return allChamps.map(elem => {
-			return (
+	const Row = ({index, style}) => {
+		const elem = allChamps[index]
+		return (
+			<div style={style}>
 				<ConfigRow
 					key={uniqid()}
 					allChamps={allChamps}
@@ -49,8 +53,51 @@ function Settings() {
 					opScoreCSW={+elem.opScore_CSW}
 					opScoreUser={elem.opScore_user != undefined ? +elem.opScore_user : 50}
 				/>
-			)
-		})
+			</div>
+		)
+	}
+
+	const rowHeights = new Array(allChamps.length)
+		.fill(true)
+		.map(() => { return 24})
+	const getItemSize = index => rowHeights[index]
+
+	function renderListChampNameWithOPScore(allChamps) {
+		return (
+
+			// <Virtuoso
+			// 	style={{height: '400px'}}
+			// 	totalCount={allChamps.length}
+			// 	itemContent={index => {
+			// 		const elem = allChamps[index]
+			// 		return (
+			// 			<ConfigRow
+			// 				key={uniqid()}
+			// 				allChamps={allChamps}
+			// 				champName={elem.name}
+			// 				opScoreCSW={+elem.opScore_CSW}
+			// 				opScoreUser={elem.opScore_user != undefined ? +elem.opScore_user : 50}
+			// 			/>
+			// 		)
+			// 	}}
+			// />)
+
+			<>
+				{
+					allChamps.map(elem => {
+						return (
+							<ConfigRow
+								key={uniqid()}
+								allChamps={allChamps}
+								champName={elem.name}
+								opScoreCSW={+elem.opScore_CSW}
+								opScoreUser={elem.opScore_user != undefined ? +elem.opScore_user : 50}
+							/>
+						)
+					})
+				}
+			</>
+		)
 	}
 
 	function renderTitleRow() {
@@ -68,7 +115,7 @@ function Settings() {
 	return (
 		<SettingsContainer aria-label={'settingsContainer'}>
 			{renderTitleRow()}
-			{renderListChampNameWithOPScore()}
+			{renderListChampNameWithOPScore(allChamps)}
 		</SettingsContainer>
 	)
 }
