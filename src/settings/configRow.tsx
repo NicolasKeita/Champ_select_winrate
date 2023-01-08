@@ -213,6 +213,7 @@ function ConfigRow(props: PropsType) {
 		<Collapsible
 			transitionTime={10}
 			lazyRender={true}
+			overflowWhenOpen={'visible'}
 			trigger={
 				<ConfigRowTrigger
 					champName={props.champName}
