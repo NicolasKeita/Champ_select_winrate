@@ -180,7 +180,6 @@ function ConfigRow(props: PropsType) {
 				color='blue'
 				appearance='primary'
 				size={'xs'}
-				style={{margin: '5px 0 0 5px'}}
 			/>
 		)
 	}
@@ -199,6 +198,7 @@ function ConfigRow(props: PropsType) {
 			<Dropdown
 				renderToggle={renderIconButton}
 				onSelect={(_, {target}) => addTag((target as HTMLTextAreaElement).outerText)}
+				style={{margin: '11px 0 0 6px'}}
 			>
 				<Dropdown.Item>
 					{/* onSelect={(_, event) => {addTag('hi')}}>*/}
