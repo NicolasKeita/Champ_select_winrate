@@ -3,6 +3,9 @@ const championAttributes = {
 	UNKILLABLE_LANER: 'unkillable laner'
 }
 
+// if lane bully -> added automatically weak vs unkillable laner
+// if unkillable laner -> add godo vs lane bully
+
 const allChamps = {
 	Aatrox: {
 		opScore_CSW: 69,
@@ -26,7 +29,12 @@ const allChamps = {
 		name: 'Ahri',
 		image: 'Ahri.png',
 		nameFormatted: 'Ahri',
-		id: '103'
+		id: '103',
+		tags: {
+			attributes: [championAttributes.UNKILLABLE_LANER],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Akali: {
 		opScore_CSW: 75,
