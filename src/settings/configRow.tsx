@@ -8,18 +8,18 @@ import {Champion} from '../desktop/components/maincontent/settings/Champion'
 import {useAppDispatch} from '@utils/hooks'
 import {updateChamp} from '../background/store/slice'
 import Collapsible from 'react-collapsible'
-import {PlusCircleOutlined} from '@ant-design/icons'
+import {PlusCircleTwoTone} from '@ant-design/icons'
 import {
 	TagGroup,
-	Tag,
-	IconButton
+	Tag
 } from 'rsuite'
-import PlusIcon from '@rsuite/icons/Plus'
 import './rsuite.css'
 import './sass/main.css'
 import type {MenuProps} from 'antd'
 import {Dropdown, Space} from 'antd'
 import 'antd/dist/reset.css'
+import {Color} from 'react-bootstrap/types'
+import {TypeAttributes} from 'rsuite/esm/@types/common'
 
 const ChampName = styled.h1`
   background: -webkit-linear-gradient(#ab6630, #b79e4d);
@@ -140,29 +140,16 @@ function ConfigRow(props: PropsType) {
 	//TODO do react-virtuoso and increase the range to check the vh othersize
 	// it rerender when opening accordion
 
-	const availableTags = ['tank', 'ranged', 'dofus3']
-	const [tags, setTags] = useState(['javascript', 'css', 'react'])
+	const [tags, setTags] = useState<{name: string, color: string}[]>([])
 
 	const removeTag = tag => {
 		const nextTags = tags.filter(item => item !== tag)
 		setTags(nextTags)
 	}
 
-	const addTag = (text: string) => {
-		const nextTags = [...tags, text]
+	const addTag = (text: string, color: string) => {
+		const nextTags = [...tags, {name: text, color: color}]
 		setTags(nextTags)
-	}
-
-	const renderIconButton = () => {
-		return (
-			<IconButton
-				icon={<PlusIcon />}
-				circle
-				color='blue'
-				appearance='primary'
-				size={'xs'}
-			/>
-		)
 	}
 
 	const renderDropDownPlusButton = () => {
@@ -170,45 +157,43 @@ function ConfigRow(props: PropsType) {
 		const items: MenuProps['items'] = [
 			{
 				key: '1',
-				type: 'group',
-				label: 'Group title',
-				children: [
-					{
-						key: '1-1',
-						label: '1st menu item'
-					},
-					{
-						key: '1-2',
-						label: '2nd menu item'
-					}
-				]
+				label: 'Tank',
+				onClick: () => {addTag('Tank', 'cyan')}
 			},
 			{
 				key: '2',
-				label: 'sub menu',
+				label: 'Potential Zonyah owner',
+				onClick: () => {addTag('Potential Zonyah owner', 'cyan')}
+			},
+			{
+				key: '3',
+				label: 'Strong against',
 				children: [
 					{
-						key: '2-1',
-						label: '3rd menu item'
+						key: '3-1',
+						label: 'Tank',
+						onClick: () => {addTag('Strong against Tank', 'green')}
 					},
 					{
-						key: '2-2',
-						label: '4th menu item'
+						key: '3-2',
+						label: 'Potential Zonyah owner',
+						onClick: () => {addTag('Strong against Potential Zonyah owner', 'green')}
 					}
 				]
 			},
 			{
-				key: '3',
-				label: 'disabled sub menu',
-				disabled: true,
+				key: '4',
+				label: 'Weak against',
 				children: [
 					{
-						key: '3-1',
-						label: '5d menu item'
+						key: '4-1',
+						label: 'Tank',
+						onClick: () => {addTag('Weak against Tank', 'red')}
 					},
 					{
-						key: '3-2',
-						label: '6th menu item'
+						key: '4-2',
+						label: 'Potential Zonyah owner',
+						onClick: () => {addTag('Weak against Potential Zonyah owner', 'red')}
 					}
 				]
 			}
@@ -219,14 +204,12 @@ function ConfigRow(props: PropsType) {
 			<Dropdown menu={{items}} trigger={['click']}>
 				<a onClick={(e) => e.preventDefault()}>
 					<Space>
-						<PlusCircleOutlined />
+						<PlusCircleTwoTone style={{
+							fontSize: '24px',
+							margin: '11px 0 0 6px'
+						}} />
 					</Space>
 				</a>
-				{/*// renderToggle={renderIconButton}*/}
-				{/*// onSelect={(_, {target}) => addTag((target as HTMLTextAreaElement).outerText)}*/}
-				{/*// style={{margin: '11px 0 0 6px'}}*/}
-				{/*// placement={'leftStart'}*/}
-				{/*>*/}
 			</Dropdown>
 		)
 	}
@@ -246,13 +229,13 @@ function ConfigRow(props: PropsType) {
 				/>
 			}>
 			<TagGroup style={{display: 'flex', flexWrap: 'wrap'}}>
-				{tags.map((item, index) => (
+				{tags.map((tag, i) => (
 					<Tag
-						key={index} closable
-						onClose={() => removeTag(item)}
-						color={'red'}
+						key={i} closable
+						onClose={() => removeTag(tag)}
+						color={tag.color as TypeAttributes.Color}
 					>
-						{item}
+						{tag.name}
 					</Tag>
 				))}
 				{renderDropDownPlusButton()}
