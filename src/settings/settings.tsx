@@ -7,6 +7,7 @@ import '@public/css/desktop.css'
 import store from './store/store'
 import {copyFromAnotherSetting} from '../background/store/slice'
 import Config from '../desktop/components/maincontent/settings/Config'
+import {StyleProvider} from '@ant-design/cssinjs'
 
 import '@public/css/desktop.css'
 import '@public/css/general.css'
@@ -27,8 +28,10 @@ overwolf.windows.getMainWindow().settingsStore = settingsStore
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
 	<React.StrictMode>
-		<Provider store={settingsStore}>
-			<MyApp />
-		</Provider>
+		<StyleProvider hashPriority={'high'}>
+			<Provider store={settingsStore}>
+				<MyApp />
+			</Provider>
+		</StyleProvider>
 	</React.StrictMode>
 )

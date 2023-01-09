@@ -8,23 +8,18 @@ import {Champion} from '../desktop/components/maincontent/settings/Champion'
 import {useAppDispatch} from '@utils/hooks'
 import {updateChamp} from '../background/store/slice'
 import Collapsible from 'react-collapsible'
-import {Chip} from '@tidy-ui/chip'
+import {PlusCircleOutlined} from '@ant-design/icons'
 import {
 	TagGroup,
 	Tag,
-	Input,
-	IconButton,
-	Cascader,
-	Dropdown,
-	ButtonToolbar
+	IconButton
 } from 'rsuite'
 import PlusIcon from '@rsuite/icons/Plus'
-import PageIcon from '@rsuite/icons/Page'
-import FolderFillIcon from '@rsuite/icons/FolderFill'
-import DetailIcon from '@rsuite/icons/Detail'
-import FileDownloadIcon from '@rsuite/icons/FileDownload'
 import './rsuite.css'
 import './sass/main.css'
+import type {MenuProps} from 'antd'
+import {Dropdown, Space} from 'antd'
+import 'antd/dist/reset.css'
 
 const ChampName = styled.h1`
   background: -webkit-linear-gradient(#ab6630, #b79e4d);
@@ -142,14 +137,11 @@ function ConfigRowTrigger(props: PropsType) {
 }
 
 function ConfigRow(props: PropsType) {
-	//TODO avant faire la technique de useMemo pour que le second render soit propre
-	// car lorsque je render 23 items, je recharge les 13 premiers ? j'aimerai juste les ajouter
-	//TODO faire la technique de load 13 items puis 23 puis 33 en fonction du scroll du user
-	//TODO check react-window on npm
+	//TODO do react-virtuoso and increase the range to check the vh othersize
+	// it rerender when opening accordion
 
-	const [tags, setTags] = React.useState(['javascript', 'css', 'react'])
-	const [typing, setTyping] = React.useState(false)
-	const [inputValue, setInputValue] = React.useState('')
+	const availableTags = ['tank', 'ranged', 'dofus3']
+	const [tags, setTags] = useState(['javascript', 'css', 'react'])
 
 	const removeTag = tag => {
 		const nextTags = tags.filter(item => item !== tag)
@@ -157,24 +149,13 @@ function ConfigRow(props: PropsType) {
 	}
 
 	const addTag = (text: string) => {
-		console.log(text)
-		// const nextTags = inputValue ? [...tags, inputValue] : tags
 		const nextTags = [...tags, text]
 		setTags(nextTags)
-		// setTyping(false)
-		// setInputValue('')
 	}
 
-	const handleButtonClick = () => {
-		setTyping(true)
-	}
-
-
-	const renderIconButton = (props, ref) => {
+	const renderIconButton = () => {
 		return (
 			<IconButton
-				{...props}
-				ref={ref}
 				icon={<PlusIcon />}
 				circle
 				color='blue'
@@ -184,26 +165,68 @@ function ConfigRow(props: PropsType) {
 		)
 	}
 
-	const renderButton = (props, ref) => {
-		return (
-			<button {...props} ref={ref}>
-				New File
-			</button>
-		)
-	}
+	const renderDropDownPlusButton = () => {
 
-	const renderInput = () => {
+		const items: MenuProps['items'] = [
+			{
+				key: '1',
+				type: 'group',
+				label: 'Group title',
+				children: [
+					{
+						key: '1-1',
+						label: '1st menu item'
+					},
+					{
+						key: '1-2',
+						label: '2nd menu item'
+					}
+				]
+			},
+			{
+				key: '2',
+				label: 'sub menu',
+				children: [
+					{
+						key: '2-1',
+						label: '3rd menu item'
+					},
+					{
+						key: '2-2',
+						label: '4th menu item'
+					}
+				]
+			},
+			{
+				key: '3',
+				label: 'disabled sub menu',
+				disabled: true,
+				children: [
+					{
+						key: '3-1',
+						label: '5d menu item'
+					},
+					{
+						key: '3-2',
+						label: '6th menu item'
+					}
+				]
+			}
+		]
+
 
 		return (
-			<Dropdown
-				renderToggle={renderIconButton}
-				onSelect={(_, {target}) => addTag((target as HTMLTextAreaElement).outerText)}
-				style={{margin: '11px 0 0 6px'}}
-			>
-				<Dropdown.Item>
-					{/* onSelect={(_, event) => {addTag('hi')}}>*/}
-					hi
-				</Dropdown.Item>
+			<Dropdown menu={{items}} trigger={['click']}>
+				<a onClick={(e) => e.preventDefault()}>
+					<Space>
+						<PlusCircleOutlined />
+					</Space>
+				</a>
+				{/*// renderToggle={renderIconButton}*/}
+				{/*// onSelect={(_, {target}) => addTag((target as HTMLTextAreaElement).outerText)}*/}
+				{/*// style={{margin: '11px 0 0 6px'}}*/}
+				{/*// placement={'leftStart'}*/}
+				{/*>*/}
 			</Dropdown>
 		)
 	}
@@ -222,9 +245,7 @@ function ConfigRow(props: PropsType) {
 					allChamps={props.allChamps}
 				/>
 			}>
-			<TagGroup
-				style={{display: 'flex', flexWrap: 'wrap'}}
-			>
+			<TagGroup style={{display: 'flex', flexWrap: 'wrap'}}>
 				{tags.map((item, index) => (
 					<Tag
 						key={index} closable
@@ -234,7 +255,7 @@ function ConfigRow(props: PropsType) {
 						{item}
 					</Tag>
 				))}
-				{renderInput()}
+				{renderDropDownPlusButton()}
 			</TagGroup>
 		</Collapsible>
 	)
