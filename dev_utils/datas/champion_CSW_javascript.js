@@ -2481,7 +2481,16 @@ const allChamps = {
 		name: 'Viktor',
 		image: 'Viktor.png',
 		nameFormatted: 'Viktor',
-		id: '112'
+		id: '112',
+		tags: {
+			attributes: [
+				championAttributes.RANGED,
+				championAttributes.AP,
+				championAttributes.UNKILLABLE_LANER
+			],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Vladimir: {
 		opScore_CSW: 65,
@@ -2489,7 +2498,16 @@ const allChamps = {
 		name: 'Vladimir',
 		image: 'Vladimir.png',
 		nameFormatted: 'Vladimir',
-		id: '8'
+		id: '8',
+		tags: {
+			attributes: [
+				championAttributes.RANGED,
+				championAttributes.AP,
+				championAttributes.UNKILLABLE_LANER
+			],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Volibear: {
 		opScore_CSW: 67,
@@ -2497,7 +2515,17 @@ const allChamps = {
 		name: 'Volibear',
 		image: 'Volibear.png',
 		nameFormatted: 'Volibear',
-		id: '106'
+		id: '106',
+		tags: {
+			attributes: [
+				championAttributes.MELEE,
+				championAttributes.CC,
+				championAttributes.AD,
+				championAttributes.JUNGLE_GANKER
+			],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Warwick: {
 		opScore_CSW: 65,
@@ -2505,7 +2533,18 @@ const allChamps = {
 		name: 'Warwick',
 		image: 'Warwick.png',
 		nameFormatted: 'Warwick',
-		id: '19'
+		id: '19',
+		tags: {
+			attributes: [
+				championAttributes.MELEE,
+				championAttributes.CC,
+				championAttributes.AD,
+				championAttributes.HEALER_ISH,
+				championAttributes.JUNGLE_GANKER
+			],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Xayah: {
 		opScore_CSW: 55,
@@ -2513,7 +2552,17 @@ const allChamps = {
 		name: 'Xayah',
 		image: 'Xayah.png',
 		nameFormatted: 'Xayah',
-		id: '498'
+		id: '498',
+		tags: {
+			attributes: [
+				championAttributes.RANGED,
+				championAttributes.CC,
+				championAttributes.AD,
+				championAttributes.LANE_BULLY
+			],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Xerath: {
 		opScore_CSW: 57,
@@ -2521,7 +2570,16 @@ const allChamps = {
 		name: 'Xerath',
 		image: 'Xerath.png',
 		nameFormatted: 'Xerath',
-		id: '101'
+		id: '101',
+		tags: {
+			attributes: [
+				championAttributes.RANGED,
+				championAttributes.CC,
+				championAttributes.AP
+			],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	XinZhao: {
 		opScore_CSW: 55,
@@ -2529,7 +2587,17 @@ const allChamps = {
 		name: 'Xin Zhao',
 		image: 'XinZhao.png',
 		nameFormatted: 'XinZhao',
-		id: '5'
+		id: '5',
+		tags: {
+			attributes: [
+				championAttributes.MELEE,
+				championAttributes.CC,
+				championAttributes.AD,
+				championAttributes.JUNGLE_GANKER
+			],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Yasuo: {
 		opScore_CSW: 30,
@@ -2537,7 +2605,12 @@ const allChamps = {
 		name: 'Yasuo',
 		image: 'Yasuo.png',
 		nameFormatted: 'Yasuo',
-		id: '157'
+		id: '157',
+		tags: {
+			attributes: [championAttributes.MELEE, championAttributes.AD],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Yone: {
 		opScore_CSW: 66,
@@ -2545,7 +2618,16 @@ const allChamps = {
 		name: 'Yone',
 		image: 'Yone.png',
 		nameFormatted: 'Yone',
-		id: '777'
+		id: '777',
+		tags: {
+			attributes: [
+				championAttributes.MELEE,
+				championAttributes.CC,
+				championAttributes.AD
+			],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Yorick: {
 		opScore_CSW: 64,
@@ -2553,7 +2635,12 @@ const allChamps = {
 		name: 'Yorick',
 		image: 'Yorick.png',
 		nameFormatted: 'Yorick',
-		id: '83'
+		id: '83',
+		tags: {
+			attributes: [championAttributes.MELEE, championAttributes.AD],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Yuumi: {
 		opScore_CSW: 60,
@@ -2561,7 +2648,15 @@ const allChamps = {
 		name: 'Yuumi',
 		image: 'Yuumi.png',
 		nameFormatted: 'Yuumi',
-		id: '350'
+		id: '350',
+		tags: {
+			attributes: [
+				championAttributes.CC,
+				championAttributes.POTENTIAL_GREVIOUS_WOUNDS
+			],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Zac: {
 		opScore_CSW: 63,
@@ -2569,7 +2664,17 @@ const allChamps = {
 		name: 'Zac',
 		image: 'Zac.png',
 		nameFormatted: 'Zac',
-		id: '154'
+		id: '154',
+		tags: {
+			attributes: [
+				championAttributes.MELEE,
+				championAttributes.CC,
+				championAttributes.TANK,
+				championAttributes.JUNGLE_GANKER
+			],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Zed: {
 		opScore_CSW: 60,
@@ -2577,7 +2682,16 @@ const allChamps = {
 		name: 'Zed',
 		image: 'Zed.png',
 		nameFormatted: 'Zed',
-		id: '238'
+		id: '238',
+		tags: {
+			attributes: [
+				championAttributes.MELEE,
+				championAttributes.AD,
+				championAttributes.UNKILLABLE_LANER
+			],
+			strongAgainst: [],
+			weakAgainst: [championAttributes.POTENTIAL_ZHONYA_OWNER]
+		}
 	},
 	Zeri: {
 		opScore_CSW: 50,
@@ -2585,7 +2699,12 @@ const allChamps = {
 		name: 'Zeri',
 		image: 'Zeri.png',
 		nameFormatted: 'Zeri',
-		id: '221'
+		id: '221',
+		tags: {
+			attributes: [championAttributes.RANGED, championAttributes.AD],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Ziggs: {
 		opScore_CSW: 60,
@@ -2593,7 +2712,16 @@ const allChamps = {
 		name: 'Ziggs',
 		image: 'Ziggs.png',
 		nameFormatted: 'Ziggs',
-		id: '115'
+		id: '115',
+		tags: {
+			attributes: [
+				championAttributes.RANGED,
+				championAttributes.AP,
+				championAttributes.UNKILLABLE_LANER
+			],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Zilean: {
 		opScore_CSW: 50,
@@ -2601,7 +2729,12 @@ const allChamps = {
 		name: 'Zilean',
 		image: 'Zilean.png',
 		nameFormatted: 'Zilean',
-		id: '26'
+		id: '26',
+		tags: {
+			attributes: [championAttributes.RANGED, championAttributes.CC],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Zoe: {
 		opScore_CSW: 61,
@@ -2609,7 +2742,16 @@ const allChamps = {
 		name: 'Zoe',
 		image: 'Zoe.png',
 		nameFormatted: 'Zoe',
-		id: '142'
+		id: '142',
+		tags: {
+			attributes: [
+				championAttributes.RANGED,
+				championAttributes.AP,
+				championAttributes.CC
+			],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Zyra: {
 		opScore_CSW: 57,
@@ -2617,6 +2759,16 @@ const allChamps = {
 		name: 'Zyra',
 		image: 'Zyra.png',
 		nameFormatted: 'Zyra',
-		id: '143'
+		id: '143',
+		tags: {
+			attributes: [
+				championAttributes.RANGED,
+				championAttributes.AP,
+				championAttributes.CC,
+				championAttributes.LANE_BULLY
+			],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	}
 }
