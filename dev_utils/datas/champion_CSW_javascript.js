@@ -108,7 +108,7 @@ const allChamps = {
 	},
 	Amumu: {
 		opScore_CSW: 62,
-		role: 'support',
+		role: 'utility',
 		name: 'Amumu',
 		image: 'Amumu.png',
 		nameFormatted: 'Amumu',
@@ -324,7 +324,7 @@ const allChamps = {
 				championAttributes.RANGED,
 				championAttributes.LANE_BULLY
 			],
-			strongAgainst: [],
+			strongAgainst: [championAttributes.POTENTIAL_ZHONYA_OWNER],
 			weakAgainst: []
 		}
 	},
@@ -343,7 +343,7 @@ const allChamps = {
 				championAttributes.MELEE
 			],
 			strongAgainst: [championAttributes.TANK],
-			weakAgainst: []
+			weakAgainst: [championAttributes.POTENTIAL_ZHONYA_OWNER]
 		}
 	},
 	Cassiopeia: {
@@ -559,7 +559,7 @@ const allChamps = {
 				championAttributes.MELEE
 			],
 			strongAgainst: [championAttributes.TANK],
-			weakAgainst: []
+			weakAgainst: [championAttributes.POTENTIAL_ZHONYA_OWNER]
 		}
 	},
 	Fizz: {
@@ -576,7 +576,7 @@ const allChamps = {
 				championAttributes.MELEE
 			],
 			strongAgainst: [],
-			weakAgainst: []
+			weakAgainst: [championAttributes.POTENTIAL_ZHONYA_OWNER]
 		}
 	},
 	Galio: {
@@ -722,7 +722,7 @@ const allChamps = {
 	},
 	Heimerdinger: {
 		opScore_CSW: 60,
-		role: 'support',
+		role: 'utility',
 		name: 'Heimerdinger',
 		image: 'Heimerdinger.png',
 		nameFormatted: 'Heimerdinger',
@@ -956,7 +956,7 @@ const allChamps = {
 				championAttributes.JUNGLE_FARMER
 			],
 			strongAgainst: [],
-			weakAgainst: []
+			weakAgainst: [championAttributes.POTENTIAL_ZHONYA_OWNER]
 		}
 	},
 	Kassadin: {
@@ -1021,6 +1021,7 @@ const allChamps = {
 			attributes: [
 				championAttributes.MELEE,
 				championAttributes.AD,
+				championAttributes.CC,
 				championAttributes.JUNGLE_FARMER
 			],
 			strongAgainst: [championAttributes.TANK],
@@ -1033,7 +1034,16 @@ const allChamps = {
 		name: 'Kennen',
 		image: 'Kennen.png',
 		nameFormatted: 'Kennen',
-		id: '85'
+		id: '85',
+		tags: {
+			attributes: [
+				championAttributes.RANGED,
+				championAttributes.AP,
+				championAttributes.CC
+			],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Khazix: {
 		opScore_CSW: 70,
@@ -1041,7 +1051,16 @@ const allChamps = {
 		name: "Kha'Zix",
 		image: 'Khazix.png',
 		nameFormatted: 'Khazix',
-		id: '121'
+		id: '121',
+		tags: {
+			attributes: [
+				championAttributes.MELEE,
+				championAttributes.AD,
+				championAttributes.JUNGLE_FARMER
+			],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Kindred: {
 		opScore_CSW: 55,
@@ -1049,7 +1068,12 @@ const allChamps = {
 		name: 'Kindred',
 		image: 'Kindred.png',
 		nameFormatted: 'Kindred',
-		id: '203'
+		id: '203',
+		tags: {
+			attributes: [championAttributes.RANGED, championAttributes.AD],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Kled: {
 		opScore_CSW: 68,
@@ -1057,7 +1081,18 @@ const allChamps = {
 		name: 'Kled',
 		image: 'Kled.png',
 		nameFormatted: 'Kled',
-		id: '240'
+		id: '240',
+		tags: {
+			attributes: [
+				championAttributes.MELEE,
+				championAttributes.POTENTIAL_GREVIOUS_WOUNDS,
+				championAttributes.AD,
+				championAttributes.LANE_BULLY,
+				championAttributes.UNKILLABLE_LANER
+			],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	KogMaw: {
 		opScore_CSW: 45,
@@ -1065,7 +1100,12 @@ const allChamps = {
 		name: "Kog'Maw",
 		image: 'KogMaw.png',
 		nameFormatted: 'KogMaw',
-		id: '96'
+		id: '96',
+		tags: {
+			attributes: [championAttributes.RANGED, championAttributes.AD],
+			strongAgainst: [championAttributes.TANK],
+			weakAgainst: []
+		}
 	},
 	KSante: {
 		opScore_CSW: 75,
@@ -1073,7 +1113,17 @@ const allChamps = {
 		name: "K'Sante",
 		image: 'KSante.png',
 		nameFormatted: 'KSante',
-		id: '897'
+		id: '897',
+		tags: {
+			attributes: [
+				championAttributes.MELEE,
+				championAttributes.CC,
+				championAttributes.TANK,
+				championAttributes.UNKILLABLE_LANER
+			],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Leblanc: {
 		opScore_CSW: 55,
@@ -1081,7 +1131,18 @@ const allChamps = {
 		name: 'LeBlanc',
 		image: 'Leblanc.png',
 		nameFormatted: 'Leblanc',
-		id: '7'
+		id: '7',
+		tags: {
+			attributes: [
+				championAttributes.RANGED,
+				championAttributes.AP,
+				championAttributes.CC,
+				championAttributes.UNKILLABLE_LANER,
+				championAttributes.LANE_BULLY
+			],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	LeeSin: {
 		opScore_CSW: 43,
@@ -1089,7 +1150,16 @@ const allChamps = {
 		name: 'Lee Sin',
 		image: 'LeeSin.png',
 		nameFormatted: 'LeeSin',
-		id: '64'
+		id: '64',
+		tags: {
+			attributes: [
+				championAttributes.MELEE,
+				championAttributes.JUNGLE_GANKER,
+				championAttributes.AD
+			],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Leona: {
 		opScore_CSW: 56,
@@ -1097,7 +1167,17 @@ const allChamps = {
 		name: 'Leona',
 		image: 'Leona.png',
 		nameFormatted: 'Leona',
-		id: '89'
+		id: '89',
+		tags: {
+			attributes: [
+				championAttributes.TANK,
+				championAttributes.MELEE,
+				championAttributes.CC,
+				championAttributes.POTENTIAL_GREVIOUS_WOUNDS
+			],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Lillia: {
 		opScore_CSW: 72,
@@ -1105,7 +1185,17 @@ const allChamps = {
 		name: 'Lillia',
 		image: 'Lillia.png',
 		nameFormatted: 'Lillia',
-		id: '876'
+		id: '876',
+		tags: {
+			attributes: [
+				championAttributes.AP,
+				championAttributes.MELEE,
+				championAttributes.CC,
+				championAttributes.JUNGLE_FARMER
+			],
+			strongAgainst: [championAttributes.TANK],
+			weakAgainst: []
+		}
 	},
 	Lissandra: {
 		opScore_CSW: 55,
@@ -1113,7 +1203,18 @@ const allChamps = {
 		name: 'Lissandra',
 		image: 'Lissandra.png',
 		nameFormatted: 'Lissandra',
-		id: '127'
+		id: '127',
+		tags: {
+			attributes: [
+				championAttributes.RANGED,
+				championAttributes.AP,
+				championAttributes.CC,
+				championAttributes.UNKILLABLE_LANER,
+				championAttributes.LANE_BULLY
+			],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Lucian: {
 		opScore_CSW: 43,
@@ -1121,7 +1222,12 @@ const allChamps = {
 		name: 'Lucian',
 		image: 'Lucian.png',
 		nameFormatted: 'Lucian',
-		id: '236'
+		id: '236',
+		tags: {
+			attributes: [championAttributes.RANGED, championAttributes.AD],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Lulu: {
 		opScore_CSW: 56,
@@ -1129,7 +1235,18 @@ const allChamps = {
 		name: 'Lulu',
 		image: 'Lulu.png',
 		nameFormatted: 'Lulu',
-		id: '117'
+		id: '117',
+		tags: {
+			attributes: [
+				championAttributes.RANGED,
+				championAttributes.AP,
+				championAttributes.CC,
+				championAttributes.POTENTIAL_GREVIOUS_WOUNDS,
+				championAttributes.UNKILLABLE_LANER
+			],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Lux: {
 		opScore_CSW: 54,
@@ -1137,7 +1254,17 @@ const allChamps = {
 		name: 'Lux',
 		image: 'Lux.png',
 		nameFormatted: 'Lux',
-		id: '99'
+		id: '99',
+		tags: {
+			attributes: [
+				championAttributes.RANGED,
+				championAttributes.CC,
+				championAttributes.AP,
+				championAttributes.LANE_BULLY
+			],
+			strongAgainst: [],
+			weakAgainst: [championAttributes.POTENTIAL_ZHONYA_OWNER]
+		}
 	},
 	Malphite: {
 		opScore_CSW: 57,
@@ -1145,7 +1272,17 @@ const allChamps = {
 		name: 'Malphite',
 		image: 'Malphite.png',
 		nameFormatted: 'Malphite',
-		id: '54'
+		id: '54',
+		tags: {
+			attributes: [
+				championAttributes.MELEE,
+				championAttributes.TANK,
+				championAttributes.CC,
+				championAttributes.UNKILLABLE_LANER
+			],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Malzahar: {
 		opScore_CSW: 55,
@@ -1153,15 +1290,34 @@ const allChamps = {
 		name: 'Malzahar',
 		image: 'Malzahar.png',
 		nameFormatted: 'Malzahar',
-		id: '90'
+		id: '90',
+		tags: {
+			attributes: [
+				championAttributes.RANGED,
+				championAttributes.AP,
+				championAttributes.CC
+			],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Maokai: {
-		opScore_CSW: 55,
-		role: 'utility',
+		opScore_CSW: 57,
+		role: 'jungle',
 		name: 'Maokai',
 		image: 'Maokai.png',
 		nameFormatted: 'Maokai',
-		id: '57'
+		id: '57',
+		tags: {
+			attributes: [
+				championAttributes.MELEE,
+				championAttributes.AP,
+				championAttributes.CC,
+				championAttributes.JUNGLE_GANKER
+			],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	MasterYi: {
 		opScore_CSW: 56,
@@ -1169,7 +1325,16 @@ const allChamps = {
 		name: 'Master Yi',
 		image: 'MasterYi.png',
 		nameFormatted: 'MasterYi',
-		id: '11'
+		id: '11',
+		tags: {
+			attributes: [
+				championAttributes.MELEE,
+				championAttributes.AD,
+				championAttributes.JUNGLE_FARMER
+			],
+			strongAgainst: [championAttributes.TANK],
+			weakAgainst: [championAttributes.POTENTIAL_ZHONYA_OWNER]
+		}
 	},
 	MissFortune: {
 		opScore_CSW: 63,
@@ -1177,7 +1342,16 @@ const allChamps = {
 		name: 'Miss Fortune',
 		image: 'MissFortune.png',
 		nameFormatted: 'MissFortune',
-		id: '21'
+		id: '21',
+		tags: {
+			attributes: [
+				championAttributes.RANGED,
+				championAttributes.AD,
+				championAttributes.LANE_BULLY
+			],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	MonkeyKing: {
 		opScore_CSW: 63,
@@ -1185,7 +1359,17 @@ const allChamps = {
 		name: 'Wukong',
 		image: 'MonkeyKing.png',
 		nameFormatted: 'MonkeyKing',
-		id: '62'
+		id: '62',
+		tags: {
+			attributes: [
+				championAttributes.MELEE,
+				championAttributes.AD,
+				championAttributes.CC,
+				championAttributes.JUNGLE_GANKER
+			],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Mordekaiser: {
 		opScore_CSW: 62,
@@ -1193,7 +1377,16 @@ const allChamps = {
 		name: 'Mordekaiser',
 		image: 'Mordekaiser.png',
 		nameFormatted: 'Mordekaiser',
-		id: '82'
+		id: '82',
+		tags: {
+			attributes: [
+				championAttributes.MELEE,
+				championAttributes.AP,
+				championAttributes.LANE_BULLY
+			],
+			strongAgainst: [],
+			weakAgainst: [championAttributes.POTENTIAL_ZHONYA_OWNER]
+		}
 	},
 	Morgana: {
 		opScore_CSW: 52,
@@ -1201,7 +1394,17 @@ const allChamps = {
 		name: 'Morgana',
 		image: 'Morgana.png',
 		nameFormatted: 'Morgana',
-		id: '25'
+		id: '25',
+		tags: {
+			attributes: [
+				championAttributes.RANGED,
+				championAttributes.AP,
+				championAttributes.CC,
+				championAttributes.POTENTIAL_ZHONYA_OWNER
+			],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Nami: {
 		opScore_CSW: 52,
@@ -1209,7 +1412,17 @@ const allChamps = {
 		name: 'Nami',
 		image: 'Nami.png',
 		nameFormatted: 'Nami',
-		id: '267'
+		id: '267',
+		tags: {
+			attributes: [
+				championAttributes.RANGED,
+				championAttributes.CC,
+				championAttributes.POTENTIAL_GREVIOUS_WOUNDS,
+				championAttributes.HEALER_ISH
+			],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Nasus: {
 		opScore_CSW: 63,
@@ -1217,7 +1430,16 @@ const allChamps = {
 		name: 'Nasus',
 		image: 'Nasus.png',
 		nameFormatted: 'Nasus',
-		id: '75'
+		id: '75',
+		tags: {
+			attributes: [
+				championAttributes.UNKILLABLE_LANER,
+				championAttributes.MELEE,
+				championAttributes.TANK
+			],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Nautilus: {
 		opScore_CSW: 55,
@@ -1225,7 +1447,17 @@ const allChamps = {
 		name: 'Nautilus',
 		image: 'Nautilus.png',
 		nameFormatted: 'Nautilus',
-		id: '111'
+		id: '111',
+		tags: {
+			attributes: [
+				championAttributes.POTENTIAL_GREVIOUS_WOUNDS,
+				championAttributes.CC,
+				championAttributes.MELEE,
+				championAttributes.TANK
+			],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Neeko: {
 		opScore_CSW: 55,
@@ -1233,7 +1465,17 @@ const allChamps = {
 		name: 'Neeko',
 		image: 'Neeko.png',
 		nameFormatted: 'Neeko',
-		id: '518'
+		id: '518',
+		tags: {
+			attributes: [
+				championAttributes.UNKILLABLE_LANER,
+				championAttributes.AP,
+				championAttributes.CC,
+				championAttributes.RANGED
+			],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Nidalee: {
 		opScore_CSW: 30,
@@ -1241,7 +1483,16 @@ const allChamps = {
 		name: 'Nidalee',
 		image: 'Nidalee.png',
 		nameFormatted: 'Nidalee',
-		id: '76'
+		id: '76',
+		tags: {
+			attributes: [
+				championAttributes.AP,
+				championAttributes.RANGED,
+				championAttributes.JUNGLE_GANKER
+			],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Nilah: {
 		opScore_CSW: 45,
@@ -1249,7 +1500,12 @@ const allChamps = {
 		name: 'Nilah',
 		image: 'Nilah.png',
 		nameFormatted: 'Nilah',
-		id: '895'
+		id: '895',
+		tags: {
+			attributes: [championAttributes.AD, championAttributes.MELEE],
+			strongAgainst: [championAttributes.TANK],
+			weakAgainst: [championAttributes.LANE_BULLY]
+		}
 	},
 	Nocturne: {
 		opScore_CSW: 65,
@@ -1257,7 +1513,17 @@ const allChamps = {
 		name: 'Nocturne',
 		image: 'Nocturne.png',
 		nameFormatted: 'Nocturne',
-		id: '56'
+		id: '56',
+		tags: {
+			attributes: [
+				championAttributes.AD,
+				championAttributes.CC,
+				championAttributes.MELEE,
+				championAttributes.JUNGLE_FARMER
+			],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Nunu: {
 		opScore_CSW: 60,
@@ -1265,7 +1531,17 @@ const allChamps = {
 		name: 'Nunu & Willump',
 		image: 'Nunu.png',
 		nameFormatted: 'Nunu',
-		id: '20'
+		id: '20',
+		tags: {
+			attributes: [
+				championAttributes.TANK,
+				championAttributes.CC,
+				championAttributes.MELEE,
+				championAttributes.JUNGLE_GANKER
+			],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Olaf: {
 		opScore_CSW: 57,
@@ -1273,7 +1549,17 @@ const allChamps = {
 		name: 'Olaf',
 		image: 'Olaf.png',
 		nameFormatted: 'Olaf',
-		id: '2'
+		id: '2',
+		tags: {
+			attributes: [
+				championAttributes.AD,
+				championAttributes.MELEE,
+				championAttributes.LANE_BULLY,
+				championAttributes.HEALER_ISH
+			],
+			strongAgainst: [championAttributes.TANK],
+			weakAgainst: []
+		}
 	},
 	Orianna: {
 		opScore_CSW: 40,
@@ -1281,15 +1567,34 @@ const allChamps = {
 		name: 'Orianna',
 		image: 'Orianna.png',
 		nameFormatted: 'Orianna',
-		id: '61'
+		id: '61',
+		tags: {
+			attributes: [
+				championAttributes.AP,
+				championAttributes.RANGED,
+				championAttributes.CC
+			],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Ornn: {
-		opScore_CSW: 60,
-		role: 'jungle',
+		opScore_CSW: 64,
+		role: 'top',
 		name: 'Ornn',
 		image: 'Ornn.png',
 		nameFormatted: 'Ornn',
-		id: '516'
+		id: '516',
+		tags: {
+			attributes: [
+				championAttributes.TANK,
+				championAttributes.CC,
+				championAttributes.MELEE,
+				championAttributes.UNKILLABLE_LANER
+			],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Pantheon: {
 		opScore_CSW: 65,
@@ -1297,7 +1602,17 @@ const allChamps = {
 		name: 'Pantheon',
 		image: 'Pantheon.png',
 		nameFormatted: 'Pantheon',
-		id: '80'
+		id: '80',
+		tags: {
+			attributes: [
+				championAttributes.AD,
+				championAttributes.MELEE,
+				championAttributes.CC,
+				championAttributes.JUNGLE_GANKER
+			],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Poppy: {
 		opScore_CSW: 63,
@@ -1305,7 +1620,15 @@ const allChamps = {
 		name: 'Poppy',
 		image: 'Poppy.png',
 		nameFormatted: 'Poppy',
-		id: '78'
+		id: '78',
+		tags: {
+			attributes: [
+				championAttributes.MELEE,
+				championAttributes.JUNGLE_GANKER
+			],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Pyke: {
 		opScore_CSW: 61,
@@ -1313,7 +1636,12 @@ const allChamps = {
 		name: 'Pyke',
 		image: 'Pyke.png',
 		nameFormatted: 'Pyke',
-		id: '555'
+		id: '555',
+		tags: {
+			attributes: [championAttributes.MELEE, championAttributes.CC],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Qiyana: {
 		opScore_CSW: 55,
