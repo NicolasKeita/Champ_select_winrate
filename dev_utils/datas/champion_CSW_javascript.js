@@ -1624,6 +1624,7 @@ const allChamps = {
 		tags: {
 			attributes: [
 				championAttributes.MELEE,
+				championAttributes.CC,
 				championAttributes.JUNGLE_GANKER
 			],
 			strongAgainst: [],
@@ -1638,7 +1639,11 @@ const allChamps = {
 		nameFormatted: 'Pyke',
 		id: '555',
 		tags: {
-			attributes: [championAttributes.MELEE, championAttributes.CC],
+			attributes: [
+				championAttributes.MELEE,
+				championAttributes.CC,
+				championAttributes.AD
+			],
 			strongAgainst: [],
 			weakAgainst: []
 		}
@@ -1649,7 +1654,17 @@ const allChamps = {
 		name: 'Qiyana',
 		image: 'Qiyana.png',
 		nameFormatted: 'Qiyana',
-		id: '246'
+		id: '246',
+		tags: {
+			attributes: [
+				championAttributes.MELEE,
+				championAttributes.CC,
+				championAttributes.AD,
+				championAttributes.UNKILLABLE_LANER
+			],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Quinn: {
 		opScore_CSW: 55,
@@ -1657,7 +1672,16 @@ const allChamps = {
 		name: 'Quinn',
 		image: 'Quinn.png',
 		nameFormatted: 'Quinn',
-		id: '133'
+		id: '133',
+		tags: {
+			attributes: [
+				championAttributes.RANGED,
+				championAttributes.AD,
+				championAttributes.LANE_BULLY
+			],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Rakan: {
 		opScore_CSW: 44,
@@ -1665,7 +1689,16 @@ const allChamps = {
 		name: 'Rakan',
 		image: 'Rakan.png',
 		nameFormatted: 'Rakan',
-		id: '497'
+		id: '497',
+		tags: {
+			attributes: [
+				championAttributes.MELEE,
+				championAttributes.CC,
+				championAttributes.UNKILLABLE_LANER
+			],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Rammus: {
 		opScore_CSW: 60,
@@ -1673,7 +1706,17 @@ const allChamps = {
 		name: 'Rammus',
 		image: 'Rammus.png',
 		nameFormatted: 'Rammus',
-		id: '33'
+		id: '33',
+		tags: {
+			attributes: [
+				championAttributes.MELEE,
+				championAttributes.CC,
+				championAttributes.TANK,
+				championAttributes.JUNGLE_GANKER
+			],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	RekSai: {
 		opScore_CSW: 53,
@@ -1681,7 +1724,17 @@ const allChamps = {
 		name: "Rek'Sai",
 		image: 'RekSai.png',
 		nameFormatted: 'RekSai',
-		id: '421'
+		id: '421',
+		tags: {
+			attributes: [
+				championAttributes.MELEE,
+				championAttributes.CC,
+				championAttributes.AD,
+				championAttributes.JUNGLE_GANKER
+			],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Rell: {
 		opScore_CSW: 49,
@@ -1689,7 +1742,16 @@ const allChamps = {
 		name: 'Rell',
 		image: 'Rell.png',
 		nameFormatted: 'Rell',
-		id: '526'
+		id: '526',
+		tags: {
+			attributes: [
+				championAttributes.MELEE,
+				championAttributes.CC,
+				championAttributes.POTENTIAL_GREVIOUS_WOUNDS
+			],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Renata: {
 		opScore_CSW: 54,
@@ -1697,7 +1759,15 @@ const allChamps = {
 		name: 'Renata Glasc',
 		image: 'Renata.png',
 		nameFormatted: 'Renata',
-		id: '888'
+		id: '888',
+		tags: {
+			attributes: [
+				championAttributes.CC,
+				championAttributes.POTENTIAL_GREVIOUS_WOUNDS
+			],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Renekton: {
 		opScore_CSW: 60,
@@ -1705,7 +1775,19 @@ const allChamps = {
 		name: 'Renekton',
 		image: 'Renekton.png',
 		nameFormatted: 'Renekton',
-		id: '58'
+		id: '58',
+		tags: {
+			attributes: [
+				championAttributes.MELEE,
+				championAttributes.CC,
+				championAttributes.AD,
+				championAttributes.LANE_BULLY,
+				championAttributes.HEALER_ISH,
+				championAttributes.UNKILLABLE_LANER
+			],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Rengar: {
 		opScore_CSW: 45,
@@ -1713,7 +1795,16 @@ const allChamps = {
 		name: 'Rengar',
 		image: 'Rengar.png',
 		nameFormatted: 'Rengar',
-		id: '107'
+		id: '107',
+		tags: {
+			attributes: [
+				championAttributes.MELEE,
+				championAttributes.AD,
+				championAttributes.JUNGLE_FARMER
+			],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Riven: {
 		opScore_CSW: 55,
@@ -1721,7 +1812,18 @@ const allChamps = {
 		name: 'Riven',
 		image: 'Riven.png',
 		nameFormatted: 'Riven',
-		id: '92'
+		id: '92',
+		tags: {
+			attributes: [
+				championAttributes.MELEE,
+				championAttributes.UNKILLABLE_LANER,
+				championAttributes.CC,
+				championAttributes.AD,
+				championAttributes.LANE_BULLY
+			],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Rumble: {
 		opScore_CSW: 50,
@@ -1729,7 +1831,16 @@ const allChamps = {
 		name: 'Rumble',
 		image: 'Rumble.png',
 		nameFormatted: 'Rumble',
-		id: '68'
+		id: '68',
+		tags: {
+			attributes: [
+				championAttributes.MELEE,
+				championAttributes.AP,
+				championAttributes.LANE_BULLY
+			],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Ryze: {
 		opScore_CSW: 48,
@@ -1737,7 +1848,16 @@ const allChamps = {
 		name: 'Ryze',
 		image: 'Ryze.png',
 		nameFormatted: 'Ryze',
-		id: '13'
+		id: '13',
+		tags: {
+			attributes: [
+				championAttributes.RANGED,
+				championAttributes.AP,
+				championAttributes.CC
+			],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Samira: {
 		opScore_CSW: 50,
@@ -1745,7 +1865,12 @@ const allChamps = {
 		name: 'Samira',
 		image: 'Samira.png',
 		nameFormatted: 'Samira',
-		id: '360'
+		id: '360',
+		tags: {
+			attributes: [championAttributes.RANGED, championAttributes.AD],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Sejuani: {
 		opScore_CSW: 63,
@@ -1753,7 +1878,17 @@ const allChamps = {
 		name: 'Sejuani',
 		image: 'Sejuani.png',
 		nameFormatted: 'Sejuani',
-		id: '113'
+		id: '113',
+		tags: {
+			attributes: [
+				championAttributes.MELEE,
+				championAttributes.TANK,
+				championAttributes.CC,
+				championAttributes.JUNGLE_GANKER
+			],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Senna: {
 		opScore_CSW: 56,
@@ -1761,7 +1896,18 @@ const allChamps = {
 		name: 'Senna',
 		image: 'Senna.png',
 		nameFormatted: 'Senna',
-		id: '235'
+		id: '235',
+		tags: {
+			attributes: [
+				championAttributes.RANGED,
+				championAttributes.AD,
+				championAttributes.CC,
+				championAttributes.LANE_BULLY,
+				championAttributes.UNKILLABLE_LANER
+			],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Seraphine: {
 		opScore_CSW: 56,
@@ -1769,7 +1915,17 @@ const allChamps = {
 		name: 'Seraphine',
 		image: 'Seraphine.png',
 		nameFormatted: 'Seraphine',
-		id: '147'
+		id: '147',
+		tags: {
+			attributes: [
+				championAttributes.RANGED,
+				championAttributes.POTENTIAL_GREVIOUS_WOUNDS,
+				championAttributes.CC,
+				championAttributes.LANE_BULLY
+			],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Sett: {
 		opScore_CSW: 63,
@@ -1777,7 +1933,17 @@ const allChamps = {
 		name: 'Sett',
 		image: 'Sett.png',
 		nameFormatted: 'Sett',
-		id: '875'
+		id: '875',
+		tags: {
+			attributes: [
+				championAttributes.MELEE,
+				championAttributes.AD,
+				championAttributes.CC,
+				championAttributes.LANE_BULLY
+			],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Shaco: {
 		opScore_CSW: 67,
@@ -1785,7 +1951,16 @@ const allChamps = {
 		name: 'Shaco',
 		image: 'Shaco.png',
 		nameFormatted: 'Shaco',
-		id: '35'
+		id: '35',
+		tags: {
+			attributes: [
+				championAttributes.MELEE,
+				championAttributes.AD,
+				championAttributes.JUNGLE_GANKER
+			],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Shen: {
 		opScore_CSW: 52,
@@ -1793,7 +1968,17 @@ const allChamps = {
 		name: 'Shen',
 		image: 'Shen.png',
 		nameFormatted: 'Shen',
-		id: '98'
+		id: '98',
+		tags: {
+			attributes: [
+				championAttributes.MELEE,
+				championAttributes.TANK,
+				championAttributes.CC,
+				championAttributes.UNKILLABLE_LANER
+			],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Shyvana: {
 		opScore_CSW: 68,
@@ -1801,7 +1986,16 @@ const allChamps = {
 		name: 'Shyvana',
 		image: 'Shyvana.png',
 		nameFormatted: 'Shyvana',
-		id: '102'
+		id: '102',
+		tags: {
+			attributes: [
+				championAttributes.AP,
+				championAttributes.MELEE,
+				championAttributes.JUNGLE_FARMER
+			],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Singed: {
 		opScore_CSW: 70,
@@ -1809,7 +2003,16 @@ const allChamps = {
 		name: 'Singed',
 		image: 'Singed.png',
 		nameFormatted: 'Singed',
-		id: '27'
+		id: '27',
+		tags: {
+			attributes: [
+				championAttributes.AP,
+				championAttributes.CC,
+				championAttributes.MELEE
+			],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Sion: {
 		opScore_CSW: 70,
@@ -1817,7 +2020,16 @@ const allChamps = {
 		name: 'Sion',
 		image: 'Sion.png',
 		nameFormatted: 'Sion',
-		id: '14'
+		id: '14',
+		tags: {
+			attributes: [
+				championAttributes.TANK,
+				championAttributes.MELEE,
+				championAttributes.CC
+			],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Sivir: {
 		opScore_CSW: 62,
@@ -1825,7 +2037,12 @@ const allChamps = {
 		name: 'Sivir',
 		image: 'Sivir.png',
 		nameFormatted: 'Sivir',
-		id: '15'
+		id: '15',
+		tags: {
+			attributes: [championAttributes.AD, championAttributes.RANGED],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Skarner: {
 		opScore_CSW: 50,
@@ -1833,7 +2050,17 @@ const allChamps = {
 		name: 'Skarner',
 		image: 'Skarner.png',
 		nameFormatted: 'Skarner',
-		id: '72'
+		id: '72',
+		tags: {
+			attributes: [
+				championAttributes.TANK,
+				championAttributes.MELEE,
+				championAttributes.CC,
+				championAttributes.JUNGLE_GANKER
+			],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Sona: {
 		opScore_CSW: 50,
@@ -1841,7 +2068,16 @@ const allChamps = {
 		name: 'Sona',
 		image: 'Sona.png',
 		nameFormatted: 'Sona',
-		id: '37'
+		id: '37',
+		tags: {
+			attributes: [
+				championAttributes.RANGED,
+				championAttributes.CC,
+				championAttributes.POTENTIAL_GREVIOUS_WOUNDS
+			],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Soraka: {
 		opScore_CSW: 57,
@@ -1849,7 +2085,16 @@ const allChamps = {
 		name: 'Soraka',
 		image: 'Soraka.png',
 		nameFormatted: 'Soraka',
-		id: '16'
+		id: '16',
+		tags: {
+			attributes: [
+				championAttributes.LANE_BULLY,
+				championAttributes.HEALER_ISH,
+				championAttributes.RANGED
+			],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Swain: {
 		opScore_CSW: 63,
@@ -1857,7 +2102,17 @@ const allChamps = {
 		name: 'Swain',
 		image: 'Swain.png',
 		nameFormatted: 'Swain',
-		id: '50'
+		id: '50',
+		tags: {
+			attributes: [
+				championAttributes.HEALER_ISH,
+				championAttributes.RANGED,
+				championAttributes.CC,
+				championAttributes.AP
+			],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Sylas: {
 		opScore_CSW: 75,
@@ -1865,7 +2120,18 @@ const allChamps = {
 		name: 'Sylas',
 		image: 'Sylas.png',
 		nameFormatted: 'Sylas',
-		id: '517'
+		id: '517',
+		tags: {
+			attributes: [
+				championAttributes.MELEE,
+				championAttributes.CC,
+				championAttributes.HEALER_ISH,
+				championAttributes.AP,
+				championAttributes.UNKILLABLE_LANER
+			],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Syndra: {
 		opScore_CSW: 60,
@@ -1873,7 +2139,17 @@ const allChamps = {
 		name: 'Syndra',
 		image: 'Syndra.png',
 		nameFormatted: 'Syndra',
-		id: '134'
+		id: '134',
+		tags: {
+			attributes: [
+				championAttributes.RANGED,
+				championAttributes.CC,
+				championAttributes.AP,
+				championAttributes.LANE_BULLY
+			],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	TahmKench: {
 		opScore_CSW: 60,
@@ -1881,7 +2157,12 @@ const allChamps = {
 		name: 'Tahm Kench',
 		image: 'TahmKench.png',
 		nameFormatted: 'TahmKench',
-		id: '223'
+		id: '223',
+		tags: {
+			attributes: [championAttributes.TANK, championAttributes.CC],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Taliyah: {
 		opScore_CSW: 66,
@@ -1889,7 +2170,17 @@ const allChamps = {
 		name: 'Taliyah',
 		image: 'Taliyah.png',
 		nameFormatted: 'Taliyah',
-		id: '163'
+		id: '163',
+		tags: {
+			attributes: [
+				championAttributes.RANGED,
+				championAttributes.CC,
+				championAttributes.AP,
+				championAttributes.JUNGLE_FARMER
+			],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Talon: {
 		opScore_CSW: 35,
@@ -1897,7 +2188,12 @@ const allChamps = {
 		name: 'Talon',
 		image: 'Talon.png',
 		nameFormatted: 'Talon',
-		id: '91'
+		id: '91',
+		tags: {
+			attributes: [championAttributes.MELEE, championAttributes.AD],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Taric: {
 		opScore_CSW: 45,
@@ -1905,7 +2201,12 @@ const allChamps = {
 		name: 'Taric',
 		image: 'Taric.png',
 		nameFormatted: 'Taric',
-		id: '44'
+		id: '44',
+		tags: {
+			attributes: [championAttributes.MELEE, championAttributes.CC],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Teemo: {
 		opScore_CSW: 58,
@@ -1913,7 +2214,16 @@ const allChamps = {
 		name: 'Teemo',
 		image: 'Teemo.png',
 		nameFormatted: 'Teemo',
-		id: '17'
+		id: '17',
+		tags: {
+			attributes: [
+				championAttributes.RANGED,
+				championAttributes.LANE_BULLY,
+				championAttributes.AP
+			],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Thresh: {
 		opScore_CSW: 46,
@@ -1921,7 +2231,16 @@ const allChamps = {
 		name: 'Thresh',
 		image: 'Thresh.png',
 		nameFormatted: 'Thresh',
-		id: '412'
+		id: '412',
+		tags: {
+			attributes: [
+				championAttributes.RANGED,
+				championAttributes.CC,
+				championAttributes.LANE_BULLY
+			],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Tristana: {
 		opScore_CSW: 49,
@@ -1929,7 +2248,12 @@ const allChamps = {
 		name: 'Tristana',
 		image: 'Tristana.png',
 		nameFormatted: 'Tristana',
-		id: '18'
+		id: '18',
+		tags: {
+			attributes: [championAttributes.RANGED, championAttributes.AD],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Trundle: {
 		opScore_CSW: 55,
@@ -1937,7 +2261,17 @@ const allChamps = {
 		name: 'Trundle',
 		image: 'Trundle.png',
 		nameFormatted: 'Trundle',
-		id: '48'
+		id: '48',
+		tags: {
+			attributes: [
+				championAttributes.MELEE,
+				championAttributes.JUNGLE_GANKER,
+				championAttributes.AD,
+				championAttributes.HEALER_ISH
+			],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Tryndamere: {
 		opScore_CSW: 57,
@@ -1945,7 +2279,16 @@ const allChamps = {
 		name: 'Tryndamere',
 		image: 'Tryndamere.png',
 		nameFormatted: 'Tryndamere',
-		id: '23'
+		id: '23',
+		tags: {
+			attributes: [
+				championAttributes.MELEE,
+				championAttributes.UNKILLABLE_LANER,
+				championAttributes.AD
+			],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	TwistedFate: {
 		opScore_CSW: 48,
@@ -1953,7 +2296,12 @@ const allChamps = {
 		name: 'Twisted Fate',
 		image: 'TwistedFate.png',
 		nameFormatted: 'TwistedFate',
-		id: '4'
+		id: '4',
+		tags: {
+			attributes: [championAttributes.RANGED, championAttributes.CC],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Twitch: {
 		opScore_CSW: 60,
@@ -1961,7 +2309,16 @@ const allChamps = {
 		name: 'Twitch',
 		image: 'Twitch.png',
 		nameFormatted: 'Twitch',
-		id: '29'
+		id: '29',
+		tags: {
+			attributes: [
+				championAttributes.RANGED,
+				championAttributes.UNKILLABLE_LANER,
+				championAttributes.AD
+			],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Udyr: {
 		opScore_CSW: 65,
@@ -1969,7 +2326,17 @@ const allChamps = {
 		name: 'Udyr',
 		image: 'Udyr.png',
 		nameFormatted: 'Udyr',
-		id: '77'
+		id: '77',
+		tags: {
+			attributes: [
+				championAttributes.MELEE,
+				championAttributes.CC,
+				championAttributes.JUNGLE_FARMER,
+				championAttributes.AD
+			],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Urgot: {
 		opScore_CSW: 58,
@@ -1977,7 +2344,16 @@ const allChamps = {
 		name: 'Urgot',
 		image: 'Urgot.png',
 		nameFormatted: 'Urgot',
-		id: '6'
+		id: '6',
+		tags: {
+			attributes: [
+				championAttributes.RANGED,
+				championAttributes.CC,
+				championAttributes.AD
+			],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Varus: {
 		opScore_CSW: 63,
@@ -1985,7 +2361,17 @@ const allChamps = {
 		name: 'Varus',
 		image: 'Varus.png',
 		nameFormatted: 'Varus',
-		id: '110'
+		id: '110',
+		tags: {
+			attributes: [
+				championAttributes.RANGED,
+				championAttributes.CC,
+				championAttributes.AD,
+				championAttributes.LANE_BULLY
+			],
+			strongAgainst: [championAttributes.TANK],
+			weakAgainst: []
+		}
 	},
 	Vayne: {
 		opScore_CSW: 40,
@@ -1993,7 +2379,12 @@ const allChamps = {
 		name: 'Vayne',
 		image: 'Vayne.png',
 		nameFormatted: 'Vayne',
-		id: '67'
+		id: '67',
+		tags: {
+			attributes: [championAttributes.RANGED, championAttributes.AD],
+			strongAgainst: [championAttributes.TANK],
+			weakAgainst: [championAttributes.LANE_BULLY]
+		}
 	},
 	Veigar: {
 		opScore_CSW: 70,
@@ -2001,7 +2392,16 @@ const allChamps = {
 		name: 'Veigar',
 		image: 'Veigar.png',
 		nameFormatted: 'Veigar',
-		id: '45'
+		id: '45',
+		tags: {
+			attributes: [
+				championAttributes.RANGED,
+				championAttributes.CC,
+				championAttributes.AP
+			],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Velkoz: {
 		opScore_CSW: 57,
@@ -2009,7 +2409,17 @@ const allChamps = {
 		name: "Vel'Koz",
 		image: 'Velkoz.png',
 		nameFormatted: 'Velkoz',
-		id: '161'
+		id: '161',
+		tags: {
+			attributes: [
+				championAttributes.RANGED,
+				championAttributes.CC,
+				championAttributes.AP,
+				championAttributes.LANE_BULLY
+			],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Vex: {
 		opScore_CSW: 68,
@@ -2017,7 +2427,17 @@ const allChamps = {
 		name: 'Vex',
 		image: 'Vex.png',
 		nameFormatted: 'Vex',
-		id: '711'
+		id: '711',
+		tags: {
+			attributes: [
+				championAttributes.RANGED,
+				championAttributes.CC,
+				championAttributes.AP,
+				championAttributes.LANE_BULLY
+			],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Vi: {
 		opScore_CSW: 56,
@@ -2025,7 +2445,17 @@ const allChamps = {
 		name: 'Vi',
 		image: 'Vi.png',
 		nameFormatted: 'Vi',
-		id: '254'
+		id: '254',
+		tags: {
+			attributes: [
+				championAttributes.MELEE,
+				championAttributes.CC,
+				championAttributes.AD,
+				championAttributes.JUNGLE_GANKER
+			],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Viego: {
 		opScore_CSW: 72,
@@ -2033,7 +2463,17 @@ const allChamps = {
 		name: 'Viego',
 		image: 'Viego.png',
 		nameFormatted: 'Viego',
-		id: '234'
+		id: '234',
+		tags: {
+			attributes: [
+				championAttributes.MELEE,
+				championAttributes.CC,
+				championAttributes.AD,
+				championAttributes.JUNGLE_FARMER
+			],
+			strongAgainst: [],
+			weakAgainst: []
+		}
 	},
 	Viktor: {
 		opScore_CSW: 70,
