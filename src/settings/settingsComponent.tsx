@@ -9,6 +9,7 @@ import {useAppSelector} from '@utils/hooks'
 import ConfigRow from './configRow'
 import {VariableSizeList as List} from 'react-window'
 import {Virtuoso} from 'react-virtuoso'
+import {Champion} from '../desktop/components/maincontent/settings/Champion'
 
 
 const SettingsContainer = styled.div`
@@ -42,27 +43,7 @@ function Settings() {
 	const allChamps = useAppSelector(state => state.slice.config.champions, () => {return true})
 	useAppSelector(state => state.slice.rerenderSettings)
 
-	const Row = ({index, style}) => {
-		const elem = allChamps[index]
-		return (
-			<div style={style}>
-				<ConfigRow
-					key={uniqid()}
-					allChamps={allChamps}
-					champName={elem.name}
-					opScoreCSW={+elem.opScore_CSW}
-					opScoreUser={elem.opScore_user != undefined ? +elem.opScore_user : 50}
-				/>
-			</div>
-		)
-	}
-
-	const rowHeights = new Array(allChamps.length)
-		.fill(true)
-		.map(() => { return 24})
-	const getItemSize = index => rowHeights[index]
-
-	function renderListChampNameWithOPScore(allChamps) {
+	function renderListChampNameWithOPScore(allChamps: Champion[]) {
 		return (
 
 			// <Virtuoso
@@ -90,6 +71,7 @@ function Settings() {
 								key={uniqid()}
 								allChamps={allChamps}
 								champName={elem.name}
+								champTags={elem.tags}
 								opScoreCSW={+elem.opScore_CSW}
 								opScoreUser={elem.opScore_user != undefined ? +elem.opScore_user : 50}
 							/>

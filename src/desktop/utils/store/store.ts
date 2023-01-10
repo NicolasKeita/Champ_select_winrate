@@ -4,8 +4,6 @@
 
 import {configureStore} from '@reduxjs/toolkit'
 import mainReducer from '../../../background/store/reducer'
-import {kWindowNames} from '../../../consts'
-import WindowStateEx = overwolf.windows.enums.WindowStateEx
 
 const sendActionToSettingsStore = store => next => action => {
 	if (!action.noDuplicate) {

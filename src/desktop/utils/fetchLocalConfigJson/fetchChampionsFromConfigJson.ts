@@ -26,7 +26,8 @@ export async function fetchAllChampionsJson(): Promise<Champion[]> {
 			elem.image,
 			'',
 			elem.id,
-			elem.nameFormatted
+			elem.nameFormatted,
+			elem.tags
 		)))
 	} catch (e) {
 		throw new Error(`CSW_error: following call : res.json() caught error; previously: ${url} error: ${e}`)

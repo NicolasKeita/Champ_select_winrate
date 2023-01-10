@@ -4,7 +4,10 @@
 
 import React, {KeyboardEvent, useState} from 'react'
 import styled from 'styled-components'
-import {Champion} from '../desktop/components/maincontent/settings/Champion'
+import {
+	Champion, championAttributes,
+	ChampionTagsType
+} from '../desktop/components/maincontent/settings/Champion'
 import {useAppDispatch} from '@utils/hooks'
 import {updateChamp} from '../background/store/slice'
 import Collapsible from 'react-collapsible'
@@ -20,6 +23,7 @@ import {Dropdown, Space} from 'antd'
 import 'antd/dist/reset.css'
 import {Color} from 'react-bootstrap/types'
 import {TypeAttributes} from 'rsuite/esm/@types/common'
+import uniqid from 'uniqid'
 
 const ChampName = styled.h1`
   background: -webkit-linear-gradient(#ab6630, #b79e4d);
@@ -53,6 +57,7 @@ const OP_Score = styled.div``
 
 interface PropsType {
 	champName: string,
+	champTags?: ChampionTagsType,
 	opScoreCSW: number,
 	opScoreUser: number,
 	allChamps: Champion[],
@@ -140,7 +145,17 @@ function ConfigRow(props: PropsType) {
 	//TODO do react-virtuoso and increase the range to check the vh othersize
 	// it rerender when opening accordion
 
-	const [tags, setTags] = useState<{name: string, color: string}[]>([])
+	const defaultTags: {name: string, color: string}[] = []
+	for (const tag of props.champTags?.attributes || []) {
+		defaultTags.push({name: tag, color: 'cyan'})
+	}
+	for (const tag of props.champTags?.strongAgainst || []) {
+		defaultTags.push({name: `Strong against ${tag}`, color: 'green'})
+	}
+	for (const tag of props.champTags?.weakAgainst || []) {
+		defaultTags.push({name: `Weak against ${tag}`, color: 'red'})
+	}
+	const [tags, setTags] = useState<{name: string, color: string}[]>(defaultTags)
 
 	const removeTag = tag => {
 		const nextTags = tags.filter(item => item !== tag)
@@ -154,48 +169,40 @@ function ConfigRow(props: PropsType) {
 
 	const renderDropDownPlusButton = () => {
 
+		const attributes = Object.values(championAttributes).map((attribute) => {
+			return {
+				key: uniqid(),
+				label: attribute,
+				onClick: () => {addTag(attribute, 'cyan')}
+			}
+		}) || []
+		const strongAgainst = Object.values(championAttributes).map((tag) => {
+			return {
+				key: uniqid(),
+				label: tag,
+				onClick: () => {addTag(tag, 'green')}
+			}
+		}) || []
+
+		const weakAgainst = Object.values(championAttributes).map((tag) => {
+			return {
+				key: uniqid(),
+				label: tag,
+				onClick: () => {addTag(tag, 'red')}
+			}
+		}) || []
+
 		const items: MenuProps['items'] = [
-			{
-				key: '1',
-				label: 'Tank',
-				onClick: () => {addTag('Tank', 'cyan')}
-			},
-			{
-				key: '2',
-				label: 'Potential Zonyah owner',
-				onClick: () => {addTag('Potential Zonyah owner', 'cyan')}
-			},
+			...attributes,
 			{
 				key: '3',
 				label: 'Strong against',
-				children: [
-					{
-						key: '3-1',
-						label: 'Tank',
-						onClick: () => {addTag('Strong against Tank', 'green')}
-					},
-					{
-						key: '3-2',
-						label: 'Potential Zonyah owner',
-						onClick: () => {addTag('Strong against Potential Zonyah owner', 'green')}
-					}
-				]
+				children: [...strongAgainst]
 			},
 			{
 				key: '4',
 				label: 'Weak against',
-				children: [
-					{
-						key: '4-1',
-						label: 'Tank',
-						onClick: () => {addTag('Weak against Tank', 'red')}
-					},
-					{
-						key: '4-2',
-						label: 'Potential Zonyah owner',
-						onClick: () => {addTag('Weak against Potential Zonyah owner', 'red')}
-					}
-				]
+				children: [...weakAgainst]
 			}
 		]
 
@@ -216,31 +223,31 @@ function ConfigRow(props: PropsType) {
 
 
 	return (
-		// <Collapsible
-		// 	transitionTime={10}
-		// 	lazyRender={true}
-		// 	overflowWhenOpen={'visible'}
-		// 	trigger={
-		<ConfigRowTrigger
-			champName={props.champName}
-			opScoreCSW={props.opScoreCSW}
-			opScoreUser={props.opScoreUser}
-			allChamps={props.allChamps}
-		/>
-		// }>
-		// <TagGroup style={{display: 'flex', flexWrap: 'wrap'}}>
-		// 	{tags.map((tag, i) => (
-		// 		<Tag
-		// 			key={i} closable
-		// 			onClose={() => removeTag(tag)}
-		// 			color={tag.color as TypeAttributes.Color}
-		// 		>
-		// 			{tag.name}
-		// 		</Tag>
-		// 	))}
-		// 	{renderDropDownPlusButton()}
-		// </TagGroup>
-		// </Collapsible>
+		<Collapsible
+			transitionTime={10}
+			lazyRender={true}
+			overflowWhenOpen={'visible'}
+			trigger={
+				<ConfigRowTrigger
+					champName={props.champName}
+					opScoreCSW={props.opScoreCSW}
+					opScoreUser={props.opScoreUser}
+					allChamps={props.allChamps}
+				/>
+			}>
+			<TagGroup style={{display: 'flex', flexWrap: 'wrap'}}>
+				{tags.map((tag, i) => (
+					<Tag
+						key={i} closable
+						onClose={() => removeTag(tag)}
+						color={tag.color as TypeAttributes.Color}
+					>
+						{tag.name}
+					</Tag>
+				))}
+				{renderDropDownPlusButton()}
+			</TagGroup>
+		</Collapsible>
 	)
 }
 

@@ -1,3 +1,5 @@
+const fs = require('fs')
+
 const championAttributes = {
 	HEALER_ISH: 'Healer-ish',
 	POTENTIAL_GREVIOUS_WOUNDS: 'Potential Grievous Wounds',
@@ -2772,3 +2774,5 @@ const allChamps = {
 		}
 	}
 }
+
+fs.writeFileSync('champions_CSW_3.json', JSON.stringify(allChamps))
