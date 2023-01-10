@@ -216,31 +216,31 @@ function ConfigRow(props: PropsType) {
 
 
 	return (
-		<Collapsible
-			transitionTime={10}
-			lazyRender={true}
-			overflowWhenOpen={'visible'}
-			trigger={
-				<ConfigRowTrigger
-					champName={props.champName}
-					opScoreCSW={props.opScoreCSW}
-					opScoreUser={props.opScoreUser}
-					allChamps={props.allChamps}
-				/>
-			}>
-			<TagGroup style={{display: 'flex', flexWrap: 'wrap'}}>
-				{tags.map((tag, i) => (
-					<Tag
-						key={i} closable
-						onClose={() => removeTag(tag)}
-						color={tag.color as TypeAttributes.Color}
-					>
-						{tag.name}
-					</Tag>
-				))}
-				{renderDropDownPlusButton()}
-			</TagGroup>
-		</Collapsible>
+		// <Collapsible
+		// 	transitionTime={10}
+		// 	lazyRender={true}
+		// 	overflowWhenOpen={'visible'}
+		// 	trigger={
+		<ConfigRowTrigger
+			champName={props.champName}
+			opScoreCSW={props.opScoreCSW}
+			opScoreUser={props.opScoreUser}
+			allChamps={props.allChamps}
+		/>
+		// }>
+		// <TagGroup style={{display: 'flex', flexWrap: 'wrap'}}>
+		// 	{tags.map((tag, i) => (
+		// 		<Tag
+		// 			key={i} closable
+		// 			onClose={() => removeTag(tag)}
+		// 			color={tag.color as TypeAttributes.Color}
+		// 		>
+		// 			{tag.name}
+		// 		</Tag>
+		// 	))}
+		// 	{renderDropDownPlusButton()}
+		// </TagGroup>
+		// </Collapsible>
 	)
 }
 

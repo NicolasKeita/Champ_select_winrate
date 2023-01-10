@@ -7,7 +7,6 @@ import styled from 'styled-components'
 
 import Header from './components/header'
 import MainContent from './components/maincontent'
-// import FooterAD from './components/footerAD'
 import Config from './components/maincontent/settings/Config'
 import {
 	copyFromAnotherSetting,
@@ -22,6 +21,7 @@ import ReplacementFooterAD from './components/footerAD/replacement'
 import {doWithRetry} from 'do-with-retry'
 import {addLCU_listeners} from '@utils/LCU_API_connector/addLCU_listeners'
 import {AppDispatch} from '@utils/store/store'
+import FooterAD from './components/footerAD'
 
 const MyAppContainer = styled.div`
   display: flex;
@@ -65,10 +65,11 @@ function MyApp(): JSX.Element {
 	}, [dispatch])
 
 	let Footer: JSX.Element
-	// if (false)
-	// Footer = <FooterAD />
-	// else
-	Footer = <ReplacementFooterAD />
+	const testADBoolean = localStorage.getItem('owAdsForceAdUnit')
+	if (testADBoolean == 'Ad_test') {
+		Footer = <FooterAD />
+	} else
+		Footer = <ReplacementFooterAD />
 	return (
 		<MyAppContainer id='myApp'>
 			<Header />

@@ -4,7 +4,7 @@
 	"meta": {
 		"name": "Champ Select Winrate",
 		"author": "SpyNight",
-		"version": "2.0.4",
+		"version": "2.0.3",
 		"minimum-overwolf-version": "0.194.0",
 		"description": "Fully customizable champ select tool",
 		"dock_button_title": "Champ Select Win",
@@ -56,7 +56,6 @@
 				}
 			},
 			"settings": {
-
 				"file": "settings.html",
 				"desktop_only": true,
 				"native_window": false,

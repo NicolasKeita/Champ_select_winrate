@@ -7,6 +7,7 @@ import styled from 'styled-components'
 import Header from './header'
 import ReplacementFooterAD from '../desktop/components/footerAD/replacement'
 import Settings from './settingsComponent'
+import FooterAD from '../desktop/components/footerAD'
 
 const MyAppContainer = styled.div`
   display: flex;
@@ -17,10 +18,11 @@ const MyAppContainer = styled.div`
 function MyApp(): JSX.Element {
 
 	let Footer: JSX.Element
-	// if (false)
-	// Footer = <FooterAD />
-	// else
-	Footer = <ReplacementFooterAD />
+	const testADBoolean = localStorage.getItem('owAdsForceAdUnit')
+	if (testADBoolean == 'Ad_test') {
+		Footer = <FooterAD />
+	} else
+		Footer = <ReplacementFooterAD />
 	return (
 		<MyAppContainer>
 			<Header />
