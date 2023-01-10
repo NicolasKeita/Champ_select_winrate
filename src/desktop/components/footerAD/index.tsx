@@ -6,6 +6,7 @@
 
 import React, {useEffect} from 'react'
 import styled from 'styled-components'
+// import {OwAd} from '@overwolf/types'
 
 const FooterContainer = styled.footer`
   flex: 1;
@@ -147,10 +148,13 @@ function FooterAD() {
 	}
 
 	useEffect(() => {
-		localStorage.owAdsForceAdUnit = 'Ad_test'
 		init()
 	}, [])
-	return <FooterContainer id={'adContainer'}></FooterContainer>
+	return (
+		<>
+			<FooterContainer id={'adContainer'}></FooterContainer>
+		</>
+	)
 }
 
 export default FooterAD
