@@ -1,33 +1,26 @@
-// @ts-nocheck
-
 /*
     Path + Filename: src/desktop/components/footerAD/myContextMenu.tsx
 */
 
 import React, {useEffect, useReducer, useRef} from 'react'
-import styled from 'styled-components'
 import replacementFooterADimg from '@public/img/ReplacementFooterAD.jpg'
 import ReplacementFooterAD from './replacement'
-
-const FooterContainer = styled.footer`
-  flex: 1;
-  //height: 300px;
-  //width: 400px;
-`
-
-const ADcontainer = styled.img``
+import {kWindowNames} from '../../../consts'
+import {OwAd} from '@overwolf/types/owads'
 
 let g_errorAD = 0
 
+//TODO there is a TS no check at the top of the file
 function FooterAD() {
+	console.log('Footer Rendered')
+	const adContainerRef = useRef<HTMLElement>(null)
 	const adReplacementContainer = useRef(null)
-	const [ignored, forceUpdate] = useReducer(x => x + 1, 0)
-	const kWindowName = 'desktop'
+	const [_, forceUpdate] = useReducer(x => x + 1, 0)
 	let adEnabled = false,
 		updateWindowIsVisibleInterval = null,
 		windowIsOpen = false,
 		windowIsVisible = false,
-		adInstance = null
+		adInstance: OwAd | null = null
 
 	function setTab(tab) {
 		document.querySelectorAll(`[data-tab]`).forEach(el => {
@@ -94,16 +87,21 @@ function FooterAD() {
 			}
 		}
 		if (adInstance !== null) {
-			adInstance.refreshAd()
+			adInstance.refreshAd(null)
 			return
 		}
-		const adCont = document.getElementById('adContainer')
-		adInstance = new window.OwAd(adCont, {
+		const adCont = adContainerRef.current
+		if (!adCont) {
+			console.log('CSW_error: AdContainer not defined yet')
+			return
+		}
+		adInstance = new OwAd(adCont, {
 			size: {
 				width: 400,
 				height: 300
 			}
 		})
+		window.OwAd = adInstance
 		adInstance.addEventListener('player_loaded', () => {})
 		adInstance.addEventListener('display_ad_loaded', () => {})
 		adInstance.addEventListener('play', () => {})
@@ -114,20 +112,21 @@ function FooterAD() {
 			console.log('CSW_error: OwAd instance error:')
 			console.error(e)
 			g_errorAD += 1
-			adInstance.shutdown()
-			forceUpdate()
-			if (g_errorAD > 3) {
-				adReplacementContainer.hidden = false
-				const adCont = document.getElementById('adContainer')
-				if (adCont) {
-					adCont.hidden = true
+			if (adInstance) {
+				adInstance.removeAd()
+				// forceUpdate()
+				if (g_errorAD > 3) {
+					// adReplacementContainer.hidden = false
+					if (adContainerRef.current) {
+						// adContainerRef.current.hidden = true
+					}
 				}
 			}
 		})
 	}
 
 	function onWindowStateChanged(state) {
-		if (state && state.window_state_ex && state.window_name === kWindowName) {
+		if (state && state.window_state_ex && state.window_name === kWindowNames.desktop) {
 			const isOpen = state.window_state_ex === 'normal'
 			if (windowIsOpen !== isOpen) {
 				windowIsOpen = isOpen
@@ -154,7 +153,7 @@ function FooterAD() {
 
 	async function getWindowIsOpen() {
 		const state = await new Promise(resolve => {
-			overwolf.windows.getWindowState(kWindowName, resolve)
+			overwolf.windows.getWindowState(kWindowNames.desktop, resolve)
 		})
 		if (state && state.success && state.window_state_ex) {
 			return state.window_state_ex === 'normal'
@@ -171,29 +170,29 @@ function FooterAD() {
 		updateAd()
 	}
 
-	if (g_errorAD > 3) {
-		adReplacementContainer.hidden = false
-		const adCont = document.getElementById('adContainer')
-		if (adCont) {
-			adCont.hidden = true
-		}
-	} else {
-		adReplacementContainer.hidden = true
-	}
-	init()
+	// if (g_errorAD > 3) {
+	// 	adReplacementContainer.hidden = false
+	// 	const adCont = document.getElementById('adContainer')
+	// 	if (adCont) {
+	// 		adCont.hidden = true
+	// 	}
+	// } else {
+	// 	adReplacementContainer.hidden = true
+	// }
 	useEffect(() => {
-	}, [])
+		init()
+	})
 	return (
-		<>
-			<FooterContainer id={'adContainer'}>
-			</FooterContainer>
-			<img
-				ref={adReplacementContainer}
-				src={replacementFooterADimg}
-				alt={'replacementFooterADimg'}
-				height={308}
-			/>
-		</>
+		<footer
+			ref={adContainerRef}
+			style={{height: 400, width: 300}}
+		/>
+		// {/*<img*/}
+		// {/*	ref={adReplacementContainer}*/}
+		// {/*	src={replacementFooterADimg}*/}
+		// {/*	alt={'replacementFooterADimg'}*/}
+		// {/*	height={308}*/}
+		// {/*/>*/}
 	)
 }
 
