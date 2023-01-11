@@ -162,9 +162,10 @@ function ConfigRow(props: PropsType) {
 		setTags(nextTags)
 	}
 
-	const addTag = (text: string, color: string) => {
-		const nextTags = [...tags, {name: text, color: color}]
-		setTags(nextTags)
+	const addTag = (name: string, color: string) => {
+		if (!tags.find(elem => elem.name == name)) {
+			setTags([...tags, {name: name, color: color}])
+		}
 	}
 
 	const renderDropDownPlusButton = () => {
@@ -172,6 +173,9 @@ function ConfigRow(props: PropsType) {
 		const attributes = Object.values(championAttributes).map((attribute) => {
 			return {
 				key: uniqid(),
+				style: {
+					background: 'cyan'
+				},
 				label: attribute,
 				onClick: () => {addTag(attribute, 'cyan')}
 			}
@@ -179,16 +183,22 @@ function ConfigRow(props: PropsType) {
 		const strongAgainst = Object.values(championAttributes).map((tag) => {
 			return {
 				key: uniqid(),
+				style: {
+					background: 'green'
+				},
 				label: tag,
-				onClick: () => {addTag(tag, 'green')}
+				onClick: () => {addTag(`Strong against ${tag}`, 'green')}
 			}
 		}) || []
 
 		const weakAgainst = Object.values(championAttributes).map((tag) => {
 			return {
 				key: uniqid(),
+				style: {
+					background: 'red'
+				},
 				label: tag,
-				onClick: () => {addTag(tag, 'red')}
+				onClick: () => {addTag(`Weak against ${tag}`, 'red')}
 			}
 		}) || []
 
@@ -196,13 +206,19 @@ function ConfigRow(props: PropsType) {
 			...attributes,
 			{
 				key: '3',
+				style: {
+					background: 'green'
+				},
 				label: 'Strong against',
-				children: [...strongAgainst]
+				children: strongAgainst
 			},
 			{
 				key: '4',
+				style: {
+					background: 'red'
+				},
 				label: 'Weak against',
-				children: [...weakAgainst]
+				children: weakAgainst
 			}
 		]
 

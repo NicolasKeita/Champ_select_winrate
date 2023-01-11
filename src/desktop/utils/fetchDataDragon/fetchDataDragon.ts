@@ -35,6 +35,11 @@ export function getChampScoreByNames(champNames: string[], allChampions: Champio
 	return result
 }
 
+//
+// export function getChampsByNames(chamNames: string[], allChampions: Champion[]): Champion[] {
+//
+// }
+
 export function getChampImgByNamePNG(champNamePNG: string): string {
 	let formattedName: string = champNamePNG
 	if (!champNamePNG.endsWith('.png'))

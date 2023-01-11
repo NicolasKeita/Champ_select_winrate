@@ -13,7 +13,7 @@ import Config, {
 	getDefaultConfig
 } from '../../desktop/components/maincontent/settings/Config'
 import {
-	Champion,
+	Champion, championAttributes,
 	getDefaultChampion
 } from '../../desktop/components/maincontent/settings/Champion'
 import {
@@ -142,7 +142,7 @@ function updateChampSelectDisplayedScores(champSelectDisplayed: ChampSelectDispl
 
 function updateChampSelectDisplayedRecommendations(champSelectDisplayed: ChampSelectDisplayedType, allChamps: Champion[]) {
 	for (const [i, ally] of champSelectDisplayed.allies.entries()) {
-		ally.recommendations = getRecommendations(champSelectDisplayed.allies, i, allChamps)
+		ally.recommendations = getRecommendations(champSelectDisplayed.allies, champSelectDisplayed.enemies, i, allChamps)
 	}
 }
 
@@ -175,17 +175,80 @@ type FillChampSelectDisplayedParamType = {
 	myTeam: never[]
 }
 
-function getRecommendations(allies: ChampDisplayedType[], playerId: number, allChamps: Champion[]): Champion[] {
+function updateAllChampsWithTags(allies: ChampDisplayedType[], enemies: ChampDisplayedType[], allChampsCopy: Champion[]) {
+	for (const ally of allies) {
+		if (
+			ally.champ.tags.strongAgainst.includes(championAttributes.LANE_BULLY) && enemies.find((enemy => {
+				enemy.champ.tags.attributes.includes(championAttributes.LANE_BULLY)
+			}))
+		) {
+			allChampsCopy.forEach((champ, i, allChamps) => {
+				if (champ.tags.strongAgainst.includes(championAttributes.LANE_BULLY)) {
+					if (allChamps[i].opScore_user != undefined) {
+						// @ts-ignore
+						allChamps[i]['opScore_user'] += 5
+					}
+				}
+			})
+		}
+
+
+		if (
+			ally.champ.tags.strongAgainst.includes(championAttributes.UNKILLABLE_LANER) && enemies.find((enemy => {
+				enemy.champ.tags.attributes.includes(championAttributes.UNKILLABLE_LANER)
+			}))
+		) {
+			allChampsCopy.forEach((champ, i, allChamps) => {
+				if (champ.tags.strongAgainst.includes(championAttributes.UNKILLABLE_LANER)) {
+					if (allChamps[i].opScore_user != undefined) {
+						// @ts-ignore
+						allChamps[i]['opScore_user'] += 5
+					}
+				}
+			})
+		}
+
+		if (
+			ally.champ.tags.strongAgainst.includes(championAttributes.HEALER_ISH) && enemies.find((enemy => {
+				enemy.champ.tags.attributes.includes(championAttributes.HEALER_ISH)
+			}))
+		) {
+			console.log('UP', ally.champ.name)
+			allChampsCopy.forEach((champ, i, allChamps) => {
+				if (champ.tags.strongAgainst.includes(championAttributes.HEALER_ISH)) {
+					if (allChamps[i].opScore_user != undefined) {
+						// @ts-ignore
+						allChamps[i]['opScore_user'] += 5
+					}
+				}
+			})
+		}
+	}
+}
+
+function getRecommendations(allies: ChampDisplayedType[], enemies: ChampDisplayedType[], playerId: number, allChamps: Champion[]): Champion[] {
 	let assignedRole = allies[playerId].assignedRole
 	if (assignedRole == '')
 		assignedRole = 'utility'
-	const allChampsFilteredWithRole = allChamps.filter(champ => champ.role == assignedRole)
-	if (allChampsFilteredWithRole.length == 0)
+	const allChampsCopy = copy(allChamps)
+	updateAllChampsWithTags(allies, enemies, allChampsCopy)
+
+	const allChampsFilteredWithRoleCopy = allChampsCopy.filter(champ => champ.role == assignedRole)
+	if (allChampsFilteredWithRoleCopy.length == 0)
 		console.error('CSW_error: couldnt get recommendations')
-	allChampsFilteredWithRole.sort((a, b) => (
+	// const allChampsFilteredWithRoleCopy = copy(allChampsFilteredWithRole)
+	// updateAllChampsWithTags(allies, enemies, allChampsFilteredWithRoleCopy)
+
+
+	allChampsFilteredWithRoleCopy.sort((a, b) => (
 		(b.opScore_user != null && a.opScore_user != null) ? b.opScore_user - a.opScore_user : 0
 	))
-	return allChampsFilteredWithRole.slice(0, 5)
+	const firstFiveCopy = allChampsFilteredWithRoleCopy.slice(0, 5)
+	const firstFive: Champion[] = []
+	for (const elem of firstFiveCopy) {
+		firstFive.push(allChamps.find((champ) => champ.id == elem.id) || getDefaultChampion())
+	}
+	return firstFive
 }
 
 export const fetchAllChampions = createAsyncThunk<Champion[]>(
@@ -330,13 +393,13 @@ export const fillChampSelectDisplayed = createAsyncThunk<ChampSelectDisplayedTyp
 		}
 
 		//TODO set up le type de myTeam
-		function fillAssignedRoleAndRecommendations(allies: ChampDisplayedType[], myTeam: never[], actorCellId: number, allChamps: Champion[], isActorCellRightSide = false) {
+		function fillAssignedRoleAndRecommendations(allies: ChampDisplayedType[], enemies: ChampDisplayedType[], myTeam: never[], actorCellId: number, allChamps: Champion[], isActorCellRightSide = false) {
 			let actorCellIdTeam = actorCellId
 			if (isActorCellRightSide) actorCellIdTeam += 5
 			for (const {assignedPosition, cellId} of myTeam) {
 				if (cellId === actorCellIdTeam) {
 					allies[actorCellId].assignedRole = assignedPosition
-					const recommendations = getRecommendations(allies, actorCellId, allChamps)
+					const recommendations = getRecommendations(allies, enemies, actorCellId, allChamps)
 					allies[actorCellId].recommendations.splice(0, recommendations.length, ...recommendations)
 				}
 			}
@@ -359,7 +422,7 @@ export const fillChampSelectDisplayed = createAsyncThunk<ChampSelectDisplayedTyp
 							if (championId != 0) {
 								allies[actorCellId].champ = allChamps.find((champ) => champ.id == championId) || getDefaultChampion()
 							}
-							fillAssignedRoleAndRecommendations(allies, thunkParam.myTeam, actorCellId, allChamps)
+							fillAssignedRoleAndRecommendations(allies, enemies, thunkParam.myTeam, actorCellId, allChamps)
 						} else {
 							if (championId != 0) {
 								enemies[actorCellIdEnemy++].champ = allChamps.find((champ) => champ.id == championId) || getDefaultChampion()
@@ -383,15 +446,13 @@ export const fillChampSelectDisplayed = createAsyncThunk<ChampSelectDisplayedTyp
 						if (championId != 0) {
 							allies[actorCellId].champ = allChamps.find((champ) => champ.id == championId) || getDefaultChampion()
 						}
-						// fillChampNameAndImgUrlFromId(allies[actorCellId].champ, championId)
-						fillAssignedRoleAndRecommendations(allies, thunkParam.myTeam, actorCellId, allChamps, isActorCellRightSide)
+						fillAssignedRoleAndRecommendations(allies, enemies, thunkParam.myTeam, actorCellId, allChamps, isActorCellRightSide)
 					} else {
 						if (actorCellId >= 5)
 							actorCellId -= 5
 						if (championId != 0) {
 							enemies[actorCellId].champ = allChamps.find((champ) => champ.id == championId) || getDefaultChampion()
 						}
-						// fillChampNameAndImgUrlFromId(enemies[actorCellId].champ, championId)
 					}
 				}
 			}
@@ -522,8 +583,10 @@ export const slice = createSlice({
 				const duplicate = state.config.champions.find(elemConfig => elemConfig.name === championPayload.name)
 				if (duplicate) {
 					const userScore = duplicate.opScore_user
+					const userTag = duplicate.tags
 					Object.assign(duplicate, copy(championPayload))
 					duplicate.opScore_user = userScore
+					duplicate.tags = userTag
 				} else
 					state.config.champions.push(championPayload)
 			}
