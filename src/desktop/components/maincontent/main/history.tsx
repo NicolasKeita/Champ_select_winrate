@@ -100,7 +100,10 @@ function History() {
 		const linesHistory: JSX.Element[] = []
 		const tooltipNumber = 'Numbers are coming from your own settings. Check your settings (top right icon) to change the default.'
 		for (let i = 0; i < 5; ++i) {
-			const winrate = computeWinrate(historyDisplayed[i].allies, historyDisplayed[i].enemies)
+			const alliesScores = historyDisplayed[i].allies.map((ally) => ally.opScore_user || 50)
+			const enemiesScores = historyDisplayed[i].enemies.map((enemy) => enemy.opScore_user || 50)
+			//TODO check below, that's big, history forecast is not using tags
+			const winrate = computeWinrate(alliesScores, enemiesScores)
 			const key = uniqid()
 			linesHistory.push(
 				<React.Fragment key={key}>

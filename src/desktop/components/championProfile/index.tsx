@@ -77,14 +77,15 @@ function ChampionProfile(props: PropsType): JSX.Element {
 		if (props.isEnemyTeam) return null
 		//if (props.isEnemyTeam || isUnsupportedGameMode) return null
 		const row: JSX.Element[] = []
+		//TODO same as history, big, not using tags for winrate
 		for (let i = 0; i < 5; ++i) {
 			const allies = props.champSelectDisplayed.allies.map((ally) => {
 				if (ally.champ.name == props.champName) {
-					return props.champRecommendation[i]
+					return props.champRecommendation[i].opScore_user || 50
 				} else
-					return ally.champ
+					return ally.champ.opScore_user || 50
 			})
-			const enemies = props.champSelectDisplayed.enemies.map((enemy) => {return enemy.champ})
+			const enemies = props.champSelectDisplayed.enemies.map((enemy) => enemy.champ.opScore_user || 50)
 			const winrate = computeWinrate(allies, enemies)
 			const tooltipNumber = `If this player picks ${props.champRecommendation[i].name}, your winrate changes to ${winrate}`
 			row.push(

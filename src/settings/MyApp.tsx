@@ -13,6 +13,8 @@ const MyAppContainer = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1;
+  width: 400px;
+  height: 780px;
 `
 
 function MyApp(): JSX.Element {

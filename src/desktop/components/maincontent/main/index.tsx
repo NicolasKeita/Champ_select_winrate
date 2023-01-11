@@ -105,8 +105,8 @@ function ChampSelect() {
 		return <div>{profiles}</div>
 	}
 
-	const allies = champSelectDisplayed.allies.map((ally) => ally.champ)
-	const enemies = champSelectDisplayed.enemies.map((enemy) => enemy.champ)
+	const allies = champSelectDisplayed.allies.map((ally) => ally.scoreDisplayed)
+	const enemies = champSelectDisplayed.enemies.map((enemy) => enemy.scoreDisplayed)
 	const winrate = computeWinrate(allies, enemies)
 	const tooltipNumber = 'Numbers are coming from your own settings. Check your settings (top right icon) to change the default.'
 	return (

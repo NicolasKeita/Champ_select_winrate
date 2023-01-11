@@ -5,13 +5,13 @@
 
 import {Champion} from '../../components/maincontent/settings/Champion'
 
-export default function computeWinrate(allies: Champion[], enemies: Champion[]): number {
+export default function computeWinrate(alliesScores: number[], enemiesScores: number[]): number {
 	let sumAllies = 0
 	let sumEnemies = 0
-	for (const ally of allies)
-		sumAllies += ally.opScore_user != undefined ? ally.opScore_user : 50
-	for (const enemy of enemies)
-		sumEnemies += enemy.opScore_user != undefined ? enemy.opScore_user : 50
+	for (const allyScore of alliesScores)
+		sumAllies += allyScore
+	for (const enemyScore of enemiesScores)
+		sumEnemies += enemyScore
 	let winRate = (sumAllies / 5 - sumEnemies / 5) / 2 + 50
 	let isInferiorTo50 = false
 	if (winRate < 50) {

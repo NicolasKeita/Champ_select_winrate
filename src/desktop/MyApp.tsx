@@ -27,6 +27,8 @@ const MyAppContainer = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1;
+  width: 400px;
+  height: 780px;
 `
 
 function MyApp(): JSX.Element {
@@ -67,11 +69,11 @@ function MyApp(): JSX.Element {
 	let Footer: JSX.Element
 	// const testADBoolean = localStorage.getItem('owAdsForceAdUnit')
 	// if (true) {
-	// Footer = <FooterAD />
+	Footer = <FooterAD />
 	// } else
-	Footer = <ReplacementFooterAD />
+	// Footer = <ReplacementFooterAD />
 	return (
-		<MyAppContainer id='myApp'>
+		<MyAppContainer aria-label='myApp'>
 			<Header />
 			<MainContent />
 			{Footer}
