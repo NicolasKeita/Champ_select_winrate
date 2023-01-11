@@ -18,11 +18,11 @@ const MyAppContainer = styled.div`
 function MyApp(): JSX.Element {
 
 	let Footer: JSX.Element
-	const testADBoolean = localStorage.getItem('owAdsForceAdUnit')
-	if (testADBoolean == 'Ad_test') {
-		Footer = <FooterAD />
-	} else
-		Footer = <ReplacementFooterAD />
+	// const testADBoolean = localStorage.getItem('owAdsForceAdUnit')
+	// if (testADBoolean == 'Ad_test') {
+	Footer = <FooterAD />
+	// } else
+	// 	Footer = <ReplacementFooterAD />
 	return (
 		<MyAppContainer>
 			<Header />

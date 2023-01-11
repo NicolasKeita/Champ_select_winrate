@@ -35,6 +35,7 @@ import {RootState} from '@utils/store/store'
 export type ChampDisplayedType = {
 	assignedRole: string
 	champ: Champion
+	scoreDisplayed: number
 	recommendations: Champion[]
 }
 
@@ -67,11 +68,13 @@ function initChampSelectDisplayed() {
 	for (let i = 0; i < 5; ++i) {
 		champSelectDisplayed.allies.push({
 			assignedRole: '',
+			scoreDisplayed: 50,
 			champ: getDefaultChampion(),
 			recommendations: getDefaultRecommendations()
 		})
 		champSelectDisplayed.enemies.push({
 			assignedRole: '',
+			scoreDisplayed: 50,
 			champ: getDefaultChampion(),
 			recommendations: getDefaultRecommendations()
 		})
@@ -134,9 +137,11 @@ function updateChampSelectDisplayedScores(champSelectDisplayed: ChampSelectDispl
 		return
 	for (const ally of champSelectDisplayed.allies) {
 		ally.champ.opScore_user = allChampsToQueryFulfilled[`${ally.champ.name}`]
+		ally.scoreDisplayed = ally.champ.opScore_user || 50
 	}
-	for (const enemy of champSelectDisplayed.allies) {
+	for (const enemy of champSelectDisplayed.enemies) {
 		enemy.champ.opScore_user = allChampsToQueryFulfilled[`${enemy.champ.name}`]
+		enemy.scoreDisplayed = enemy.champ.opScore_user || 50
 	}
 }
 
@@ -175,55 +180,54 @@ type FillChampSelectDisplayedParamType = {
 	myTeam: never[]
 }
 
-function updateAllChampsWithTags(allies: ChampDisplayedType[], enemies: ChampDisplayedType[], allChampsCopy: Champion[]) {
-	for (const ally of allies) {
-		if (
-			ally.champ.tags.strongAgainst.includes(championAttributes.LANE_BULLY) && enemies.find((enemy => {
-				enemy.champ.tags.attributes.includes(championAttributes.LANE_BULLY)
-			}))
-		) {
-			allChampsCopy.forEach((champ, i, allChamps) => {
-				if (champ.tags.strongAgainst.includes(championAttributes.LANE_BULLY)) {
-					if (allChamps[i].opScore_user != undefined) {
-						// @ts-ignore
-						allChamps[i]['opScore_user'] += 5
-					}
-				}
-			})
-		}
+function updateAllChampsWithTags(allies: ChampDisplayedType[], enemies: ChampDisplayedType[], allChampsCopy: Champion[], playerId: number) {
+	console.log('Update champs')
+	const ally = allies[playerId]
+	// for (const ally of allies) {
+	let laneBullyBonus: boolean = ally.champ.tags.strongAgainst.includes(championAttributes.LANE_BULLY) && !!enemies.find((enemy =>
+		enemy.champ.tags.attributes.includes(championAttributes.LANE_BULLY)))
+	let healerIshBonus: boolean = ally.champ.tags.strongAgainst.includes(championAttributes.HEALER_ISH) && !!enemies.find((enemy =>
+		enemy.champ.tags.attributes.includes(championAttributes.HEALER_ISH)))
+	let unkillableLanerBonus: boolean = ally.champ.tags.strongAgainst.includes(championAttributes.UNKILLABLE_LANER) && !!enemies.find((enemy =>
+		enemy.champ.tags.attributes.includes(championAttributes.UNKILLABLE_LANER)))
 
+	let laneBullyPenalty: boolean = ally.champ.tags.weakAgainst.includes(championAttributes.LANE_BULLY) && !!enemies.find((enemy =>
+		enemy.champ.tags.attributes.includes(championAttributes.LANE_BULLY)))
+	let healerIshPenalty: boolean = ally.champ.tags.weakAgainst.includes(championAttributes.HEALER_ISH) && !!enemies.find((enemy =>
+		enemy.champ.tags.attributes.includes(championAttributes.HEALER_ISH)))
+	let unkillableLanerPenalty: boolean = ally.champ.tags.weakAgainst.includes(championAttributes.UNKILLABLE_LANER) && !!enemies.find((enemy =>
+		enemy.champ.tags.attributes.includes(championAttributes.UNKILLABLE_LANER)))
 
-		if (
-			ally.champ.tags.strongAgainst.includes(championAttributes.UNKILLABLE_LANER) && enemies.find((enemy => {
-				enemy.champ.tags.attributes.includes(championAttributes.UNKILLABLE_LANER)
-			}))
-		) {
-			allChampsCopy.forEach((champ, i, allChamps) => {
-				if (champ.tags.strongAgainst.includes(championAttributes.UNKILLABLE_LANER)) {
-					if (allChamps[i].opScore_user != undefined) {
-						// @ts-ignore
-						allChamps[i]['opScore_user'] += 5
-					}
-				}
-			})
-		}
-
-		if (
-			ally.champ.tags.strongAgainst.includes(championAttributes.HEALER_ISH) && enemies.find((enemy => {
-				enemy.champ.tags.attributes.includes(championAttributes.HEALER_ISH)
-			}))
-		) {
-			console.log('UP', ally.champ.name)
-			allChampsCopy.forEach((champ, i, allChamps) => {
-				if (champ.tags.strongAgainst.includes(championAttributes.HEALER_ISH)) {
-					if (allChamps[i].opScore_user != undefined) {
-						// @ts-ignore
-						allChamps[i]['opScore_user'] += 5
-					}
-				}
-			})
-		}
+	if (laneBullyBonus || healerIshBonus || unkillableLanerBonus) {
+		ally.scoreDisplayed += 5
 	}
+	if (laneBullyPenalty || healerIshPenalty || unkillableLanerPenalty) {
+		ally.scoreDisplayed -= 5
+	}
+	// }
+	// for (const enemy of enemies) {
+	const enemy = enemies[playerId]
+	laneBullyBonus = enemy.champ.tags.strongAgainst.includes(championAttributes.LANE_BULLY) && !!allies.find((ally =>
+		ally.champ.tags.attributes.includes(championAttributes.LANE_BULLY)))
+	healerIshBonus = enemy.champ.tags.strongAgainst.includes(championAttributes.HEALER_ISH) && !!allies.find((ally =>
+		ally.champ.tags.attributes.includes(championAttributes.HEALER_ISH)))
+	unkillableLanerBonus = enemy.champ.tags.strongAgainst.includes(championAttributes.UNKILLABLE_LANER) && !!allies.find((ally =>
+		ally.champ.tags.attributes.includes(championAttributes.UNKILLABLE_LANER)))
+
+	laneBullyPenalty = enemy.champ.tags.weakAgainst.includes(championAttributes.LANE_BULLY) && !!allies.find((ally =>
+		ally.champ.tags.attributes.includes(championAttributes.LANE_BULLY)))
+	healerIshPenalty = enemy.champ.tags.weakAgainst.includes(championAttributes.HEALER_ISH) && !!allies.find((ally =>
+		ally.champ.tags.attributes.includes(championAttributes.HEALER_ISH)))
+	unkillableLanerPenalty = enemy.champ.tags.weakAgainst.includes(championAttributes.UNKILLABLE_LANER) && !!allies.find((ally =>
+		ally.champ.tags.attributes.includes(championAttributes.UNKILLABLE_LANER)))
+
+	if (laneBullyBonus || healerIshBonus || unkillableLanerBonus) {
+		enemy.scoreDisplayed += 5
+	}
+	if (laneBullyPenalty || healerIshPenalty || unkillableLanerPenalty) {
+		enemy.scoreDisplayed -= 5
+	}
+	// }
 }
 
 function getRecommendations(allies: ChampDisplayedType[], enemies: ChampDisplayedType[], playerId: number, allChamps: Champion[]): Champion[] {
@@ -231,7 +235,7 @@ function getRecommendations(allies: ChampDisplayedType[], enemies: ChampDisplaye
 	if (assignedRole == '')
 		assignedRole = 'utility'
 	const allChampsCopy = copy(allChamps)
-	updateAllChampsWithTags(allies, enemies, allChampsCopy)
+	updateAllChampsWithTags(allies, enemies, allChampsCopy, playerId)
 
 	const allChampsFilteredWithRoleCopy = allChampsCopy.filter(champ => champ.role == assignedRole)
 	if (allChampsFilteredWithRoleCopy.length == 0)
@@ -418,17 +422,17 @@ export const fillChampSelectDisplayed = createAsyncThunk<ChampSelectDisplayedTyp
 				} of action) {
 					if (type == 'pick') {
 						if (isAllyAction) {
-							// fillChampNameAndImgUrlFromId(allies[actorCellId].champ, championId) //TODO FIX BOTH REWORK
 							if (championId != 0) {
 								allies[actorCellId].champ = allChamps.find((champ) => champ.id == championId) || getDefaultChampion()
+								allies[actorCellId].scoreDisplayed = allies[actorCellId].champ.opScore_user || 50
 							}
 							fillAssignedRoleAndRecommendations(allies, enemies, thunkParam.myTeam, actorCellId, allChamps)
 						} else {
 							if (championId != 0) {
-								enemies[actorCellIdEnemy++].champ = allChamps.find((champ) => champ.id == championId) || getDefaultChampion()
+								enemies[actorCellIdEnemy].champ = allChamps.find((champ) => champ.id == championId) || getDefaultChampion()
+								enemies[actorCellIdEnemy].scoreDisplayed = enemies[actorCellIdEnemy].champ.opScore_user || 50
+								actorCellIdEnemy++
 							}
-							// fillChampNameAndImgUrlFromId(enemies[actorCellIdEnemy].champ, championId)
-							// actorCellIdEnemy += 1
 						}
 					}
 				}
@@ -445,6 +449,7 @@ export const fillChampSelectDisplayed = createAsyncThunk<ChampSelectDisplayedTyp
 							actorCellId -= 5
 						if (championId != 0) {
 							allies[actorCellId].champ = allChamps.find((champ) => champ.id == championId) || getDefaultChampion()
+							allies[actorCellId].scoreDisplayed = allies[actorCellId].champ.opScore_user || 50
 						}
 						fillAssignedRoleAndRecommendations(allies, enemies, thunkParam.myTeam, actorCellId, allChamps, isActorCellRightSide)
 					} else {
@@ -452,6 +457,7 @@ export const fillChampSelectDisplayed = createAsyncThunk<ChampSelectDisplayedTyp
 							actorCellId -= 5
 						if (championId != 0) {
 							enemies[actorCellId].champ = allChamps.find((champ) => champ.id == championId) || getDefaultChampion()
+							enemies[actorCellId].scoreDisplayed = enemies[actorCellId].champ.opScore_user || 50
 						}
 					}
 				}

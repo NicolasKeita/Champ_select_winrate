@@ -4,17 +4,24 @@
     Path + Filename: src/desktop/components/footerAD/myContextMenu.tsx
 */
 
-import React, {useEffect} from 'react'
+import React, {useEffect, useReducer, useRef} from 'react'
 import styled from 'styled-components'
-// import {OwAd} from '@overwolf/types'
+import replacementFooterADimg from '@public/img/ReplacementFooterAD.jpg'
+import ReplacementFooterAD from './replacement'
 
 const FooterContainer = styled.footer`
   flex: 1;
+  //height: 300px;
+  //width: 400px;
 `
 
 const ADcontainer = styled.img``
 
+let g_errorAD = 0
+
 function FooterAD() {
+	const adReplacementContainer = useRef(null)
+	const [ignored, forceUpdate] = useReducer(x => x + 1, 0)
 	const kWindowName = 'desktop'
 	let adEnabled = false,
 		updateWindowIsVisibleInterval = null,
@@ -53,8 +60,10 @@ function FooterAD() {
 		const shouldEnable = windowIsOpen && windowIsVisible
 		if (adEnabled !== shouldEnable) {
 			adEnabled = shouldEnable
-			if (shouldEnable) createAd()
-			else removeAd()
+			if (shouldEnable)
+				createAd()
+			else
+				removeAd()
 		}
 	}
 
@@ -68,6 +77,11 @@ function FooterAD() {
 			document.body.appendChild(el)
 		}).catch(() => {
 			console.error('CSW_error : couldn\'t connect to ' + 'https://content.overwolf.com/libs/ads/latest/owads.min.js' + '. Check your internet connection?')
+			adReplacementContainer.hidden = false
+			const adCont = document.getElementById('adContainer')
+			if (adCont) {
+				adCont.hidden = true
+			}
 		})
 	}
 
@@ -97,8 +111,18 @@ function FooterAD() {
 		adInstance.addEventListener('complete', () => {})
 		adInstance.addEventListener('ow_internal_rendered', () => {})
 		adInstance.addEventListener('error', e => {
-			console.log('OwAd instance error:')
+			console.log('CSW_error: OwAd instance error:')
 			console.error(e)
+			g_errorAD += 1
+			adInstance.shutdown()
+			forceUpdate()
+			if (g_errorAD > 3) {
+				adReplacementContainer.hidden = false
+				const adCont = document.getElementById('adContainer')
+				if (adCont) {
+					adCont.hidden = true
+				}
+			}
 		})
 	}
 
@@ -147,12 +171,28 @@ function FooterAD() {
 		updateAd()
 	}
 
+	if (g_errorAD > 3) {
+		adReplacementContainer.hidden = false
+		const adCont = document.getElementById('adContainer')
+		if (adCont) {
+			adCont.hidden = true
+		}
+	} else {
+		adReplacementContainer.hidden = true
+	}
+	init()
 	useEffect(() => {
-		init()
 	}, [])
 	return (
 		<>
-			<FooterContainer id={'adContainer'}></FooterContainer>
+			<FooterContainer id={'adContainer'}>
+			</FooterContainer>
+			<img
+				ref={adReplacementContainer}
+				src={replacementFooterADimg}
+				alt={'replacementFooterADimg'}
+				height={308}
+			/>
 		</>
 	)
 }

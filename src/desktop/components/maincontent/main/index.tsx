@@ -87,13 +87,13 @@ function ChampSelect() {
 		for (let i = 0; i < 5; ++i) {
 			const img = isEnemyTeam ? champSelectDisplayed.enemies[i].champ.imageUrl : champSelectDisplayed.allies[i].champ.imageUrl
 			const champName = isEnemyTeam ? champSelectDisplayed.enemies[i].champ.name : champSelectDisplayed.allies[i].champ.name
-			const champScore = isEnemyTeam ? champSelectDisplayed.enemies[i].champ.opScore_user : champSelectDisplayed.allies[i].champ.opScore_user
+			const champScore = isEnemyTeam ? champSelectDisplayed.enemies[i].scoreDisplayed : champSelectDisplayed.allies[i].scoreDisplayed
 			const champRecommendation = isEnemyTeam ? [] : champSelectDisplayed.allies[i].recommendations
 			profiles.push(<ChampionProfile isEnemyTeam={isEnemyTeam}
 										   key={uniqid()}
 										   img={img ? img : questionMark}
 										   champName={champName}
-										   champScore={champScore != undefined ? champScore : 50}
+										   champDisplayedScore={champScore != undefined ? champScore : 50}
 										   champRecommendation={champRecommendation}
 										   champSelectDisplayed={champSelectDisplayed}
 										   index={i}

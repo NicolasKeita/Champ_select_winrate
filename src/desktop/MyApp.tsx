@@ -65,11 +65,11 @@ function MyApp(): JSX.Element {
 	}, [dispatch])
 
 	let Footer: JSX.Element
-	const testADBoolean = localStorage.getItem('owAdsForceAdUnit')
-	if (testADBoolean == 'Ad_test') {
-		Footer = <FooterAD />
-	} else
-		Footer = <ReplacementFooterAD />
+	// const testADBoolean = localStorage.getItem('owAdsForceAdUnit')
+	// if (true) {
+	// Footer = <FooterAD />
+	// } else
+	Footer = <ReplacementFooterAD />
 	return (
 		<MyAppContainer id='myApp'>
 			<Header />

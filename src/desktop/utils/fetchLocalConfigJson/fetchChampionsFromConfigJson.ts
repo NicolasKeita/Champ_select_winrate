@@ -14,11 +14,21 @@ function addToArrayNoDuplicate(myArray, value) {
 }
 
 function adjustTags(tags: ChampionTagsType) {
+
 	if (tags.attributes.includes(championAttributes.HEALER_ISH)) {
 		addToArrayNoDuplicate(tags.weakAgainst, championAttributes.POTENTIAL_GREVIOUS_WOUNDS)
 	}
 	if (tags.attributes.includes(championAttributes.JUNGLE_GANKER) || tags.attributes.includes(championAttributes.LANE_BULLY)) {
 		addToArrayNoDuplicate(tags.weakAgainst, championAttributes.UNKILLABLE_LANER)
+	}
+
+
+	if (tags.attributes.includes(championAttributes.POTENTIAL_GREVIOUS_WOUNDS)) {
+		addToArrayNoDuplicate(tags.strongAgainst, championAttributes.HEALER_ISH)
+	}
+	if (tags.attributes.includes(championAttributes.UNKILLABLE_LANER)) {
+		addToArrayNoDuplicate(tags.strongAgainst, championAttributes.JUNGLE_GANKER)
+		addToArrayNoDuplicate(tags.strongAgainst, championAttributes.LANE_BULLY)
 	}
 	return tags
 }

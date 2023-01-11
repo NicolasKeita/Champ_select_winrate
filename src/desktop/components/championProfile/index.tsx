@@ -64,7 +64,7 @@ interface PropsType {
 	isEnemyTeam: boolean,
 	champName: string,
 	img: string,
-	champScore: number,
+	champDisplayedScore: number,
 	champRecommendation: Champion[],
 	champSelectDisplayed: ChampSelectDisplayedType,
 	index: number
@@ -117,7 +117,7 @@ function ChampionProfile(props: PropsType): JSX.Element {
 				<ChampPowerAndRecommendations
 					aria-label={'Champion Power and Recommendations'}
 					isEnemyTeam={props.isEnemyTeam}>
-					<ChampionPower>{props.champScore}</ChampionPower>
+					<ChampionPower>{props.champDisplayedScore}</ChampionPower>
 					{renderChampionRecommendation()}
 				</ChampPowerAndRecommendations>
 			</ProfileItems>

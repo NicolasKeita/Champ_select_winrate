@@ -14,7 +14,7 @@
 		"splash_image": "OWassets/IconMouseOver.png",
 		"window_icon": "OWassets/IconMouseOver.png"
 	},
-	"permissions": ["GameInfo", "Extensions", "Streaming", "Profile"],
+	"permissions": ["GameInfo", "Extensions", "Streaming", "Profile", "DesktopStreaming"],
 	"data": {
 		"start_window": "background",
 		"protocol_override_domains": {
