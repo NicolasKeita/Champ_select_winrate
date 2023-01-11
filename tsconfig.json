@@ -51,6 +51,9 @@
 	],
 	"include": [
 		"index.d.ts",
+		"node_modules/@overwolf/types/owads.d.ts",
+		"owads.ts",
+		"src/types/owads.ts",
 		"src/"
 	]
 }

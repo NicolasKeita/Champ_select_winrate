@@ -2,28 +2,28 @@
     Path + Filename: src/desktop/components/footerAD/myContextMenu.tsx
 */
 
-import React, {useEffect, useReducer, useRef} from 'react'
+import React, {useEffect, useRef} from 'react'
 import replacementFooterADimg from '@public/img/ReplacementFooterAD.jpg'
-import ReplacementFooterAD from './replacement'
 import {kWindowNames} from '../../../consts'
-import {OwAd} from '@overwolf/types/owads'
+import OwAdMocking from '../../../types/owads'
 
-let g_errorAD = 0
+type PropsType = {
+	windowName: string
+}
 
-//TODO there is a TS no check at the top of the file
-function FooterAD() {
+function FooterAD(props: PropsType) {
 	console.log('Footer Rendered')
 	const adContainerRef = useRef<HTMLElement>(null)
-	const adReplacementContainer = useRef(null)
-	const [_, forceUpdate] = useReducer(x => x + 1, 0)
+	const adReplacementContainer = useRef<HTMLImageElement>(null)
 	let adEnabled = false,
-		updateWindowIsVisibleInterval = null,
+		updateWindowIsVisibleInterval: NodeJS.Timer | null = null,
 		windowIsOpen = false,
 		windowIsVisible = false,
-		adInstance: OwAd | null = null
+		adInstance: OwAdMocking | null = null
 
 	function setTab(tab) {
 		document.querySelectorAll(`[data-tab]`).forEach(el => {
+			// @ts-ignore
 			if (el.dataset.tab === tab) {
 				el.classList.add('active')
 			} else {
@@ -32,6 +32,7 @@ function FooterAD() {
 		})
 
 		document.querySelectorAll(`.tab-content`).forEach(el => {
+			// @ts-ignore
 			el.hidden = Boolean(el.id !== tab)
 		})
 	}
@@ -39,6 +40,7 @@ function FooterAD() {
 	function registerListeners() {
 		document.querySelectorAll('[data-tab]').forEach(el => {
 			el.addEventListener('click', () => {
+				// @ts-ignore
 				setTab(el.dataset.tab)
 			})
 		})
@@ -70,11 +72,11 @@ function FooterAD() {
 			document.body.appendChild(el)
 		}).catch(() => {
 			console.error('CSW_error : couldn\'t connect to ' + 'https://content.overwolf.com/libs/ads/latest/owads.min.js' + '. Check your internet connection?')
-			adReplacementContainer.hidden = false
-			const adCont = document.getElementById('adContainer')
-			if (adCont) {
-				adCont.hidden = true
-			}
+			// adReplacementContainer.hidden = false
+			// const adCont = document.getElementById('adContainer')
+			// if (adCont) {
+			// adCont.hidden = true
+			// }
 		})
 	}
 
@@ -90,39 +92,43 @@ function FooterAD() {
 			adInstance.refreshAd(null)
 			return
 		}
-		const adCont = adContainerRef.current
+		const adCont: HTMLElement | null = adContainerRef.current
 		if (!adCont) {
 			console.log('CSW_error: AdContainer not defined yet')
 			return
 		}
-		adInstance = new OwAd(adCont, {
-			size: {
-				width: 400,
-				height: 300
-			}
-		})
-		window.OwAd = adInstance
-		adInstance.addEventListener('player_loaded', () => {})
-		adInstance.addEventListener('display_ad_loaded', () => {})
-		adInstance.addEventListener('play', () => {})
-		adInstance.addEventListener('impression', () => {})
-		adInstance.addEventListener('complete', () => {})
-		adInstance.addEventListener('ow_internal_rendered', () => {})
-		adInstance.addEventListener('error', e => {
-			console.log('CSW_error: OwAd instance error:')
-			console.error(e)
-			g_errorAD += 1
-			if (adInstance) {
-				adInstance.removeAd()
-				// forceUpdate()
-				if (g_errorAD > 3) {
-					// adReplacementContainer.hidden = false
-					if (adContainerRef.current) {
-						// adContainerRef.current.hidden = true
-					}
+		try {
+			// @ts-ignore
+			adInstance = new OwAd(adCont, {
+				size: {
+					width: 400,
+					height: 300
 				}
-			}
-		})
+			})
+		} catch (e) {
+			console.log('CSW_error: OwAd constructor exception caught')
+			console.error(e)
+			adInstance = null
+		}
+		if (adInstance) {
+			window.OwAd = adInstance
+			adInstance.addEventListener('player_loaded', () => {})
+			adInstance.addEventListener('display_ad_loaded', () => {})
+			adInstance.addEventListener('play', () => {})
+			adInstance.addEventListener('impression', () => {})
+			adInstance.addEventListener('complete', () => {})
+			adInstance.addEventListener('ow_internal_rendered', () => {})
+			adInstance.addEventListener('error', e => {
+				console.log('CSW_error: OwAd instance error:')
+				console.error(e)
+				adCont.hidden = true
+				if (adReplacementContainer.current)
+					adReplacementContainer.current.hidden = false
+				if (adInstance) {
+					adInstance.removeAd()
+				}
+			})
+		}
 	}
 
 	function onWindowStateChanged(state) {
@@ -139,6 +145,7 @@ function FooterAD() {
 		const state = await new Promise(resolve => {
 			overwolf.windows.isWindowVisibleToUser(resolve)
 		})
+		// @ts-ignore
 		return state && state.success && state.visible !== 'hidden'
 	}
 
@@ -153,9 +160,11 @@ function FooterAD() {
 
 	async function getWindowIsOpen() {
 		const state = await new Promise(resolve => {
-			overwolf.windows.getWindowState(kWindowNames.desktop, resolve)
+			overwolf.windows.getWindowState(props.windowName, resolve)
 		})
+		// @ts-ignore
 		if (state && state.success && state.window_state_ex) {
+			// @ts-ignore
 			return state.window_state_ex === 'normal'
 		}
 		return false
@@ -170,29 +179,23 @@ function FooterAD() {
 		updateAd()
 	}
 
-	// if (g_errorAD > 3) {
-	// 	adReplacementContainer.hidden = false
-	// 	const adCont = document.getElementById('adContainer')
-	// 	if (adCont) {
-	// 		adCont.hidden = true
-	// 	}
-	// } else {
-	// 	adReplacementContainer.hidden = true
-	// }
 	useEffect(() => {
 		init()
 	})
 	return (
-		<footer
-			ref={adContainerRef}
-			style={{height: 400, width: 300}}
-		/>
-		// {/*<img*/}
-		// {/*	ref={adReplacementContainer}*/}
-		// {/*	src={replacementFooterADimg}*/}
-		// {/*	alt={'replacementFooterADimg'}*/}
-		// {/*	height={308}*/}
-		// {/*/>*/}
+		<>
+			<footer
+				ref={adContainerRef}
+				style={{height: 400, width: 300}}
+			/>
+			<img
+				ref={adReplacementContainer}
+				hidden={true}
+				src={replacementFooterADimg}
+				alt={'replacementFooterADimg'}
+				height={308}
+			/>
+		</>
 	)
 }
 

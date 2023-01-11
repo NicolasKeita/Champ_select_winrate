@@ -8,6 +8,7 @@ import Header from './header'
 import ReplacementFooterAD from '../desktop/components/footerAD/replacement'
 import Settings from './settingsComponent'
 import FooterAD from '../desktop/components/footerAD'
+import {kWindowNames} from '../consts'
 
 const MyAppContainer = styled.div`
   display: flex;
@@ -22,7 +23,7 @@ function MyApp(): JSX.Element {
 	let Footer: JSX.Element
 	// const testADBoolean = localStorage.getItem('owAdsForceAdUnit')
 	// if (testADBoolean == 'Ad_test') {
-	Footer = <FooterAD />
+	Footer = <FooterAD windowName={kWindowNames.settings} />
 	// } else
 	// 	Footer = <ReplacementFooterAD />
 	return (

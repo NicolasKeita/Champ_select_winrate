@@ -22,6 +22,7 @@ import {doWithRetry} from 'do-with-retry'
 import {addLCU_listeners} from '@utils/LCU_API_connector/addLCU_listeners'
 import {AppDispatch} from '@utils/store/store'
 import FooterAD from './components/footerAD'
+import {kWindowNames} from '../consts'
 
 const MyAppContainer = styled.div`
   display: flex;
@@ -69,7 +70,7 @@ function MyApp(): JSX.Element {
 	let Footer: JSX.Element
 	// const testADBoolean = localStorage.getItem('owAdsForceAdUnit')
 	// if (true) {
-	Footer = <FooterAD />
+	Footer = <FooterAD windowName={kWindowNames.desktop} />
 	// } else
 	// Footer = <ReplacementFooterAD />
 	return (
