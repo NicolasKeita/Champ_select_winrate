@@ -180,29 +180,28 @@ type FillChampSelectDisplayedParamType = {
 	myTeam: never[]
 }
 
-function getTagBonus(ally: Champion, enemy: Champion): number {
-	const laneBullyBonus: boolean = ally.tags.strongAgainst.includes(championAttributes.LANE_BULLY) && enemy.tags.attributes.includes(championAttributes.LANE_BULLY)
-	const healerIshBonus: boolean = ally.tags.strongAgainst.includes(championAttributes.HEALER_ISH) && enemy.tags.attributes.includes(championAttributes.HEALER_ISH)
-	const unkillableLanerBonus: boolean = ally.tags.strongAgainst.includes(championAttributes.UNKILLABLE_LANER) && enemy.tags.attributes.includes(championAttributes.UNKILLABLE_LANER)
-
-	const laneBullyPenalty: boolean = ally.tags.weakAgainst.includes(championAttributes.LANE_BULLY) && enemy.tags.attributes.includes(championAttributes.LANE_BULLY)
-	const healerIshPenalty: boolean = ally.tags.weakAgainst.includes(championAttributes.HEALER_ISH) && enemy.tags.attributes.includes(championAttributes.HEALER_ISH)
-	const unkillableLanerPenalty: boolean = ally.tags.weakAgainst.includes(championAttributes.UNKILLABLE_LANER) && enemy.tags.attributes.includes(championAttributes.UNKILLABLE_LANER)
-
-	//TODO how to use pairs in js?
-	const arrayBonusAndPenalty = [[laneBullyBonus, +5], [healerIshBonus, +5],
-		[unkillableLanerBonus, +5], [laneBullyPenalty, -5],
-		[healerIshPenalty, -5], [unkillableLanerPenalty, -5]]
-	const arrayBonusAndPenaltyFiltered = arrayBonusAndPenalty.filter(elem => elem[0] == true)
-	//DEBUG
-	// console.log(ally.name)
-	// console.log(arrayBonusAndPenaltyFiltered)
-
-	let sumBonusPenalties = 0
-	for (const bonusAndPenalty of arrayBonusAndPenaltyFiltered) {
-		sumBonusPenalties += bonusAndPenalty[1] as number
+function getTagBonus(tagsAlly, tagsEnemy, tag, bonusAmount: number) {
+	let bonus = 0
+	if (tagsEnemy.attributes.includes(tag)) {
+		if (tagsAlly.strongAgainst.includes(tag)) {
+			bonus = +bonusAmount
+		} else if (tagsAlly.weakAgainst.includes(tag)) {
+			bonus = -bonusAmount
+		}
 	}
-	return sumBonusPenalties
+	return bonus
+}
+
+function getTagsBonuses(ally: Champion, enemy: Champion): number {
+	const laneBullyBonus: number = getTagBonus(ally.tags, enemy.tags,
+		championAttributes.LANE_BULLY, 5)
+	const healerIshBonus: number = getTagBonus(ally.tags, enemy.tags,
+		championAttributes.HEALER_ISH, 5)
+	const unkillableLanerBonus: number = getTagBonus(ally.tags, enemy.tags,
+		championAttributes.UNKILLABLE_LANER, 5)
+	const junglerGankerBonus: number = getTagBonus(ally.tags, enemy.tags,
+		championAttributes.JUNGLE_GANKER, 5)
+	return laneBullyBonus + healerIshBonus + unkillableLanerBonus + junglerGankerBonus
 }
 
 
@@ -210,62 +209,10 @@ function updateDisplayedScoresWithTags(allies: ChampDisplayedType[], enemies: Ch
 	for (const ally of allies) {
 		let sumBonus = 0
 		for (const enemy of enemies) {
-			sumBonus += getTagBonus(ally.champ, enemy.champ)
+			sumBonus += getTagsBonuses(ally.champ, enemy.champ)
 		}
 		ally.scoreDisplayed = (ally.champ.opScore_user || 50) + sumBonus
 	}
-
-	//TODO do the ennemy side aswell
-	// for (const enemy of enemies) {
-	// 	let sumBonus = 0
-	// 	for (const ally of allies) {
-	// 		sumBonus += getTagBonus(ally.champ, enemy.champ)
-	// 	}
-	// 	ally.scoreDisplayed = (ally.champ.opScore_user || 50) + sumBonus
-	// }
-
-	// const ally = allies[playerId]
-	// let laneBullyBonus: boolean = ally.champ.tags.strongAgainst.includes(championAttributes.LANE_BULLY) && !!enemies.find((enemy =>
-	// 	enemy.champ.tags.attributes.includes(championAttributes.LANE_BULLY)))
-	// let healerIshBonus: boolean = ally.champ.tags.strongAgainst.includes(championAttributes.HEALER_ISH) && !!enemies.find((enemy =>
-	// 	enemy.champ.tags.attributes.includes(championAttributes.HEALER_ISH)))
-	// let unkillableLanerBonus: boolean = ally.champ.tags.strongAgainst.includes(championAttributes.UNKILLABLE_LANER) && !!enemies.find((enemy =>
-	// 	enemy.champ.tags.attributes.includes(championAttributes.UNKILLABLE_LANER)))
-	//
-	// let laneBullyPenalty: boolean = ally.champ.tags.weakAgainst.includes(championAttributes.LANE_BULLY) && !!enemies.find((enemy =>
-	// 	enemy.champ.tags.attributes.includes(championAttributes.LANE_BULLY)))
-	// let healerIshPenalty: boolean = ally.champ.tags.weakAgainst.includes(championAttributes.HEALER_ISH) && !!enemies.find((enemy =>
-	// 	enemy.champ.tags.attributes.includes(championAttributes.HEALER_ISH)))
-	// let unkillableLanerPenalty: boolean = ally.champ.tags.weakAgainst.includes(championAttributes.UNKILLABLE_LANER) && !!enemies.find((enemy =>
-	// 	enemy.champ.tags.attributes.includes(championAttributes.UNKILLABLE_LANER)))
-	//
-	// if (laneBullyBonus || healerIshBonus || unkillableLanerBonus) {
-	// 	ally.scoreDisplayed += 5
-	// }
-	// if (laneBullyPenalty || healerIshPenalty || unkillableLanerPenalty) {
-	// 	ally.scoreDisplayed -= 5
-	// }
-	// const enemy = enemies[playerId]
-	// laneBullyBonus = enemy.champ.tags.strongAgainst.includes(championAttributes.LANE_BULLY) && !!allies.find((ally =>
-	// 	ally.champ.tags.attributes.includes(championAttributes.LANE_BULLY)))
-	// healerIshBonus = enemy.champ.tags.strongAgainst.includes(championAttributes.HEALER_ISH) && !!allies.find((ally =>
-	// 	ally.champ.tags.attributes.includes(championAttributes.HEALER_ISH)))
-	// unkillableLanerBonus = enemy.champ.tags.strongAgainst.includes(championAttributes.UNKILLABLE_LANER) && !!allies.find((ally =>
-	// 	ally.champ.tags.attributes.includes(championAttributes.UNKILLABLE_LANER)))
-	//
-	// laneBullyPenalty = enemy.champ.tags.weakAgainst.includes(championAttributes.LANE_BULLY) && !!allies.find((ally =>
-	// 	ally.champ.tags.attributes.includes(championAttributes.LANE_BULLY)))
-	// healerIshPenalty = enemy.champ.tags.weakAgainst.includes(championAttributes.HEALER_ISH) && !!allies.find((ally =>
-	// 	ally.champ.tags.attributes.includes(championAttributes.HEALER_ISH)))
-	// unkillableLanerPenalty = enemy.champ.tags.weakAgainst.includes(championAttributes.UNKILLABLE_LANER) && !!allies.find((ally =>
-	// 	ally.champ.tags.attributes.includes(championAttributes.UNKILLABLE_LANER)))
-	//
-	// if (laneBullyBonus || healerIshBonus || unkillableLanerBonus) {
-	// 	enemy.scoreDisplayed += 5
-	// }
-	// if (laneBullyPenalty || healerIshPenalty || unkillableLanerPenalty) {
-	// 	enemy.scoreDisplayed -= 5
-	// }
 }
 
 function getRecommendations(allies: ChampDisplayedType[], enemies: ChampDisplayedType[], playerId: number, allChamps: Champion[]): Champion[] {
@@ -292,22 +239,17 @@ function getRecommendations(allies: ChampDisplayedType[], enemies: ChampDisplaye
 	const allChampsFilteredWithRole = allChamps.filter(champ => champ.role == assignedRole)
 	if (allChampsFilteredWithRole.length == 0)
 		console.error('CSW_error: couldnt get recommendations')
-	const allChampsWithDisplayedScore = allChampsFilteredWithRole.map(champ => {
+	const allChampsWithDisplayedScore: [number, Champion][] = allChampsFilteredWithRole.map(champ => {
 		let displayedScore = 0
 		for (const enemy of enemies) {
-			displayedScore += getTagBonus(champ, enemy.champ)
+			displayedScore += getTagsBonuses(champ, enemy.champ)
 		}
 		displayedScore += (champ.opScore_user || 50)
 		return [displayedScore, champ]
 	})
-	// const allChampsFilteredWithRoleCopy = copy(allChampsFilteredWithRole)
-	// updateAllChampsWithTags(allies, enemies, allChampsFilteredWithRoleCopy)
-
-	// @ts-ignore
 	allChampsWithDisplayedScore.sort((a, b) => b[0] - a[0])
-
 	const firstFive = allChampsWithDisplayedScore.slice(0, 5)
-	return (firstFive.map(elem => elem[1] as Champion))
+	return (firstFive.map(elem => elem[1]))
 }
 
 export const fetchAllChampions = createAsyncThunk<Champion[]>(
