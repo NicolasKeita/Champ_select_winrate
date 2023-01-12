@@ -12,7 +12,6 @@ type PropsType = {
 }
 
 function FooterAD(props: PropsType) {
-	console.log('Footer Rendered')
 	const adContainerRef = useRef<HTMLElement>(null)
 	const adReplacementContainer = useRef<HTMLImageElement>(null)
 	let adEnabled = false,

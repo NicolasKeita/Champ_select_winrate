@@ -287,10 +287,7 @@ function getRecommendations(allies: ChampDisplayedType[], enemies: ChampDisplaye
 			assignedRole = 'utility'
 		}
 	}
-	//assignedRole = 'utility'
-	// const allChampsCopy = copy(allChamps)
 	updateDisplayedScoresWithTags(allies, enemies)
-	// updateAllChampsWithTags()
 
 	const allChampsFilteredWithRole = allChamps.filter(champ => champ.role == assignedRole)
 	if (allChampsFilteredWithRole.length == 0)
@@ -309,15 +306,6 @@ function getRecommendations(allies: ChampDisplayedType[], enemies: ChampDisplaye
 	// @ts-ignore
 	allChampsWithDisplayedScore.sort((a, b) => b[0] - a[0])
 
-	// allChampsFilteredWithRoleCopy.sort((a, b) => (
-	// 	(b.opScore_user != null && a.opScore_user != null) ? b.opScore_user - a.opScore_user : 0
-	// ))
-	// const firstFiveCopy = allChampsFilteredWithRoleCopy.slice(0, 5)
-	// const firstFive: Champion[] = []
-	// for (const elem of firstFiveCopy) {
-	// 	firstFive.push(allChamps.find((champ) => champ.id == elem.id) || getDefaultChampion())
-	// }
-	// return firstFive
 	const firstFive = allChampsWithDisplayedScore.slice(0, 5)
 	return (firstFive.map(elem => elem[1] as Champion))
 }
