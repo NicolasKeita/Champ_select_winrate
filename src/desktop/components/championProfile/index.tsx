@@ -79,26 +79,26 @@ function ChampionProfile(props: PropsType): JSX.Element {
 		const row: JSX.Element[] = []
 		//TODO same as history, big, not using tags for winrate
 		for (let i = 0; i < 5; ++i) {
-			const allies = props.champSelectDisplayed.allies.map((ally) => {
-				if (ally.champ.name == props.champName) {
-					return props.champRecommendation[i].opScore_user || 50
-				} else
-					return ally.champ.opScore_user || 50
-			})
-			const enemies = props.champSelectDisplayed.enemies.map((enemy) => enemy.champ.opScore_user || 50)
-			const winrate = computeWinrate(allies, enemies)
-			const tooltipNumber = `If this player picks ${props.champRecommendation[i].name}, your winrate changes to ${winrate}`
+			// const allies = props.champSelectDisplayed.allies.map((ally) => {
+			// 	if (ally.champ.name == props.champName) {
+			// 		return props.champRecommendation[i].opScore_user || 50
+			// 	} else
+			// 		return ally.champ.opScore_user || 50
+			// })
+			// const enemies = props.champSelectDisplayed.enemies.map((enemy) => enemy.champ.opScore_user || 50)
+			// const winrate = computeWinrate(allies, enemies)
+			// const tooltipNumber = `If this player picks ${props.champRecommendation[i].name}, your winrate changes to ${winrate}`
 			row.push(
 				<React.Fragment key={uniqid()}>
-					<Tooltip
-						placement={'top'}
-						overlayClassName={'winrateTooltip'}
-						overlay={<span>{tooltipNumber}</span>}
-					>
-						<ChampRecommendationImg
-							src={props.champRecommendation[i] ? props.champRecommendation[i].imageUrl : questionMark}
-						/>
-					</Tooltip>
+					{/*<Tooltip*/}
+					{/*	placement={'top'}*/}
+					{/*	overlayClassName={'winrateTooltip'}*/}
+					{/*	overlay={<span>{tooltipNumber}</span>}*/}
+					{/*>*/}
+					<ChampRecommendationImg
+						src={props.champRecommendation[i] ? props.champRecommendation[i].imageUrl : questionMark}
+					/>
+					{/*</Tooltip>*/}
 				</React.Fragment>
 			)
 		}

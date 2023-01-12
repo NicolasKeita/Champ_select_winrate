@@ -2504,6 +2504,7 @@ const allChamps = {
 		tags: {
 			attributes: [
 				championAttributes.RANGED,
+				championAttributes.HEALER_ISH,
 				championAttributes.AP,
 				championAttributes.UNKILLABLE_LANER
 			],

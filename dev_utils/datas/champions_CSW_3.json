@@ -1990,7 +1990,7 @@
 		"nameFormatted": "Vladimir",
 		"id": "8",
 		"tags": {
-			"attributes": ["Ranged", "AP", "Unkillable laner"],
+			"attributes": ["Ranged", "Healer-ish", "AP", "Unkillable laner"],
 			"strongAgainst": [],
 			"weakAgainst": []
 		}
