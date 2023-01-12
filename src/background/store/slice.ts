@@ -278,13 +278,13 @@ function getRecommendations(allies: ChampDisplayedType[], enemies: ChampDisplaye
 			assignedRole = 'jungle'
 		}
 		if (playerId == 2 || playerId == 7) {
-			assignedRole = 'mid'
+			assignedRole = 'middle'
 		}
 		if (playerId == 3 || playerId == 8) {
-			assignedRole = 'adc'
+			assignedRole = 'bottom'
 		}
 		if (playerId == 4 || playerId == 9) {
-			assignedRole = 'support'
+			assignedRole = 'utility'
 		}
 	}
 	//assignedRole = 'utility'
