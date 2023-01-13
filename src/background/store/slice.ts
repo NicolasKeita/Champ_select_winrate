@@ -193,15 +193,12 @@ function getTagBonus(tagsAlly, tagsEnemy, tag, bonusAmount: number) {
 }
 
 function getTagsBonuses(ally: Champion, enemy: Champion): number {
-	const laneBullyBonus: number = getTagBonus(ally.tags, enemy.tags,
-		championAttributes.LANE_BULLY, 5)
-	const healerIshBonus: number = getTagBonus(ally.tags, enemy.tags,
-		championAttributes.HEALER_ISH, 5)
-	const unkillableLanerBonus: number = getTagBonus(ally.tags, enemy.tags,
-		championAttributes.UNKILLABLE_LANER, 5)
-	const junglerGankerBonus: number = getTagBonus(ally.tags, enemy.tags,
-		championAttributes.JUNGLE_GANKER, 5)
-	return laneBullyBonus + healerIshBonus + unkillableLanerBonus + junglerGankerBonus
+	return (
+		getTagBonus(ally.tags, enemy.tags, championAttributes.LANE_BULLY, 5)
+		+ getTagBonus(ally.tags, enemy.tags, championAttributes.HEALER_ISH, 5)
+		+ getTagBonus(ally.tags, enemy.tags, championAttributes.UNKILLABLE_LANER, 5)
+		+ getTagBonus(ally.tags, enemy.tags, championAttributes.POTENTIAL_ZHONYA_OWNER, 5)
+	)
 }
 
 
