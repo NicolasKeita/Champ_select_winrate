@@ -6,6 +6,8 @@ import React, {useEffect, useRef} from 'react'
 import replacementFooterADimg from '@public/img/ReplacementFooterAD.jpg'
 import {kWindowNames} from '../../../consts'
 import OwAdMocking from '../../../types/owads'
+import GetWindowStateResult = overwolf.windows.GetWindowStateResult
+import IsWindowVisibleToUserResult = overwolf.windows.IsWindowVisibleToUserResult
 
 type PropsType = {
 	windowName: string
@@ -71,11 +73,6 @@ function FooterAD(props: PropsType) {
 			document.body.appendChild(el)
 		}).catch(() => {
 			console.error('CSW_error : couldn\'t connect to ' + 'https://content.overwolf.com/libs/ads/latest/owads.min.js' + '. Check your internet connection?')
-			// adReplacementContainer.hidden = false
-			// const adCont = document.getElementById('adContainer')
-			// if (adCont) {
-			// adCont.hidden = true
-			// }
 		})
 	}
 
@@ -141,10 +138,9 @@ function FooterAD(props: PropsType) {
 	}
 
 	async function getWindowIsVisible() {
-		const state = await new Promise(resolve => {
+		const state: IsWindowVisibleToUserResult = await new Promise(resolve => {
 			overwolf.windows.isWindowVisibleToUser(resolve)
 		})
-		// @ts-ignore
 		return state && state.success && state.visible !== 'hidden'
 	}
 
@@ -158,12 +154,10 @@ function FooterAD(props: PropsType) {
 	}
 
 	async function getWindowIsOpen() {
-		const state = await new Promise(resolve => {
+		const state: GetWindowStateResult = await new Promise(resolve => {
 			overwolf.windows.getWindowState(props.windowName, resolve)
 		})
-		// @ts-ignore
 		if (state && state.success && state.window_state_ex) {
-			// @ts-ignore
 			return state.window_state_ex === 'normal'
 		}
 		return false
