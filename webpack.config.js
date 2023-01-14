@@ -39,6 +39,9 @@ module.exports = env => {
 			path: path.resolve(__dirname, 'dist/'),
 			filename: 'js/[name].bundle.js',
 			clean: true,
+			environment: {
+				module: true
+			},
 			assetModuleFilename: 'assets/[hash][ext][query]'
 		},
 		optimization: {

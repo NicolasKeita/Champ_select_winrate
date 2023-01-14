@@ -2,7 +2,7 @@
     Path + Filename: src/desktop/components/footer/myContextMenu.tsx
 */
 
-import React, {useEffect, useState} from 'react'
+import React, {useState} from 'react'
 import styled from 'styled-components'
 import {useAppDispatch, useAppSelector} from '@utils/hooks'
 import {setFooterMessage} from '../../../../background/store/slice'
@@ -39,7 +39,6 @@ function Footer(): JSX.Element {
 		countdownDurationLimit = 1000 * 60 * 3
 	if (countdownDurationLimit < 1)
 		footerMessageID = -1
-
 
 	switch (footerMessageID) {
 		case -1:
@@ -85,11 +84,10 @@ function Footer(): JSX.Element {
 			messageDisplayed = 'League client is not open.'
 	}
 
-	useEffect(() => {
-		if (!navigator.onLine) { dispatch(setFooterMessage(100)) }
-		window.onoffline = () => { dispatch(setFooterMessage(100)) }
-		window.ononline = () => { dispatch(setFooterMessage(101)) }
-	}, [dispatch])
+	if (!navigator.onLine)
+		dispatch(setFooterMessage(100))
+	window.onoffline = () => dispatch(setFooterMessage(100))
+	window.ononline = () => dispatch(setFooterMessage(101))
 
 	const renderer = ({seconds, completed}) => {
 		if (completed) {

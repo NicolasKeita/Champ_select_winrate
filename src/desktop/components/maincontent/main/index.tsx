@@ -43,6 +43,7 @@ const PlayersGrid = styled.div`
 const TeamGrid = styled.div`
   display: flex;
   flex-direction: column;
+  flex: 1;
 `
 
 const ProfileLine = styled.div`
@@ -127,9 +128,13 @@ function ChampSelect() {
 				</Tooltip>
 				<WinrateLine />
 			</PercentageContainer>
-			<PlayersGrid>
-				<TeamGrid>{renderPlayersGrid(false)}</TeamGrid>
-				<TeamGrid>{renderPlayersGrid(true)}</TeamGrid>
+			<PlayersGrid aria-label={'PlayersGrid'}>
+				<TeamGrid aria-label={'allyTeamGrid'}>
+					{renderPlayersGrid(false)}
+				</TeamGrid>
+				<TeamGrid aria-label={'enemyTeamGrid'} isEnemyTeam>
+					{renderPlayersGrid(true)}
+				</TeamGrid>
 			</PlayersGrid>
 		</MainContainer>
 	)

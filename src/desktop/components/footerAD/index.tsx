@@ -65,7 +65,7 @@ function FooterAD(props: PropsType) {
 
 	function loadAdLib() {
 		return new Promise((resolve, reject) => {
-			const el = document.createElement('script')
+			const el: HTMLScriptElement = document.createElement('script')
 			el.src = 'https://content.overwolf.com/libs/ads/latest/owads.min.js'
 			el.async = true
 			el.onload = resolve
@@ -73,6 +73,7 @@ function FooterAD(props: PropsType) {
 			document.body.appendChild(el)
 		}).catch(() => {
 			console.error('CSW_error : couldn\'t connect to ' + 'https://content.overwolf.com/libs/ads/latest/owads.min.js' + '. Check your internet connection?')
+			hideAdContainer(adContainerRef.current, adReplacementContainer.current)
 		})
 	}
 
@@ -80,7 +81,7 @@ function FooterAD(props: PropsType) {
 		if (!window.OwAd) {
 			await loadAdLib()
 			if (!window.OwAd) {
-				console.error('Couldn\'t load OwAd')
+				console.error('CSW_Error: Couldn\'t load OwAd')
 				return
 			}
 		}
@@ -95,7 +96,7 @@ function FooterAD(props: PropsType) {
 		}
 		try {
 			// @ts-ignore
-			adInstance = new OwAd(adCont, {
+			adInstance = new window.OwAd(adCont, {
 				size: {
 					width: 400,
 					height: 300
@@ -107,7 +108,7 @@ function FooterAD(props: PropsType) {
 			adInstance = null
 		}
 		if (adInstance) {
-			window.OwAd = adInstance
+			// window.OwAd = adInstance
 			adInstance.addEventListener('player_loaded', () => {})
 			adInstance.addEventListener('display_ad_loaded', () => {})
 			adInstance.addEventListener('play', () => {})
@@ -117,14 +118,19 @@ function FooterAD(props: PropsType) {
 			adInstance.addEventListener('error', e => {
 				console.log('CSW_error: OwAd instance error:')
 				console.error(e)
-				adCont.hidden = true
-				if (adReplacementContainer.current)
-					adReplacementContainer.current.hidden = false
+				hideAdContainer(adCont, adReplacementContainer.current)
 				if (adInstance) {
 					adInstance.removeAd()
 				}
 			})
 		}
+	}
+
+	function hideAdContainer(adContainer, adReplacementContainer) {
+		if (adContainer)
+			adContainer.hidden = true
+		if (adReplacementContainer)
+			adReplacementContainer.hidden = false
 	}
 
 	function onWindowStateChanged(state) {

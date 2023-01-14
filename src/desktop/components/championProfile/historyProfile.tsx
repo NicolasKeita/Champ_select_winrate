@@ -2,7 +2,7 @@
     Path + Filename: src/desktop/components/championProfile/historyProfile.tsx
 */
 
-import React, {useReducer, useState} from 'react'
+import React, {useState} from 'react'
 import {Champion} from '../maincontent/settings/Champion'
 import styled from 'styled-components'
 import questionMark from '@public/img/question_mark.jpg'

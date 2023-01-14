@@ -52,10 +52,6 @@ const HistoryGrid = styled.div`
 const TeamGrid = styled.div`
   display: flex;
   justify-content: space-between;
-  //font-size: 22px;
-  //background: -webkit-linear-gradient(#a8540c, #b79e4d);
-  //-webkit-background-clip: text;
-  //-webkit-text-fill-color: transparent;
 `
 
 const ProfileLine = styled.div`
@@ -92,21 +88,20 @@ const ProfileLine = styled.div`
   }
 `
 
-
 function History() {
 	const historyDisplayed = useAppSelector(state => state.slice.historyDisplayed)
 
 	function renderHistoryGrid(historyDisplayed: HistoryDisplayedType[]): JSX.Element[] {
 		const linesHistory: JSX.Element[] = []
-		const tooltipNumber = 'Numbers are coming from your own settings. Check your settings (top right icon) to change the default.'
+		const tooltipNumber = 'Numbers are coming from your own settings.' +
+			' Check your settings (top right icon) to change the default.'
 		for (let i = 0; i < 5; ++i) {
 			const alliesScores = historyDisplayed[i].allies.map((ally) => ally.opScore_user || 50)
 			const enemiesScores = historyDisplayed[i].enemies.map((enemy) => enemy.opScore_user || 50)
 			//TODO check below, that's big, history forecast is not using tags
 			const winrate = computeWinrate(alliesScores, enemiesScores)
-			const key = uniqid()
 			linesHistory.push(
-				<React.Fragment key={key}>
+				<React.Fragment key={uniqid()}>
 					<TeamGrid aria-label={'teamGrid'}>
 						<HistoryProfile
 							teamHistory={historyDisplayed[i].allies}
