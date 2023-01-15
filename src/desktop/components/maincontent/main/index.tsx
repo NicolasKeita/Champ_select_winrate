@@ -90,16 +90,18 @@ function ChampSelect() {
 			const champName = isEnemyTeam ? champSelectDisplayed.enemies[i].champ.name : champSelectDisplayed.allies[i].champ.name
 			const champScore = isEnemyTeam ? champSelectDisplayed.enemies[i].scoreDisplayed : champSelectDisplayed.allies[i].scoreDisplayed
 			const champRecommendation = isEnemyTeam ? [] : champSelectDisplayed.allies[i].recommendations
-			profiles.push(<ChampionProfile isEnemyTeam={isEnemyTeam}
-										   key={uniqid()}
-										   img={img ? img : questionMark}
-										   champName={champName}
-										   champDisplayedScore={champScore != undefined ? champScore : 50}
-										   champRecommendation={champRecommendation}
-										   champSelectDisplayed={champSelectDisplayed}
-										   index={i}
-
-			/>)
+			profiles.push(
+				<ChampionProfile
+					isEnemyTeam={isEnemyTeam}
+					key={uniqid()}
+					img={img ? img : questionMark}
+					champName={champName}
+					champDisplayedScore={champScore != undefined ? champScore : 50}
+					champRecommendation={champRecommendation}
+					champSelectDisplayed={champSelectDisplayed}
+					index={i}
+				/>
+			)
 			if (i < 4) profiles.push(<ProfileLine isEnemyTeam={isEnemyTeam}
 												  key={uniqid()} />)
 		}
@@ -132,7 +134,7 @@ function ChampSelect() {
 				<TeamGrid aria-label={'allyTeamGrid'}>
 					{renderPlayersGrid(false)}
 				</TeamGrid>
-				<TeamGrid aria-label={'enemyTeamGrid'} isEnemyTeam>
+				<TeamGrid aria-label={'enemyTeamGrid'}>
 					{renderPlayersGrid(true)}
 				</TeamGrid>
 			</PlayersGrid>

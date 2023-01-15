@@ -22,7 +22,6 @@ function adjustTags(tags: ChampionTagsType) {
 		addToArrayNoDuplicate(tags.weakAgainst, championAttributes.UNKILLABLE_LANER)
 	}
 
-
 	if (tags.attributes.includes(championAttributes.POTENTIAL_GREVIOUS_WOUNDS)) {
 		addToArrayNoDuplicate(tags.strongAgainst, championAttributes.HEALER_ISH)
 	}

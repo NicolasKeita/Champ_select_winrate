@@ -96,15 +96,17 @@ function History() {
 		const tooltipNumber = 'Numbers are coming from your own settings.' +
 			' Check your settings (top right icon) to change the default.'
 		for (let i = 0; i < 5; ++i) {
-			const alliesScores = historyDisplayed[i].allies.map((ally) => ally.opScore_user || 50)
-			const enemiesScores = historyDisplayed[i].enemies.map((enemy) => enemy.opScore_user || 50)
-			//TODO check below, that's big, history forecast is not using tags
+			const alliesScores = historyDisplayed[i].allies.map((ally) => ally.enhancedScore)
+			const enemiesScores = historyDisplayed[i].enemies.map((enemy) => enemy.enhancedScore)
 			const winrate = computeWinrate(alliesScores, enemiesScores)
+			console.log('allies score history', winrate)
+			console.log(alliesScores)
+			console.log(enemiesScores)
 			linesHistory.push(
 				<React.Fragment key={uniqid()}>
 					<TeamGrid aria-label={'teamGrid'}>
 						<HistoryProfile
-							teamHistory={historyDisplayed[i].allies}
+							teamHistory={historyDisplayed[i].allies.map(ally => ally.champ)}
 							isLoading={historyDisplayed[i].isLoading}
 							userWon={historyDisplayed[i].userWon}
 							isEnemyTeam={false}
@@ -122,7 +124,7 @@ function History() {
 							</span>
 						</Tooltip>
 						<HistoryProfile
-							teamHistory={historyDisplayed[i].enemies}
+							teamHistory={historyDisplayed[i].enemies.map(enemy => enemy.champ)}
 							isLoading={historyDisplayed[i].isLoading}
 							userWon={!historyDisplayed[i].userWon}
 							isEnemyTeam={true}

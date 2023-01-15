@@ -44,11 +44,16 @@ export type ChampSelectDisplayedType = {
 	enemies: ChampDisplayedType[]
 }
 
+export type HistoryChampScore = {
+	champ: Champion
+	enhancedScore: number
+}
+
 export type HistoryDisplayedType = {
-	allies: Champion[]
-	enemies: Champion[]
-	matchId: string,
-	isLoading: boolean,
+	allies: HistoryChampScore[]
+	enemies: HistoryChampScore[]
+	matchId: string
+	isLoading: boolean
 	userWon: boolean
 }
 
@@ -86,8 +91,14 @@ function initHistoryDisplayed() {
 	const historyDisplayed: HistoryDisplayedType[] = []
 	for (let i = 0; i < 5; ++i) {
 		historyDisplayed.push({
-			allies: getDefaultRecommendations(),
-			enemies: getDefaultRecommendations(),
+			allies: getDefaultRecommendations().map(champ => ({
+				champ: champ,
+				enhancedScore: 50
+			})),
+			enemies: getDefaultRecommendations().map(champ => ({
+				champ: champ,
+				enhancedScore: 50
+			})),
 			isLoading: false,
 			matchId: '0',
 			userWon: true
@@ -138,6 +149,7 @@ function updateChampSelectDisplayedScores(champSelectDisplayed: ChampSelectDispl
 	for (const ally of champSelectDisplayed.allies) {
 		ally.champ.opScore_user = allChampsToQueryFulfilled[`${ally.champ.name}`]
 		ally.scoreDisplayed = ally.champ.opScore_user || 50
+		ally.scoreDisplayed = (ally.champ.opScore_user || 50) + getTagsBonuses(ally.champ, champSelectDisplayed.enemies.map(enemy => enemy.champ))
 	}
 	for (const enemy of champSelectDisplayed.enemies) {
 		enemy.champ.opScore_user = allChampsToQueryFulfilled[`${enemy.champ.name}`]
@@ -151,14 +163,17 @@ function updateChampSelectDisplayedRecommendations(champSelectDisplayed: ChampSe
 	}
 }
 
+//TODO rename?
+//TODO and put theses kind of function inside the fillHistoryDisplayed? to prevent duplicate?
 function updateHistoryDisplayedScores(historyDisplayed: HistoryDisplayedType[], allChamps: Champion[]) {
+	console.log('Call update')
 	const allChampsToQuery: string[] = []
 	for (const match of historyDisplayed) {
 		for (const ally of match.allies) {
-			allChampsToQuery.push(ally.name)
+			allChampsToQuery.push(ally.champ.name)
 		}
 		for (const enemy of match.enemies) {
-			allChampsToQuery.push(enemy.name)
+			allChampsToQuery.push(enemy.champ.name)
 		}
 	}
 	const allChampsToQueryFulfilled = getChampScoreByNames(allChampsToQuery, allChamps)
@@ -166,10 +181,12 @@ function updateHistoryDisplayedScores(historyDisplayed: HistoryDisplayedType[], 
 		return
 	for (const match of historyDisplayed) {
 		for (const ally of match.allies) {
-			ally.opScore_user = allChampsToQueryFulfilled[`${ally.name}`]
+			ally.champ.opScore_user = allChampsToQueryFulfilled[`${ally.champ.name}`]
+			ally.enhancedScore = (ally.champ.opScore_user || 50) + getTagsBonuses(ally.champ, match.enemies.map(enemy => enemy.champ))
 		}
 		for (const enemy of match.enemies) {
-			enemy.opScore_user = allChampsToQueryFulfilled[`${enemy.name}`]
+			enemy.champ.opScore_user = allChampsToQueryFulfilled[`${enemy.champ.name}`]
+			enemy.enhancedScore = enemy.champ.opScore_user != undefined ? enemy.champ.opScore_user : 50
 		}
 	}
 }
@@ -192,23 +209,30 @@ function getTagBonus(tagsAlly, tagsEnemy, tag, bonusAmount: number) {
 	return bonus
 }
 
-function getTagsBonuses(ally: Champion, enemy: Champion): number {
+function getTagsBonusesSoloEnemy(ally: Champion, enemy: Champion): number {
 	return (
 		getTagBonus(ally.tags, enemy.tags, championAttributes.LANE_BULLY, 5)
 		+ getTagBonus(ally.tags, enemy.tags, championAttributes.HEALER_ISH, 5)
 		+ getTagBonus(ally.tags, enemy.tags, championAttributes.UNKILLABLE_LANER, 5)
 		+ getTagBonus(ally.tags, enemy.tags, championAttributes.POTENTIAL_ZHONYA_OWNER, 5)
+		+ getTagBonus(ally.tags, enemy.tags, championAttributes.JUNGLE_GANKER, 5)
+		+ getTagBonus(ally.tags, enemy.tags, championAttributes.POTENTIAL_GREVIOUS_WOUNDS, 5)
 	)
+}
+
+function getTagsBonuses(ally: Champion, enemies: Champion[]): number {
+	let sum = 0
+	for (const enemy of enemies) {
+		sum += getTagsBonusesSoloEnemy(ally, enemy)
+	}
+	return sum
 }
 
 
 function updateDisplayedScoresWithTags(allies: ChampDisplayedType[], enemies: ChampDisplayedType[]) {
 	for (const ally of allies) {
-		let sumBonus = 0
-		for (const enemy of enemies) {
-			sumBonus += getTagsBonuses(ally.champ, enemy.champ)
-		}
-		ally.scoreDisplayed = (ally.champ.opScore_user || 50) + sumBonus
+		ally.scoreDisplayed = (ally.champ.opScore_user || 50)
+			+ getTagsBonuses(ally.champ, enemies.map(enemy => enemy.champ))
 	}
 }
 
@@ -237,11 +261,12 @@ function getRecommendations(allies: ChampDisplayedType[], enemies: ChampDisplaye
 	if (allChampsFilteredWithRole.length == 0)
 		console.error('CSW_error: couldnt get recommendations')
 	const allChampsWithDisplayedScore: [number, Champion][] = allChampsFilteredWithRole.map(champ => {
-		let displayedScore = 0
-		for (const enemy of enemies) {
-			displayedScore += getTagsBonuses(champ, enemy.champ)
-		}
-		displayedScore += (champ.opScore_user || 50)
+		const displayedScore = getTagsBonuses(champ, enemies.map(enemy => enemy.champ))
+		// let displayedScore = 0
+		// for (const enemy of enemies) {
+		// 	displayedScore += getTagsBonusesSoloEnemy(champ, enemy.champ)
+		// }
+		// displayedScore += (champ.opScore_user || 50)
 		return [displayedScore, champ]
 	})
 	allChampsWithDisplayedScore.sort((a, b) => b[0] - a[0])
@@ -334,14 +359,21 @@ export const fillHistoryDisplayed = createAsyncThunk<void, {region: string, puui
 					}
 					userTeam = matchInfo.info.participants[x].teamId
 				}
+				const champInAllChamps = allChamps.find(champ => champ.nameFormatted == participantChampName)
+				if (champInAllChamps) {
+					console.error('CSW_error: cannot find: ', participantChampName)
+				}
 				if (x < 5) {
-					historyDisplayedTmp[i].allies[x].name = participantChampName
-					historyDisplayedTmp[i].allies[x].imageUrl = getChampImgByFormattedName(participantChampName)
-					historyDisplayedTmp[i].allies[x].opScore_user = allChamps.find((champ) => champ.name == participantChampName)?.opScore_user
+					historyDisplayedTmp[i].allies[x].champ = champInAllChamps || getDefaultChampion()
+					// historyDisplayedTmp[i].allies[x].champ.name = participantChampName
+					// historyDisplayedTmp[i].allies[x].champ.imageUrl = getChampImgByFormattedName(participantChampName)
+					// historyDisplayedTmp[i].allies[x].champ.opScore_user = allChamps.find(champ => champ.nameFormatted == participantChampName)?.opScore_user
 				} else {
-					historyDisplayedTmp[i].enemies[x - 5].name = participantChampName
-					historyDisplayedTmp[i].enemies[x - 5].imageUrl = getChampImgByFormattedName(participantChampName)
-					historyDisplayedTmp[i].enemies[x - 5].opScore_user = allChamps.find((champ) => champ.name == participantChampName)?.opScore_user
+					historyDisplayedTmp[i].enemies[x - 5].champ = champInAllChamps || getDefaultChampion()
+					// historyDisplayedTmp[i].enemies[x - 5].champ.name = participantChampName
+					// historyDisplayedTmp[i].enemies[x - 5].champ.imageUrl = getChampImgByFormattedName(participantChampName)
+					// historyDisplayedTmp[i].enemies[x - 5].champ.opScore_user = allChamps.find(champ => champ.nameFormatted == participantChampName)?.opScore_user
+					historyDisplayedTmp[i].enemies[x - 5].enhancedScore = historyDisplayedTmp[i].enemies[x - 5].champ.opScore_user || 50
 				}
 			}
 			if (!imInAllyTeam) {
@@ -353,6 +385,18 @@ export const fillHistoryDisplayed = createAsyncThunk<void, {region: string, puui
 					JSON.stringify(historyDisplayedTmp[i].enemies)
 				)
 				historyDisplayedTmp[i].enemies = JSON.parse(tmpAlies)
+			}
+			for (const ally of historyDisplayedTmp[i].allies) {
+				console.log(ally.champ.name)
+				console.log(ally.enhancedScore)
+				ally.enhancedScore =
+					(ally.champ.opScore_user || 50)
+					+ getTagsBonuses(ally.champ, historyDisplayedTmp[i].enemies.map(enemy => enemy.champ))
+				console.log(ally.enhancedScore, ally.champ.opScore_user,
+					getTagsBonuses(ally.champ, historyDisplayedTmp[i].enemies.map(enemy => enemy.champ)))
+				console.log('here')
+				console.log(ally)
+				console.log(historyDisplayedTmp[i].enemies.map(enemy => enemy.champ))
 			}
 			historyDisplayedTmp[i].userWon = userTeam == winningTeam || winningTeam == null
 

@@ -23,6 +23,7 @@ export function getChampScoreByName(champName: string, allChampions: Champion[])
 	return 50
 }
 
+//TODO any wtf ?
 export function getChampScoreByNames(champNames: string[], allChampions: Champion[]): any {
 	const result = {}
 	for (const champion of allChampions) {

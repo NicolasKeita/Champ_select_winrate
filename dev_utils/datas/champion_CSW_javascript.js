@@ -1251,7 +1251,7 @@ const allChamps = {
 		}
 	},
 	Lux: {
-		opScore_CSW: 54,
+		opScore_CSW: 58,
 		role: 'utility',
 		name: 'Lux',
 		image: 'Lux.png',
