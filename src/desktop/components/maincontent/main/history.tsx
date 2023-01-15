@@ -99,9 +99,6 @@ function History() {
 			const alliesScores = historyDisplayed[i].allies.map((ally) => ally.enhancedScore)
 			const enemiesScores = historyDisplayed[i].enemies.map((enemy) => enemy.enhancedScore)
 			const winrate = computeWinrate(alliesScores, enemiesScores)
-			console.log('allies score history', winrate)
-			console.log(alliesScores)
-			console.log(enemiesScores)
 			linesHistory.push(
 				<React.Fragment key={uniqid()}>
 					<TeamGrid aria-label={'teamGrid'}>

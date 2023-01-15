@@ -360,9 +360,6 @@ export const fillHistoryDisplayed = createAsyncThunk<void, {region: string, puui
 					userTeam = matchInfo.info.participants[x].teamId
 				}
 				const champInAllChamps = allChamps.find(champ => champ.nameFormatted == participantChampName)
-				if (champInAllChamps) {
-					console.error('CSW_error: cannot find: ', participantChampName)
-				}
 				if (x < 5) {
 					historyDisplayedTmp[i].allies[x].champ = champInAllChamps || getDefaultChampion()
 					// historyDisplayedTmp[i].allies[x].champ.name = participantChampName
@@ -387,16 +384,9 @@ export const fillHistoryDisplayed = createAsyncThunk<void, {region: string, puui
 				historyDisplayedTmp[i].enemies = JSON.parse(tmpAlies)
 			}
 			for (const ally of historyDisplayedTmp[i].allies) {
-				console.log(ally.champ.name)
-				console.log(ally.enhancedScore)
 				ally.enhancedScore =
 					(ally.champ.opScore_user || 50)
 					+ getTagsBonuses(ally.champ, historyDisplayedTmp[i].enemies.map(enemy => enemy.champ))
-				console.log(ally.enhancedScore, ally.champ.opScore_user,
-					getTagsBonuses(ally.champ, historyDisplayedTmp[i].enemies.map(enemy => enemy.champ)))
-				console.log('here')
-				console.log(ally)
-				console.log(historyDisplayedTmp[i].enemies.map(enemy => enemy.champ))
 			}
 			historyDisplayedTmp[i].userWon = userTeam == winningTeam || winningTeam == null
 
