@@ -166,7 +166,6 @@ function updateChampSelectDisplayedRecommendations(champSelectDisplayed: ChampSe
 //TODO rename?
 //TODO and put theses kind of function inside the fillHistoryDisplayed? to prevent duplicate?
 function updateHistoryDisplayedScores(historyDisplayed: HistoryDisplayedType[], allChamps: Champion[]) {
-	console.log('Call update')
 	const allChampsToQuery: string[] = []
 	for (const match of historyDisplayed) {
 		for (const ally of match.allies) {
