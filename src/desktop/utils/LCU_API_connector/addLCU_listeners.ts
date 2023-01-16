@@ -14,11 +14,13 @@ import {
 import {fetchEncryptedSummonerId} from '@utils/LOL_API'
 import LCU_API_connector from '@utils/LCU_API_connector'
 import {AppDispatch} from '../store/store'
+import {GameFlow} from '../../../types/GameFlow'
+import {ChampSelect} from '../../../types/ChampSelect'
 
 const LCU_interface = new LCU_API_connector()
 
 export async function addLCU_listeners(dispatch: AppDispatch) {
-	function handleGameFlow(game_flow) {
+	function handleGameFlow(game_flow: GameFlow) {
 		if (game_flow && game_flow.phase) {
 			if (game_flow.phase === 'ChampSelect') {
 				dispatch(resetChampSelectDisplayed())
@@ -66,8 +68,9 @@ export async function addLCU_listeners(dispatch: AppDispatch) {
 		}
 	}
 
-	function handleChampSelect(champ_select) {
-		const raw = JSON.parse(champ_select.raw)
+	function handleChampSelect(champ_select: {raw: string}) {
+		const raw: ChampSelect = JSON.parse(champ_select.raw)
+		console.log(raw)
 		if (raw.localPlayerCellId == -1)
 			return
 		dispatch(setClientStatus(0))
@@ -83,14 +86,26 @@ export async function addLCU_listeners(dispatch: AppDispatch) {
 		}
 		dispatch(fillChampSelectDisplayed({
 			actions: raw.actions,
-			localPlayerCellId: parseInt(raw.localPlayerCellId),
+			localPlayerCellId: raw.localPlayerCellId,
 			myTeam: raw.myTeam
 		}))
 	}
 
-	function handleFeaturesCallbacks(info) {
-		if (info.feature === 'game_flow') handleGameFlow(info.info.game_flow)
-		if (info.feature === 'champ_select') handleChampSelect(info.info.champ_select)
+	type InfoEventOW = {
+		feature: 'game_flow' | 'champ_select'
+		info: {
+			game_flow?: GameFlow,
+			champ_select?: {
+				raw: string
+			}
+		}
+	}
+
+	function handleFeaturesCallbacks(info: InfoEventOW) {
+		if (info.feature === 'game_flow' && info.info.game_flow)
+			handleGameFlow(info.info.game_flow)
+		if (info.feature === 'champ_select' && info.info.champ_select)
+			handleChampSelect(info.info.champ_select)
 	}
 
 	LCU_interface.onClientAlreadyRunningOrNot(clientsInfos => {

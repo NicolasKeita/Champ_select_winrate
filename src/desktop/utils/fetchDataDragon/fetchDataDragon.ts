@@ -23,23 +23,23 @@ export function getChampScoreByName(champName: string, allChampions: Champion[])
 	return 50
 }
 
-//TODO any wtf ?
-export function getChampScoreByNames(champNames: string[], allChampions: Champion[]): any {
-	const result = {}
+export function getChampScoreByNames(champNames: string[], allChampions: Champion[]): {champName: string, opScore_user: number}[] {
+	const result: {champName: string, opScore_user: number}[] = []
+	// const result = {}
 	for (const champion of allChampions) {
 		if (champNames.includes(champion.name)) {
-			result[`${champion.name}`] = champion.opScore_user != undefined ? champion.opScore_user : 50
-			if (Object.keys(result).length == champNames.length)
+			result.push({
+				champName: champion.name,
+				opScore_user: champion.opScore_user || 50
+			})
+			// result[`${champion.name}`] = champion.opScore_user != undefined ? champion.opScore_user : 50
+			if (result.length == champNames.length)
+				// if (Object.keys(result).length == champNames.length)
 				return result
 		}
 	}
 	return result
 }
-
-//
-// export function getChampsByNames(chamNames: string[], allChampions: Champion[]): Champion[] {
-//
-// }
 
 export function getChampImgByNamePNG(champNamePNG: string): string {
 	let formattedName: string = champNamePNG

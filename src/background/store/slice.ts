@@ -31,6 +31,10 @@ import {
 	Team
 } from '@utils/LOL_API/fetchMatchHistory_type'
 import {RootState} from '@utils/store/store'
+import {
+	Action as ActionChampSelect,
+	Team as TeamChampSelect
+} from '../../types/ChampSelect'
 
 export type ChampDisplayedType = {
 	assignedRole: string
@@ -144,15 +148,17 @@ function updateChampSelectDisplayedScores(champSelectDisplayed: ChampSelectDispl
 		allChampsToQuery.push(enemy.champ.name)
 	}
 	const allChampsToQueryFulfilled = getChampScoreByNames(allChampsToQuery, allChamps)
-	if (Object.keys(allChampsToQueryFulfilled).length == 0)
+	if (allChampsToQueryFulfilled.length == 0)
 		return
 	for (const ally of champSelectDisplayed.allies) {
-		ally.champ.opScore_user = allChampsToQueryFulfilled[`${ally.champ.name}`]
+		ally.champ.opScore_user = allChampsToQueryFulfilled.find(champ => champ.champName == ally.champ.name)?.opScore_user || 50
+		// ally.champ.opScore_user = allChampsToQueryFulfilled[`${ally.champ.name}`]
 		ally.scoreDisplayed = ally.champ.opScore_user || 50
 		ally.scoreDisplayed = (ally.champ.opScore_user || 50) + getTagsBonuses(ally.champ, champSelectDisplayed.enemies.map(enemy => enemy.champ))
 	}
 	for (const enemy of champSelectDisplayed.enemies) {
-		enemy.champ.opScore_user = allChampsToQueryFulfilled[`${enemy.champ.name}`]
+		enemy.champ.opScore_user = allChampsToQueryFulfilled.find(champ => champ.champName == enemy.champ.name)?.opScore_user || 50
+		// enemy.champ.opScore_user = allChampsToQueryFulfilled[`${enemy.champ.name}`]
 		enemy.scoreDisplayed = enemy.champ.opScore_user || 50
 	}
 }
@@ -176,24 +182,26 @@ function updateHistoryDisplayedScores(historyDisplayed: HistoryDisplayedType[], 
 		}
 	}
 	const allChampsToQueryFulfilled = getChampScoreByNames(allChampsToQuery, allChamps)
-	if (Object.keys(allChampsToQueryFulfilled).length == 0)
+	if (allChampsToQueryFulfilled.length == 0)
 		return
 	for (const match of historyDisplayed) {
 		for (const ally of match.allies) {
-			ally.champ.opScore_user = allChampsToQueryFulfilled[`${ally.champ.name}`]
+			ally.champ.opScore_user = allChampsToQueryFulfilled.find(champ => champ.champName == ally.champ.name)?.opScore_user || 50
+			// ally.champ.opScore_user = allChampsToQueryFulfilled[`${ally.champ.name}`]
 			ally.enhancedScore = (ally.champ.opScore_user || 50) + getTagsBonuses(ally.champ, match.enemies.map(enemy => enemy.champ))
 		}
 		for (const enemy of match.enemies) {
-			enemy.champ.opScore_user = allChampsToQueryFulfilled[`${enemy.champ.name}`]
+			enemy.champ.opScore_user = allChampsToQueryFulfilled.find(champ => champ.champName == enemy.champ.name)?.opScore_user || 50
+			// enemy.champ.opScore_user = allChampsToQueryFulfilled[`${enemy.champ.name}`]
 			enemy.enhancedScore = enemy.champ.opScore_user != undefined ? enemy.champ.opScore_user : 50
 		}
 	}
 }
 
 type FillChampSelectDisplayedParamType = {
-	actions: never[][],
+	actions: ActionChampSelect[][],
 	localPlayerCellId: number,
-	myTeam: never[]
+	myTeam: TeamChampSelect[]
 }
 
 function getTagBonus(tagsAlly, tagsEnemy, tag, bonusAmount: number) {
@@ -256,16 +264,11 @@ function getRecommendations(allies: ChampDisplayedType[], enemies: ChampDisplaye
 	}
 	updateDisplayedScoresWithTags(allies, enemies)
 
-	const allChampsFilteredWithRole = allChamps.filter(champ => champ.role == assignedRole)
+	const allChampsFilteredWithRole = allChamps.filter(({role}) => role == assignedRole)
 	if (allChampsFilteredWithRole.length == 0)
 		console.error('CSW_error: couldnt get recommendations')
 	const allChampsWithDisplayedScore: [number, Champion][] = allChampsFilteredWithRole.map(champ => {
 		const displayedScore = getTagsBonuses(champ, enemies.map(enemy => enemy.champ))
-		// let displayedScore = 0
-		// for (const enemy of enemies) {
-		// 	displayedScore += getTagsBonusesSoloEnemy(champ, enemy.champ)
-		// }
-		// displayedScore += (champ.opScore_user || 50)
 		return [displayedScore, champ]
 	})
 	allChampsWithDisplayedScore.sort((a, b) => b[0] - a[0])
@@ -361,27 +364,14 @@ export const fillHistoryDisplayed = createAsyncThunk<void, {region: string, puui
 				const champInAllChamps = allChamps.find(champ => champ.nameFormatted == participantChampName)
 				if (x < 5) {
 					historyDisplayedTmp[i].allies[x].champ = champInAllChamps || getDefaultChampion()
-					// historyDisplayedTmp[i].allies[x].champ.name = participantChampName
-					// historyDisplayedTmp[i].allies[x].champ.imageUrl = getChampImgByFormattedName(participantChampName)
-					// historyDisplayedTmp[i].allies[x].champ.opScore_user = allChamps.find(champ => champ.nameFormatted == participantChampName)?.opScore_user
 				} else {
 					historyDisplayedTmp[i].enemies[x - 5].champ = champInAllChamps || getDefaultChampion()
-					// historyDisplayedTmp[i].enemies[x - 5].champ.name = participantChampName
-					// historyDisplayedTmp[i].enemies[x - 5].champ.imageUrl = getChampImgByFormattedName(participantChampName)
-					// historyDisplayedTmp[i].enemies[x - 5].champ.opScore_user = allChamps.find(champ => champ.nameFormatted == participantChampName)?.opScore_user
 					historyDisplayedTmp[i].enemies[x - 5].enhancedScore = historyDisplayedTmp[i].enemies[x - 5].champ.opScore_user || 50
 				}
 			}
-			if (!imInAllyTeam) {
-				//TODO is it the cleanest way to swap?
-				const tmpAlies = JSON.stringify(
-					historyDisplayedTmp[i].allies
-				)
-				historyDisplayedTmp[i].allies = JSON.parse(
-					JSON.stringify(historyDisplayedTmp[i].enemies)
-				)
-				historyDisplayedTmp[i].enemies = JSON.parse(tmpAlies)
-			}
+
+			if (!imInAllyTeam)
+				[historyDisplayedTmp[i].allies, historyDisplayedTmp[i].enemies] = [historyDisplayedTmp[i].enemies, historyDisplayedTmp[i].allies]
 			for (const ally of historyDisplayedTmp[i].allies) {
 				ally.enhancedScore =
 					(ally.champ.opScore_user || 50)
@@ -402,29 +392,27 @@ export const fillChampSelectDisplayed = createAsyncThunk<ChampSelectDisplayedTyp
 	async (thunkParam, thunkAPI) => {
 		if (thunkParam.actions.length == 0)
 			return
-		//TODO SEtup the type de thunkparam qui est le type du fetch
 		const champSelectDisplayed = initChampSelectDisplayed()
 		const allies = champSelectDisplayed.allies
 		const enemies = champSelectDisplayed.enemies
 		const allChamps = thunkAPI.getState().slice.config.champions
 
-		function fillChampNameAndImgUrlFromId(champion: Champion, championId: number) {
-			if (championId == 0) return
-			const championSearched = thunkAPI.getState().slice.config.champions.find((champ) => champ.id == championId)
-			if (!championSearched) {
-				console.error(`CSW_error: Store all champions is probably empty. Debug: champion Id : ${championId}`)
-				return
-			}
-			return championSearched
-			//TODO return ?
+		// function fillChampNameAndImgUrlFromId(champion: Champion, championId: number) {
+		// 	if (championId == 0) return
+		// 	const championSearched = thunkAPI.getState().slice.config.champions.find((champ) => champ.id == championId)
+		// 	if (!championSearched) {
+		// 		console.error(`CSW_error: Store all champions is probably empty. Debug: champion Id : ${championId}`)
+		// 		return
+		// 	}
+		// 	return championSearched
+		//TODO return ?
 
-			// champion.name = championSearched.name
-			// champion.imageUrl = getChampImgByFormattedName(championSearched.nameFormatted)
-			// champion.opScore_user = -1
-		}
+		// champion.name = championSearched.name
+		// champion.imageUrl = getChampImgByFormattedName(championSearched.nameFormatted)
+		// champion.opScore_user = -1
+		// }
 
-		//TODO set up le type de myTeam
-		function fillAssignedRoleAndRecommendations(allies: ChampDisplayedType[], enemies: ChampDisplayedType[], myTeam: never[], actorCellId: number, allChamps: Champion[], isActorCellRightSide = false) {
+		function fillAssignedRoleAndRecommendations(allies: ChampDisplayedType[], enemies: ChampDisplayedType[], myTeam: TeamChampSelect[], actorCellId: number, allChamps: Champion[], isActorCellRightSide = false) {
 			let actorCellIdTeam = actorCellId
 			if (isActorCellRightSide) actorCellIdTeam += 5
 			for (const {assignedPosition, cellId} of myTeam) {
@@ -450,7 +438,7 @@ export const fillChampSelectDisplayed = createAsyncThunk<ChampSelectDisplayedTyp
 					if (type == 'pick') {
 						if (isAllyAction) {
 							if (championId != 0) {
-								allies[actorCellId].champ = allChamps.find((champ) => champ.id == championId) || getDefaultChampion()
+								allies[actorCellId].champ = allChamps.find(({id}) => id == championId) || getDefaultChampion()
 								allies[actorCellId].scoreDisplayed = allies[actorCellId].champ.opScore_user || 50
 							}
 							fillAssignedRoleAndRecommendations(allies, enemies, thunkParam.myTeam, actorCellId, allChamps)
