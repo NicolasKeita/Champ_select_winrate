@@ -5,17 +5,19 @@
 import {
 	cleanHistoryMatch,
 	fillChampSelectDisplayed,
-	fillHistoryDisplayed,
 	resetChampSelectDisplayed,
 	setClientStatus,
 	setFooterMessage,
 	setHistoryIsLoading
-} from '../../../background/store/slice'
+} from '../../../background/store/slice/slice'
 import {fetchEncryptedSummonerId} from '@utils/LOL_API'
 import LCU_API_connector from '@utils/LCU_API_connector'
 import {AppDispatch} from '../store/store'
 import {GameFlow} from '../../../types/GameFlow'
 import {ChampSelect} from '../../../types/ChampSelect'
+import {
+	fillHistoryDisplayed
+} from '../../../background/store/slice/fillHistoryDisplayed'
 
 const LCU_interface = new LCU_API_connector()
 

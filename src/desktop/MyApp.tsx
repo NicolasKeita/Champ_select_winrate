@@ -11,7 +11,7 @@ import Config from './components/maincontent/settings/Config'
 import {
 	copyFromAnotherSetting,
 	fetchAllChampions
-} from '../background/store/slice'
+} from '../background/store/slice/slice'
 
 import {useAppDispatch} from '@utils/hooks'
 import {

@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom/client'
 import MyApp from './MyApp'
 import '@public/css/desktop.css'
 import store from './store/store'
-import {copyFromAnotherSetting} from '../background/store/slice'
+import {copyFromAnotherSetting} from '../background/store/slice/slice'
 import Config from '../desktop/components/maincontent/settings/Config'
 import {StyleProvider} from '@ant-design/cssinjs'
 

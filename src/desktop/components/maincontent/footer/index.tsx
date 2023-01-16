@@ -5,7 +5,7 @@
 import React, {useState} from 'react'
 import styled from 'styled-components'
 import {useAppDispatch, useAppSelector} from '@utils/hooks'
-import {setFooterMessage} from '../../../../background/store/slice'
+import {setFooterMessage} from '../../../../background/store/slice/slice'
 import Countdown from 'react-countdown'
 import {isInGame} from '@utils/LOL_API'
 import uniqid from 'uniqid'

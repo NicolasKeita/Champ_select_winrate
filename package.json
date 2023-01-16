@@ -1,6 +1,6 @@
 {
 	"name": "champ_select_winrate",
-	"version": "2.1.0",
+	"version": "2.1.1",
 	"description": "Fully customizable champ select tool",
 	"scripts": {
 		"test": "jest --silent",

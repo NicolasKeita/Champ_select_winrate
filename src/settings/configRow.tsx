@@ -9,7 +9,7 @@ import {
 	ChampionTagsType
 } from '../desktop/components/maincontent/settings/Champion'
 import {useAppDispatch} from '@utils/hooks'
-import {updateChamp} from '../background/store/slice'
+import {updateChamp} from '../background/store/slice/slice'
 import Collapsible from 'react-collapsible'
 import {PlusCircleTwoTone} from '@ant-design/icons'
 import {

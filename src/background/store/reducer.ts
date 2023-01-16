@@ -3,7 +3,7 @@
 */
 
 import {combineReducers} from '@reduxjs/toolkit'
-import {slice} from './slice'
+import {slice} from './slice/slice'
 
 const mainReducer = combineReducers({
 	slice: slice.reducer

@@ -7,7 +7,7 @@ import styled from 'styled-components'
 import {Champion} from '../maincontent/settings/Champion'
 import uniqid from 'uniqid'
 import questionMark from '@public/img/question_mark.jpg'
-import {ChampSelectDisplayedType} from '../../../background/store/slice'
+import {ChampSelectDisplayedType} from '../../../background/store/slice/slice'
 import computeWinrate from '@utils/maths/computeWinrateBetweenTwoTeams'
 import Tooltip from 'rc-tooltip'
 
