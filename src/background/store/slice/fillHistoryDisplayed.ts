@@ -15,12 +15,14 @@ import {
 	getDefaultChampion
 } from '../../../desktop/components/maincontent/settings/Champion'
 import {
-	getDefaultRecommendations,
 	setFooterMessage,
 	setHistoryIsLoading, setHistoryMatch
 } from './slice'
 import {getTagsBonuses} from '@utils/champTags/champTags'
 import {getChampScoreByNames} from '@utils/fetchDataDragon/fetchDataDragon'
+import {
+	getDefaultRecommendations
+} from '@utils/recommendations/champRecommendation'
 
 
 export type HistoryChampScore = {

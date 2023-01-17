@@ -4,7 +4,6 @@
 
 import {
 	cleanHistoryMatch,
-	fillChampSelectDisplayed,
 	resetChampSelectDisplayed,
 	setClientStatus,
 	setFooterMessage,
@@ -18,6 +17,9 @@ import {ChampSelect} from '../../../types/ChampSelect'
 import {
 	fillHistoryDisplayed
 } from '../../../background/store/slice/fillHistoryDisplayed'
+import {
+	fillChampSelectDisplayed
+} from '../../../background/store/slice/fillChampSelectDIsplayed'
 
 const LCU_interface = new LCU_API_connector()
 

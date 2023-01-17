@@ -13,69 +13,26 @@ import Config, {
 	getDefaultConfig
 } from '../../../desktop/components/maincontent/settings/Config'
 import {
-	Champion,
-	getDefaultChampion
+	Champion
 } from '../../../desktop/components/maincontent/settings/Champion'
 import {
-	getChampImgByFormattedName,
-	getChampScoreByNames
+	getChampImgByFormattedName
 } from '@utils/fetchDataDragon/fetchDataDragon'
 import {
 	fetchAllChampionsJson
 } from '@utils/fetchLocalConfigJson/fetchChampionsFromConfigJson'
 import {copy} from 'copy-anything'
-import {RootState} from '@utils/store/store'
-import {
-	Action as ActionChampSelect,
-	Team as TeamChampSelect
-} from '../../../types/ChampSelect'
-import {getTagsBonuses} from '@utils/champTags/champTags'
 import {
 	fillHistoryDisplayed, HistoryDisplayedType,
 	initHistoryDisplayed, updateHistoryValues
 } from './fillHistoryDisplayed'
-
-export type ChampDisplayedType = {
-	assignedRole: string
-	champ: Champion
-	scoreDisplayed: number
-	recommendations: Champion[]
-}
-
-export type ChampSelectDisplayedType = {
-	allies: ChampDisplayedType[]
-	enemies: ChampDisplayedType[]
-}
-
-export function getDefaultRecommendations(): Champion[] {
-	const recommendations: Champion[] = []
-	for (let i = 0; i < 5; ++i) {
-		recommendations.push(getDefaultChampion())
-	}
-	return recommendations
-}
-
-function initChampSelectDisplayed() {
-	const champSelectDisplayed: ChampSelectDisplayedType = {
-		allies: [],
-		enemies: []
-	}
-	for (let i = 0; i < 5; ++i) {
-		champSelectDisplayed.allies.push({
-			assignedRole: '',
-			scoreDisplayed: 50,
-			champ: getDefaultChampion(),
-			recommendations: getDefaultRecommendations()
-		})
-		champSelectDisplayed.enemies.push({
-			assignedRole: '',
-			scoreDisplayed: 50,
-			champ: getDefaultChampion(),
-			recommendations: getDefaultRecommendations()
-		})
-	}
-	return champSelectDisplayed
-}
+import {
+	ChampSelectDisplayedType,
+	fillChampSelectDisplayed,
+	initChampSelectDisplayed,
+	updateChampSelectDisplayedRecommendations,
+	updateChampSelectDisplayedScores
+} from './fillChampSelectDIsplayed'
 
 type StoreStateType = {
 	config: Config,
@@ -105,82 +62,6 @@ const initialState = {
 	helpPageVisible: false
 } as StoreStateType
 
-function updateChampSelectDisplayedScores(champSelectDisplayed: ChampSelectDisplayedType, allChamps: Champion[]) {
-	const allChampsToQuery: string[] = []
-	for (const ally of champSelectDisplayed.allies) {
-		allChampsToQuery.push(ally.champ.name)
-	}
-	for (const enemy of champSelectDisplayed.enemies) {
-		allChampsToQuery.push(enemy.champ.name)
-	}
-	const allChampsToQueryFulfilled = getChampScoreByNames(allChampsToQuery, allChamps)
-	if (allChampsToQueryFulfilled.length == 0)
-		return
-	for (const ally of champSelectDisplayed.allies) {
-		ally.champ.opScore_user = allChampsToQueryFulfilled.find(({champName}) => champName == ally.champ.name)?.opScore_user || 50
-		// ally.champ.opScore_user = allChampsToQueryFulfilled[`${ally.champ.name}`]
-		ally.scoreDisplayed = ally.champ.opScore_user || 50
-		ally.scoreDisplayed = (ally.champ.opScore_user || 50) + getTagsBonuses(ally.champ, champSelectDisplayed.enemies.map(enemy => enemy.champ))
-	}
-	for (const enemy of champSelectDisplayed.enemies) {
-		enemy.champ.opScore_user = allChampsToQueryFulfilled.find(({champName}) => champName == enemy.champ.name)?.opScore_user || 50
-		// enemy.champ.opScore_user = allChampsToQueryFulfilled[`${enemy.champ.name}`]
-		enemy.scoreDisplayed = enemy.champ.opScore_user || 50
-	}
-}
-
-function updateChampSelectDisplayedRecommendations(champSelectDisplayed: ChampSelectDisplayedType, allChamps: Champion[]) {
-	for (const [i, ally] of champSelectDisplayed.allies.entries()) {
-		ally.recommendations = getRecommendations(champSelectDisplayed.allies, champSelectDisplayed.enemies, i, allChamps)
-	}
-}
-
-type FillChampSelectDisplayedParamType = {
-	actions: ActionChampSelect[][],
-	localPlayerCellId: number,
-	myTeam: TeamChampSelect[]
-}
-
-function updateDisplayedScoresWithTags(allies: ChampDisplayedType[], enemies: ChampDisplayedType[]) {
-	for (const ally of allies) {
-		ally.scoreDisplayed = (ally.champ.opScore_user || 50)
-			+ getTagsBonuses(ally.champ, enemies.map(enemy => enemy.champ))
-	}
-}
-
-function getRecommendations(allies: ChampDisplayedType[], enemies: ChampDisplayedType[], playerId: number, allChamps: Champion[]): Champion[] {
-	let assignedRole = allies[playerId].assignedRole
-	if (assignedRole == '') {
-		if (playerId == 0 || playerId == 5) {
-			assignedRole = 'top'
-		}
-		if (playerId == 1 || playerId == 6) {
-			assignedRole = 'jungle'
-		}
-		if (playerId == 2 || playerId == 7) {
-			assignedRole = 'middle'
-		}
-		if (playerId == 3 || playerId == 8) {
-			assignedRole = 'bottom'
-		}
-		if (playerId == 4 || playerId == 9) {
-			assignedRole = 'utility'
-		}
-	}
-	updateDisplayedScoresWithTags(allies, enemies)
-
-	const allChampsFilteredWithRole = allChamps.filter(({role}) => role == assignedRole)
-	if (allChampsFilteredWithRole.length == 0)
-		console.error('CSW_error: couldnt get recommendations')
-	const allChampsWithDisplayedScore: [number, Champion][] = allChampsFilteredWithRole.map(champ => {
-		const displayedScore = getTagsBonuses(champ, enemies.map(enemy => enemy.champ))
-		return [displayedScore, champ]
-	})
-	allChampsWithDisplayedScore.sort((a, b) => b[0] - a[0])
-	const firstFive = allChampsWithDisplayedScore.slice(0, 5)
-	return (firstFive.map(elem => elem[1]))
-}
-
 export const fetchAllChampions = createAsyncThunk<Champion[]>(
 	'fetchAllChampions',
 	async (thunkParam, {rejectWithValue}) => {
@@ -191,201 +72,6 @@ export const fetchAllChampions = createAsyncThunk<Champion[]>(
 		}
 	}
 )
-//
-// export const fillHistoryDisplayed = createAsyncThunk<void, {region: string, puuid: string}, {state: RootState}>(
-// 	'fillHistoryDisplayed',
-// 	async (thunkParam, thunkAPI) => {
-// 		const historyDisplayedTmp: HistoryDisplayedType[] = initHistoryDisplayed()
-// 		if (thunkParam.region == '' || thunkParam.puuid == '') {
-// 			console.error('could not fill History')
-// 			return
-// 		}
-//
-// 		const matchHistoryIds = await doWithRetry(async retry => {
-// 			try {
-// 				return await fetchMatchHistoryId(thunkParam.region, thunkParam.puuid)
-// 			} catch (e) {
-// 				retry(e)
-// 			}
-// 		})
-// 			.catch(e => {
-// 				throw e.cause
-// 			}) as string[]
-//
-// 		if (matchHistoryIds.length < 5) {
-// 			for (let i = matchHistoryIds.length; i < 5; ++i) {
-// 				thunkAPI.dispatch(setHistoryIsLoading({
-// 					historyDisplayedIndex: i,
-// 					isLoading: false
-// 				}))
-// 			}
-// 			thunkAPI.dispatch(setFooterMessage(7))
-// 		}
-// 		const allChamps = thunkAPI.getState().slice.config.champions
-//
-// 		function getWinningTeam(teams: Team[]) {
-// 			if (!teams.length || teams.length != 2) {
-// 				console.error('CSW_history : Cannot find a winner for the game')
-// 				return null
-// 			}
-// 			if (teams[0].win)
-// 				return teams[0].teamId
-// 			else if (!teams[0].win)
-// 				return teams[1].teamId
-// 			else {
-// 				console.error('CSW_history : Cannot find a winner for the game')
-// 				return null
-// 			}
-// 		}
-//
-// 		for (const [i, matchHistoryId] of matchHistoryIds.entries()) {
-// 			historyDisplayedTmp[i].matchId = matchHistoryId
-// 			//TODO maybe matchId is already in the sessionStorage; if then don't fetch and just use the result you got previously inside sessionStorage
-// 			const matchInfo = await doWithRetry(async retry => {
-// 				try {
-// 					return await fetchMatchHistory(matchHistoryId, thunkParam.region)
-// 				} catch (e) {
-// 					retry(e)
-// 				}
-// 			})
-// 				.catch(e => {
-// 					throw e.cause
-// 				}) as FetchMatchHistoryType
-//
-// 			historyDisplayedTmp[i].userWon = false
-// 			const winningTeam = getWinningTeam(matchInfo.info.teams)
-// 			let imInAllyTeam
-// 			let userTeam = 100
-// 			for (let x = 0; x < 10; ++x) {
-// 				const participantChampName = matchInfo.info.participants[x].championName
-// 				const encryptedSummonerId = (matchInfo.info.participants[x].summonerId)
-// 				const myEncryptedSummonerId = sessionStorage.getItem('encryptedSummonerId')
-// 				if (encryptedSummonerId == myEncryptedSummonerId) {
-// 					if (x < 5) {
-// 						imInAllyTeam = true
-// 					}
-// 					userTeam = matchInfo.info.participants[x].teamId
-// 				}
-// 				const champInAllChamps = allChamps.find(champ => champ.nameFormatted == participantChampName)
-// 				if (x < 5) {
-// 					historyDisplayedTmp[i].allies[x].champ = champInAllChamps || getDefaultChampion()
-// 				} else {
-// 					historyDisplayedTmp[i].enemies[x - 5].champ = champInAllChamps || getDefaultChampion()
-// 					historyDisplayedTmp[i].enemies[x - 5].enhancedScore = historyDisplayedTmp[i].enemies[x - 5].champ.opScore_user || 50
-// 				}
-// 			}
-//
-// 			if (!imInAllyTeam)
-// 				[historyDisplayedTmp[i].allies, historyDisplayedTmp[i].enemies] = [historyDisplayedTmp[i].enemies, historyDisplayedTmp[i].allies]
-// 			for (const ally of historyDisplayedTmp[i].allies) {
-// 				ally.enhancedScore =
-// 					(ally.champ.opScore_user || 50)
-// 					+ getTagsBonuses(ally.champ, historyDisplayedTmp[i].enemies.map(enemy => enemy.champ))
-// 			}
-// 			historyDisplayedTmp[i].userWon = userTeam == winningTeam || winningTeam == null
-//
-// 			thunkAPI.dispatch(setHistoryMatch({
-// 				historyDisplayedIndex: i,
-// 				matchDisplayed: historyDisplayedTmp[i]
-// 			}))
-// 		}
-// 	}
-// )
-
-export const fillChampSelectDisplayed = createAsyncThunk<ChampSelectDisplayedType | void, FillChampSelectDisplayedParamType, {state: RootState}>(
-	'fillChampSelectDisplayed',
-	async (thunkParam, thunkAPI) => {
-		if (thunkParam.actions.length == 0)
-			return
-		const champSelectDisplayed = initChampSelectDisplayed()
-		const allies = champSelectDisplayed.allies
-		const enemies = champSelectDisplayed.enemies
-		const allChamps = thunkAPI.getState().slice.config.champions
-
-		// function fillChampNameAndImgUrlFromId(champion: Champion, championId: number) {
-		// 	if (championId == 0) return
-		// 	const championSearched = thunkAPI.getState().slice.config.champions.find((champ) => champ.id == championId)
-		// 	if (!championSearched) {
-		// 		console.error(`CSW_error: Store all champions is probably empty. Debug: champion Id : ${championId}`)
-		// 		return
-		// 	}
-		// 	return championSearched
-		//TODO return ?
-
-		// champion.name = championSearched.name
-		// champion.imageUrl = getChampImgByFormattedName(championSearched.nameFormatted)
-		// champion.opScore_user = -1
-		// }
-
-		function fillAssignedRoleAndRecommendations(allies: ChampDisplayedType[], enemies: ChampDisplayedType[], myTeam: TeamChampSelect[], actorCellId: number, allChamps: Champion[], isActorCellRightSide = false) {
-			let actorCellIdTeam = actorCellId
-			if (isActorCellRightSide) actorCellIdTeam += 5
-			for (const {assignedPosition, cellId} of myTeam) {
-				if (cellId === actorCellIdTeam) {
-					allies[actorCellId].assignedRole = assignedPosition
-					const recommendations = getRecommendations(allies, enemies, actorCellId, allChamps)
-					allies[actorCellId].recommendations.splice(0, recommendations.length, ...recommendations)
-				}
-			}
-		}
-
-		//Custom solo without or with bans
-		if (thunkParam.actions.length != 8) {
-			let actorCellId: number, championId: number, isAllyAction: boolean,
-				type: string, actorCellIdEnemy = 0
-			for (const action of thunkParam.actions) {
-				for ({
-					actorCellId,
-					championId,
-					isAllyAction,
-					type
-				} of action) {
-					if (type == 'pick') {
-						if (isAllyAction) {
-							if (championId != 0) {
-								allies[actorCellId].champ = allChamps.find(({id}) => id == championId) || getDefaultChampion()
-								allies[actorCellId].scoreDisplayed = allies[actorCellId].champ.opScore_user || 50
-							}
-							fillAssignedRoleAndRecommendations(allies, enemies, thunkParam.myTeam, actorCellId, allChamps)
-						} else {
-							if (championId != 0) {
-								enemies[actorCellIdEnemy].champ = allChamps.find((champ) => champ.id == championId) || getDefaultChampion()
-								enemies[actorCellIdEnemy].scoreDisplayed = enemies[actorCellIdEnemy].champ.opScore_user || 50
-								actorCellIdEnemy++
-							}
-						}
-					}
-				}
-			}
-		}
-		// Rift Mode with bans (doesn't support clash or tournament yet)
-		else if (thunkParam.actions.length == 8) {
-			for (let i = 2; i < thunkParam.actions.length; i++) {
-				let actorCellId: number, championId: number
-				for ({actorCellId, championId} of thunkParam.actions[i]) {
-					const isActorCellRightSide = actorCellId >= 5
-					if ((actorCellId < 5 && thunkParam.localPlayerCellId < 5) || (actorCellId >= 5 && thunkParam.localPlayerCellId >= 5)) {
-						if (actorCellId >= 5)
-							actorCellId -= 5
-						if (championId != 0) {
-							allies[actorCellId].champ = allChamps.find((champ) => champ.id == championId) || getDefaultChampion()
-							allies[actorCellId].scoreDisplayed = allies[actorCellId].champ.opScore_user || 50
-						}
-						fillAssignedRoleAndRecommendations(allies, enemies, thunkParam.myTeam, actorCellId, allChamps, isActorCellRightSide)
-					} else {
-						if (actorCellId >= 5)
-							actorCellId -= 5
-						if (championId != 0) {
-							enemies[actorCellId].champ = allChamps.find((champ) => champ.id == championId) || getDefaultChampion()
-							enemies[actorCellId].scoreDisplayed = enemies[actorCellId].champ.opScore_user || 50
-						}
-					}
-				}
-			}
-		}
-		return champSelectDisplayed
-	})
-
 
 export const slice = createSlice({
 	name: 'slice',
