@@ -74,7 +74,6 @@ export async function addLCU_listeners(dispatch: AppDispatch) {
 
 	function handleChampSelect(champ_select: {raw: string}) {
 		const raw: ChampSelect = JSON.parse(champ_select.raw)
-		console.log(raw)
 		if (raw.localPlayerCellId == -1)
 			return
 		dispatch(setClientStatus(0))

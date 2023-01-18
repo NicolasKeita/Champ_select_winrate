@@ -26,10 +26,10 @@ export function championConstructor(name = '',
 									id = -1,
 									nameFormatted = '',
 									tags = {
-										attributes: [] as string[],
-										strongAgainst: [] as string[],
-										weakAgainst: [] as string[]
-									}
+										attributes: [],
+										strongAgainst: [],
+										weakAgainst: []
+									} as ChampionTagsType
 ): Champion {
 	return {
 		name: name,

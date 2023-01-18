@@ -67,7 +67,7 @@ export interface EntitledFeatureState {
 	unlockedSkinIds: any[];
 }
 
-export enum RolesChampSelect {
+export enum rolesChampSelect {
 	TOP = 'top',
 	JUNGLE = 'jungle',
 	MID = 'middle',
@@ -76,7 +76,7 @@ export enum RolesChampSelect {
 	NONE = ''
 }
 
-export type RoleChampSelect = `${RolesChampSelect}`;
+export type RoleChampSelect = `${rolesChampSelect}`;
 
 export interface Team {
 	assignedPosition: RoleChampSelect;
