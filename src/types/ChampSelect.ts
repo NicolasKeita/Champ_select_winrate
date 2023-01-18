@@ -67,8 +67,19 @@ export interface EntitledFeatureState {
 	unlockedSkinIds: any[];
 }
 
+export enum RolesChampSelect {
+	TOP = 'top',
+	JUNGLE = 'jungle',
+	MID = 'middle',
+	ADC = 'bottom',
+	SUPPORT = 'utility',
+	NONE = ''
+}
+
+export type RoleChampSelect = `${RolesChampSelect}`;
+
 export interface Team {
-	assignedPosition: string;
+	assignedPosition: RoleChampSelect;
 	cellId: number;
 	championId: number;
 	championPickIntent: number;

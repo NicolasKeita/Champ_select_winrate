@@ -114,6 +114,7 @@ export const slice = createSlice({
 				championToChange.opScore_user = action.payload.champUserScore
 			if (action.payload.champImageUrl)
 				championToChange.imageUrl = action.payload.champImageUrl
+			//TODO there is a bunch of duplicate for the lines below
 			localStorage.setItem('config', JSON.stringify(state.config))
 			if (state.config.currentPage == ConfigPage.CHAMPSELECT) {
 				updateChampSelectDisplayedScores(state.champSelectDisplayed, state.config.champions)

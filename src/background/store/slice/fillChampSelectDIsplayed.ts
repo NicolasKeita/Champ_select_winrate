@@ -5,7 +5,7 @@
 import {createAsyncThunk} from '@reduxjs/toolkit'
 import {RootState} from '@utils/store/store'
 import {
-	Action as ActionChampSelect,
+	Action as ActionChampSelect, RoleChampSelect,
 	Team as TeamChampSelect
 } from '../../../types/ChampSelect'
 import {
@@ -21,7 +21,7 @@ import {getTagsBonuses} from '@utils/champTags/champTags'
 
 
 export type ChampDisplayedType = {
-	assignedRole: string
+	assignedRole: RoleChampSelect
 	champ: Champion
 	scoreDisplayed: number
 	recommendations: Champion[]

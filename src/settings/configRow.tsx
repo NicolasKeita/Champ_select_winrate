@@ -5,9 +5,10 @@
 import React, {KeyboardEvent, useState} from 'react'
 import styled from 'styled-components'
 import {
-	Champion, championAttributes,
-	ChampionTagsType
-} from '../desktop/components/maincontent/settings/Champion'
+	Champion
+}
+	from
+		'../desktop/components/maincontent/settings/Champion'
 import {useAppDispatch} from '@utils/hooks'
 import {updateChamp} from '../background/store/slice/slice'
 import Collapsible from 'react-collapsible'
@@ -21,9 +22,9 @@ import './sass/main.css'
 import type {MenuProps} from 'antd'
 import {Dropdown, Space} from 'antd'
 import 'antd/dist/reset.css'
-import {Color} from 'react-bootstrap/types'
 import {TypeAttributes} from 'rsuite/esm/@types/common'
 import uniqid from 'uniqid'
+import {championAttributes, ChampionTagsType} from '@utils/champTags/champTags'
 
 const ChampName = styled.h1`
   background: -webkit-linear-gradient(#ab6630, #b79e4d);
@@ -170,7 +171,7 @@ function ConfigRow(props: PropsType) {
 
 	const renderDropDownPlusButton = () => {
 
-		const attributes = Object.values(championAttributes).map((attribute) => {
+		const attributes = Object.values(championAttributes.visibleTags).map((attribute) => {
 			return {
 				key: uniqid(),
 				style: {
@@ -180,7 +181,7 @@ function ConfigRow(props: PropsType) {
 				onClick: () => {addTag(attribute, 'cyan')}
 			}
 		}) || []
-		const strongAgainst = Object.values(championAttributes).map((tag) => {
+		const strongAgainst = Object.values(championAttributes.visibleTags).map((tag) => {
 			return {
 				key: uniqid(),
 				style: {
@@ -191,7 +192,7 @@ function ConfigRow(props: PropsType) {
 			}
 		}) || []
 
-		const weakAgainst = Object.values(championAttributes).map((tag) => {
+		const weakAgainst = Object.values(championAttributes.visibleTags).map((tag) => {
 			return {
 				key: uniqid(),
 				style: {

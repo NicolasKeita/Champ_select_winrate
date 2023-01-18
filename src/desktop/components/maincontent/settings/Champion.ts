@@ -3,29 +3,7 @@
 */
 
 import questionMark from '@public/img/question_mark.jpg'
-import Config from './Config'
-
-export const championAttributes = {
-	HEALER_ISH: 'Healer-ish',
-	POTENTIAL_GREVIOUS_WOUNDS: 'Potential Grievous Wounds',
-	UNKILLABLE_LANER: 'Unkillable laner',
-	POTENTIAL_ZHONYA_OWNER: 'Potential Zhonya owner',
-	LANE_BULLY: 'Lane Bully',
-	CC: 'CC',
-	AP: 'AP',
-	AD: 'AD',
-	TANK: 'Tank',
-	RANGED: 'Ranged',
-	MELEE: 'Melee',
-	JUNGLE_FARMER: 'Jungle Farmer',
-	JUNGLE_GANKER: 'Ganker'
-}
-
-export type ChampionTagsType = {
-	attributes: string[],
-	strongAgainst: string[],
-	weakAgainst: string[]
-}
+import {ChampionTagsType} from '@utils/champTags/champTags'
 
 export type Champion = {
 	id: number

@@ -4,9 +4,12 @@
 
 
 import {
-	Champion, championAttributes,
-	championConstructor, ChampionTagsType
-} from '../../components/maincontent/settings/Champion'
+	Champion,
+	championConstructor
+}
+	from
+		'../../components/maincontent/settings/Champion'
+import {championAttributes, ChampionTagsType} from '@utils/champTags/champTags'
 
 function addToArrayNoDuplicate(myArray, value) {
 	if (!myArray.includes(value))
@@ -15,19 +18,19 @@ function addToArrayNoDuplicate(myArray, value) {
 
 function adjustTags(tags: ChampionTagsType) {
 
-	if (tags.attributes.includes(championAttributes.HEALER_ISH)) {
-		addToArrayNoDuplicate(tags.weakAgainst, championAttributes.POTENTIAL_GREVIOUS_WOUNDS)
+	if (tags.attributes.includes(championAttributes.visibleTags.HEALER_ISH)) {
+		addToArrayNoDuplicate(tags.weakAgainst, championAttributes.visibleTags.POTENTIAL_GREVIOUS_WOUNDS)
 	}
-	if (tags.attributes.includes(championAttributes.JUNGLE_GANKER) || tags.attributes.includes(championAttributes.LANE_BULLY)) {
-		addToArrayNoDuplicate(tags.weakAgainst, championAttributes.UNKILLABLE_LANER)
+	if (tags.attributes.includes(championAttributes.visibleTags.JUNGLE_GANKER) || tags.attributes.includes(championAttributes.visibleTags.LANE_BULLY)) {
+		addToArrayNoDuplicate(tags.weakAgainst, championAttributes.visibleTags.UNKILLABLE_LANER)
 	}
 
-	if (tags.attributes.includes(championAttributes.POTENTIAL_GREVIOUS_WOUNDS)) {
-		addToArrayNoDuplicate(tags.strongAgainst, championAttributes.HEALER_ISH)
+	if (tags.attributes.includes(championAttributes.visibleTags.POTENTIAL_GREVIOUS_WOUNDS)) {
+		addToArrayNoDuplicate(tags.strongAgainst, championAttributes.visibleTags.HEALER_ISH)
 	}
-	if (tags.attributes.includes(championAttributes.UNKILLABLE_LANER)) {
-		addToArrayNoDuplicate(tags.strongAgainst, championAttributes.JUNGLE_GANKER)
-		addToArrayNoDuplicate(tags.strongAgainst, championAttributes.LANE_BULLY)
+	if (tags.attributes.includes(championAttributes.visibleTags.UNKILLABLE_LANER)) {
+		addToArrayNoDuplicate(tags.strongAgainst, championAttributes.visibleTags.JUNGLE_GANKER)
+		addToArrayNoDuplicate(tags.strongAgainst, championAttributes.visibleTags.LANE_BULLY)
 	}
 	return tags
 }

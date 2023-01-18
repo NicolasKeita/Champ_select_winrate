@@ -10,25 +10,26 @@ import {getTagsBonuses} from '@utils/champTags/champTags'
 import {
 	ChampDisplayedType
 } from '../../../background/store/slice/fillChampSelectDIsplayed'
+import {RolesChampSelect} from '../../../types/ChampSelect'
 
 //TODO change to types to make it more accessible for history or others?
 export function getRecommendations(allies: ChampDisplayedType[], enemies: ChampDisplayedType[], playerId: number, allChamps: Champion[]): Champion[] {
 	let assignedRole = allies[playerId].assignedRole
 	if (assignedRole == '') {
 		if (playerId == 0 || playerId == 5) {
-			assignedRole = 'top'
+			assignedRole = RolesChampSelect.TOP
 		}
 		if (playerId == 1 || playerId == 6) {
-			assignedRole = 'jungle'
+			assignedRole = RolesChampSelect.JUNGLE
 		}
 		if (playerId == 2 || playerId == 7) {
-			assignedRole = 'middle'
+			assignedRole = RolesChampSelect.MID
 		}
 		if (playerId == 3 || playerId == 8) {
-			assignedRole = 'bottom'
+			assignedRole = RolesChampSelect.ADC
 		}
 		if (playerId == 4 || playerId == 9) {
-			assignedRole = 'utility'
+			assignedRole = RolesChampSelect.SUPPORT
 		}
 	}
 
