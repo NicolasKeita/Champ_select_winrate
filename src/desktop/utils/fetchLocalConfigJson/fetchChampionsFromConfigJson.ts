@@ -11,7 +11,6 @@ import {
 		'../../components/maincontent/settings/Champion'
 import {
 	ChampionAttributes,
-	ChampionTag,
 	ChampionTagsType
 } from '@utils/champTags/champTags'
 

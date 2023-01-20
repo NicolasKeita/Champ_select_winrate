@@ -46,7 +46,6 @@ function getTagBonus(allyTags: ChampionTagsType,
 					 bonusAmount: number): number {
 
 	if (enemyTags.attributes.includes(tag)) {
-		//TODO update below by adding an hidden tag JUNGLER
 		const isEnemyJungler = enemyTags.attributes.includes(ChampionAttributes.hiddenTags.JUNGLER)
 		// const isEnemyJungler = !!enemyTags.attributes.find(enemyTag => enemyTag == (championAttributes.visibleTags.JUNGLE_GANKER || championAttributes.visibleTags.JUNGLE_FARMER))
 		//special case unkillable laner needs to respect lanes
