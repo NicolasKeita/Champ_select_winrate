@@ -24,7 +24,11 @@ import {Dropdown, Space} from 'antd'
 import 'antd/dist/reset.css'
 import {TypeAttributes} from 'rsuite/esm/@types/common'
 import uniqid from 'uniqid'
-import {championAttributes, ChampionTagsType} from '@utils/champTags/champTags'
+import {
+	ChampionAttributes, ChampionTag,
+	ChampionTagsType,
+	HiddenTags
+} from '@utils/champTags/champTags'
 
 const ChampName = styled.h1`
   background: -webkit-linear-gradient(#ab6630, #b79e4d);
@@ -148,7 +152,8 @@ function ConfigRow(props: PropsType) {
 
 	const defaultTags: {name: string, color: string}[] = []
 	for (const tag of props.champTags?.attributes || []) {
-		defaultTags.push({name: tag, color: 'cyan'})
+		if (!(Object.values(ChampionAttributes.hiddenTags) as ChampionTag[]).includes(tag))
+			defaultTags.push({name: tag, color: 'cyan'})
 	}
 	for (const tag of props.champTags?.strongAgainst || []) {
 		defaultTags.push({name: `Strong against ${tag}`, color: 'green'})
@@ -171,7 +176,7 @@ function ConfigRow(props: PropsType) {
 
 	const renderDropDownPlusButton = () => {
 
-		const attributes = Object.values(championAttributes.visibleTags).map((attribute) => {
+		const attributes = Object.values(ChampionAttributes.visibleTags).map((attribute) => {
 			return {
 				key: uniqid(),
 				style: {
@@ -181,7 +186,7 @@ function ConfigRow(props: PropsType) {
 				onClick: () => {addTag(attribute, 'cyan')}
 			}
 		}) || []
-		const strongAgainst = Object.values(championAttributes.visibleTags).map((tag) => {
+		const strongAgainst = Object.values(ChampionAttributes.visibleTags).map((tag) => {
 			return {
 				key: uniqid(),
 				style: {
@@ -192,7 +197,7 @@ function ConfigRow(props: PropsType) {
 			}
 		}) || []
 
-		const weakAgainst = Object.values(championAttributes.visibleTags).map((tag) => {
+		const weakAgainst = Object.values(ChampionAttributes.visibleTags).map((tag) => {
 			return {
 				key: uniqid(),
 				style: {

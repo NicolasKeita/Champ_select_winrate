@@ -3,11 +3,9 @@
 */
 
 import {Champion} from '../../components/maincontent/settings/Champion'
-import {RoleChampSelect, rolesChampSelect} from '../../../types/ChampSelect'
+import {rolesChampSelect} from '../../../types/ChampSelect'
 
-// import {AssignedRole} from '../../../types/AssignedRole'
-
-export enum visibleTags {
+export enum VisibleTags {
 	HEALER_ISH = 'Healer-ish',
 	POTENTIAL_GREVIOUS_WOUNDS = 'Potential Grievous Wounds',
 	UNKILLABLE_LANER = 'Unkillable laner',
@@ -23,36 +21,37 @@ export enum visibleTags {
 	JUNGLE_GANKER = 'Ganker'
 }
 
-export enum hiddenTags {
+export enum HiddenTags {
 	LANER = 'Laner',
 	JUNGLER = 'Jungler'
 }
 
-export const championAttributes = {
-	visibleTags: visibleTags,
-	hiddenTags: hiddenTags
+export const ChampionAttributes = {
+	visibleTags: VisibleTags,
+	hiddenTags: HiddenTags
 }
 
-export type championTag = `${visibleTags}` | `${hiddenTags}`
+export type ChampionTag = `${VisibleTags}` | `${HiddenTags}`
 
 export type ChampionTagsType = {
-	attributes: championTag[],
-	strongAgainst: championTag[],
-	weakAgainst: championTag[]
+	attributes: ChampionTag[],
+	strongAgainst: ChampionTag[],
+	weakAgainst: ChampionTag[]
 }
 
 function getTagBonus(allyTags: ChampionTagsType,
 					 enemyTags: ChampionTagsType,
-					 tag: championTag,
+					 tag: ChampionTag,
 					 isLaneOpponent: boolean,
 					 bonusAmount: number): number {
 
 	if (enemyTags.attributes.includes(tag)) {
 		//TODO update below by adding an hidden tag JUNGLER
-		const isEnemyJungler = !!enemyTags.attributes.find(enemyTag => enemyTag == (championAttributes.visibleTags.JUNGLE_GANKER || championAttributes.visibleTags.JUNGLE_FARMER))
+		const isEnemyJungler = enemyTags.attributes.includes(ChampionAttributes.hiddenTags.JUNGLER)
+		// const isEnemyJungler = !!enemyTags.attributes.find(enemyTag => enemyTag == (championAttributes.visibleTags.JUNGLE_GANKER || championAttributes.visibleTags.JUNGLE_FARMER))
 		//special case unkillable laner needs to respect lanes
-		if ((enemyTags.strongAgainst.includes(championAttributes.visibleTags.UNKILLABLE_LANER)
-				|| enemyTags.weakAgainst.includes(championAttributes.visibleTags.UNKILLABLE_LANER))
+		if ((enemyTags.strongAgainst.includes(ChampionAttributes.visibleTags.UNKILLABLE_LANER)
+				|| enemyTags.weakAgainst.includes(ChampionAttributes.visibleTags.UNKILLABLE_LANER))
 			&& !isLaneOpponent && !isEnemyJungler)
 			return 0
 		if (allyTags.strongAgainst.includes(tag)) {
@@ -65,12 +64,12 @@ function getTagBonus(allyTags: ChampionTagsType,
 
 function getTagsBonusesSoloEnemy(allyTags: ChampionTagsType, enemyTags: ChampionTagsType, isLaneOpponent: boolean): number {
 	return (
-		getTagBonus(allyTags, enemyTags, championAttributes.visibleTags.LANE_BULLY, isLaneOpponent, 5)
-		+ getTagBonus(allyTags, enemyTags, championAttributes.visibleTags.HEALER_ISH, isLaneOpponent, 5)
-		+ getTagBonus(allyTags, enemyTags, championAttributes.visibleTags.UNKILLABLE_LANER, isLaneOpponent, 5)
-		+ getTagBonus(allyTags, enemyTags, championAttributes.visibleTags.POTENTIAL_ZHONYA_OWNER, isLaneOpponent, 5)
-		+ getTagBonus(allyTags, enemyTags, championAttributes.visibleTags.JUNGLE_GANKER, isLaneOpponent, 5)
-		+ getTagBonus(allyTags, enemyTags, championAttributes.visibleTags.POTENTIAL_GREVIOUS_WOUNDS, isLaneOpponent, 5)
+		getTagBonus(allyTags, enemyTags, ChampionAttributes.visibleTags.LANE_BULLY, isLaneOpponent, 5)
+		+ getTagBonus(allyTags, enemyTags, ChampionAttributes.visibleTags.HEALER_ISH, isLaneOpponent, 5)
+		+ getTagBonus(allyTags, enemyTags, ChampionAttributes.visibleTags.UNKILLABLE_LANER, isLaneOpponent, 5)
+		+ getTagBonus(allyTags, enemyTags, ChampionAttributes.visibleTags.POTENTIAL_ZHONYA_OWNER, isLaneOpponent, 5)
+		+ getTagBonus(allyTags, enemyTags, ChampionAttributes.visibleTags.JUNGLE_GANKER, isLaneOpponent, 5)
+		+ getTagBonus(allyTags, enemyTags, ChampionAttributes.visibleTags.POTENTIAL_GREVIOUS_WOUNDS, isLaneOpponent, 5)
 	)
 }
 

@@ -9,29 +9,41 @@ import {
 }
 	from
 		'../../components/maincontent/settings/Champion'
-import {championAttributes, ChampionTagsType} from '@utils/champTags/champTags'
+import {
+	ChampionAttributes,
+	ChampionTag,
+	ChampionTagsType
+} from '@utils/champTags/champTags'
 
 function addToArrayNoDuplicate(myArray, value) {
 	if (!myArray.includes(value))
 		myArray.push(value)
 }
 
+function addLanerAndJunglerTag(tags: ChampionTagsType) {
+	if (tags.attributes.find(tag => tag == (ChampionAttributes.visibleTags.JUNGLE_GANKER || ChampionAttributes.visibleTags.JUNGLE_FARMER))) {
+		tags.attributes.push(ChampionAttributes.hiddenTags.JUNGLER)
+	} else
+		tags.attributes.push(ChampionAttributes.hiddenTags.LANER)
+}
+
 function adjustTags(tags: ChampionTagsType) {
 
-	if (tags.attributes.includes(championAttributes.visibleTags.HEALER_ISH)) {
-		addToArrayNoDuplicate(tags.weakAgainst, championAttributes.visibleTags.POTENTIAL_GREVIOUS_WOUNDS)
+	if (tags.attributes.includes(ChampionAttributes.visibleTags.HEALER_ISH)) {
+		addToArrayNoDuplicate(tags.weakAgainst, ChampionAttributes.visibleTags.POTENTIAL_GREVIOUS_WOUNDS)
 	}
-	if (tags.attributes.includes(championAttributes.visibleTags.JUNGLE_GANKER) || tags.attributes.includes(championAttributes.visibleTags.LANE_BULLY)) {
-		addToArrayNoDuplicate(tags.weakAgainst, championAttributes.visibleTags.UNKILLABLE_LANER)
+	if (tags.attributes.includes(ChampionAttributes.visibleTags.JUNGLE_GANKER) || tags.attributes.includes(ChampionAttributes.visibleTags.LANE_BULLY)) {
+		addToArrayNoDuplicate(tags.weakAgainst, ChampionAttributes.visibleTags.UNKILLABLE_LANER)
 	}
 
-	if (tags.attributes.includes(championAttributes.visibleTags.POTENTIAL_GREVIOUS_WOUNDS)) {
-		addToArrayNoDuplicate(tags.strongAgainst, championAttributes.visibleTags.HEALER_ISH)
+	if (tags.attributes.includes(ChampionAttributes.visibleTags.POTENTIAL_GREVIOUS_WOUNDS)) {
+		addToArrayNoDuplicate(tags.strongAgainst, ChampionAttributes.visibleTags.HEALER_ISH)
 	}
-	if (tags.attributes.includes(championAttributes.visibleTags.UNKILLABLE_LANER)) {
-		addToArrayNoDuplicate(tags.strongAgainst, championAttributes.visibleTags.JUNGLE_GANKER)
-		addToArrayNoDuplicate(tags.strongAgainst, championAttributes.visibleTags.LANE_BULLY)
+	if (tags.attributes.includes(ChampionAttributes.visibleTags.UNKILLABLE_LANER)) {
+		addToArrayNoDuplicate(tags.strongAgainst, ChampionAttributes.visibleTags.JUNGLE_GANKER)
+		addToArrayNoDuplicate(tags.strongAgainst, ChampionAttributes.visibleTags.LANE_BULLY)
 	}
+	addLanerAndJunglerTag(tags)
 	return tags
 }
 
