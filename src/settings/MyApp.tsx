@@ -5,7 +5,6 @@
 import React from 'react'
 import styled from 'styled-components'
 import Header from './header'
-import ReplacementFooterAD from '../desktop/components/footerAD/replacement'
 import Settings from './settingsComponent'
 import FooterAD from '../desktop/components/footerAD'
 import {kWindowNames} from '../consts'
@@ -18,19 +17,13 @@ const MyAppContainer = styled.div`
   height: 780px;
 `
 
+// Settings
 function MyApp(): JSX.Element {
-
-	let Footer: JSX.Element
-	// const testADBoolean = localStorage.getItem('owAdsForceAdUnit')
-	// if (testADBoolean == 'Ad_test') {
-	Footer = <FooterAD windowName={kWindowNames.settings} />
-	// } else
-	// 	Footer = <ReplacementFooterAD />
 	return (
 		<MyAppContainer>
 			<Header />
 			<Settings />
-			{Footer}
+			<FooterAD windowName={kWindowNames.settings} />
 		</MyAppContainer>
 	)
 }

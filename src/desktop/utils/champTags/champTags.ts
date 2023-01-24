@@ -5,7 +5,7 @@
 import {Champion} from '../../components/maincontent/settings/Champion'
 import {rolesChampSelect} from '../../../types/ChampSelect'
 
-export enum VisibleTags {
+enum VisibleTags {
 	HEALER_ISH = 'Healer-ish',
 	POTENTIAL_GREVIOUS_WOUNDS = 'Potential Grievous Wounds',
 	UNKILLABLE_LANER = 'Unkillable laner',
@@ -21,7 +21,7 @@ export enum VisibleTags {
 	JUNGLE_GANKER = 'Ganker'
 }
 
-export enum HiddenTags {
+enum HiddenTags {
 	LANER = 'Laner',
 	JUNGLER = 'Jungler'
 }

@@ -10,7 +10,6 @@ import '@public/css/general.css'
 import '@public/css/modal.css'
 import '@public/css/header.css'
 
-import {AppWindow} from '../AppWindow'
 import {kWindowNames} from '../consts'
 
 const HeaderContainer = styled.header`

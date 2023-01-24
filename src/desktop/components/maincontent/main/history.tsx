@@ -7,16 +7,15 @@ import styled from 'styled-components'
 import HistoryProfile from '../../championProfile/historyProfile'
 import uniqid from 'uniqid'
 import {useAppSelector} from '@utils/hooks'
-import './tooltip.css'
+import '@public/css/tooltip.css'
 import Tooltip from 'rc-tooltip'
-import './react-tooltip.css'
-import './assets/bootstrap_white.css'
-import './assets/bootstrap.css'
+import '@public/css/rc-tooltip_css/bootstrap_white.css'
+import '@public/css/rc-tooltip_css/bootstrap.css'
 
 import computeWinrate from '@utils/maths/computeWinrateBetweenTwoTeams'
 import {
 	HistoryDisplayedType
-} from '../../../../background/store/slice/fillHistoryDisplayed'
+} from '@background/store/slice/fillHistoryDisplayed'
 
 const HistoryContainer = styled.div`
   color: white;

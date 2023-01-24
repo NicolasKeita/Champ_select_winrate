@@ -26,8 +26,7 @@ import {TypeAttributes} from 'rsuite/esm/@types/common'
 import uniqid from 'uniqid'
 import {
 	ChampionAttributes, ChampionTag,
-	ChampionTagsType,
-	HiddenTags
+	ChampionTagsType
 } from '@utils/champTags/champTags'
 
 const ChampName = styled.h1`

@@ -57,7 +57,7 @@ export function getDefaultChampion(): Champion {
 		attributes: [],
 		strongAgainst: [],
 		weakAgainst: []
-	}
+	} as ChampionTagsType
 	return championConstructor(defaultName,
 		defaultUserScore,
 		defaultCSWScore,

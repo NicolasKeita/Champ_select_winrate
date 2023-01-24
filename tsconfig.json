@@ -23,6 +23,15 @@
 			],
 			"@utils/*": [
 				"../src/desktop/utils/*"
+			],
+			"@background/*": [
+				"../src/background/*"
+			],
+			"@desktop/*": [
+				"../src/desktop/*"
+			],
+			"@settings/*": [
+				"../src/settings/*"
 			]
 		},
 		"removeComments": true,
