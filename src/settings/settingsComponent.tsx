@@ -10,14 +10,14 @@ import ConfigRow from './configRow'
 import {VariableSizeList as List} from 'react-window'
 import {Virtuoso} from 'react-virtuoso'
 import {Champion} from '@desktop/components/maincontent/settings/Champion'
-import '@public/css/CSWColors.css'
+import '@public/css/CSWStyles.css'
 
 
 const SettingsContainer = styled.div`
   background: linear-gradient(to right, #252424, #363636, #252424);
   padding: 12px 0 0 30px;
   overflow-y: scroll;
-  height: 780px;
+  height: calc(780px - 46px);
   flex: 1;
 `
 const TitlesContainer = styled.div`
@@ -29,15 +29,7 @@ const TitlesContainer = styled.div`
     font-weight: bold;
   }
 `
-const TitleHeadings = styled.h1`
-  background: -webkit-linear-gradient(#ab6630, #b79e4d);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
 
-  h1 {
-    font-weight: bold;
-  }
-`
 const OP_ScoreContainer = styled.div`
   display: flex;
   flex: 1;

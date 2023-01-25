@@ -1,3 +1,13 @@
+.flexDirectionRow {
+    display: flex;
+    flex-direction: row;
+}
+
+.flexDirectionColumn {
+    display: flex;
+    flex-direction: column;
+}
+
 .CSWColoredTextGradiant {
     background: -webkit-linear-gradient(#a8540c, #b79e4d);
     -webkit-background-clip: text;

@@ -1,6 +1,6 @@
 {
 	"name": "champ_select_winrate",
-	"version": "2.1.1",
+	"version": "2.2.0",
 	"description": "Fully customizable champ select tool",
 	"scripts": {
 		"test": "jest --silent",
@@ -77,6 +77,7 @@
 		"bootstrap": ">=5.2.3",
 		"copy-anything": ">=3.0.3",
 		"do-with-retry": ">=1.0.3",
+		"dts-css-modules-loader": ">=2.0.1",
 		"rc-tooltip": ">=5.2.2",
 		"react": ">=18.2.0",
 		"react-bootstrap": ">=2.7.0",
