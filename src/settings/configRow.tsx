@@ -7,10 +7,9 @@ import styled from 'styled-components'
 import {
 	Champion
 }
-	from
-		'../desktop/components/maincontent/settings/Champion'
+	from '@desktop/components/maincontent/settings/Champion'
 import {useAppDispatch} from '@utils/hooks'
-import {updateChamp} from '../background/store/slice/slice'
+import {updateChamp} from '@background/store/slice/slice'
 import Collapsible from 'react-collapsible'
 import {PlusCircleTwoTone} from '@ant-design/icons'
 import {
@@ -244,31 +243,33 @@ function ConfigRow(props: PropsType) {
 
 
 	return (
-		<Collapsible
-			transitionTime={10}
-			lazyRender={true}
-			overflowWhenOpen={'visible'}
-			trigger={
-				<ConfigRowTrigger
-					champName={props.champName}
-					opScoreCSW={props.opScoreCSW}
-					opScoreUser={props.opScoreUser}
-					allChamps={props.allChamps}
-				/>
-			}>
-			<TagGroup style={{display: 'flex', flexWrap: 'wrap'}}>
-				{tags.map((tag, i) => (
-					<Tag
-						key={i} closable
-						onClose={() => removeTag(tag)}
-						color={tag.color as TypeAttributes.Color}
-					>
-						{tag.name}
-					</Tag>
-				))}
-				{renderDropDownPlusButton()}
-			</TagGroup>
-		</Collapsible>
+		<div style={{marginBottom: '5px'}}>
+			<Collapsible
+				transitionTime={10}
+				lazyRender={true}
+				overflowWhenOpen={'visible'}
+				trigger={
+					<ConfigRowTrigger
+						champName={props.champName}
+						opScoreCSW={props.opScoreCSW}
+						opScoreUser={props.opScoreUser}
+						allChamps={props.allChamps}
+					/>
+				}>
+				<TagGroup style={{display: 'flex', flexWrap: 'wrap'}}>
+					{tags.map((tag, i) => (
+						<Tag
+							key={i} closable
+							onClose={() => removeTag(tag)}
+							color={tag.color as TypeAttributes.Color}
+						>
+							{tag.name}
+						</Tag>
+					))}
+					{renderDropDownPlusButton()}
+				</TagGroup>
+			</Collapsible>
+		</div>
 	)
 }
 

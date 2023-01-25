@@ -5,11 +5,6 @@
 import React, {useEffect, useRef} from 'react'
 import styled from 'styled-components'
 
-import '@public/css/desktop.css'
-import '@public/css/general.css'
-import '@public/css/modal.css'
-import '@public/css/header.css'
-
 import {kWindowNames} from '../consts'
 
 const HeaderContainer = styled.header`

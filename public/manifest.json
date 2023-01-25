@@ -58,7 +58,7 @@
 			"settings": {
 				"file": "settings.html",
 				"desktop_only": true,
-				"native_window": false,
+				"native_window": true,
 				"resizable": false,
 				"transparent": true,
 				"override_on_update": true,
@@ -66,11 +66,11 @@
 				"popup_blocker": true,
 				"mute": true,
 				"size": {
-					"width": 400,
+					"width": 1200,
 					"height": 780
 				},
 				"min_size": {
-					"width": 400,
+					"width": 1200,
 					"height": 780
 				}
 			}

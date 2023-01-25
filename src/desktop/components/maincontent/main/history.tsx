@@ -4,14 +4,14 @@
 
 import React from 'react'
 import styled from 'styled-components'
-import HistoryProfile from '../../championProfile/historyProfile'
 import uniqid from 'uniqid'
+import Tooltip from 'rc-tooltip'
+
+import HistoryProfile from '@desktop/components/championProfile/historyProfile'
 import {useAppSelector} from '@utils/hooks'
 import '@public/css/tooltip.css'
-import Tooltip from 'rc-tooltip'
 import '@public/css/rc-tooltip_css/bootstrap_white.css'
 import '@public/css/rc-tooltip_css/bootstrap.css'
-
 import computeWinrate from '@utils/maths/computeWinrateBetweenTwoTeams'
 import {
 	HistoryDisplayedType

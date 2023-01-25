@@ -15,7 +15,7 @@ import {kWindowNames} from '../../../consts'
 import {
 	rerenderSettings,
 	resetSettings, toggleHelpPage
-} from '../../../background/store/slice/slice'
+} from '@background/store/slice/slice'
 import {useAppDispatch} from '@utils/hooks'
 
 import {Menu, Item, useContextMenu} from 'react-contexify'

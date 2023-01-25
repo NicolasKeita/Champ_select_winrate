@@ -9,39 +9,45 @@ import {useAppSelector} from '@utils/hooks'
 import ConfigRow from './configRow'
 import {VariableSizeList as List} from 'react-window'
 import {Virtuoso} from 'react-virtuoso'
-import {Champion} from '../desktop/components/maincontent/settings/Champion'
+import {Champion} from '@desktop/components/maincontent/settings/Champion'
+import '@public/css/CSWColors.css'
 
 
 const SettingsContainer = styled.div`
   background: linear-gradient(to right, #252424, #363636, #252424);
-  padding: 12px 0 0 12px;
+  padding: 12px 0 0 30px;
   overflow-y: scroll;
-  height: 424px;
+  height: 780px;
+  flex: 1;
 `
-const RowContainer = styled.div`
+const TitlesContainer = styled.div`
   display: flex;
   flex-direction: row;
-  padding-bottom: 10px;
+  margin-bottom: 20px;
+
+  h1 {
+    font-weight: bold;
+  }
 `
-const ChampName = styled.h1`
+const TitleHeadings = styled.h1`
   background: -webkit-linear-gradient(#ab6630, #b79e4d);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  width: 110px;
+
+  h1 {
+    font-weight: bold;
+  }
 `
 const OP_ScoreContainer = styled.div`
   display: flex;
   flex: 1;
   flex-direction: row;
   justify-content: space-evenly;
-  background: -webkit-linear-gradient(#a95a21, #8d782a);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
 `
 
 function Settings() {
-	const allChamps = useAppSelector(state => state.slice.config.champions, () => {return true})
-	useAppSelector(state => state.slice.rerenderSettings)
+	const allChamps = useAppSelector(({slice: {config: {champions}}}) => champions, () => true)
+	useAppSelector(({slice: {rerenderSettings}}) => rerenderSettings)
 
 	function renderListChampNameWithOPScore(allChamps: Champion[]) {
 		return (
@@ -84,13 +90,16 @@ function Settings() {
 
 	function renderTitleRow() {
 		return (
-			<RowContainer style={{paddingBottom: '12px'}}>
-				<ChampName>ChampName</ChampName>
+			<TitlesContainer
+				aria-label={'titlesContainer'}
+				className={'CSWColoredTextGradiant'}
+			>
+				<h1 style={{width: '110px'}}>ChampName</h1>
 				<OP_ScoreContainer>
 					<h1>Your OP Score</h1>
 					<h1>CSW OP Score</h1>
 				</OP_ScoreContainer>
-			</RowContainer>
+			</TitlesContainer>
 		)
 	}
 

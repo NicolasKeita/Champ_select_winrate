@@ -8,22 +8,41 @@ import Header from './header'
 import Settings from './settingsComponent'
 import FooterAD from '../desktop/components/footerAD'
 import {kWindowNames} from '../consts'
+import SettingsInfos from '@settings/SettingsInfos'
 
 const MyAppContainer = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1;
-  width: 400px;
+  width: 1200px;
   height: 780px;
+`
+
+const SettingsMainContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+`
+
+const SettingsInfosContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  min-width: 411px;
+  width: 411px;
+  max-width: 411px;
 `
 
 // Settings
 function MyApp(): JSX.Element {
 	return (
-		<MyAppContainer>
+		<MyAppContainer aria-label={'myAppContainer'}>
 			<Header />
-			<Settings />
-			<FooterAD windowName={kWindowNames.settings} />
+			<SettingsMainContainer aria-label={'settingsMainContainer'}>
+				<Settings />
+				<SettingsInfosContainer aria-label={'settingsInfosContainer'}>
+					<SettingsInfos />
+					<FooterAD windowName={kWindowNames.settings} />
+				</SettingsInfosContainer>
+			</SettingsMainContainer>
 		</MyAppContainer>
 	)
 }
