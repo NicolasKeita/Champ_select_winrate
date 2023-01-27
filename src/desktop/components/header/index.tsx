@@ -13,13 +13,14 @@ import {
 import {useAppDispatch} from '@utils/hooks'
 
 import {Menu, Item, useContextMenu} from 'react-contexify'
-import styles from './ReactContexify.css'
-import './modif_globals.css'
-import css from './modif2.module.css'
+// import styles from './ReactContexify.css'
+// import './modif_globals.css'
+// import css from './modif2.module.css'
+// import headerCss from './header.module.css'
+import headerCss from './header.module.css' assert { type: 'css' }
 
 const HeaderContainer = styled.header`
-  //background: linear-gradient(to right, rgb(63, 62, 62), #363636, #323232);
-  background: #00defa;
+  background: linear-gradient(to right, rgb(63, 62, 62), #363636, #323232);
   padding: 8px;
   display: flex;
   align-items: center;
@@ -91,22 +92,11 @@ function Header() {
 		id: 'settingsButton'
 	})
 
-	console.log(css)
-	console.log('1')
-	console.log(css.my_class4)
-	console.log('1.4')
-	console.log(css[0])
-	console.log('2')
-	console.log(css[1])
-	console.log('3')
-	console.log(css.toString())
-
+	console.log(headerCss)
+	console.log(headerCss)
 	return (
 		<HeaderContainer
-			className={css.my_class4}
-			// className={'my_class1'}
-			//className={'app-header ' + css.my_class1}
-			//className={'app-header ' + css.my_class1}
+			className={headerCss.appHeader}
 			ref={headerRef}
 		>
 			<h1>hellou</h1>
