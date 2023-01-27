@@ -17,7 +17,7 @@ import {Menu, Item, useContextMenu} from 'react-contexify'
 // import './modif_globals.css'
 // import css from './modif2.module.css'
 // import headerCss from './header.module.css'
-import headerCss from './header.module.css' assert { type: 'css' }
+import headerCss from './header.module.css' assert {type: 'css'}
 
 const HeaderContainer = styled.header`
   background: linear-gradient(to right, rgb(63, 62, 62), #363636, #323232);
@@ -92,25 +92,24 @@ function Header() {
 		id: 'settingsButton'
 	})
 
-	console.log(headerCss)
-	console.log(headerCss)
 	return (
 		<HeaderContainer
 			className={headerCss.appHeader}
 			ref={headerRef}
 		>
-			<h1>hellou</h1>
 			<Logo>CSW</Logo>
 			<CSWName>Champ Select Winrate</CSWName>
-			<div className='window-controls-group'>
-				<button className={'window-control window-control-support'}
-						onMouseDown={e => activateHelp(e)}
-						aria-label={'helpButton'}
+			<div className={headerCss.windowControlsGroup}>
+				<button
+					className={[headerCss.windowControl, headerCss.windowControlSupport].join(' ')}
+					onMouseDown={e => activateHelp(e)}
+					aria-label={'helpButton'}
 				/>
-				<button className={'window-control window-control-settings'}
-						onMouseDown={e => activateSettings(e)}
-						onContextMenu={handleContextMenu}
-						aria-label={'settingsButton'}
+				<button
+					className={[headerCss.windowControl, headerCss.windowControlSettings].join(' ')}
+					onMouseDown={e => activateSettings(e)}
+					onContextMenu={handleContextMenu}
+					aria-label={'settingsButton'}
 				/>
 				<Menu id={'settingsButton'}>
 					<Item onClick={() => {
@@ -121,11 +120,13 @@ function Header() {
 					</Item>
 				</Menu>
 
-				<button className={'window-control window-control-minimize'}
-						onMouseDown={minimize} />
-				<button className={'window-control window-control-close'}
-						aria-label={'shutdownAppButton'}
-						onMouseDown={close} />
+				<button
+					className={[headerCss.windowControl, headerCss.windowControlMinimize].join(' ')}
+					onMouseDown={minimize} />
+				<button
+					className={[headerCss.windowControl, headerCss.windowControlClose].join(' ')}
+					aria-label={'shutdownAppButton'}
+					onMouseDown={close} />
 			</div>
 		</HeaderContainer>
 	)
