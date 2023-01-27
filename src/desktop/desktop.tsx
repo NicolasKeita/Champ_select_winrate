@@ -3,7 +3,7 @@ import {Provider} from 'react-redux'
 import ReactDOM from 'react-dom/client'
 
 import MyApp from './MyApp'
-import '@public/css/desktop.css'
+import css6 from '@public/css/global/desktop_globals.css'
 import store from '@utils/store/store'
 
 const desktopStore = store

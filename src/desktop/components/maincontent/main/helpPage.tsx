@@ -9,8 +9,8 @@ import help3 from '@public/img/Help3.jpg'
 import help4 from '@public/img/Help4.jpg'
 import {Splide, SplideSlide} from '@splidejs/react-splide'
 
-import '@public/css/splide/splide.min.css'
-import '@public/css/splide/customCss.css'
+import css from '@public/css/splide/splide.min.css'
+import css2 from '@public/css/splide/customCss.css'
 
 function HelpPage() {
 	return (

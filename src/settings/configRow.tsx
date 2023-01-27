@@ -16,11 +16,11 @@ import {
 	TagGroup,
 	Tag
 } from 'rsuite'
-import './rsuite.css'
-import './sass/main.css'
+import css8 from './rsuite.css'
+import css9 from './sass/main.css'
 import type {MenuProps} from 'antd'
 import {Dropdown, Space} from 'antd'
-import 'antd/dist/reset.css'
+import css10 from 'antd/dist/reset.css'
 import {TypeAttributes} from 'rsuite/esm/@types/common'
 import uniqid from 'uniqid'
 import {

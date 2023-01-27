@@ -21,15 +21,20 @@ module.exports = env => {
 					use: 'ts-loader',
 					exclude: /node_modules/
 				},
-				// {
-				// 	loader: 'dts-css-modules-loader',
-				// 	options: {
-				// 		namedExport: true
-				// 	}
-				// },
 				{
 					test: /\.css$/i,
-					use: ['style-loader', 'css-loader']
+					oneOf: [
+						{
+							test: /\.module\.css$/,
+							assert: {
+								type: 'css'
+							},
+							use: ['css-loader']
+						},
+						{
+							use: ['style-loader', 'css-loader']
+						}
+					]
 				},
 				{
 					test: /\.(png|jpe?g|ttf|webp|svg)$/,

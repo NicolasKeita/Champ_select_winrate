@@ -5,13 +5,7 @@
 import React, {useEffect, useRef} from 'react'
 import styled from 'styled-components'
 
-
-import '@public/css/desktop.css'
-import '@public/css/general.css'
-import '@public/css/modal.css'
-import '@public/css/header.css'
 import {kWindowNames} from '../../../consts'
-
 import {
 	rerenderSettings,
 	resetSettings, toggleHelpPage
@@ -19,10 +13,13 @@ import {
 import {useAppDispatch} from '@utils/hooks'
 
 import {Menu, Item, useContextMenu} from 'react-contexify'
-import './ReactContexify.css'
+import styles from './ReactContexify.css'
+import './modif_globals.css'
+import css from './modif2.module.css'
 
 const HeaderContainer = styled.header`
-  background: linear-gradient(to right, rgb(63, 62, 62), #363636, #323232);
+  //background: linear-gradient(to right, rgb(63, 62, 62), #363636, #323232);
+  background: #00defa;
   padding: 8px;
   display: flex;
   align-items: center;
@@ -94,8 +91,25 @@ function Header() {
 		id: 'settingsButton'
 	})
 
+	console.log(css)
+	console.log('1')
+	console.log(css.my_class4)
+	console.log('1.4')
+	console.log(css[0])
+	console.log('2')
+	console.log(css[1])
+	console.log('3')
+	console.log(css.toString())
+
 	return (
-		<HeaderContainer className={'app-header'} ref={headerRef}>
+		<HeaderContainer
+			className={css.my_class4}
+			// className={'my_class1'}
+			//className={'app-header ' + css.my_class1}
+			//className={'app-header ' + css.my_class1}
+			ref={headerRef}
+		>
+			<h1>hellou</h1>
 			<Logo>CSW</Logo>
 			<CSWName>Champ Select Winrate</CSWName>
 			<div className='window-controls-group'>

@@ -34,6 +34,9 @@
 				"../src/settings/*"
 			]
 		},
+		//		"plugins": [
+		//			{"name": "typescript-plugin-css-modules"}
+		//		],
 		"removeComments": true,
 		"resolveJsonModule": true,
 		"rootDir": "./",
