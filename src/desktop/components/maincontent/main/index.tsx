@@ -11,6 +11,8 @@ import {useAppSelector} from '@utils/hooks'
 import questionMark from '@public/img/question_mark.jpg'
 import computeWinrate from '@utils/maths/computeWinrateBetweenTwoTeams'
 import Tooltip from 'rc-tooltip'
+import cssTooltip from '@public/css/tooltip.module.css' assert {type: 'css'}
+import cssCSW from '@public/css/CSWStyles.module.css' assert {type: 'css'}
 
 const PercentageContainer = styled.div`
   display: flex;
@@ -118,12 +120,12 @@ function ChampSelect() {
 				<WinrateLine isLeft />
 				<Tooltip
 					placement={'top'}
-					overlayClassName={'winrateTooltip'}
+					overlayClassName={cssTooltip.winrateTooltip}
 					overlay={<span>{tooltipNumber}</span>}
 				>
 							<span
 								style={{fontSize: '22px'}}
-								className={'CSWColoredTextGradiant'}
+								className={cssCSW.CSWColoredTextGradiant}
 							>
 								{winrate}%
 							</span>

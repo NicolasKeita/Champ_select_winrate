@@ -11,7 +11,7 @@ import computeWinrate from '@utils/maths/computeWinrateBetweenTwoTeams'
 import Tooltip from 'rc-tooltip'
 import {
 	ChampSelectDisplayedType
-} from '../../../background/store/slice/fillChampSelectDIsplayed'
+} from '@background/store/slice/fillChampSelectDIsplayed'
 
 const ChampionImg = styled.img`
   border-radius: 50%;

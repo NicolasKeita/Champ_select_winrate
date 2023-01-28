@@ -9,9 +9,10 @@ import help3 from '@public/img/Help3.jpg'
 import help4 from '@public/img/Help4.jpg'
 import {Splide, SplideSlide} from '@splidejs/react-splide'
 
-import css from '@public/css/splide/splide.min.css'
-import css2 from '@public/css/splide/customCss.css'
+import '@public/css/splide/splide.min.css' assert {type: 'css'}
+import '@public/css/splide/customCss.css' assert {type: 'css'}
 
+//TODO I can see some classname using string instead of module, below
 function HelpPage() {
 	return (
 		<div

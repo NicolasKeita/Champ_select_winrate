@@ -9,7 +9,7 @@ import styled from 'styled-components'
 
 import Footer from './../../components/maincontent/footer'
 import ChampSelect from './../../components/maincontent/main'
-import {selectCurrentPage} from '../../../background/store/selectors'
+import {selectCurrentPage} from '@background/store/selectors'
 import {ConfigPage} from './settings/Config'
 import History from './main/history'
 import HelpPage from './main/helpPage'
@@ -29,8 +29,9 @@ function MainContent() {
 	let currentPageSet: JSX.Element
 	if (!helpPageVisible) {
 		currentPageSet =
-			<div id='main+footer'
-				 style={{display: 'flex', flexDirection: 'column', flex: 1}}>
+			<div
+				style={{display: 'flex', flexDirection: 'column', flex: 1}}
+			>
 				{
 					currentPage === ConfigPage.CHAMPSELECT ?
 						<ChampSelect /> :
@@ -42,7 +43,7 @@ function MainContent() {
 		currentPageSet = <HelpPage />
 
 	return (
-		<MainContentContainer id='mainContentContainer'>
+		<MainContentContainer aria-label='mainContentContainer'>
 			{currentPageSet}
 		</MainContentContainer>
 	)
