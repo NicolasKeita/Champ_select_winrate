@@ -6,6 +6,7 @@ import React, {useEffect, useRef} from 'react'
 import styled from 'styled-components'
 
 import {kWindowNames} from '../consts'
+import cssHeader from './header.module.css' assert {type: 'css'}
 
 const HeaderContainer = styled.header`
   background: linear-gradient(to right, rgb(63, 62, 62), #363636, #323232);
@@ -51,16 +52,18 @@ function Header() {
 	}, [])
 
 	return (
-		<HeaderContainer className={'app-header'} ref={headerRef}>
+		<HeaderContainer className={cssHeader.appHeader} ref={headerRef}>
 			<Logo>CSW</Logo>
 			<CSWName>Champ Select Winrate Settings</CSWName>
-			<div className='window-controls-group'>
-				<button className={'window-control window-control-minimize'}
-						aria-label={'minimizeAppButton'}
-						onMouseDown={minimize} />
-				<button className={'window-control window-control-close'}
-						aria-label={'shutdownAppButton'}
-						onMouseDown={close} />
+			<div className={cssHeader.windowControlsGroup}>
+				<button
+					className={[cssHeader.windowControl, cssHeader.windowControlMinimize].join(' ')}
+					aria-label={'minimizeAppButton'}
+					onMouseDown={minimize} />
+				<button
+					className={[cssHeader.windowControl, cssHeader.windowControlClose].join(' ')}
+					aria-label={'shutdownAppButton'}
+					onMouseDown={close} />
 			</div>
 		</HeaderContainer>
 	)

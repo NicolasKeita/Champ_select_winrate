@@ -3,6 +3,7 @@ import {Provider} from 'react-redux'
 import ReactDOM from 'react-dom/client'
 
 import MyApp from './MyApp'
+// TODO remove unnecessary below and merge into one?
 import '@public/css/desktop.css' assert {type: 'css'}
 import '@public/css/general.css' assert {type: 'css'}
 import '@public/css/modal.css' assert {type: 'css'}

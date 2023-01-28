@@ -10,10 +10,7 @@ import ConfigRow from './configRow'
 import {VariableSizeList as List} from 'react-window'
 import {Virtuoso} from 'react-virtuoso'
 import {Champion} from '@desktop/components/maincontent/settings/Champion'
-// import styles from '@public/css/CSWStyles.css'
-// import css from '@public/css/CSWStyles.css'
-// import '@public/css/CSWStyles.css'
-// import css from '../../public/css/CSWStyles.css'
+import cssCSW from '@public/css/CSWStyles.module.css' assert {type: 'css'}
 
 
 const SettingsContainer = styled.div`
@@ -31,13 +28,6 @@ const TitlesContainer = styled.div`
   h1 {
     font-weight: bold;
   }
-`
-
-const OP_ScoreContainer = styled.div`
-  display: flex;
-  flex: 1;
-  flex-direction: row;
-  justify-content: space-evenly;
 `
 
 function Settings() {
@@ -84,18 +74,15 @@ function Settings() {
 	}
 
 	function renderTitleRow() {
-		// console.log('STYLE ICI')
-		// console.log(styles)
-		// console.log(css)
 		return (
 			<TitlesContainer
 				aria-label={'titlesContainer'}
-				// className={css.CSWColoredTextGradiant}
+				className={cssCSW.CSWColoredTextGradiant}
 			>
 				<h1 style={{width: '110px'}}>ChampName</h1>
 				<div
 					style={{flex: 1, justifyContent: 'space-evenly'}}
-					className={'flexDirectionRow'}
+					className={cssCSW.flexDirectionRow}
 				>
 					<h1>Your OP Score</h1>
 					<h1>CSW OP Score</h1>

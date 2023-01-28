@@ -8,10 +8,10 @@ import {copyFromAnotherSetting} from '@background/store/slice/slice'
 import Config from '../desktop/components/maincontent/settings/Config'
 import {StyleProvider} from '@ant-design/cssinjs'
 
-import cs1 from '@public/css/setting.css'
-import cs2 from '@public/css/general.css'
-import cs3 from '@public/css/modal.css'
-import cs4 from '@public/css/header.css'
+// TODO remove unnecessary below and merge into one?
+import '@public/css/setting.css' assert {type: 'css'}
+import '@public/css/general.css' assert {type: 'css'}
+import '@public/css/modal.css' assert {type: 'css'}
 
 const settingsStore = store
 const config: Config = JSON.parse(localStorage.getItem('config') ?? '{}')
