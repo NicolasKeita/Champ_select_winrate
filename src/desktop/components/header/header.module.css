@@ -37,16 +37,15 @@
 }
 
 .app-header {
-    background: #0f9119 !important;
 }
 
 .app-header h1 {
-    /*font-style: normal;*/
-    /*font-weight: normal;*/
-    /*font-size: 16px;*/
-    /*padding-left: 8px;*/
-    /*margin: 0;*/
-    /*cursor: inherit;*/
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    padding-left: 8px;
+    margin: 0;
+    cursor: inherit;
 }
 
 .app-header .hotkey-text {

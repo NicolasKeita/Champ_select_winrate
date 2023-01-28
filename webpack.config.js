@@ -29,14 +29,17 @@ module.exports = env => {
 							assert: {
 								type: 'css'
 							},
-							use: [{loader: 'style-loader'}, {
-								loader: 'css-loader',
-								options: {
-									modules: {
-										exportLocalsConvention: 'camelCase',
-									},
+							use: [
+								{loader: 'style-loader'},
+								{
+									loader: 'css-loader',
+									options: {
+										modules: {
+											exportLocalsConvention: 'camelCase'
+										}
+									}
 								}
-							}]
+							]
 						},
 						{
 							use: ['style-loader', 'css-loader']

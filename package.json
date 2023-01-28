@@ -74,7 +74,6 @@
 		"@tidy-ui/chip": ">=0.14.1",
 		"@types/rc-tooltip": ">=3.7.7",
 		"antd": ">=5.1.2",
-		"autoprefixer": ">=10.4.13",
 		"bootstrap": ">=5.2.3",
 		"copy-anything": ">=3.0.3",
 		"do-with-retry": ">=1.0.3",

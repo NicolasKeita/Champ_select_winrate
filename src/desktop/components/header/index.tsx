@@ -13,10 +13,7 @@ import {
 import {useAppDispatch} from '@utils/hooks'
 
 import {Menu, Item, useContextMenu} from 'react-contexify'
-// import styles from './ReactContexify.css'
-// import './modif_globals.css'
-// import css from './modif2.module.css'
-// import headerCss from './header.module.css'
+import './ReactContexify.css' assert {type: 'css'}
 import headerCss from './header.module.css' assert {type: 'css'}
 
 const HeaderContainer = styled.header`
@@ -111,6 +108,7 @@ function Header() {
 					onContextMenu={handleContextMenu}
 					aria-label={'settingsButton'}
 				/>
+				{/*l'id ci-dessous est en rapport avec le contextmenu*/}
 				<Menu id={'settingsButton'}>
 					<Item onClick={() => {
 						dispatch(resetSettings())

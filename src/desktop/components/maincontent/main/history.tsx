@@ -9,9 +9,10 @@ import Tooltip from 'rc-tooltip'
 
 import HistoryProfile from '@desktop/components/championProfile/historyProfile'
 import {useAppSelector} from '@utils/hooks'
-import css3 from '@public/css/tooltip.css'
-import css4 from '@public/css/rc-tooltip_css/bootstrap_white.css'
-import css5 from '@public/css/rc-tooltip_css/bootstrap.css'
+import cssTooltip from '@public/css/tooltip.module.css' assert {type: 'css'}
+import cssCSW from '@public/css/CSWStyles.module.css' assert {type: 'css'}
+import '@public/css/rc-tooltip_css/bootstrap_white.css' assert {type: 'css'}
+import '@public/css/rc-tooltip_css/bootstrap.css' assert {type: 'css'}
 import computeWinrate from '@utils/maths/computeWinrateBetweenTwoTeams'
 import {
 	HistoryDisplayedType
@@ -111,12 +112,12 @@ function History() {
 						/>
 						<Tooltip
 							placement={'top'}
-							overlayClassName={'winrateTooltip'}
+							overlayClassName={cssTooltip.winrateTooltip}
 							overlay={<span>{tooltipNumber}</span>}
 						>
 							<span
 								style={{fontSize: '22px'}}
-								className={'CSWColoredTextGradiant'}
+								className={cssCSW.CSWColoredTextGradiant}
 							>
 								{winrate}%
 							</span>

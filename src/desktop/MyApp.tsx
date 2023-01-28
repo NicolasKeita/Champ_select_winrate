@@ -11,13 +11,12 @@ import Config from './components/maincontent/settings/Config'
 import {
 	copyFromAnotherSetting,
 	fetchAllChampions
-} from '../background/store/slice/slice'
+} from '@background/store/slice/slice'
 
 import {useAppDispatch} from '@utils/hooks'
 import {
 	fetchCSWgameVersion
 } from '@utils/fetchLocalConfigJson/fetchChampionsFromConfigJson'
-import ReplacementFooterAD from './components/footerAD/replacement'
 import {doWithRetry} from 'do-with-retry'
 import {addLCU_listeners} from '@utils/LCU_API_connector/addLCU_listeners'
 import {AppDispatch} from '@utils/store/store'
@@ -67,17 +66,11 @@ function MyApp(): JSX.Element {
 		}
 	}, [dispatch])
 
-	let Footer: JSX.Element
-	// const testADBoolean = localStorage.getItem('owAdsForceAdUnit')
-	// if (true) {
-	Footer = <FooterAD windowName={kWindowNames.desktop} />
-	// } else
-	// Footer = <ReplacementFooterAD />
 	return (
 		<MyAppContainer aria-label='myApp'>
 			<Header />
 			<MainContent />
-			{Footer}
+			<FooterAD windowName={kWindowNames.desktop} />
 		</MyAppContainer>
 	)
 }
