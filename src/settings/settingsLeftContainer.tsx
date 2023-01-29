@@ -30,7 +30,7 @@ const TitlesContainer = styled.div`
   }
 `
 
-function Settings() {
+function SettingsLeftContainer() {
 	const allChamps = useAppSelector(({slice: {config: {champions}}}) => champions, () => true)
 	useAppSelector(({slice: {rerenderSettings}}) => rerenderSettings)
 
@@ -92,11 +92,11 @@ function Settings() {
 	}
 
 	return (
-		<SettingsContainer aria-label={'settingsContainer'}>
+		<SettingsContainer aria-label={'settingsLeftContainer'}>
 			{renderTitleRow()}
 			{renderListChampNameWithOPScore(allChamps)}
 		</SettingsContainer>
 	)
 }
 
-export default Settings
+export default SettingsLeftContainer

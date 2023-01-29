@@ -29,6 +29,12 @@ a {
     color: inherit;
 }
 
+h1 {
+    background: -webkit-linear-gradient(#a8540c, #b79e4d);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
 .desktopTop {
     color: white;
     width: 100%;

@@ -5,7 +5,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import Header from './header'
-import Settings from './settingsComponent'
+import SettingsLeftContainer from './settingsLeftContainer'
 import FooterAD from '../desktop/components/footerAD'
 import {kWindowNames} from '../consts'
 import SettingsInfos from '@settings/SettingsInfos'
@@ -23,7 +23,7 @@ const SettingsMainContainer = styled.div`
   flex-direction: row;
 `
 
-const SettingsInfosContainer = styled.div`
+const SettingsRightContainer = styled.div`
   display: flex;
   flex-direction: column;
   min-width: 411px;
@@ -31,17 +31,18 @@ const SettingsInfosContainer = styled.div`
   max-width: 411px;
 `
 
+
 // Settings
 function MyApp(): JSX.Element {
 	return (
 		<MyAppContainer aria-label={'myAppContainer'}>
 			<Header />
 			<SettingsMainContainer aria-label={'settingsMainContainer'}>
-				<Settings />
-				<SettingsInfosContainer aria-label={'settingsInfosContainer'}>
+				<SettingsLeftContainer />
+				<SettingsRightContainer aria-label={'settingsRightContainer'}>
 					<SettingsInfos />
 					<FooterAD windowName={kWindowNames.settings} />
-				</SettingsInfosContainer>
+				</SettingsRightContainer>
 			</SettingsMainContainer>
 		</MyAppContainer>
 	)
