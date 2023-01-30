@@ -8,6 +8,7 @@ import {kWindowNames} from '../../../consts'
 import OwAdMocking from '../../../types/owads'
 import GetWindowStateResult = overwolf.windows.GetWindowStateResult
 import IsWindowVisibleToUserResult = overwolf.windows.IsWindowVisibleToUserResult
+import WindowStateEx = overwolf.windows.enums.WindowStateEx
 
 type PropsType = {
 	windowName: string
@@ -54,6 +55,14 @@ function FooterAD(props: PropsType) {
 
 	function updateAd() {
 		const shouldEnable = windowIsOpen && windowIsVisible
+		console.log('ShouldEnable')
+		console.log(shouldEnable)
+		console.log('adEnabled')
+		console.log(adEnabled)
+		console.log('WIndiwIsOpen')
+		console.log(windowIsOpen)
+		console.log('WindowIsVisible')
+		console.log(windowIsVisible)
 		if (adEnabled !== shouldEnable) {
 			adEnabled = shouldEnable
 			if (shouldEnable)
@@ -108,6 +117,7 @@ function FooterAD(props: PropsType) {
 			adInstance = null
 		}
 		if (adInstance) {
+			hideAdReplacementContainer(adCont, adReplacementContainer.current)
 			// window.OwAd = adInstance
 			adInstance.addEventListener('player_loaded', () => {})
 			adInstance.addEventListener('display_ad_loaded', () => {})
@@ -133,9 +143,18 @@ function FooterAD(props: PropsType) {
 			adReplacementContainer.hidden = false
 	}
 
-	function onWindowStateChanged(state) {
-		if (state && state.window_state_ex && state.window_name === kWindowNames.desktop) {
-			const isOpen = state.window_state_ex === 'normal'
+	function hideAdReplacementContainer(adContainer, adReplacementContainer) {
+		if (adContainer)
+			adContainer.hidden = false
+		if (adReplacementContainer)
+			adReplacementContainer.hidden = true
+	}
+
+	function onWindowStateChanged(state: overwolf.windows.WindowStateChangedEvent) {
+		console.log('Window OnStateChanged')
+		console.log(state)
+		if (state && state.window_state_ex && state.window_name === props.windowName) {
+			const isOpen = state.window_state_ex === WindowStateEx.NORMAL
 			if (windowIsOpen !== isOpen) {
 				windowIsOpen = isOpen
 				updateAd()
@@ -186,10 +205,11 @@ function FooterAD(props: PropsType) {
 			<footer
 				ref={adContainerRef}
 				style={{height: 400, width: 300}}
+				hidden={true}
 			/>
 			<img
 				ref={adReplacementContainer}
-				hidden={true}
+				hidden={false}
 				src={replacementFooterADimg}
 				alt={'replacementFooterADimg'}
 				height={308}
