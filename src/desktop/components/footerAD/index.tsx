@@ -4,10 +4,7 @@
 
 import React, {useEffect, useRef} from 'react'
 import replacementFooterADimg from '@public/img/ReplacementFooterAD.jpg'
-import {kWindowNames} from '../../../consts'
 import OwAdMocking from '../../../types/owads'
-import GetWindowStateResult = overwolf.windows.GetWindowStateResult
-import IsWindowVisibleToUserResult = overwolf.windows.IsWindowVisibleToUserResult
 import WindowStateEx = overwolf.windows.enums.WindowStateEx
 
 type PropsType = {
@@ -55,14 +52,6 @@ function FooterAD(props: PropsType) {
 
 	function updateAd() {
 		const shouldEnable = windowIsOpen && windowIsVisible
-		console.log('ShouldEnable')
-		console.log(shouldEnable)
-		console.log('adEnabled')
-		console.log(adEnabled)
-		console.log('WIndiwIsOpen')
-		console.log(windowIsOpen)
-		console.log('WindowIsVisible')
-		console.log(windowIsVisible)
 		if (adEnabled !== shouldEnable) {
 			adEnabled = shouldEnable
 			if (shouldEnable)
@@ -94,17 +83,18 @@ function FooterAD(props: PropsType) {
 				return
 			}
 		}
-		if (adInstance !== null) {
-			adInstance.refreshAd(null)
-			return
-		}
 		const adCont: HTMLElement | null = adContainerRef.current
 		if (!adCont) {
 			console.log('CSW_error: AdContainer not defined yet')
 			return
 		}
+		if (adInstance !== null) {
+			adInstance.refreshAd(null)
+			return
+		}
 		try {
 			// @ts-ignore
+			hideAdReplacementContainer(adCont, adReplacementContainer.current)
 			adInstance = new window.OwAd(adCont, {
 				size: {
 					width: 400,
@@ -117,14 +107,19 @@ function FooterAD(props: PropsType) {
 			adInstance = null
 		}
 		if (adInstance) {
-			hideAdReplacementContainer(adCont, adReplacementContainer.current)
+			// hideAdReplacementContainer(adCont, adReplacementContainer.current)
 			// window.OwAd = adInstance
-			adInstance.addEventListener('player_loaded', () => {})
-			adInstance.addEventListener('display_ad_loaded', () => {})
-			adInstance.addEventListener('play', () => {})
-			adInstance.addEventListener('impression', () => {})
+			adInstance.addEventListener('player_loaded', () => {
+			})
+			adInstance.addEventListener('display_ad_loaded', () => {
+			})
+			adInstance.addEventListener('play', () => {
+			})
+			adInstance.addEventListener('impression', () => {
+			})
 			adInstance.addEventListener('complete', () => {})
-			adInstance.addEventListener('ow_internal_rendered', () => {})
+			adInstance.addEventListener('ow_internal_rendered', () => {
+			})
 			adInstance.addEventListener('error', e => {
 				console.log('CSW_error: OwAd instance error:')
 				console.error(e)
@@ -151,8 +146,6 @@ function FooterAD(props: PropsType) {
 	}
 
 	function onWindowStateChanged(state: overwolf.windows.WindowStateChangedEvent) {
-		console.log('Window OnStateChanged')
-		console.log(state)
 		if (state && state.window_state_ex && state.window_name === props.windowName) {
 			const isOpen = state.window_state_ex === WindowStateEx.NORMAL
 			if (windowIsOpen !== isOpen) {
@@ -163,10 +156,10 @@ function FooterAD(props: PropsType) {
 	}
 
 	async function getWindowIsVisible() {
-		const state: IsWindowVisibleToUserResult = await new Promise(resolve => {
+		const state: overwolf.windows.IsWindowVisibleToUserResult = await new Promise(resolve => {
 			overwolf.windows.isWindowVisibleToUser(resolve)
 		})
-		return state && state.success && state.visible !== 'hidden'
+		return state && state.success && state.visible !== WindowStateEx.HIDDEN
 	}
 
 	async function updateWindowIsVisible() {
@@ -179,11 +172,11 @@ function FooterAD(props: PropsType) {
 	}
 
 	async function getWindowIsOpen() {
-		const state: GetWindowStateResult = await new Promise(resolve => {
+		const state: overwolf.windows.GetWindowStateResult = await new Promise(resolve => {
 			overwolf.windows.getWindowState(props.windowName, resolve)
 		})
 		if (state && state.success && state.window_state_ex) {
-			return state.window_state_ex === 'normal'
+			return state.window_state_ex === WindowStateEx.NORMAL
 		}
 		return false
 	}

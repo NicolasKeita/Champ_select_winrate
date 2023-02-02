@@ -35,6 +35,16 @@ h1 {
     -webkit-text-fill-color: transparent;
 }
 
+p {
+    color: #b79e4d;
+}
+
+hr {
+    margin: 10px 0 10px 0;
+    align-self: stretch;
+    border-color: #b79e4d;
+}
+
 .desktopTop {
     color: white;
     width: 100%;

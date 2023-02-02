@@ -13,3 +13,7 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
+
+.CSWOrangeBackground {
+    background: linear-gradient(#a8540c, #b79e4d);
+}
