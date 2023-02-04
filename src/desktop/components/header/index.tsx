@@ -23,12 +23,12 @@ const HeaderContainer = styled.header`
   align-items: center;
 `
 const Logo = styled.h1`
-  font-size: 26px;
+  font-size: 26px !important;
   font-family: Hero, serif;
-  font-weight: 900;
+  font-weight: bold !important;
   background: -webkit-linear-gradient(#904a0f, #b79e4d);
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;);
+  -webkit-text-fill-color: transparent;
   cursor: inherit;
 `
 const CSWName = styled.h1`
