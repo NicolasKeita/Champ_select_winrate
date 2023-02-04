@@ -37,6 +37,7 @@
 }
 
 .app-header {
+    background: #0f9119;
 }
 
 .app-header h1 {
@@ -57,12 +58,12 @@
     font-weight: bold;
 }
 
-.app-header.draggable {
+.app-header, .draggable {
     user-select: none;
     cursor: grab;
 }
 
-.app-header.draggable:active {
+.draggable:active {
     cursor: grabbing;
 }
 

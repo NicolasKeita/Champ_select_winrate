@@ -16,6 +16,19 @@ module.exports = env => {
 		devtool: env['removeSourceMap'] ? false : 'inline-source-map',
 		module: {
 			rules: [
+				// 		{
+				// 		test: /\.m?js$/,
+				// exclude: /node_modules/,
+				// use: {
+				// 	loader: 'babel-loader',
+				// 	options: {
+				// 		presets: [
+				// 			['@babel/preset-env', {targets: "defaults"}]
+				// 		],
+				// 		plugins: ['@babel/plugin-proposal-class-properties']
+				// 	}
+				// }
+
 				{
 					test: /\.(ts|js)x?$/,
 					use: 'ts-loader',
@@ -35,7 +48,8 @@ module.exports = env => {
 									loader: 'css-loader',
 									options: {
 										modules: {
-											exportLocalsConvention: 'camelCase'
+											exportLocalsConvention: 'camelCase',
+											localIdentName: '[local]'
 										}
 									}
 								}
